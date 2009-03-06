@@ -3,7 +3,7 @@
 Plugin Name: Extended Category Widget
 Plugin URI: http://blog.avirtualhome.com/wordpress-plugins
 Description: Replacement of the category widget to allow for greater customization of the category widget.
-Version: 1.4.1
+Version: 1.5
 Author: Peter van der Does
 Author URI: http://blog.avirtualhome.com/
 
@@ -31,7 +31,7 @@ function widget_extended_categories_init() {
 	}
 	
 	function widget_extended_categories($args, $number = 1) {
-		$version = '1.4.1';
+		$version = '1.5';
 		// Check for version
 		global $wp_version;
 		if ( version_compare($wp_version, '2.5.1', '<') ) {
@@ -46,16 +46,47 @@ function widget_extended_categories_init() {
 		$e = $options [$number]['hide_empty'] ? '1' : '0';
 		$s = $options [$number]['sort_column'] ? $options [$number]['sort_column'] : 'name';
 		$o = $options [$number]['sort_order'] ? $options [$number]['sort_order'] : 'asc';
-		$title = empty ( $options [$number]['title'] ) ? __ ( 'Categories' ) : $options [$number]['title'];
+		$r = $options [$number]['rssfeed'] ? 'RSS' : '';
+		$i = $options [$number]['rssimage'] ? $options [$number]['rssimage'] : '';
+		if (empty($r)) {
+			$i='';
+		}
+		if (!empty($i)){
+			if (! file_exists(ABSPATH . '/'. $i)) {
+				$i='';
+			}
+		}
+		$title = empty ( $options [$number]['title'] ) ? __ ( 'Categories' ) : attribute_escape($options [$number]['title']);
 		$style = empty ( $options [$number]['style'] ) ? 'list' : $options [$number]['style'];
 		if ($avh_extcat_canselectcats) {
 			if ($options [$number]['post_category']) {
 				$post_category = unserialize ( $options [$number]['post_category'] );
 				$included_cats = implode ( ",", $post_category );
 			}
-			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'title_li' => '', 'show_option_none' => __ ( 'Select Category' ), 'name' =>  'ec-cat-'.$number );
+			$cat_args = array (
+				'include' => $included_cats, 
+				'orderby' => $s, 
+				'order' => $o, 
+				'show_count' => $c, 
+				'hide_empty' => $e, 
+				'hierarchical' => $h, 
+				'title_li' => '', 
+				'show_option_none' => __ ( 'Select Category' ),
+				'feed' => $r,
+				'feed_image' => $i,
+				'name' =>  'ec-cat-'.$number );
 		} else {
-			$cat_args = array ('orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'title_li' => '', 'show_option_none' => __ ( 'Select Category' ), 'name' =>  'ec-cat-'.$number);
+			$cat_args = array (
+				'orderby' => $s, 
+				'order' => $o, 
+				'show_count' => $c, 
+				'hide_empty' => $e, 
+				'hierarchical' => $h, 
+				'title_li' => '', 
+				'show_option_none' => __ ( 'Select Category' ),
+				'feed' => $r,
+				'feed_image' => $i, 
+				'name' =>  'ec-cat-'.$number);
 		}
 		echo $before_widget;
 		echo '<!-- AVH Extended Categories version ' . $version .' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
@@ -105,6 +136,8 @@ function widget_extended_categories_init() {
 			$newoptions [$number]['sort_column'] = strip_tags ( stripslashes ( $_POST ['categories-sort_column-' . $number] ) );
 			$newoptions [$number]['sort_order'] = strip_tags ( stripslashes ( $_POST ['categories-sort_order-' . $number] ) );
 			$newoptions [$number]['style'] = strip_tags ( stripslashes ( $_POST ['categories-style-' . $number] ) );
+			$newoptions [$number]['rssfeed'] = isset ( $_POST ['categories-rssfeed-' . $number] );
+			$newoptions [$number]['rssimage'] = attribute_escape ( $_POST ['categories-rssimage-' . $number] );
 			if ($avh_extcat_canselectcats) {
 				if (in_array ( '-1', $_POST ['post_category-' . $number], true )) {
 					$newoptions [$number]['post_category'] = false;
@@ -133,6 +166,8 @@ function widget_extended_categories_init() {
 		$sort_order_d = ($options [$number]['sort_order'] == 'desc') ? ' SELECTED' : '';
 		$style_list = ($options [$number]['style'] == 'list') ? ' SELECTED' : '';
 		$style_drop = ($options [$number]['style'] == 'drop') ? ' SELECTED' : '';
+		$rssfeed = $options [$number]['rssfeed'] ? 'checked="checked"' : '';
+		$rssimage = htmlspecialchars ( $options [$number]['rssimage'], ENT_QUOTES );
 		if ($avh_extcat_canselectcats) {
 			$selected_cats = ($options [$number]['post_category'] != '') ? unserialize ( $options [$number]['post_category'] ) : false;
 		}
@@ -175,6 +210,15 @@ function widget_extended_categories_init() {
 		<option value='drop' <?php echo $style_drop; ?>>Drop down</option>
 	</select>
 </label> 
+
+<label for="categories-rssfeed-<?php echo $number; ?>" style="line-height: 35px; display: block;">Show RSS Feed 
+	<input class="checkbox" type="checkbox" <?php echo $rssfeed; ?> id="categories-rssfeed-<?php echo $number; ?>" name="categories-rssfeed-<?php echo $number; ?>" /> 
+</label>
+
+<label for="categories-rssimage-<?php echo $number; ?>"><?php _e ( 'Full path to RSS image:' ); ?>
+	<input style="width: 250px;" id="categories-rssimage-<?php echo $number; ?>"	name="categories-rssimage-<?php echo $number; ?>" type="text" value="<?php echo $rssimage; ?>" />
+</label>
+
 <?php 
 if ($avh_extcat_canselectcats) { 
 	echo '			<b>Include these categories</b><hr />';	
@@ -292,11 +336,11 @@ class AVH_Walker_Category_Checklist extends Walker {
 /**
  * Creates the categories checklist
  *
- * @param unknown_type $post_id
- * @param unknown_type $descendants_and_self
- * @param unknown_type $selected_cats
- * @param unknown_type $popular_cats
- * @param unknown_type $number
+ * @param int $post_id
+ * @param int $descendants_and_self
+ * @param array $selected_cats
+ * @param array $popular_cats
+ * @param int $number
  */
 function avh_wp_category_checklist( $post_id = 0, $descendants_and_self = 0, $selected_cats = false, $popular_cats = false, $number ) {
 	$walker = new AVH_Walker_Category_Checklist;
