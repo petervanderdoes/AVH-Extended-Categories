@@ -1,9 +1,9 @@
 === Extended Categories Widget ===
-Contributors: petervanderdoes, datafeedr.com
+Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget
 Requires at least: 2.3
-Tested up to: 2.6.1
+Tested up to: 2.7.1
 Stable tag: 1.5
 
 Replacement of the category widget to allow for greater customization of the category widget.
@@ -18,6 +18,7 @@ Replacement of the category widget to allow for greater customization of the cat
 * Show categories hierarchical.
 * Sort by ID, Name,Count.
 * Sort ascending or descending.
+* Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher)
 
 == Installation ==
