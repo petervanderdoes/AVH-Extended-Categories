@@ -3,7 +3,7 @@
 Plugin Name: Extended Category Widget
 Plugin URI: http://blog.avirtualhome.com/wordpress-plugins
 Description: Replacement of the category widget to allow for greater customization of the category widget.
-Version: 1.5
+Version: 1.5.1
 Author: Peter van der Does
 Author URI: http://blog.avirtualhome.com/
 
@@ -31,7 +31,7 @@ function widget_extended_categories_init() {
 	}
 	
 	function widget_extended_categories($args, $number = 1) {
-		$version = '1.5';
+		$version = '1.5.1';
 		// Check for version
 		require (ABSPATH . WPINC . '/version.php');
 		if ( version_compare($wp_version, '2.5.1', '<') ) {

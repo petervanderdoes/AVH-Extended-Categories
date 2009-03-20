@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget
 Requires at least: 2.3
 Tested up to: 2.7.1
-Stable tag: 1.5
+Stable tag: 1.5.1
 
 Replacement of the category widget to allow for greater customization of the category widget.
 
@@ -41,6 +41,8 @@ I created a support site at http://forums.avirtualhome.com where you can ask que
 None
 
 == Arbitrary section ==
+* Version 1.5.1
+	* Bugfix: Compatibility issue with the plugin wp-security-scan
 * Version 1.5
 	* RFC: Option to show RSS feed after categories
 * Version 1.4.1
