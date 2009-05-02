@@ -6,7 +6,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	{
 		//@TODO Convert the old option widget_extended_categories to widget_avh_extendedcategories_normal
 		$widget_ops = array ('classname' => 'widget_avh_ec_normal', 'description' => __( "An extended version of the default Categories widget." ) );
-		$this->WP_Widget( false, __( 'AVH Exenteded Categories' ), $widget_ops );
+		parent::__construct( false, __( 'AVH Exenteded Categories' ), $widget_ops );
 	}
 
 	function WP_Widget_AVH_EC_Normal ()
