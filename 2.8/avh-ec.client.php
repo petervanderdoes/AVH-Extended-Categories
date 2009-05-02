@@ -202,7 +202,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
 		echo '<li id="' . $this->get_field_id( 'category--1' ) . '" class="popular-category">';
 		echo '<label for="' . $this->get_field_id( 'post_category' ) . '" class="selectit">';
-		echo '<input value="-1" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[]" type="checkbox" ' . $this->isChecked( false, $selected_cats ) . '>';
+		echo '<input value="-1" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[0]" type="checkbox" ' . $this->isChecked( false, $selected_cats ) . '>';
 		_e( 'Include All Categories' );
 		echo '</label>';
 		echo '</li>';
@@ -319,7 +319,7 @@ class AVH_Walker_Category_Checklist extends Walker
 		extract( $args );
 		$this->input_id = $this->input_id.'-'.$category->term_id;
 		$class = in_array( $category->term_id, $popular_cats ) ? ' class="popular-category"' : '';
-		$output .= "\n<li id='$this->li_id'$class>" . '<label for="' . $this->input_id . '" class="selectit"><input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[]" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
+		$output .= "\n<li id='$this->li_id'$class>" . '<label for="' . $this->input_id . '" class="selectit"><input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '['.$category->term_id.']" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
 	}
 
 	function end_el ( &$output, $category, $depth, $args )
