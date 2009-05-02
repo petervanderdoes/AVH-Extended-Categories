@@ -317,7 +317,7 @@ class AVH_Walker_Category_Checklist extends Walker
 	function start_el ( &$output, $category, $depth, $args )
 	{
 		extract( $args );
-		
+		$this->input_id = $this->input_id.'-'.$category->term_id;
 		$class = in_array( $category->term_id, $popular_cats ) ? ' class="popular-category"' : '';
 		$output .= "\n<li id='$this->li_id'$class>" . '<label for="' . $this->input_id . '" class="selectit"><input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[]" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
 	}
