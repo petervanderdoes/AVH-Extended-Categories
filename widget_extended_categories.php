@@ -31,7 +31,5 @@ if ( ( float ) $wp_version >= 2.8 ) {
 	require (dirname ( __FILE__ ) . '/2.8/avh-ec.client.php');
 } else {
 	require_once 'widget-pre2.8.php';
-
 }
-
 ?>
