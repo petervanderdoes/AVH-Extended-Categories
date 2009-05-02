@@ -98,7 +98,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
 		$instance['rssfeed'] = isset( $new_instance['rssfeed'] );
 		$instance['rssimage'] = attribute_escape( $new_instance['rssimage'] );
-		if ( in_array( '-1', $new_instance['post_category'], true ) ) {
+		if ( array_key_exists('all', $new_instance['post_category'] ) ){
 			$instance['post_category'] = false;
 		} else {
 			$instance['post_category'] = serialize( $new_instance['post_category'] );
@@ -130,7 +130,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$style_drop = ($instance['style'] == 'drop') ? ' SELECTED' : '';
 		$rssfeed = ( bool ) $instance['rssfeed'];
 		$rssimage = htmlspecialchars( $instance['rssimage'], ENT_QUOTES );
-		$selected_cats = ($instance['post_category'] != '') ? unserialize( $instance['post_category'] ) : false;
+		$selected_cats = (is_array($instance['post_category'] )) ? unserialize( $instance['post_category'] ) : false;
 
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
@@ -202,7 +202,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
 		echo '<li id="' . $this->get_field_id( 'category--1' ) . '" class="popular-category">';
 		echo '<label for="' . $this->get_field_id( 'post_category' ) . '" class="selectit">';
-		echo '<input value="-1" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[0]" type="checkbox" ' . $this->isChecked( false, $selected_cats ) . '>';
+		echo '<input value="all" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[all]" type="checkbox" ' . $this->isChecked( false, $selected_cats ) . '>';
 		_e( 'Include All Categories' );
 		echo '</label>';
 		echo '</li>';
