@@ -220,7 +220,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 * @param mixed_type $current
 	 * @return string
 	 *
-	 * @since 2.3.4
+	 * @since 2.0
 	 */
 	function isChecked ( $checked, $current )
 	{

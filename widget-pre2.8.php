@@ -5,7 +5,7 @@ function widget_extended_categories_init() {
 	if (! function_exists ( 'wp_register_sidebar_widget' ) || ! function_exists ( 'wp_register_widget_control' )) {
 		return;
 	}
-	
+
 	function widget_extended_categories($args, $number = 1) {
 		$version = '2.0-rc1';
 		// Check for version
@@ -40,35 +40,36 @@ function widget_extended_categories_init() {
 				$included_cats = implode ( ",", $post_category );
 			}
 			$cat_args = array (
-				'include' => $included_cats, 
-				'orderby' => $s, 
-				'order' => $o, 
-				'show_count' => $c, 
-				'hide_empty' => $e, 
-				'hierarchical' => $h, 
-				'title_li' => '', 
+				'include' => $included_cats,
+				'orderby' => $s,
+				'order' => $o,
+				'show_count' => $c,
+				'hide_empty' => $e,
+				'hierarchical' => $h,
+				'title_li' => '',
 				'show_option_none' => __ ( 'Select Category' ),
 				'feed' => $r,
 				'feed_image' => $i,
-				'name' =>  'ec-cat-'.$number );
+				'name' =>  'ec-cat-'.$number,
+				'depth' => 2, );
 		} else {
 			$cat_args = array (
-				'orderby' => $s, 
-				'order' => $o, 
-				'show_count' => $c, 
-				'hide_empty' => $e, 
-				'hierarchical' => $h, 
-				'title_li' => '', 
+				'orderby' => $s,
+				'order' => $o,
+				'show_count' => $c,
+				'hide_empty' => $e,
+				'hierarchical' => $h,
+				'title_li' => '',
 				'show_option_none' => __ ( 'Select Category' ),
 				'feed' => $r,
-				'feed_image' => $i, 
+				'feed_image' => $i,
 				'name' =>  'ec-cat-'.$number);
 		}
 		echo $before_widget;
 		echo '<!-- AVH Extended Categories version ' . $version .' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		echo $before_title . $title . $after_title;
 		echo '<ul>';
-		
+
 		if ($style == 'list') {
 			wp_list_categories ( $cat_args );
 		} else {
@@ -88,7 +89,7 @@ function widget_extended_categories_init() {
 		echo '</ul>';
 		echo $after_widget;
 	}
-	
+
 	function widget_extended_categories_control($number = 1) {
 	// Check for version
 		require (ABSPATH . WPINC . '/version.php');
@@ -103,7 +104,7 @@ function widget_extended_categories_init() {
 			$options = $newoptions = array ( );
 		}
 		// Post to new options array
-		
+
 		if ($_POST ['categories-submit-' . $number]) {
 			$newoptions [$number]['title'] = strip_tags ( stripslashes ( $_POST ['categories-title-' . $number] ) );
 			$newoptions [$number]['count'] = isset ( $_POST ['categories-count-' . $number] );
@@ -121,15 +122,15 @@ function widget_extended_categories_init() {
 					$newoptions [$number]['post_category'] = serialize ( $_POST ['post_category-' . $number] );
 				}
 			}
-		
+
 		}
-		
+
 		// Update if new options
 		if ($options != $newoptions) {
 			$options = $newoptions;
 			update_option ( 'widget_extended_categories', $options );
 		}
-		
+
 		// Prepare data for display
 		$title = htmlspecialchars ( $options [$number]['title'], ENT_QUOTES );
 		$count = $options [$number]['count'] ? 'checked="checked"' : '';
@@ -153,16 +154,16 @@ function widget_extended_categories_init() {
 	<input style="width: 250px;" id="categories-title-<?php echo $number; ?>"	name="categories-title-<?php echo $number; ?>" type="text" value="<?php echo $title; ?>" />
 </label>
 
-<label for="categories-count-<?php echo $number; ?>" style="line-height: 35px; display: block;">Show post counts 
-	<input class="checkbox" type="checkbox" <?php echo $count; ?> id="categories-count-<?php echo $number; ?>" name="categories-count-<?php echo $number; ?>" /> 
+<label for="categories-count-<?php echo $number; ?>" style="line-height: 35px; display: block;">Show post counts
+	<input class="checkbox" type="checkbox" <?php echo $count; ?> id="categories-count-<?php echo $number; ?>" name="categories-count-<?php echo $number; ?>" />
 </label>
 
 <label for="categories-hierarchical" style="line-height: 35px; display: block;">Show hierarchy
-	<input class="checkbox" type="checkbox" <?php echo $hierarchical; ?> id="categories-hierarchical-<?php echo $number; ?>" name="categories-hierarchical-<?php echo $number; ?>" /> 
+	<input class="checkbox" type="checkbox" <?php echo $hierarchical; ?> id="categories-hierarchical-<?php echo $number; ?>" name="categories-hierarchical-<?php echo $number; ?>" />
 </label>
 
 <label for="categories-hide_empty-<?php echo $number; ?>" style="line-height: 35px; display: block;">Hide empty categories
-	<input class="checkbox" type="checkbox" <?php echo $hide_empty;	?> id="categories-hide_empty-<?php echo $number; ?>" name="categories-hide_empty-<?php echo $number; ?>" /> 
+	<input class="checkbox" type="checkbox" <?php echo $hide_empty;	?> id="categories-hide_empty-<?php echo $number; ?>" name="categories-hide_empty-<?php echo $number; ?>" />
 </label>
 
 <label for="categories-sort_column-<?php echo $number; ?>" style="line-height: 35px; display: block;">Sort by
@@ -185,23 +186,23 @@ function widget_extended_categories_init() {
 		<option value='list' <?php echo $style_list; ?>>List</option>
 		<option value='drop' <?php echo $style_drop; ?>>Drop down</option>
 	</select>
-</label> 
+</label>
 
-<label for="categories-rssfeed-<?php echo $number; ?>" style="line-height: 35px; display: block;">Show RSS Feed 
-	<input class="checkbox" type="checkbox" <?php echo $rssfeed; ?> id="categories-rssfeed-<?php echo $number; ?>" name="categories-rssfeed-<?php echo $number; ?>" /> 
+<label for="categories-rssfeed-<?php echo $number; ?>" style="line-height: 35px; display: block;">Show RSS Feed
+	<input class="checkbox" type="checkbox" <?php echo $rssfeed; ?> id="categories-rssfeed-<?php echo $number; ?>" name="categories-rssfeed-<?php echo $number; ?>" />
 </label>
 
 <label for="categories-rssimage-<?php echo $number; ?>"><?php _e ( 'Full path to RSS image:' ); ?>
 	<input style="width: 250px;" id="categories-rssimage-<?php echo $number; ?>"	name="categories-rssimage-<?php echo $number; ?>" type="text" value="<?php echo $rssimage; ?>" />
 </label>
 
-<?php 
-if ($avh_extcat_canselectcats) { 
-	echo '			<b>Include these categories</b><hr />';	
+<?php
+if ($avh_extcat_canselectcats) {
+	echo '			<b>Include these categories</b><hr />';
 	echo '			<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
 	echo '				<li id="category--1-'.$number.'" class="popular-category">';
 	echo '					<label for="in-category--1-'.$number.'" class="selectit">';
-	echo '						<input value="-1" name="post_category-'.$number.'[]" id="in-category--1-'.$number.'" type="checkbox"'; 
+	echo '						<input value="-1" name="post_category-'.$number.'[]" id="in-category--1-'.$number.'" type="checkbox"';
 	if (!$selected_cats) { echo 'checked'; }
 	echo '> Include All Categories';
 	echo '					</label>';
@@ -210,14 +211,14 @@ if ($avh_extcat_canselectcats) {
 	echo '			</ul>';
 }
 ?>
-	
+
 	<input type="hidden" id="categories-submit-<?php echo $number; ?>" name="categories-submit-<?php echo $number; ?>" value="1" /></div>
 <?php
 	}
 	/**
 	 * Called after the widget_extended_categories_page form has been submitted.
 	 * Set the amount of widgets wanted and register the widgets
-	 * 
+	 *
 	 */
 	function widget_extended_categories_setup() {
 		$options = $newoptions = get_option('widget_extended_categories');
@@ -225,7 +226,7 @@ if ($avh_extcat_canselectcats) {
 			$number = (int) $_POST['extended_categories-number'];
 			if ( $number > 9 ) $number = 9;
 			if ( $number < 1 ) $number = 1;
-			$newoptions['number'] = $number; 
+			$newoptions['number'] = $number;
 		}
 		if ( $options != $newoptions ) {
 			$options = $newoptions;
@@ -235,7 +236,7 @@ if ($avh_extcat_canselectcats) {
 	}
 	/**
 	 * How many Wish List widgets are wanted.
-	 * 
+	 *
 	 */
 	function widget_extended_categories_page() {
 		$options = get_option('widget_extended_categories');
@@ -251,10 +252,10 @@ if ($avh_extcat_canselectcats) {
 				</form>
 			</div>
 		<?php
-	}	
+	}
 	function widget_extended_categories_register() {
 		$options = get_option( 'widget_extended_categories' );
-		
+
 		$number = ( int ) $options['number'];
 			if ( $number < 1 ) $number = 1;
 			if ( $number > 9 ) $number = 9;
@@ -267,7 +268,7 @@ if ($avh_extcat_canselectcats) {
 		add_action('sidebar_admin_setup', 'widget_extended_categories_setup');
 		add_action('sidebar_admin_page', 'widget_extended_categories_page');
 	}
-	
+
 	// Launch Widgets
 	widget_extended_categories_register ();
 }
@@ -286,7 +287,7 @@ class AVH_Walker_Category_Checklist extends Walker {
 	var $tree_type = 'category';
 	var $db_fields = array ('parent' => 'parent', 'id' => 'term_id'); //TODO: decouple this
 	var $number;
-	
+
 	function start_lvl(&$output, $depth, $args) {
 		$indent = str_repeat("\t", $depth);
 		$output .= "$indent<ul class='children'>\n";
