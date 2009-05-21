@@ -41,6 +41,8 @@ I created a support site at http://forums.avirtualhome.com where you can ask que
 None
 
 == Arbitrary section ==
+* Version 2.0
+	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
 * Version 1.5.1
 	* Bugfix: Compatibility issue with the plugin wp-security-scan
 * Version 1.5
