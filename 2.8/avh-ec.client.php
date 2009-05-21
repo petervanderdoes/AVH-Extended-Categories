@@ -2,14 +2,25 @@
 class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 {
 
+	/**
+	 * PHP 5 Constructor
+	 *
+	 */
 	function __construct ()
 	{
-		//@TODO Convert the old option widget_extended_categories to widget_avh_extendedcategories_normal
-		$widget_ops = array ('classname' => 'widget_avh_ec_normal', 'description' => __( "An extended version of the default Categories widget." ) );
-		parent::__construct( false, __( 'AVH Exenteded Categories' ), $widget_ops );
+		//Convert the old option widget_extended_categories to widget_extended-categories
+		$old = get_option( 'widget_extended_categories' );
+		if ( ! (false === $old) ) {
+			update_option( 'widget_extended-categories', $old );
+			delete_option( 'widget_extended_categories' );
+		}
+		$widget_ops = array ('description' => __( "An extended version of the default Categories widget." ) );
+		$control_ops = array('id_base' => 'widget_extended_categories_control');
+		parent::__construct( 'extended-categories', __( 'AVH Exenteded Categories' ), $widget_ops, $control_ops );
+
 	}
 
-	function WP_Widget_AVH_EC_Normal ()
+	function WP_Widget_AVH_ExtendedCategories_Normal ()
 	{
 		$this->__construct();
 	}
@@ -130,7 +141,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$style_drop = ($instance['style'] == 'drop') ? ' SELECTED' : '';
 		$rssfeed = ( bool ) $instance['rssfeed'];
 		$rssimage = htmlspecialchars( $instance['rssimage'], ENT_QUOTES );
-		$selected_cats = (is_array($instance['post_category'] )) ? unserialize( $instance['post_category'] ) : false;
+		$selected_cats = ($instance['post_category'] != '') ? unserialize ( $instance['post_category'] ) : false;
 
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
