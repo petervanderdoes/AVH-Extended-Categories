@@ -15,7 +15,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			delete_option( 'widget_extended_categories' );
 		}
 		$widget_ops = array ('description' => __( "An extended version of the default Categories widget." ) );
-		WP_Widget::__construct( 'extended-categories', __( 'AVH Exenteded Categories' ), $widget_ops );
+		WP_Widget::__construct( 'extended-categories', __( 'AVH Extended Categories' ), $widget_ops );
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Normal ()
