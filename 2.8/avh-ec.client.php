@@ -37,6 +37,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$c = $instance['count'] ? '1' : '0';
 		$h = $instance['hierarchical'] ? '1' : '0';
+		$d = $instance['depth'] ? $instance['depth'] : -1;
 		$e = $instance['hide_empty'] ? '1' : '0';
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
@@ -50,13 +51,17 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 				$i = '';
 			}
 		}
+		if (empty($d)) {
+			$d=-1;
+		}
+
 		$title = empty( $instance['title'] ) ? __( 'Categories' ) : attribute_escape( $instance['title'] );
 		$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
 		if ( $instance['post_category'] ) {
 			$post_category = unserialize( $instance['post_category'] );
 			$included_cats = implode( ",", $post_category );
 		}
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
 		echo $before_widget;
 		echo '<!-- AVH Extended Categories version ' . $version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		echo $before_title . $title . $after_title;
@@ -107,10 +112,14 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
 		$instance['rssfeed'] = isset( $new_instance['rssfeed'] );
 		$instance['rssimage'] = attribute_escape( $new_instance['rssimage'] );
-		if ( array_key_exists('all', $new_instance['post_category'] ) ){
+		if ( array_key_exists( 'all', $new_instance['post_category'] ) ) {
 			$instance['post_category'] = false;
 		} else {
 			$instance['post_category'] = serialize( $new_instance['post_category'] );
+		}
+		$instance['depth'] = ( int ) $new_instance['depth'];
+		if ( $instance['depth'] < 0 || 11 < $instance['depth'] ) {
+			$instance['depth'] = 0;
 		}
 		return $instance;
 	}
@@ -123,12 +132,13 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	function form ( $instance )
 	{
 		// displays the widget admin form
-		$instance = wp_parse_args( ( array ) $instance, array ('title' => '', 'rssimage' => '' ) );
+		$instance = wp_parse_args( ( array ) $instance, array ('title' => '', 'rssimage' => '', 'depth'=>0 ) );
 
 		// Prepare data for display
 		$title = htmlspecialchars( $instance['title'], ENT_QUOTES );
 		$count = ( bool ) $instance['count'];
 		$hierarchical = ( bool ) $instance['hierarchical'];
+		$depth = (int) $instance['depth'];
 		$hide_empty = ( bool ) $instance['hide_empty'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
 		$sort_name = ($instance['sort_column'] == 'name') ? ' SELECTED' : '';
@@ -141,6 +151,9 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$rssimage = htmlspecialchars( $instance['rssimage'], ENT_QUOTES );
 		$selected_cats = ($instance['post_category'] != '') ? unserialize ( $instance['post_category'] ) : false;
 
+		if ($depth < 0 || 11 < $depth) {
+			$depth = 0;
+		}
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
 		_e( 'Title:' );
@@ -160,6 +173,18 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierachical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->isChecked( true, $hierarchical ) . ' /> ';
 		_e( 'Show hierarchy' );
 		echo '</label>';
+		echo '<br />';
+
+		echo '<label for="' . $this->get_field_id( 'depth' ) . '">';
+		_e( 'How many levels to show' );
+		echo '</label>';
+		echo '<select id="' . $this->get_field_id( 'depth' ) . '" name="' . $this->get_field_name( 'depth' ) . '"> ';
+		echo '<option value="0" ' . ( 0 == $depth ? "selected='selected'" : '' ) . '>' . __( 'All Levels' ) . '</option>';
+		echo '<option value="1" ' . ( 1 == $depth ? "selected='selected'" : '' ) . '>' . __( 'Toplevel only' ) . '</option>';
+		for ($i=2;$i<=11;$i++){
+			echo '<option value="'.$i.'" ' . ( $i == $depth ? "selected='selected'" : '' ) . '>' . __( 'Child ' ) . ($i-1).'</option>';
+		}
+		echo '</select>';
 		echo '<br />';
 
 		echo '<label for="' . $this->get_field_id( 'hide_empty' ) . '">';

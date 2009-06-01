@@ -37,12 +37,19 @@ The Extended Categories Widget can be installed in 3 easy steps:
 = What about support? =
 I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.
 
+= Depth selection =
+Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.
+
+Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:
+You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
+
 == Screenshots ==
 None
 
 == Arbitrary section ==
 * Version 2.0
 	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
+	* In WordPress 2.8 you have the options to select depth when showing hierachy. See FAQ for more information.
 * Version 1.5.1
 	* Bugfix: Compatibility issue with the plugin wp-security-scan
 * Version 1.5
