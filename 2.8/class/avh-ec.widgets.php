@@ -382,17 +382,17 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 			wp_list_categories( $cat_args );
 		} else {
 			wp_dropdown_categories( $cat_args );
-			echo '<script type=\'text/javascript\'>';
-			echo '/* <![CDATA[ */';
-			echo '            var ec_top_dropdown_' . $this->number . ' = document.getElementById("extended-categories-top-select-' . $this->number . '");';
-			echo '            function ec_onCatChange_' . $this->number . '() {';
-			echo '                if ( ec_top_dropdown_' . $this->number . '.options[ec_top_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {';
-			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_top_dropdown_' . $this->number . '.options[ec_top_dropdown_' . $this->number . '.selectedIndex].value;';
-			echo '                }';
-			echo '            }';
-			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';';
-			echo '/* ]]> */';
-			echo '</script>';
+			echo '<script type=\'text/javascript\'>'."\n";
+			echo '/* <![CDATA[ */'."\n";
+			echo '            var ec_dropdown_top_' . $this->number . ' = document.getElementById("extended-categories-top-select-' . $this->number . '");'."\n";
+			echo '            function ec_top_onCatChange_' . $this->number . '() {'."\n";
+			echo '                if ( ec_dropdown_top_' . $this->number . '.options[ec_dropdown_top_' . $this->number . '.selectedIndex].value > 0 ) {'."\n";
+			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_top_' . $this->number . '.options[ec_dropdown_top_' . $this->number . '.selectedIndex].value;'."\n";
+			echo '                }'."\n";
+			echo '            }'."\n";
+			echo '            ec_dropdown_top_' . $this->number . '.onchange = ec_top_onCatChange_' . $this->number . ';'."\n";
+			echo '/* ]]> */'."\n";
+			echo '</script>'."\n";
 		}
 		echo '</ul>';
 		echo $after_widget;
