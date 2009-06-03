@@ -312,11 +312,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	}
 }
 
- /**
- * As the original wp_category_checklist doesn't support multiple lists on the same page I needed to duplicate the functions
- * use by the wp_category_checklist function
- *
- */
+
 
 class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 		var $core;
