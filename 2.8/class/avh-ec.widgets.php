@@ -317,6 +317,87 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
  * use by the wp_category_checklist function
  *
  */
+
+class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
+		var $core;
+
+	/**
+	 * PHP 5 Constructor
+	 *
+	 */
+	function __construct ()
+	{
+		$this->core = AVHExtendendCategoriesCore::getInstance();
+
+		$widget_ops = array ('description' => __( "Shows the top categories." ) );
+		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );
+	}
+
+	function WP_Widget_AVH_ExtendedCategories_Top ()
+	{
+		$this->__construct();
+	}
+
+	/** Echo the widget content.
+	 *
+	 * Subclasses should over-ride this function to generate their widget code.
+	 *
+	 * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
+	 * @param array $instance The settings for the particular instance of the widget
+	 */
+	function widget($args, $instance) {
+		$included_cats= get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
+
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => 'count', 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
+		echo $before_widget;
+		echo $this->core->comment;
+		echo $before_title . $title . $after_title;
+		echo '<ul>';
+
+		if ( $style == 'list' ) {
+			wp_list_categories( $cat_args );
+		} else {
+			wp_dropdown_categories( $cat_args );
+			echo '<script type=\'text/javascript\'>';
+			echo '/* <![CDATA[ */';
+			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("ec-cat-' . $this->number . '");';
+			echo '            function ec_onCatChange_' . $this->number . '() {';
+			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {';
+			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;';
+			echo '                }';
+			echo '            }';
+			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';';
+			echo '/* ]]> */';
+			echo '</script>';
+		}
+		echo '</ul>';
+		echo $after_widget;
+	}
+
+	/** Update a particular instance.
+	 *
+	 * This function should check that $new_instance is set correctly.
+	 * The newly calculated value of $instance should be returned.
+	 * If "false" is returned, the instance won't be saved/updated.
+	 *
+	 * @param array $new_instance New settings for this instance as input by the user via form()
+	 * @param array $old_instance Old settings for this instance
+	 * @return array Settings to save or bool false to cancel saving
+	 */
+	function update($new_instance, $old_instance) {
+		return $new_instance;
+	}
+
+	/** Echo the settings update form
+	 *
+	 * @param array $instance Current settings
+	 */
+	function form($instance) {
+		echo '<p>' . __('There are no options for this widget.') . '</p>';
+		return 'noform';
+	}
+
+}
 /**
  * Class that will display the categories
  *

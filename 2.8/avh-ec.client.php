@@ -24,6 +24,7 @@ function avhextendedcategories_init ()
 function avhextendedcategories_widgets_init ()
 {
 	register_widget( 'WP_Widget_AVH_ExtendedCategories_Normal' );
+	register_widget( 'WP_Widget_AVH_ExtendendCategories_Top' );
 }
 
 add_action( 'plugins_loaded', 'avhextendedcategories_init' );
