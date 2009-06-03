@@ -1,4 +1,8 @@
 <?php
+/**
+ * Widget Class for displaying categories. Extended version of the dfeault categories.
+ *
+ */
 class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 {
 	var $core;
@@ -311,6 +315,10 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	}
 }
 
+/**
+ * Widget Class for displaying the top categories
+ *
+ */
 class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget
 {
 	var $core;
