@@ -62,7 +62,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			$post_category = unserialize( $instance['post_category'] );
 			$included_cats = implode( ",", $post_category );
 		}
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -72,17 +72,17 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			wp_list_categories( $cat_args );
 		} else {
 			wp_dropdown_categories( $cat_args );
-			echo '<script type=\'text/javascript\'>';
-			echo '/* <![CDATA[ */';
-			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("ec-cat-' . $this->number . '");';
-			echo '            function ec_onCatChange_' . $this->number . '() {';
-			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {';
-			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;';
-			echo '                }';
-			echo '            }';
-			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';';
-			echo '/* ]]> */';
-			echo '</script>';
+			echo '<script type=\'text/javascript\'>'."\n";
+			echo '/* <![CDATA[ */'."\n";
+			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");'."\n";
+			echo '            function ec_onCatChange_' . $this->number . '() {'."\n";
+			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {'."\n";
+			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;'."\n";
+			echo '                }'."\n";
+			echo '            }'."\n";
+			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';'."\n";
+			echo '/* ]]> */'."\n";
+			echo '</script>'."\n";
 		}
 		echo '</ul>';
 		echo $after_widget;
@@ -346,8 +346,8 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 	 * @param array $instance The settings for the particular instance of the widget
 	 */
 	function widget($args, $instance) {
-		$included_cats= get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
-
+		$top_cats= get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
+		$included_cats = implode( ",", $top_cats );
 		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => 'count', 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
 		echo $before_widget;
 		echo $this->core->comment;
@@ -360,7 +360,7 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 			wp_dropdown_categories( $cat_args );
 			echo '<script type=\'text/javascript\'>';
 			echo '/* <![CDATA[ */';
-			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("ec-cat-' . $this->number . '");';
+			echo '            var ec_top_dropdown_' . $this->number . ' = document.getElementById("extended-categories-' . $this->number . '");';
 			echo '            function ec_onCatChange_' . $this->number . '() {';
 			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {';
 			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;';
