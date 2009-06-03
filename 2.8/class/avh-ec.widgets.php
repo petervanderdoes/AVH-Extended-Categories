@@ -349,6 +349,13 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 
 		extract( $args );
 
+		$title = apply_filters('widget_title',empty( $instance['title'] ) ? __( 'Categories' ) :  $instance['title'] );
+		$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
+		if ( !$a = (int) $instance['amount'] ) {
+			$a = 5;
+		} elseif ( $a < 1 ) {
+			$a = 1;
+		}
 		$c = $instance['count'] ? '1' : '0';
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
@@ -362,14 +369,8 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 				$i = '';
 			}
 		}
-		if (empty($d)) {
-			$d=-1;
-		}
 
-		$title = empty( $instance['title'] ) ? __( 'Categories' ) : attribute_escape( $instance['title'] );
-		$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
-
-		$top_cats= get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
+		$top_cats= get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false ) );
 		$included_cats = implode( ",", $top_cats );
 
 		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => -1, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
@@ -408,21 +409,23 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 	 * @param array $old_instance Old settings for this instance
 	 * @return array Settings to save or bool false to cancel saving
 	 */
-	function update($new_instance, $old_instance) {
-				// update the instance's settings
+	function update ( $new_instance, $old_instance )
+	{
+		// update the instance's settings
 		if ( ! isset( $new_instance['submit'] ) ) {
 			return false;
 		}
 
 		$instance = $old_instance;
 
-		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['amount'] = ( int ) $new_instance['amount'];
 		$instance['count'] = isset( $new_instance['count'] );
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
 		$instance['rssfeed'] = isset( $new_instance['rssfeed'] );
-		$instance['rssimage'] = attribute_escape( $new_instance['rssimage'] );
+		$instance['rssimage'] = esc_attr( $new_instance['rssimage'] );
 
 		return $instance;
 	}
@@ -432,11 +435,14 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 	 * @param array $instance Current settings
 	 */
 	function form($instance) {
-			// displays the widget admin form
+		// displays the widget admin form
 		$instance = wp_parse_args( ( array ) $instance, array ('title' => '', 'rssimage' => '' ) );
 
 		// Prepare data for display
 		$title = htmlspecialchars( $instance['title'], ENT_QUOTES );
+		if ( !$amount = (int) $instance['amount'] ) {
+			$amount = 5;
+		}
 		$count = ( bool ) $instance['count'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
 		$sort_name = ($instance['sort_column'] == 'name') ? ' SELECTED' : '';
@@ -446,8 +452,11 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 		$style_list = ($instance['style'] == 'list') ? ' SELECTED' : '';
 		$style_drop = ($instance['style'] == 'drop') ? ' SELECTED' : '';
 		$rssfeed = ( bool ) $instance['rssfeed'];
-		$rssimage = htmlspecialchars( $instance['rssimage'], ENT_QUOTES );
+		$rssimage = esc_attr( $instance['rssimage'], ENT_QUOTES );
 
+		if ($amount < 1 ) {
+			$amount = 1;
+		}
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
 		_e( 'Title:' );
@@ -456,14 +465,20 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget  {
 		echo '</p>';
 
 		echo '<p>';
+		echo '<label for="' . $this->get_field_id( 'amount' ) . '">';
+		_e( 'How categories to show' );
+		echo '</label>';
+		echo '<input class="widefat" id="' . $this->get_field_id( 'amount' ) . '" name="' . $this->get_field_name( 'amount' ) . '" type="text" value="' . $amount . '" /> ';
+		echo '</select>';
+		echo '</p>';
 
+		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'count' ) . '">';
 		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'count' ) . '"	name="' . $this->get_field_name( 'count' ) . '" ' . $this->core->isChecked( true, $count ) . ' /> ';
 		_e( 'Show post counts' );
 		echo '</label>';
 		echo '<br />';
 
-		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'sort_column' ) . '">';
 		_e( 'Sort by ' );
 		echo '<select id="' . $this->get_field_id( 'sort_column' ) . '" name="' . $this->get_field_name( 'sort_column' ) . '"> ';
