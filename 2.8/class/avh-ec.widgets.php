@@ -1,6 +1,7 @@
 <?php
 class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 {
+	var $core;
 
 	/**
 	 * PHP 5 Constructor
@@ -8,6 +9,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function __construct ()
 	{
+		$this->core = AVHExtendendCategoriesCore::getInstance();
+
 		//Convert the old option widget_extended_categories to widget_extended-categories
 		$old = get_option( 'widget_extended_categories' );
 		if ( ! (false === $old) ) {
@@ -32,8 +35,6 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	function widget ( $args, $instance )
 	{
 		extract( $args );
-
-		$version = '2.0-rc1';
 
 		$c = $instance['count'] ? '1' : '0';
 		$h = $instance['hierarchical'] ? '1' : '0';
@@ -63,7 +64,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		}
 		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'ec-cat-' . $number );
 		echo $before_widget;
-		echo '<!-- AVH Extended Categories version ' . $version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
+		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
 		echo '<ul>';
 
@@ -164,13 +165,13 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<p>';
 
 		echo '<label for="' . $this->get_field_id( 'count' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'count' ) . '"	name="' . $this->get_field_name( 'count' ) . '" ' . $this->isChecked( true, $count ) . ' /> ';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'count' ) . '"	name="' . $this->get_field_name( 'count' ) . '" ' . $this->core->isChecked( true, $count ) . ' /> ';
 		_e( 'Show post counts' );
 		echo '</label>';
 		echo '<br />';
 
 		echo '<label for="' . $this->get_field_id( 'hierachical' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierachical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->isChecked( true, $hierarchical ) . ' /> ';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierachical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->core->isChecked( true, $hierarchical ) . ' /> ';
 		_e( 'Show hierarchy' );
 		echo '</label>';
 		echo '<br />';
@@ -188,7 +189,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<br />';
 
 		echo '<label for="' . $this->get_field_id( 'hide_empty' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hide_empty' ) . '"	name="' . $this->get_field_name( 'hide_empty' ) . '" ' . $this->isChecked( true, $hide_empty ) . '/> ';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hide_empty' ) . '"	name="' . $this->get_field_name( 'hide_empty' ) . '" ' . $this->core->isChecked( true, $hide_empty ) . '/> ';
 		_e( 'Hide empty categories' );
 		echo '</label>';
 		echo '<br />';
@@ -227,7 +228,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<p>';
 
 		echo '<label for="' . $this->get_field_id( 'rssfeed' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'rssfeed' ) . '" name="' . $this->get_field_name( 'rssfeed' ) . '" ' . $this->isChecked( true, $rssfeed ) . '/> ';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'rssfeed' ) . '" name="' . $this->get_field_name( 'rssfeed' ) . '" ' . $this->core->isChecked( true, $rssfeed ) . '/> ';
 		_e( 'Show RSS Feed' );
 		echo '</label>';
 		echo '<br />';
@@ -243,7 +244,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
 		echo '<li id="' . $this->get_field_id( 'category--1' ) . '" class="popular-category">';
 		echo '<label for="' . $this->get_field_id( 'post_category' ) . '" class="selectit">';
-		echo '<input value="all" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[all]" type="checkbox" ' . $this->isChecked( false, $selected_cats ) . '> ';
+		echo '<input value="all" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[all]" type="checkbox" ' . $this->core->isChecked( false, $selected_cats ) . '> ';
 		_e( 'Include All Categories' );
 		echo '</label>';
 		echo '</li>';
@@ -254,20 +255,6 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';
 	}
 
-	/**
-	 * Used in forms to set the checked option.
-	 *
-	 * @param mixed $checked
-	 * @param mixed_type $current
-	 * @return string
-	 *
-	 * @since 2.0
-	 */
-	function isChecked ( $checked, $current )
-	{
-		if ( $checked == $current )
-			return (' checked="checked"');
-	}
 
 	/**
 	 * Creates the categories checklist
@@ -367,10 +354,5 @@ class AVH_Walker_Category_Checklist extends Walker
 	{
 		$output .= "</li>\n";
 	}
-}
-
-add_action('widgets_init', 'widget_avh_ec_normal_init');
-function widget_avh_ec_normal_init() {
-	register_widget('WP_Widget_AVH_ExtendedCategories_Normal');
 }
 ?>

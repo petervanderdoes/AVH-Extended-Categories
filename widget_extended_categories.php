@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 require (ABSPATH . WPINC . '/version.php');
 
 if ( ( float ) $wp_version >= 2.8 ) {
-	require (dirname ( __FILE__ ) . '/2.8/avh-ec.widgets.php');
+	require (dirname ( __FILE__ ) . '/2.8/avh-ec.client.php');
 } else {
 	require_once 'widget-pre2.8.php';
 }
