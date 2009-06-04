@@ -13,7 +13,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = AVHExtendendCategoriesCore::getInstance();
+		$this->core = & AVHExtendendCategoriesCore::getInstance();
 
 		//Convert the old option widget_extended_categories to widget_extended-categories
 		$old = get_option( 'widget_extended_categories' );
