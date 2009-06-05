@@ -10,7 +10,7 @@ class AVHExtendendCategoriesCore
 	 */
 	function __construct ()
 	{
-		$this->version = '2.0-rc1';
+		$this->version = '2.0';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 	}
 
