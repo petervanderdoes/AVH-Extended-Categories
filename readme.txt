@@ -1,8 +1,7 @@
 === Extended Categories Widget ===
-
 Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
-Tags: extended, categories, widget
+Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 2.8
 Stable tag: 2.0
