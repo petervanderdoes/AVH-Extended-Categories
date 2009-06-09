@@ -329,7 +329,7 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = AVHExtendendCategoriesCore::getInstance();
+		$this->core = & AVHExtendendCategoriesCore::getInstance();
 
 		$widget_ops = array ('description' => __( "Shows the top categories." ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );
@@ -470,7 +470,7 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget
 
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'amount' ) . '">';
-		_e( 'How categories to show' );
+		_e( 'How many categories to show' );
 		echo '</label>';
 		echo '<input class="widefat" id="' . $this->get_field_id( 'amount' ) . '" name="' . $this->get_field_name( 'amount' ) . '" type="text" value="' . $amount . '" /> ';
 		echo '</select>';

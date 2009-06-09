@@ -6,20 +6,37 @@ Requires at least: 2.3
 Tested up to: 2.8
 Stable tag: 2.0
 
-Replacement of the category widget to allow for greater customization of the category widget.
+The AVH Extended Categories Widget gives you two widgets for displaying categories. One is a replacement of the default category widget to allow for greater customization. The second is a Top Categories widget.
 
 == Description ==
 
-Replacement of the category widget to allow for greater customization of the category widget. The following options have been implemented:
+The AVH Extended Categories Widget gives you two widgets for displaying categories.
 
-* Display as List or Dropdown
-* Show number of posts (Count) after the category
-* Hide empty categories
+1. Replacement of the default category widget to allow for greater customization..
+
+1. A top categories widget. Shows the top X categories. This requires WordPress 2.8 or higher.
+
+The replacement widget gives you the following customizable options:
+* Title of the widget.
+* Display as List or Dropdown.
+* Show number of posts (Count) after the category.
+* Hide empty categories.
 * Show categories hierarchical.
+* Show categories up to a certain depth. (Requires WordPress 2.8 or higher).
 * Sort by ID, Name,Count.
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
-* Select which categories to show. (Requires WordPress 2.5.1 or higher)
+* Select which categories to show. (Requires WordPress 2.5.1 or higher).
+
+The Top Categories widget gives you the following customizable options:
+* Title of the widget.
+* How many categories to show.
+* Display as List or Dropdown.
+* Show number of posts (Count) after the category.
+* Sort by ID, Name,Count.
+* Sort ascending or descending.
+* Show RSS link after the category as text or image.
+* Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 == Installation ==
 
@@ -29,7 +46,7 @@ The Extended Categories Widget can be installed in 3 easy steps:
 
 1. Activate the plugin
 
-1. Go to the Presentation->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
+1. Go to the Presentation/Appearance->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
 
 
 == Frequently Asked Questions ==
@@ -50,6 +67,7 @@ None
 * Version 2.0
 	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
 	* In WordPress 2.8 you have the options to select depth when showing hierachy. See FAQ for more information.
+	* With WordPress 2.8 there is a new widget, AVH Extended Categories Top. This will show the top categories based on amount of posts.
 * Version 1.5.1
 	* Bugfix: Compatibility issue with the plugin wp-security-scan
 * Version 1.5
