@@ -1,4 +1,5 @@
 === Extended Categories Widget ===
+
 Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget
@@ -66,7 +67,7 @@ None
 == Arbitrary section ==
 * Version 2.0
 	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
-	* In WordPress 2.8 you have the options to select depth when showing hierachy. See FAQ for more information.
+	* In WordPress 2.8 you have the options to select depth when showing hierarchy. See FAQ for more information.
 	* With WordPress 2.8 there is a new widget, AVH Extended Categories Top. This will show the top categories based on amount of posts.
 * Version 1.5.1
 	* Bugfix: Compatibility issue with the plugin wp-security-scan
