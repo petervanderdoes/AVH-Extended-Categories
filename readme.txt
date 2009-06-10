@@ -12,7 +12,7 @@ The AVH Extended Categories Widget gives you two widgets for displaying categori
 
 The AVH Extended Categories Widget gives you two widgets for displaying categories.
 
-1. Replacement of the default category widget to allow for greater customization..
+1. Replacement of the default category widget to allow for greater customization.
 
 1. A top categories widget. Shows the top X categories. This requires WordPress 2.8 or higher.
 
