@@ -17,6 +17,7 @@ The AVH Extended Categories Widget gives you two widgets for displaying categori
 1. A top categories widget. Shows the top X categories. This requires WordPress 2.8 or higher.
 
 The replacement widget gives you the following customizable options:
+
 * Title of the widget.
 * Display as List or Dropdown.
 * Show number of posts (Count) after the category.
@@ -29,6 +30,7 @@ The replacement widget gives you the following customizable options:
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 The Top Categories widget gives you the following customizable options:
+
 * Title of the widget.
 * How many categories to show.
 * Display as List or Dropdown.
