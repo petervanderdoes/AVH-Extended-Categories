@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 2.8
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 The AVH Extended Categories Widget gives you two widgets for displaying categories. One is a replacement of the default category widget to allow for greater customization. The second is a Top Categories widget.
 
@@ -66,6 +66,8 @@ You select to display all categories, select to Show hierarchy and select how ma
 None
 
 == Arbitrary section ==
+* Version 2.0.1
+	* Reported problem with calling a class by self ()
 * Version 2.0
 	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
 	* In WordPress 2.8 you have the options to select depth when showing hierarchy. See FAQ for more information.
