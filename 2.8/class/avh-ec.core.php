@@ -33,7 +33,7 @@ class AVHExtendendCategoriesCore
 	{
 		static $_instance;
 		if ( $_instance === null ) {
-			$_instance = & new self( );
+			$_instance = & new AVHExtendendCategoriesCore( );
 		}
 		return $_instance;
 	}
