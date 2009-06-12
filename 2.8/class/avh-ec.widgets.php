@@ -13,7 +13,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVHExtendendCategoriesCore::getInstance();
+		$this->core = & AVHExtendedCategoriesCore::getInstance();
 
 		//Convert the old option widget_extended_categories to widget_extended-categories
 		$old = get_option( 'widget_extended_categories' );
@@ -319,7 +319,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
  * Widget Class for displaying the top categories
  *
  */
-class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget
+class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 {
 	var $core;
 
@@ -329,7 +329,7 @@ class WP_Widget_AVH_ExtendendCategories_Top extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVHExtendendCategoriesCore::getInstance();
+		$this->core = & AVHExtendedCategoriesCore::getInstance();
 
 		$widget_ops = array ('description' => __( "Shows the top categories." ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );

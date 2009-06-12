@@ -1,5 +1,5 @@
 <?php
-class AVHExtendendCategoriesCore
+class AVHExtendedCategoriesCore
 {
 	var $version;
 	var $comment;
@@ -17,9 +17,9 @@ class AVHExtendendCategoriesCore
 	/**
 	 * PHP4 Constructor
 	 *
-	 * @return AVHExtendendCategoriesCore
+	 * @return AVHExtendedCategoriesCore
 	 */
-	function AVHExtendendCategoriesCore ()
+	function AVHExtendedCategoriesCore ()
 	{
 		$this->__construct();
 	}
@@ -33,7 +33,7 @@ class AVHExtendendCategoriesCore
 	{
 		static $_instance;
 		if ( $_instance === null ) {
-			$_instance = & new AVHExtendendCategoriesCore( );
+			$_instance = & new AVHExtendedCategoriesCore( );
 		}
 		return $_instance;
 	}
