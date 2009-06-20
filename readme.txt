@@ -65,28 +65,39 @@ You select to display all categories, select to Show hierarchy and select how ma
 == Screenshots ==
 None
 
-== Arbitrary section ==
-* Version 2.0.2
-	* Top categories widget caused error in PHP4.
-* Version 2.0.1
-	* Reported problem with calling a class by self ()
-* Version 2.0
-	* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
-	* In WordPress 2.8 you have the options to select depth when showing hierarchy. See FAQ for more information.
-	* With WordPress 2.8 there is a new widget, AVH Extended Categories Top. This will show the top categories based on amount of posts.
-* Version 1.5.1
-	* Bugfix: Compatibility issue with the plugin wp-security-scan
-* Version 1.5
-	* RFC: Option to show RSS feed after categories
-* Version 1.4.1
-	* Bugfix: Problem when using multiple widgets with the dropdown option.
-* Version 1.4
-	* Ability to have up to 9 widgets.
-* Version 1.3
-	* You can select which categories to show (Requires WordPress 2.5.1 or higher).
-* Version 1.2
-	* When no category or an empty category is selected the dropdown menu shows Select Category, like the default category widget.
-* Version 1.1
-	* Dropdown menu didn't work. Page wasn't refreshed with selected category.
-* Version 1.0
- 	* Initial version
+== Changelog ==
+
+= Version 2.0.2 =
+* Top categories widget caused error in PHP4.
+
+= Version 2.0.1 =
+* Reported problem with calling a class by self ()
+
+= Version 2.0 =
+* Updated for WordPress 2.8. Unlimited amount of Extended Categories widgets is now possible.
+* In WordPress 2.8 you have the options to select depth when showing hierarchy. See FAQ for more information.
+* With WordPress 2.8 there is a new widget, AVH Extended Categories Top. This will show the top categories based on amount of posts.
+
+= Version 1.5.1 =
+* Bugfix: Compatibility issue with the plugin wp-security-scan
+
+= Version 1.5 =
+* RFC: Option to show RSS feed after categories
+
+= Version 1.4.1 =
+* Bugfix: Problem when using multiple widgets with the dropdown option.
+
+= Version 1.4 =
+* Ability to have up to 9 widgets.
+
+= Version 1.3 =
+* You can select which categories to show (Requires WordPress 2.5.1 or higher).
+
+= Version 1.2 =
+* When no category or an empty category is selected the dropdown menu shows Select Category, like the default category widget.
+
+= Version 1.1 =
+* Dropdown menu didn't work. Page wasn't refreshed with selected category.
+
+= Version 1.0 =
+ * Initial version
