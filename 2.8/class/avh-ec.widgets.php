@@ -42,7 +42,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$c = $instance['count'] ? '1' : '0';
 		$h = $instance['hierarchical'] ? '1' : '0';
-		$d = $instance['depth'] ? $instance['depth'] : - 1;
+		$d = $instance['depth'] ? $instance['depth'] : 0;
 		$e = $instance['hide_empty'] ? '1' : '0';
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
@@ -57,7 +57,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			}
 		}
 		if ( empty( $d ) ) {
-			$d = - 1;
+			$d = 0;
 		}
 
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Categories' ) : $instance['title'] );
