@@ -51,11 +51,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		if ( empty( $r ) ) {
 			$i = '';
 		}
-		if ( ! empty( $i ) ) {
-			if ( ! file_exists( ABSPATH . '/' . $i ) ) {
-				$i = '';
-			}
-		}
+
 		if ( empty( $d ) ) {
 			$d = 0;
 		}
@@ -521,7 +517,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		echo '<br />';
 
 		echo '<label for="">';
-		_e( 'Full path to RSS image:' );
+		_e( 'Path (URI) to RSS image:' );
 		echo '<input class="widefat" id="' . $this->get_field_id( 'rssimage' ) . '" name="' . $this->get_field_name( 'rssimage' ) . '" type="text" value="' . $rssimage . '" />';
 		echo '</label>';
 		echo '</p>';

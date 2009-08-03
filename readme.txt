@@ -67,6 +67,9 @@ None
 
 == Changelog ==
 
+= Version 2.1 =
+* RFC: The path for the RSS image can be URI.
+
 = Version 2.0.3 =
 * Bugfix: When selecting hierarchy and showing of all levels, the hierarchy wouldn't be shown.
 

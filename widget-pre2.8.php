@@ -27,11 +27,7 @@ function widget_extended_categories_init() {
 		if (empty($r)) {
 			$i='';
 		}
-		if (!empty($i)){
-			if (! file_exists(ABSPATH . '/'. $i)) {
-				$i='';
-			}
-		}
+
 		$title = empty ( $options [$number]['title'] ) ? __ ( 'Categories' ) : attribute_escape($options [$number]['title']);
 		$style = empty ( $options [$number]['style'] ) ? 'list' : $options [$number]['style'];
 		if ($avh_extcat_canselectcats) {
@@ -192,7 +188,7 @@ function widget_extended_categories_init() {
 	<input class="checkbox" type="checkbox" <?php echo $rssfeed; ?> id="categories-rssfeed-<?php echo $number; ?>" name="categories-rssfeed-<?php echo $number; ?>" />
 </label>
 
-<label for="categories-rssimage-<?php echo $number; ?>"><?php _e ( 'Full path to RSS image:' ); ?>
+<label for="categories-rssimage-<?php echo $number; ?>"><?php _e ( 'Path (URI) to RSS image:' ); ?>
 	<input style="width: 250px;" id="categories-rssimage-<?php echo $number; ?>"	name="categories-rssimage-<?php echo $number; ?>" type="text" value="<?php echo $rssimage; ?>" />
 </label>
 
