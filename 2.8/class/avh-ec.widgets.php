@@ -58,6 +58,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Categories' ) : $instance['title'] );
 		$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
+		$included_cats = '';
 		if ( $instance['post_category'] ) {
 			$post_category = unserialize( $instance['post_category'] );
 			$included_cats = implode( ",", $post_category );
