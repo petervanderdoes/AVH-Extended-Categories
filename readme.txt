@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 2.8
-Stable tag: 2.1
+Stable tag: 2.2-rc1
 
 The AVH Extended Categories Widget gives you two widgets for displaying categories. One is a replacement of the default category widget to allow for greater customization. The second is a Top Categories widget.
 
@@ -62,10 +62,17 @@ Starting with version 2.0 and WordPress 2.8 you can select how many levels deep 
 Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:
 You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
 
+= I want to help and translate the plugin =
+The .pot file is included with the plugin.
+If you have created a language pack, or have an update of an existing one, you can send the [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can include them in future releases.
+I'll keep a list of translators and their websites here in the readme.txt and on my website.
+
 == Screenshots ==
 None
 
 == Changelog ==
+= Version 2.2 =
+* RFC: Internationalization of the plugin.
 
 = Version 2.1 =
 * RFC: The path for the RSS image can be URI.
