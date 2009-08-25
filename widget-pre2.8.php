@@ -64,10 +64,11 @@ function widget_extended_categories_init() {
 		echo $before_widget;
 		echo '<!-- AVH Extended Categories version ' . $version .' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		echo $before_title . $title . $after_title;
-		echo '<ul>';
 
 		if ($style == 'list') {
+			echo '<ul>';
 			wp_list_categories ( $cat_args );
+			echo '</ul>';
 		} else {
 			wp_dropdown_categories ( $cat_args );
 			?>
@@ -82,7 +83,6 @@ function widget_extended_categories_init() {
 --></script>
 <?php
 		}
-		echo '</ul>';
 		echo $after_widget;
 	}
 

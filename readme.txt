@@ -73,6 +73,7 @@ None
 == Changelog ==
 = Version 2.2 =
 * RFC: Internationalization of the plugin.
+* Bugfix: W3 Validation Errors when using dropdown categories.
 
 = Version 2.1 =
 * RFC: The path for the RSS image can be URI.

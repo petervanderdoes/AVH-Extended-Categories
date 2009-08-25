@@ -67,10 +67,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
-		echo '<ul>';
 
 		if ( $style == 'list' ) {
+			echo '<ul>';
 			wp_list_categories( $cat_args );
+			echo '</ul>';
 		} else {
 			wp_dropdown_categories( $cat_args );
 			echo '<script type=\'text/javascript\'>' . "\n";
@@ -85,7 +86,6 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			echo '/* ]]> */' . "\n";
 			echo '</script>' . "\n";
 		}
-		echo '</ul>';
 		echo $after_widget;
 	}
 
