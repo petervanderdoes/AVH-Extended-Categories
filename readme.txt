@@ -74,6 +74,7 @@ None
 = Version 2.2 =
 * RFC: Internationalization of the plugin.
 * Bugfix: W3 Validation Errors when using dropdown categories.
+* Added option to exclude categories from displaying instead of including them. (Compliments to: Jose Luis Moya - http://www.alsur.es ) 
 
 = Version 2.1 =
 * RFC: The path for the RSS image can be URI.
