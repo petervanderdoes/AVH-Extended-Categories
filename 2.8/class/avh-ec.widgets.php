@@ -48,6 +48,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
 		$i = $instance['rssimage'] ? $instance['rssimage'] : '';
+		$invert = $instance['invert_included'] ? '1' : '0';
+
 		if ( empty( $r ) ) {
 			$i = '';
 		}
@@ -63,7 +65,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			$post_category = unserialize( $instance['post_category'] );
 			$included_cats = implode( ",", $post_category );
 		}
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category','avh-ec' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+
+
+		if ($invert) {$inc_exc = 'exclude';}
+		else {$inc_exc = 'include';}
+		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category','avh-ec' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -123,6 +129,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		if ( $instance['depth'] < 0 || 11 < $instance['depth'] ) {
 			$instance['depth'] = 0;
 		}
+		$instance['invert_included'] = $new_instance['invert_included'] ? 1 : 0;
+
 		return $instance;
 	}
 
@@ -152,6 +160,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$rssfeed = ( bool ) $instance['rssfeed'];
 		$rssimage = esc_attr( $instance['rssimage'] );
 		$selected_cats = ($instance['post_category'] != '') ? unserialize( $instance['post_category'] ) : false;
+		$invert_included = ( bool ) $instance['invert_included'];
 
 		if ( $depth < 0 || 11 < $depth ) {
 			$depth = 0;
@@ -241,16 +250,24 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '</p>';
 
 		echo '<p>';
-		echo '<b>' . __( 'Include these categories','avh-ec' ) . '</b><hr />';
+		echo '<b>' . __( 'Select categories','avh-ec' ) . '</b><hr />';
 		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
 		echo '<li id="' . $this->get_field_id( 'category--1' ) . '" class="popular-category">';
 		echo '<label for="' . $this->get_field_id( 'post_category' ) . '" class="selectit">';
 		echo '<input value="all" id="' . $this->get_field_id( 'post_category' ) . '" name="' . $this->get_field_name( 'post_category' ) . '[all]" type="checkbox" ' . $this->core->isChecked( false, $selected_cats ) . '> ';
-		_e( 'Include All Categories','avh-ec' );
+		_e( 'All Categories','avh-ec' );
 		echo '</label>';
 		echo '</li>';
 		$this->avh_wp_category_checklist( 0, 0, $selected_cats, false, $this->number );
 		echo '</ul>';
+		echo '</p>';
+
+		echo '<p>';
+		echo '<label for="' . $this->get_field_id( 'invert_included' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'invert_included' ) . '"     name="' . $this->get_field_name( 'invert_included' ) . '" ' . $this->core->isChecked( true, $invert_included ) . '/> ';
+		_e( 'Exclude the selected categories','avh-ec' );
+		echo '</label>';
+		echo '<br />';
 		echo '</p>';
 
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';
@@ -277,16 +294,16 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$args = array ();
 		if ( is_array( $selected_cats ) )
-			$args['selected_cats'] = $selected_cats;
+		$args['selected_cats'] = $selected_cats;
 		elseif ( $post_id )
-			$args['selected_cats'] = wp_get_post_categories( $post_id );
+		$args['selected_cats'] = wp_get_post_categories( $post_id );
 		else
-			$args['selected_cats'] = array ();
+		$args['selected_cats'] = array ();
 
 		if ( is_array( $popular_cats ) )
-			$args['popular_cats'] = $popular_cats;
+		$args['popular_cats'] = $popular_cats;
 		else
-			$args['popular_cats'] = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
+		$args['popular_cats'] = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => false ) );
 
 		if ( $descendants_and_self ) {
 			$categories = get_categories( "child_of=$descendants_and_self&hierarchical=0&hide_empty=0" );
