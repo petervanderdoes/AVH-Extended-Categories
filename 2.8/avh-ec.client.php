@@ -9,6 +9,11 @@ require (dirname( __FILE__ ) . '/class/avh-ec.widgets.php');
  */
 function avhextendedcategories_init ()
 {
+	// Admin
+	if ( is_admin() ) {
+		require (dirname( __FILE__ ) . '/class/avh-ec.admin.php');
+		$avhec_admin = & new AVH_EC_Admin( );
+	}
 	add_action( 'widgets_init', 'avhextendedcategories_widgets_init' );
 
 } // End avhamazon_init()
