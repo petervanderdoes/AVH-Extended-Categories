@@ -42,7 +42,8 @@ class AVH_EC_Admin
 		add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'pageOptions' ) );
 		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
 		// Add metaboxes
-		add_meta_box( 'dashboard_right_now', 'Donations', array (&$this, 'metaboxMenuOverviewDonations' ), 'avhec-menu-donation', 'left', 'core' );
+		add_meta_box( 'dashboard_right_now', 'Translation', array (&$this, 'metaboxTranslation' ), 'avhec-translation', 'left', 'core' );
+		add_meta_box( 'dashboard_right_now', 'Donations', array (&$this, 'metaboxDonations' ), 'avhec-donation', 'left', 'core' );
 	}
 
 	function pageOptions ()
@@ -55,8 +56,12 @@ class AVH_EC_Admin
 		echo '		<div id="post-body">';
 		echo '			<div id="dashboard-widgets-main-content">';
 		echo '				<div class="postbox-container" style="width:49%;">';
-		do_meta_boxes( 'avhec-menu-donation', 'left', '' );
+		do_meta_boxes( 'avhec-translation', 'left', '' );
 		echo '				</div>';
+		echo '				<div class="postbox-container" style="width:49%;">';
+		do_meta_boxes( 'avhec-donation', 'left', '' );
+		echo '				</div>';
+
 		echo '			</div>';
 		echo '		</div>';
 		echo '    </div>';
@@ -76,7 +81,7 @@ class AVH_EC_Admin
 	 * Donation Metabox
 	 * @return unknown_type
 	 */
-	function metaboxMenuOverviewDonations ()
+	function metaboxDonations ()
 	{
 		echo '<p>If you enjoy this plug-in please consider a donation. There are several ways you can show your appreciation</p>';
 		echo '<div class="versions">';
@@ -91,6 +96,21 @@ class AVH_EC_Admin
 		echo '</p></div>';
 	}
 
+	/**
+	 * Donation Metabox
+	 * @return unknown_type
+	 */
+	function metaboxTranslation ()
+	{
+		echo '<p>A language pack can be created for this plugin. The .pot file is included with the plugin and can be found in the directory extended-categories-widget/2.8/lang</p>';
+		echo '<div class="versions">';
+		echo '<p>';
+		echo 'If you have created a language pack you can send the .po, and if you have it the .mo file, to me and I will include the files with the plugin';
+		echo '</p>';
+		echo '<p>';
+		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
+		echo '</p></div>';
+	}
 	function displayIcon ( $icon )
 	{
 		return ('<div class="icon32" id="icon-' . $icon . '"><br/></div>');
