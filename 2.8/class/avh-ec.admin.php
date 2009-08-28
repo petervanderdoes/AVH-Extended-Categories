@@ -51,7 +51,7 @@ class AVH_EC_Admin
 		echo '<div class="wrap avhfdas-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories' . '</h2>';
-		echo '<div id="dashboard-widgets-wrap" class="avhec-menu-donation">';
+		echo '<div id="dashboard-widgets-wrap" class="avhec-meta">';
 		echo '    <div id="dashboard-widgets" class="metabox-holder">';
 		echo '		<div id="post-body">';
 		echo '			<div id="dashboard-widgets-main-content">';
@@ -71,7 +71,7 @@ class AVH_EC_Admin
 		echo '	//<![CDATA[' . "\n";
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-donation\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-meta\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
