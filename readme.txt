@@ -6,8 +6,7 @@ Requires at least: 2.3
 Tested up to: 2.8
 Stable tag: 2.2
 
-The AVH Extended Categories Widget gives you two widgets for displaying categories. One is a replacement of the default category widget to allow for greater customization. The second is a Top Categories widget.
-
+The AVH Extended Categories Widget gives you two widgets for displaying categories.
 == Description ==
 
 The AVH Extended Categories Widget gives you two widgets for displaying categories.
@@ -39,6 +38,9 @@ The Top Categories widget gives you the following customizable options:
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
+
+Translations:
+* Russian (ru_RU)
 
 == Installation ==
 
