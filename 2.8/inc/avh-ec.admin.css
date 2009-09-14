@@ -1,0 +1,31 @@
+.footer_avhfdas {
+	font-size: 0.8em;
+	text-align: center;
+}
+
+div.clearer {
+	clear: both;
+	line-height: 1px;
+	font-size: 1px;
+	height: 1px;
+}
+
+#avhecBoxDonations .versions .b {
+	font-weight: bold;
+}
+#avhecBoxDonations .inside {
+	font-size: 12px;
+}
+#avhecBoxDonations .versions {
+	padding: 6px 10px 12px;
+}
+
+#avhecBoxTranslation .versions .b {
+	font-weight: bold;
+}
+#avhecBoxTranslation .inside {
+	font-size: 12px;
+}
+#avhecBoxTranslation .versions {
+	padding: 6px 10px 12px;
+}

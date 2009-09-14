@@ -2,6 +2,7 @@
 class AVH_EC_Admin
 {
 	var $core;
+	var $pagehook;
 
 	function __construct ()
 	{
@@ -11,17 +12,7 @@ class AVH_EC_Admin
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
 
-		/**
-		 * Inject CSS and Javascript on the right pages
-		 *
-		 * Main Action: admin_print_styles-, admin_print-scripts-
-		 * Top level page: toplevel_page_avh-first-defense-against-spam
-		 * Sub menus: avh-f-d-a-s_page_avh-fdas-general
-		 *
-		 */
-		add_action( 'admin_print_styles', array (&$this, 'actionInjectCSS' ) );
-		add_action( 'admin_print_scripts', array (&$this, 'actionInjectJS' ) );
-
+		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
 		return;
 	}
 
@@ -39,39 +30,106 @@ class AVH_EC_Admin
 	function actionAdminMenu ()
 	{
 
-		add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'pageOptions' ) );
-		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
-		// Add metaboxes
-		add_meta_box( 'dashboard_right_now', 'Translation', array (&$this, 'metaboxTranslation' ), 'avhec-translation', 'left', 'core' );
-		add_meta_box( 'dashboard_right_now', 'Donations', array (&$this, 'metaboxDonations' ), 'avhec-donation', 'left', 'core' );
+		$this->pagehook = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
+		add_action( 'load-' . $this->pagehook, array (&$this, 'actionLoadPageHook_doPageOptions' ) );
+
+		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+		add_filter( 'screen_meta_screen', array (&$this, 'filterScreenMetaScreen' ), 10 );
+
+		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
+		wp_admin_css( 'css/dashboard' );
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
 	}
 
-	function pageOptions ()
+	function actionLoadPageHook_doPageOptions ()
 	{
+		// Add metaboxes
+		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook, 'normal', 'core' );
+
+
+	}
+
+	/**
+	 * Set correlation between $screen and $hook
+	 *
+	 * @WordPress filter screen_meta_screen
+	 * @param $screen
+	 * @return strings
+	 */
+	function filterScreenMetaScreen ( $screen )
+	{
+
+		switch ( $screen ) {
+			case 'toplevel_page_avh-first-defense-against-spam' :
+				$screen = 'avhfdas-menu-overview';
+				break;
+		}
+		return $screen;
+	}
+
+	/**
+	 * Sets the amount of columns wanted for a particuler screen
+	 *
+	 * @WordPress filter screen_meta_screen
+	 * @param $screen
+	 * @return strings
+	 */
+
+	function filterScreenLayoutColumns ( $columns, $screen )
+	{
+		if ( $screen == $this->pagehook ) {
+			$columns['avhfdas-menu-overview'] = 2;
+		}
+		return $columns;
+
+	}
+
+	function doPageOptions ()
+	{
+		global $screen_layout_columns;
+
+		// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook, 'normal', 'core' );
+		$hide2 = '';
+		switch ( $screen_layout_columns ) {
+			case 2:
+				$width = 'width:49%;';
+				break;
+			default:
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
+		}
+
 		echo '<div class="wrap avhfdas-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories' . '</h2>';
-		echo '<div id="dashboard-widgets-wrap" class="avhec-meta">';
-		echo '    <div id="dashboard-widgets" class="metabox-holder">';
-		echo '		<div id="post-body">';
-		echo '			<div id="dashboard-widgets-main-content">';
-		echo '				<div class="postbox-container" style="width:49%;">';
-		do_meta_boxes( 'avhec-translation', 'left', '' );
-		echo '				</div>';
-		echo '				<div class="postbox-container" style="width:49%;">';
-		do_meta_boxes( 'avhec-donation', 'left', '' );
-		echo '				</div>';
-
+		echo '	<div id="dashboard-widgets-wrap">';
+		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+		echo "			<div class='postbox-container' style='$width'>\n";
+		do_meta_boxes( $this->pagehook, 'normal', '' );
+			echo "			</div>";
+		echo "			<div class='postbox-container' style='{$hide2}$width'>\n";
+		do_meta_boxes( $this->pagehook, 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
-		echo '    </div>';
-		echo '</div>';
-		echo '</div>';
+		echo '<form style="display: none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '</div>'; // wrap
+
 		echo '<script type="text/javascript">' . "\n";
 		echo '	//<![CDATA[' . "\n";
 		echo '	jQuery(document).ready( function($) {' . "\n";
+		echo'		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');'."\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-meta\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -111,32 +169,13 @@ class AVH_EC_Admin
 		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
 		echo '</p></div>';
 	}
+
 	function displayIcon ( $icon )
 	{
 		return ('<div class="icon32" id="icon-' . $icon . '"><br/></div>');
 	}
 
 	/**
-	 * Insert link to CSS
-	 *
-	 */
-	function actionInjectCSS ()
-	{
-		wp_admin_css( 'css/dashboard' );
-
-	}
-
-	/**
-	 * Insert link to JS
-	 *
-	 */
-	function actionInjectJS ()
-	{
-		wp_enqueue_script( 'postbox' );
-
-	}
-
-		/**
 	 * Adds Settings next to the plugin actions
 	 *
 	 * @WordPress Filter plugin_action_links_avh-amazon/avh-amazon.php
