@@ -34,7 +34,6 @@ class AVH_EC_Admin
 		add_action( 'load-' . $this->pagehook, array (&$this, 'actionLoadPageHook_doPageOptions' ) );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
-		add_filter( 'screen_meta_screen', array (&$this, 'filterScreenMetaScreen' ), 10 );
 
 		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
 		wp_admin_css( 'css/dashboard' );
@@ -49,24 +48,6 @@ class AVH_EC_Admin
 		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook, 'normal', 'core' );
 
 
-	}
-
-	/**
-	 * Set correlation between $screen and $hook
-	 *
-	 * @WordPress filter screen_meta_screen
-	 * @param $screen
-	 * @return strings
-	 */
-	function filterScreenMetaScreen ( $screen )
-	{
-
-		switch ( $screen ) {
-			case 'toplevel_page_avh-first-defense-against-spam' :
-				$screen = 'avhfdas-menu-overview';
-				break;
-		}
-		return $screen;
 	}
 
 	/**
