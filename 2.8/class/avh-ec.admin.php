@@ -61,7 +61,7 @@ class AVH_EC_Admin
 	function filterScreenLayoutColumns ( $columns, $screen )
 	{
 		if ( $screen == $this->pagehook ) {
-			$columns['avhfdas-menu-overview'] = 2;
+			$columns[$this->pagehook] = 2;
 		}
 		return $columns;
 
