@@ -2,7 +2,7 @@
 class AVH_EC_Admin
 {
 	var $core;
-	var $pagehook;
+	var $pagehoook_OptionsPage;
 
 	function __construct ()
 	{
@@ -30,8 +30,8 @@ class AVH_EC_Admin
 	function actionAdminMenu ()
 	{
 
-		$this->pagehook = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
-		add_action( 'load-' . $this->pagehook, array (&$this, 'actionLoadPageHook_doPageOptions' ) );
+		$this->pagehoook_OptionsPage = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
+		add_action( 'load-' . $this->pagehoook_OptionsPage, array (&$this, 'actionLoadpagehoook_OptionsPage_doPageOptions' ) );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -42,10 +42,10 @@ class AVH_EC_Admin
 		wp_enqueue_script( 'postbox' );
 	}
 
-	function actionLoadPageHook_doPageOptions ()
+	function actionLoadpagehoook_OptionsPage_doPageOptions ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook, 'normal', 'core' );
+		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
 
 
 	}
@@ -60,8 +60,8 @@ class AVH_EC_Admin
 
 	function filterScreenLayoutColumns ( $columns, $screen )
 	{
-		if ( $screen == $this->pagehook ) {
-			$columns[$this->pagehook] = 2;
+		if ( $screen == $this->pagehoook_OptionsPage ) {
+			$columns[$this->pagehoook_OptionsPage] = 2;
 		}
 		return $columns;
 
@@ -72,7 +72,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook, 'normal', 'core' );
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns ) {
 			case 2:
@@ -89,10 +89,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo "			<div class='postbox-container' style='$width'>\n";
-		do_meta_boxes( $this->pagehook, 'normal', '' );
+		do_meta_boxes( $this->pagehoook_OptionsPage, 'normal', '' );
 			echo "			</div>";
 		echo "			<div class='postbox-container' style='{$hide2}$width'>\n";
-		do_meta_boxes( $this->pagehook, 'side', '' );
+		do_meta_boxes( $this->pagehoook_OptionsPage, 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
 		echo '<form style="display: none" method="get" action="">';
