@@ -20,12 +20,9 @@ div.clearer {
 	padding: 6px 10px 12px;
 }
 
-#avhecBoxTranslation .versions .b {
+#avhecBoxTranslation .b {
 	font-weight: bold;
 }
 #avhecBoxTranslation .inside {
 	font-size: 12px;
-}
-#avhecBoxTranslation .versions {
-	padding: 6px 10px 12px;
 }
