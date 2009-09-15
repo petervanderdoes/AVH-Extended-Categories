@@ -39,7 +39,7 @@ class AVH_EC_Admin
 	function actionLoadpagehook_OptionsPage ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
+		add_meta_box( 'avhecBoxTranslation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
