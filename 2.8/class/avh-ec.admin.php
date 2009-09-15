@@ -2,7 +2,7 @@
 class AVH_EC_Admin
 {
 	var $core;
-	var $pagehoook_OptionsPage;
+	var $pagehook_OptionsPage;
 
 	function __construct ()
 	{
@@ -30,8 +30,16 @@ class AVH_EC_Admin
 	function actionAdminMenu ()
 	{
 
-		$this->pagehoook_OptionsPage = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
+		$this->pagehook_OptionsPage = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
 		add_action( 'load-' . $this->pagehoook_OptionsPage, array (&$this, 'actionLoadpagehoook_OptionsPage_doPageOptions' ) );
+
+
+	}
+
+	function actionLoadpagehoook_OptionsPage_doPageOptions ()
+	{
+		// Add metaboxes
+		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -40,14 +48,6 @@ class AVH_EC_Admin
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
-	}
-
-	function actionLoadpagehoook_OptionsPage_doPageOptions ()
-	{
-		// Add metaboxes
-		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
-
-
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook_OptionsPage, 'normal', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns ) {
 			case 2:
@@ -89,10 +89,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo "			<div class='postbox-container' style='$width'>\n";
-		do_meta_boxes( $this->pagehoook_OptionsPage, 'normal', '' );
+		do_meta_boxes( $this->pagehook_OptionsPage, 'normal', '' );
 			echo "			</div>";
 		echo "			<div class='postbox-container' style='{$hide2}$width'>\n";
-		do_meta_boxes( $this->pagehoook_OptionsPage, 'side', '' );
+		do_meta_boxes( $this->pagehook_OptionsPage, 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
 		echo '<form style="display: none" method="get" action="">';
@@ -149,7 +149,7 @@ class AVH_EC_Admin
 		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
 		echo '</p></div>';
 		echo '<p>';
-		echo '<span class=\'b\'>Available Languages</span>';
+		echo '<span class="b">Available Languages</span></p><p>';
 		echo 'Russian (ru_RU)<br />';
 		echo 'Czech (cs_CZ)<br />';
 		echo '</p>';

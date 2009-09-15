@@ -20,7 +20,7 @@ div.clearer {
 	padding: 6px 10px 12px;
 }
 
-#avhecBoxTranslation .b {
+#avhecBoxTranslation span .b {
 	font-weight: bold;
 }
 #avhecBoxTranslation .inside {
