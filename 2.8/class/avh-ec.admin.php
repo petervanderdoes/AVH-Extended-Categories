@@ -31,15 +31,15 @@ class AVH_EC_Admin
 	{
 
 		$this->pagehook_OptionsPage = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
-		add_action( 'load-' . $this->pagehoook_OptionsPage, array (&$this, 'actionLoadpagehoook_OptionsPage_doPageOptions' ) );
+		add_action( 'load-' . $this->pagehook_OptionsPage, array (&$this, 'actionLoadpagehook_OptionsPage' ) );
 
 
 	}
 
-	function actionLoadpagehoook_OptionsPage_doPageOptions ()
+	function actionLoadpagehook_OptionsPage ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehoook_OptionsPage, 'normal', 'core' );
+		add_meta_box( 'avhecBoxTransalation', 'Translation', array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -60,8 +60,8 @@ class AVH_EC_Admin
 
 	function filterScreenLayoutColumns ( $columns, $screen )
 	{
-		if ( $screen == $this->pagehoook_OptionsPage ) {
-			$columns[$this->pagehoook_OptionsPage] = 2;
+		if ( $screen == $this->pagehook_OptionsPage ) {
+			$columns[$this->pagehook_OptionsPage] = 2;
 		}
 		return $columns;
 
