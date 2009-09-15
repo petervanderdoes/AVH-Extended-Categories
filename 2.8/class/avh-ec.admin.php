@@ -141,13 +141,12 @@ class AVH_EC_Admin
 	function metaboxTranslation ()
 	{
 		echo '<p>A language pack can be created for this plugin. The .pot file is included with the plugin and can be found in the directory extended-categories-widget/2.8/lang</p>';
-		echo '<div class="versions">';
 		echo '<p>';
 		echo 'If you have created a language pack you can send the .po, and if you have it the .mo file, to me and I will include the files with the plugin';
 		echo '</p>';
 		echo '<p>';
 		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
-		echo '</p></div>';
+		echo '</p>';
 		echo '<p>';
 		echo '<span class="b">Available Languages</span></p><p>';
 		echo 'Russian (ru_RU)<br />';

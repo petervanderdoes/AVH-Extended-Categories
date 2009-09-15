@@ -10,7 +10,7 @@ div.clearer {
 	height: 1px;
 }
 
-#avhecBoxDonations .versions .b {
+#avhecBoxDonations .b {
 	font-weight: bold;
 }
 #avhecBoxDonations .inside {
@@ -20,7 +20,7 @@ div.clearer {
 	padding: 6px 10px 12px;
 }
 
-#avhecBoxTranslation span .b {
+#avhecBoxTranslation .b {
 	font-weight: bold;
 }
 #avhecBoxTranslation .inside {
