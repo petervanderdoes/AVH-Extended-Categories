@@ -41,7 +41,7 @@ The Top Categories widget gives you the following customizable options:
 
 Translations:
 * Russian (ru_RU)
-* Czech (cs_CZ)
+* Czech (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz
 
 == Installation ==
 
