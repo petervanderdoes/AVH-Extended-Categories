@@ -148,6 +148,11 @@ class AVH_EC_Admin
 		echo '<p>';
 		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
 		echo '</p></div>';
+		echo '<p>';
+		echo '<span class=\'b\'>Available Languages</span>';
+		echo 'Russian (ru_RU)<br />';
+		echo 'Czech (cs_CZ)<br />';
+		echo '</p>';
 	}
 
 	function displayIcon ( $icon )
