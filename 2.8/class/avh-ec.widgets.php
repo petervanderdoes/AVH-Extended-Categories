@@ -64,7 +64,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$included_cats = '';
 		if ( $instance['post_category'] ) {
 			$post_category = unserialize( $instance['post_category'] );
-			$included_cats = implode( ",", $post_category );
+			$children=array();
+			foreach ($post_category as $cat_id){
+				$children = array_merge($children,get_term_children($cat_id,'category'));
+			}
+			$included_cats = implode( ",", array_merge($post_category,$children) );
 		}
 
 
@@ -80,7 +84,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			wp_list_categories( $cat_args );
 			echo '</ul>';
 		} else {
-			wp_dropdown_categories( $cat_args );
+			$this->core->avh_wp_dropdown_categories( $cat_args );
 			echo '<script type=\'text/javascript\'>' . "\n";
 			echo '/* <![CDATA[ */' . "\n";
 			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");' . "\n";
@@ -259,7 +263,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		_e( 'All Categories','avh-ec' );
 		echo '</label>';
 		echo '</li>';
-		$this->avh_wp_category_checklist( 0, 0, $selected_cats, false, $this->number );
+		$this->avh_wp_category_checklist( 0, 0, $selected_cats, false, $this->number, 1 );
 		echo '</ul>';
 		echo '</p>';
 
@@ -283,7 +287,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 * @param array $popular_cats
 	 * @param int $number
 	 */
-	function avh_wp_category_checklist ( $post_id = 0, $descendants_and_self = 0, $selected_cats = false, $popular_cats = false, $number )
+	function avh_wp_category_checklist ( $post_id = 0, $descendants_and_self = 0, $selected_cats = false, $popular_cats = false, $number, $display=1 )
 	{
 		$walker = new AVH_Walker_Category_Checklist( );
 		$walker->number = $number;
@@ -313,6 +317,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		} else {
 			$categories = get_categories( 'get=all' );
 		}
+		$all_categories = $categories;
 
 		// Post process $categories rather than adding an exclude to the get_terms() query to keep the query the same across all posts (for any query cache)
 		$checked_categories = array ();
@@ -323,10 +328,14 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			}
 		}
 
-		// Put checked cats on top
-		echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
-		// Then the rest of them
-		echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
+		if (1==$display) {
+			// Put checked cats on top
+			echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
+			// Then the rest of them
+			echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
+		} else {
+			$return($all_categories);
+		}
 	}
 }
 
