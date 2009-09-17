@@ -141,7 +141,7 @@ class AVHExtendedCategoriesCore
 	 * @param string|array $args Optional. Override default arguments.
 	 * @return string HTML content only if 'echo' argument is 0.
 	 */
-	function avh_wp_dropdown_categories ( $args = '' )
+	function avh_wp_dropdown_categories ( $args = '', $selectedonly )
 	{
 		$mywalker = new AVH_Walker_CategoryDropdown( );
 
@@ -151,6 +151,7 @@ class AVHExtendedCategoriesCore
 
 		$r = wp_parse_args( $args, $defaults );
 		$r['include_last_update_time'] = $r['show_last_update'];
+
 		extract( $r );
 
 		$tab_index_attribute = '';
@@ -175,12 +176,11 @@ class AVHExtendedCategoriesCore
 				$output .= '\t<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
 			}
 
-			if ( $hierarchical )
+			if ( $hierarchical && (! $selectonly) ) {
 				$depth = $r['depth']; // Walk the full depth.
-			else
-				$depth = - 1; // Flat.
-
-
+			} else {
+				$depth = - 1; // Flat
+			}
 			$output .= walk_category_dropdown_tree( $categories, $depth, $r );
 			$output .= "</select>\n";
 		}
@@ -194,24 +194,27 @@ class AVHExtendedCategoriesCore
 	}
 }
 
-class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown {
-	function walk( $elements, $max_depth) {
+class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
+{
 
-		$args = array_slice(func_get_args(), 2);
+	function walk ( $elements, $max_depth )
+	{
+
+		$args = array_slice( func_get_args(), 2 );
 		$output = '';
 
-		if ($max_depth < -1) //invalid parameter
+		if ( $max_depth < - 1 ) //invalid parameter
 			return $output;
 
-		if (empty($elements)) //nothing to walk
+		if ( empty( $elements ) ) //nothing to walk
 			return $output;
 
 		$id_field = $this->db_fields['id'];
 		$parent_field = $this->db_fields['parent'];
 
 		// flat display
-		if ( -1 == $max_depth ) {
-			$empty_array = array();
+		if ( - 1 == $max_depth ) {
+			$empty_array = array ();
 			foreach ( $elements as $e )
 				$this->display_element( $e, $empty_array, 1, 0, $args, $output );
 			return $output;
@@ -223,35 +226,35 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown {
 		 * children_elements is two dimensional array, eg.
 		 * children_elements[10][] contains all sub-elements whose parent is 10.
 		 */
-		$top_level_elements = array();
-		$children_elements  = array();
-		foreach ( $elements as $e) {
+		$top_level_elements = array ();
+		$children_elements = array ();
+		foreach ( $elements as $e ) {
 			if ( 0 == $e->$parent_field )
 				$top_level_elements[] = $e;
 			else
-				$children_elements[ $e->$parent_field ][] = $e;
+				$children_elements[$e->$parent_field][] = $e;
 		}
 
 		/*
 		 * when none of the elements is top level
 		 * assume the first one must be root of the sub elements
 		 */
-		if ( empty($top_level_elements) ) {
+		if ( empty( $top_level_elements ) ) {
 
 			$first = array_slice( $elements, 0, 1 );
 			$root = $first[0];
 
-			$top_level_elements = array();
-			$children_elements  = array();
-			foreach ( $elements as $e) {
+			$top_level_elements = array ();
+			$children_elements = array ();
+			foreach ( $elements as $e ) {
 				if ( $root->$parent_field == $e->$parent_field )
 					$top_level_elements[] = $e;
 				else
-					$children_elements[ $e->$parent_field ][] = $e;
+					$children_elements[$e->$parent_field][] = $e;
 			}
 		}
 
-		if (count ($children_elements) >0 ) {
+		if ( count( $children_elements ) > 0 ) {
 
 		}
 		foreach ( $top_level_elements as $e )
@@ -261,14 +264,14 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown {
 		 * if we are displaying all levels, and remaining children_elements is not empty,
 		 * then we got orphans, which should be displayed regardless
 		 */
-		if ( ( 0 == $max_depth || 1 == $max_depth) && count( $children_elements ) > 0 ) {
-			$empty_array = array();
+		if ( (0 == $max_depth) && count( $children_elements ) > 0 ) {
+			$empty_array = array ();
 			foreach ( $children_elements as $orphans )
-				foreach( $orphans as $op )
+				foreach ( $orphans as $op )
 					$this->display_element( $op, $empty_array, 1, 0, $args, $output );
-		 }
+		}
 
-		 return $output;
+		return $output;
 	}
 }
 
