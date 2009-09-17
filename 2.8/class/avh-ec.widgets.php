@@ -617,9 +617,6 @@ class AVH_Walker_Category_Checklist extends Walker
 		$output .= "\n" . '<li id="' . $this->li_id . '"' . $class . '>';
 		$output .= '<label for="' . $this->input_id . '" class="selectit">';
 		$output .= '<input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[' . $category->term_id . ']" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
-		$output .= "\n" . '<li id="' . $this->li_id . '"' . $class . '">';
-		$output .= '<label for="' . $this->input_id . '" class="selectit">';
-		$output .= '<input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[' . $category->term_id . ']" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
 	}
 
 	function end_el ( &$output, $category, $depth, $args )
