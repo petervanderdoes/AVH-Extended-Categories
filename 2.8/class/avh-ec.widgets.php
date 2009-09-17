@@ -150,7 +150,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$instance['invert_included'] = $new_instance['invert_included'] ? 1 : 0;
 
 		// If only the selected categories are to be displayed, this implies a flat view. Can't be hierarchical
-		if ( ($new_instance['selectedonly'] != $old_instance['selectedonly']) && 1 == $new_instance['selectedonly'] ) {
+		if ( 1 == $new_instance['selectedonly'] ) {
 			$instance['hierarchical'] = 0;
 		}
 		return $instance;
@@ -187,6 +187,10 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		if ( $depth < 0 || 11 < $depth ) {
 			$depth = 0;
+		}
+
+		if (1 == $selectedonly) {
+			$hierarchical = 0;
 		}
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
