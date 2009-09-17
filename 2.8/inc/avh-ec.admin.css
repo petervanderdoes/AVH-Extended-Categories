@@ -1,4 +1,4 @@
-.footer_avhfdas {
+.footer_avhec {
 	font-size: 0.8em;
 	text-align: center;
 }
@@ -9,6 +9,19 @@ div.clearer {
 	font-size: 1px;
 	height: 1px;
 }
+.avhec-wrap span.description {
+	font-size: 11px;
+}
+#avhec-generaloptions input {
+	font-size: 11px;
+}
+
+table.avhec-options {
+	font-size: 11px;
+}
+.avhfec-wrap .b {
+	font-weight: bold;
+}
 
 #avhecBoxDonations .b {
 	font-weight: bold;
@@ -16,13 +29,11 @@ div.clearer {
 #avhecBoxDonations .inside {
 	font-size: 12px;
 }
+
 #avhecBoxDonations .versions {
 	padding: 6px 10px 12px;
 }
 
-#avhecBoxTranslation .b {
-	font-weight: bold;
-}
 #avhecBoxTranslation .inside {
 	font-size: 12px;
 }
