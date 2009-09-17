@@ -192,6 +192,103 @@ class AVHExtendedCategoriesCore
 
 		return $output;
 	}
+
+	/**
+	 * Display or retrieve the HTML list of categories.
+	 *
+	 * The list of arguments is below:
+	 *     'show_option_all' (string) - Text to display for showing all categories.
+	 *     'orderby' (string) default is 'ID' - What column to use for ordering the
+	 * categories.
+	 *     'order' (string) default is 'ASC' - What direction to order categories.
+	 *     'show_last_update' (bool|int) default is 0 - See {@link
+	 * walk_category_dropdown_tree()}
+	 *     'show_count' (bool|int) default is 0 - Whether to show how many posts are
+	 * in the category.
+	 *     'hide_empty' (bool|int) default is 1 - Whether to hide categories that
+	 * don't have any posts attached to them.
+	 *     'use_desc_for_title' (bool|int) default is 1 - Whether to use the
+	 * description instead of the category title.
+	 *     'feed' - See {@link get_categories()}.
+	 *     'feed_type' - See {@link get_categories()}.
+	 *     'feed_image' - See {@link get_categories()}.
+	 *     'child_of' (int) default is 0 - See {@link get_categories()}.
+	 *     'exclude' (string) - See {@link get_categories()}.
+	 *     'exclude_tree' (string) - See {@link get_categories()}.
+	 *     'echo' (bool|int) default is 1 - Whether to display or retrieve content.
+	 *     'current_category' (int) - See {@link get_categories()}.
+	 *     'hierarchical' (bool) - See {@link get_categories()}.
+	 *     'title_li' (string) - See {@link get_categories()}.
+	 *     'depth' (int) - The max depth.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string|array $args Optional. Override default arguments.
+	 * @return string HTML content only if 'echo' argument is 0.
+	 */
+	function wp_list_categories ( $args = '', $selectedonly )
+	{
+		$defaults = array ('show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __( 'Categories' ), 'echo' => 1, 'depth' => 0 );
+
+		$r = wp_parse_args( $args, $defaults );
+
+		if ( ! isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
+			$r['pad_counts'] = true;
+		}
+
+		if ( isset( $r['show_date'] ) ) {
+			$r['include_last_update_time'] = $r['show_date'];
+		}
+
+		if ( true == $r['hierarchical'] ) {
+			$r['exclude_tree'] = $r['exclude'];
+			$r['exclude'] = '';
+		}
+
+		extract( $r );
+
+		$categories = get_categories( $r );
+
+		$output = '';
+		if ( $title_li && 'list' == $style )
+			$output = '<li class="categories">' . $r['title_li'] . '<ul>';
+
+		if ( empty( $categories ) ) {
+			if ( 'list' == $style )
+				$output .= '<li>' . __( "No categories" ) . '</li>';
+			else
+				$output .= __( "No categories" );
+		} else {
+			global $wp_query;
+
+			if ( ! empty( $show_option_all ) )
+				if ( 'list' == $style )
+					$output .= '<li><a href="' . get_bloginfo( 'url' ) . '">' . $show_option_all . '</a></li>';
+				else
+					$output .= '<a href="' . get_bloginfo( 'url' ) . '">' . $show_option_all . '</a>';
+
+			if ( empty( $r['current_category'] ) && is_category() )
+				$r['current_category'] = $wp_query->get_queried_object_id();
+
+			if ( $hierarchical && (! $selectonly) ) {
+				$depth = $r['depth'];
+			} else {
+				$depth = - 1; // Flat.
+			}
+
+			$output .= walk_category_tree( $categories, $depth, $r );
+		}
+
+		if ( $title_li && 'list' == $style )
+			$output .= '</ul></li>';
+
+		$output = apply_filters( 'wp_list_categories', $output );
+
+		if ( $echo )
+			echo $output;
+		else
+			return $output;
+	}
 }
 
 class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
@@ -254,9 +351,6 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 			}
 		}
 
-		if ( count( $children_elements ) > 0 ) {
-
-		}
 		foreach ( $top_level_elements as $e )
 			$this->display_element( $e, $children_elements, $max_depth, 0, $args, $output );
 

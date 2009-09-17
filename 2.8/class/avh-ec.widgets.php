@@ -86,7 +86,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		if ( $style == 'list' ) {
 			echo '<ul>';
-			wp_list_categories( $cat_args );
+			$this->core->avh_wp_list_categories( $cat_args, $selectedonly );
 			echo '</ul>';
 		} else {
 			$this->core->avh_wp_dropdown_categories( $cat_args, $selectedonly );
