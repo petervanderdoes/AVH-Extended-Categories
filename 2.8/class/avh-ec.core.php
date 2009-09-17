@@ -4,6 +4,10 @@ class AVHExtendedCategoriesCore
 	var $version;
 	var $comment;
 	var $info;
+	var $db_options_core;
+	var $default_options;
+	var $default_general_options;
+	var $options;
 
 	/**
 	 * PHP5 constructor
@@ -13,6 +17,8 @@ class AVHExtendedCategoriesCore
 	{
 		$this->version = '2.2';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
+		$db_version = 1;
+		$this->db_options_core = 'avhec';
 
 		// Determine installation path & url
 		$path = str_replace( '\\', '/', dirname( __FILE__ ) );
@@ -33,7 +39,22 @@ class AVHExtendedCategoriesCore
 		// Set class property for info
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
+		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
+		$this->default_options = array ('general' => $this->default_general_options );
+
+		/**
+		 * Set the options for the program
+		 *
+		 */
+		$this->loadOptions();
+
+		// Check if we have to do upgrades
+		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
+			$this->doUpgrade();
+		}
+
 		$this->handleTextdomain();
+
 	}
 
 	/**
@@ -73,6 +94,32 @@ class AVHExtendedCategoriesCore
 	}
 
 	/**
+	 * Checks if running version is newer and do upgrades if necessary
+	 *
+	 * @since 1.2.3
+	 *
+	 */
+	function doUpgrade ()
+	{
+		$options = $this->getOptions();
+
+		// Add none existing sections and/or elements to the data
+		foreach ( $this->default_data as $section => $default_data ) {
+			if ( ! array_key_exists( $section, $data ) ) {
+				$data[$section] = $default_data;
+				continue;
+			}
+			foreach ( $default_data as $element => $default_value ) {
+				if ( ! array_key_exists( $element, $data[$section] ) ) {
+					$data[$section][$element] = $default_value;
+				}
+			}
+		}
+		$options['general']['version'] = $this->version;
+		$this->saveOptions( $options );
+	}
+
+	/**
 	 * Used in forms to set the checked option.
 	 *
 	 * @param mixed $checked
@@ -106,6 +153,82 @@ class AVHExtendedCategoriesCore
 		$public_base = max( $directory_array );
 
 		return $public_base;
+	}
+
+	/*********************************
+	 *                               *
+	 * Methods for variable: options *
+	 *                               *
+	 ********************************/
+
+	/**
+	 * @param array $data
+	 */
+	function setOptions ( $options )
+	{
+		$this->options = $options;
+	}
+
+	/**
+	 * return array
+	 */
+	function getOptions ()
+	{
+		return ($this->options);
+	}
+
+	/**
+	 * Save all current options and set the options
+	 *
+	 */
+	function saveOptions ( $options )
+	{
+		update_option( $this->db_options_core, $options );
+		wp_cache_flush(); // Delete cache
+		$this->setOptions( $options );
+	}
+
+	/**
+	 * Retrieves the plugin options from the WordPress options table and assigns to class variable.
+	 * If the options do not exists, like a new installation, the options are set to the default value.
+	 *
+	 * @return none
+	 */
+	function loadOptions ()
+	{
+		$options = get_option( $this->db_options_core );
+		if ( false === $options ) { // New installation
+			$this->resetToDefaultOptions();
+		} else {
+			$this->setOptions( $options );
+		}
+	}
+
+	/**
+	 * Get the value for an option element. If there's no option is set on the Admin page, return the default value.
+	 *
+	 * @param string $key
+	 * @param string $option
+	 * @return mixed
+	 */
+	function getOptionElement ( $option, $key )
+	{
+		if ( $this->options[$option][$key] ) {
+			$return = $this->options[$option][$key]; // From Admin Page
+		} else {
+			$return = $this->default_options[$option][$key]; // Default
+		}
+		return ($return);
+	}
+
+	/**
+	 * Reset to default options and save in DB
+	 *
+	 */
+	function resetToDefaultOptions ()
+	{
+		$this->options = $this->default_options;
+		$this->saveOptions( $this->default_options );
 	}
 
 	/**

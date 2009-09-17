@@ -79,7 +79,14 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		} else {
 			$inc_exc = 'include';
 		}
-		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => __( 'Select Category', 'avh-ec' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+
+		$options = $this->core->getOptions();
+		$show_option_none = __( 'Select Category', 'avh-ec' );
+		if ( $options['general']['selectcategory'] ) {
+			$show_option_none = $options['general']['selectcategory'];
+		}
+
+		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -414,10 +421,16 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 			}
 		}
 
+		$options = $this->core->getOptions();
+		$show_option_none = __( 'Select Category', 'avh-ec' );
+		if ( $options['general']['selectcategory'] ) {
+			$show_option_none = $options['general']['selectcategory'];
+		}
+
 		$top_cats = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false ) );
 		$included_cats = implode( ",", $top_cats );
 
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => - 1, 'title_li' => '', 'show_option_none' => __( 'Select Category', 'avh-ec' ), 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => - 1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
