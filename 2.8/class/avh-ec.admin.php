@@ -254,7 +254,7 @@ class AVH_EC_Admin
 	function printAdminFooter ()
 	{
 		echo '<p class="footer_avhec">';
-		printf( __( '&copy; Copyright 2009 <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', 'avhfdas' ), $this->core->version );
+		printf( '&copy; Copyright 2009 <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', $this->core->version );
 		echo '</p>';
 	}
 
