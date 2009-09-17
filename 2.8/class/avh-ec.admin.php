@@ -154,14 +154,14 @@ class AVH_EC_Admin
 		do_meta_boxes( $this->pagehook_OptionsPage, 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
-		echo '</form>';
 
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
-		echo '</div>'; // wrap
-
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
 		echo '</form>';
+
+		echo '</div>'; // wrap
+
 
 		echo '<script type="text/javascript">' . "\n";
 		echo '	//<![CDATA[' . "\n";
