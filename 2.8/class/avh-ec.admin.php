@@ -69,14 +69,11 @@ class AVH_EC_Admin
 
 	}
 
-	function doProcessPost(){
-				$options_general[] = array ('avhfdas[general][selectcategory]');
-	}
 	function doPageOptions ()
 	{
 		global $screen_layout_columns;
 
-		$options_general[] = array ('avhfdas[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
+		$options_general[] = array ('avhec[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
 
