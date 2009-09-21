@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Extended Categories Widget, version 2.2\n"
+"Project-Id-Version: AVH Extended Categories, Czech, 20-09-2009\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-26 20:46-0500\n"
+"POT-Creation-Date: 2009-09-17 14:16-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Dirty Mind <bluebat@seznam.cz>\n"
 "Language-Team: Dirty Mind <bluebat@seznam.cz>\n"
@@ -12,135 +12,165 @@ msgstr ""
 "X-Poedit-Language: Czech\n"
 "X-Poedit-Country: CZECH REPUBLIC\n"
 
+#: ../class/avh-ec.admin.php:43
+msgid "Options"
+msgstr "Nastavení"
+
+#: ../class/avh-ec.admin.php:44
+msgid "Translation"
+msgstr "Překlad"
+
+#: ../class/avh-ec.admin.php:107
+msgid "Options saved"
+msgstr "Nastavení bylo uloženo"
+
+#: ../class/avh-ec.admin.php:160
+msgid "Save Changes"
+msgstr "Uložit změny"
+
+#: ../class/avh-ec.admin.php:241
+msgid "Settings"
+msgstr "Nastavení"
+
+#: ../class/avh-ec.core.php:354
+#: ../class/avh-ec.widgets.php:62
+#: ../class/avh-ec.widgets.php:407
+msgid "Categories"
+msgstr "Rubriky"
+
+#: ../class/avh-ec.core.php:381
+#: ../class/avh-ec.core.php:383
+msgid "No categories"
+msgstr "Žádné rubriky"
+
 #: ../class/avh-ec.widgets.php:24
 msgid "An extended version of the default Categories widget."
 msgstr "Rozšířená verze základního widgetu Rubriky."
 
-#: ../class/avh-ec.widgets.php:61
-#: ../class/avh-ec.widgets.php:369
-msgid "Categories"
-msgstr "Rubriky"
-
-#: ../class/avh-ec.widgets.php:72
-#: ../class/avh-ec.widgets.php:393
+#: ../class/avh-ec.widgets.php:84
+#: ../class/avh-ec.widgets.php:429
 msgid "Select Category"
 msgstr "Vybrat rubriku"
 
-#: ../class/avh-ec.widgets.php:170
-#: ../class/avh-ec.widgets.php:480
+#: ../class/avh-ec.widgets.php:197
+#: ../class/avh-ec.widgets.php:524
 msgid "Title"
 msgstr "Název"
 
-#: ../class/avh-ec.widgets.php:179
-#: ../class/avh-ec.widgets.php:496
+#: ../class/avh-ec.widgets.php:206
+msgid "Show selected categories only"
+msgstr "Zobrazit pouze vybrané rubriky"
+
+#: ../class/avh-ec.widgets.php:212
+#: ../class/avh-ec.widgets.php:540
 msgid "Show post counts"
 msgstr "Zobrazit počty příspěvků"
 
-#: ../class/avh-ec.widgets.php:185
+#: ../class/avh-ec.widgets.php:218
 msgid "Show hierarchy"
 msgstr "Zobrazit hierarchii"
 
-#: ../class/avh-ec.widgets.php:190
+#: ../class/avh-ec.widgets.php:223
 msgid "How many levels to show"
 msgstr "Počet zobrazovaných úrovní"
 
-#: ../class/avh-ec.widgets.php:193
+#: ../class/avh-ec.widgets.php:226
 msgid "All Levels"
 msgstr "Všechny úrovně"
 
-#: ../class/avh-ec.widgets.php:194
+#: ../class/avh-ec.widgets.php:227
 msgid "Toplevel only"
 msgstr "Pouze základní úroveň"
 
-#: ../class/avh-ec.widgets.php:196
+#: ../class/avh-ec.widgets.php:229
 msgid "Child "
 msgstr "Potomků: "
 
-#: ../class/avh-ec.widgets.php:203
+#: ../class/avh-ec.widgets.php:236
 msgid "Hide empty categories"
 msgstr "Skrýt prázdné rubriky"
 
-#: ../class/avh-ec.widgets.php:210
-#: ../class/avh-ec.widgets.php:501
+#: ../class/avh-ec.widgets.php:243
+#: ../class/avh-ec.widgets.php:545
 msgid "Sort by "
 msgstr "Setřídit podle"
 
-#: ../class/avh-ec.widgets.php:212
-#: ../class/avh-ec.widgets.php:503
+#: ../class/avh-ec.widgets.php:245
+#: ../class/avh-ec.widgets.php:547
 msgid "ID"
 msgstr "ID"
 
-#: ../class/avh-ec.widgets.php:213
-#: ../class/avh-ec.widgets.php:504
+#: ../class/avh-ec.widgets.php:246
+#: ../class/avh-ec.widgets.php:548
 msgid "Name"
 msgstr "Jméno"
 
-#: ../class/avh-ec.widgets.php:214
-#: ../class/avh-ec.widgets.php:505
+#: ../class/avh-ec.widgets.php:247
+#: ../class/avh-ec.widgets.php:549
 msgid "Count"
 msgstr "Počet"
 
-#: ../class/avh-ec.widgets.php:220
-#: ../class/avh-ec.widgets.php:511
+#: ../class/avh-ec.widgets.php:253
+#: ../class/avh-ec.widgets.php:555
 msgid "Sort order "
 msgstr "Způsob řazení"
 
-#: ../class/avh-ec.widgets.php:222
-#: ../class/avh-ec.widgets.php:513
+#: ../class/avh-ec.widgets.php:255
+#: ../class/avh-ec.widgets.php:557
 msgid "Ascending"
 msgstr "Vzestupně"
 
-#: ../class/avh-ec.widgets.php:223
-#: ../class/avh-ec.widgets.php:514
+#: ../class/avh-ec.widgets.php:256
+#: ../class/avh-ec.widgets.php:558
 msgid "Descending"
 msgstr "Sestupně"
 
-#: ../class/avh-ec.widgets.php:229
-#: ../class/avh-ec.widgets.php:520
+#: ../class/avh-ec.widgets.php:262
+#: ../class/avh-ec.widgets.php:564
 msgid "Display style "
 msgstr "Styl zobrazení"
 
-#: ../class/avh-ec.widgets.php:231
-#: ../class/avh-ec.widgets.php:522
+#: ../class/avh-ec.widgets.php:264
+#: ../class/avh-ec.widgets.php:566
 msgid "List"
 msgstr "Seznam"
 
-#: ../class/avh-ec.widgets.php:232
-#: ../class/avh-ec.widgets.php:523
+#: ../class/avh-ec.widgets.php:265
+#: ../class/avh-ec.widgets.php:567
 msgid "Drop down"
 msgstr "Drop down"
 
-#: ../class/avh-ec.widgets.php:242
-#: ../class/avh-ec.widgets.php:533
+#: ../class/avh-ec.widgets.php:275
+#: ../class/avh-ec.widgets.php:577
 msgid "Show RSS Feed"
 msgstr "Ukázat RSS Feed"
 
-#: ../class/avh-ec.widgets.php:247
-#: ../class/avh-ec.widgets.php:538
+#: ../class/avh-ec.widgets.php:280
+#: ../class/avh-ec.widgets.php:582
 msgid "Path (URI) to RSS image"
 msgstr "Cesta (URI) k obrázku RSS"
 
-#: ../class/avh-ec.widgets.php:253
+#: ../class/avh-ec.widgets.php:286
 msgid "Select categories"
 msgstr "Vybrat rubriky"
 
-#: ../class/avh-ec.widgets.php:258
+#: ../class/avh-ec.widgets.php:291
 msgid "All Categories"
 msgstr "Všechny rubriky"
 
-#: ../class/avh-ec.widgets.php:268
+#: ../class/avh-ec.widgets.php:301
 msgid "Exclude the selected categories"
 msgstr "Vyloučit vybrané rubriky"
 
-#: ../class/avh-ec.widgets.php:348
+#: ../class/avh-ec.widgets.php:386
 msgid "Shows the top categories."
 msgstr "Zobrazí top rubriky."
 
-#: ../class/avh-ec.widgets.php:349
+#: ../class/avh-ec.widgets.php:387
 msgid "AVH Extended Categories Top"
 msgstr "AVH Extended Categories Top"
 
-#: ../class/avh-ec.widgets.php:487
+#: ../class/avh-ec.widgets.php:531
 msgid "How many categories to show"
 msgstr "Počet zobrazovaných rubrik"
 
