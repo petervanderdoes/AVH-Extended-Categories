@@ -15,7 +15,7 @@ class AVHExtendedCategoriesCore
 	 */
 	function __construct ()
 	{
-		$this->version = '2.2';
+		$this->version = '2.3';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 1;
 		$this->db_options_core = 'avhec';
@@ -349,7 +349,7 @@ class AVHExtendedCategoriesCore
 	 * @param string|array $args Optional. Override default arguments.
 	 * @return string HTML content only if 'echo' argument is 0.
 	 */
-	function wp_list_categories ( $args = '', $selectedonly )
+	function avh_wp_list_categories ( $args = '', $selectedonly )
 	{
 		$defaults = array ('show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __( 'Categories' ), 'echo' => 1, 'depth' => 0 );
 
