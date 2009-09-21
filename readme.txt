@@ -40,7 +40,6 @@ The Top Categories widget gives you the following customizable options:
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 Translations:
-* Russian (ru_RU)
 * Czech (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz
 
 == Installation ==

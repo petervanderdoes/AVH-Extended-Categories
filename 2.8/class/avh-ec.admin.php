@@ -200,7 +200,6 @@ class AVH_EC_Admin
 		echo '</p>';
 		echo '<p>';
 		echo '<span class="b">Available Languages</span></p><p>';
-		echo 'Russian (ru_RU)<br />';
 		echo 'Czech (cs_CZ) by Dirty Mind - <a href="http://dirtymind.ic.cz" target="_blank">http://dirtymind.ic.cz</a><br />';
 		echo '</p>';
 	}
