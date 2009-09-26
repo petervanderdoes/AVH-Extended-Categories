@@ -69,6 +69,8 @@ The .pot file is included with the plugin.
 If you have created a language pack, or have an update of an existing one, you can send the [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can include them in future releases.
 I'll keep a list of translators and their websites here in the readme.txt and on my website.
 
+I have also setup a project in Launchpad for translating the plugin. Just visit http://bit.ly/95WyJ
+
 == Screenshots ==
 None
 
