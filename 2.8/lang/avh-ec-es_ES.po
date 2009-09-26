@@ -1,0 +1,181 @@
+# Spanish translation for avhextendedcategories
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the avhextendedcategories package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: avhextendedcategories\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-09-17 14:16-0500\n"
+"PO-Revision-Date: 2009-09-25 20:45-0500\n"
+"Last-Translator: Peter van der Does <peter@avirtualhome.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-09-26 00:32+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../class/avh-ec.admin.php:43
+msgid "Options"
+msgstr "Opciones"
+
+#: ../class/avh-ec.admin.php:44
+msgid "Translation"
+msgstr "Traducción"
+
+#: ../class/avh-ec.admin.php:107
+msgid "Options saved"
+msgstr "Opciones guardadas"
+
+#: ../class/avh-ec.admin.php:160
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: ../class/avh-ec.admin.php:241
+msgid "Settings"
+msgstr "Configuración"
+
+#: ../class/avh-ec.core.php:354
+#: ../class/avh-ec.widgets.php:62
+#: ../class/avh-ec.widgets.php:407
+msgid "Categories"
+msgstr "Categorías"
+
+#: ../class/avh-ec.core.php:381
+#: ../class/avh-ec.core.php:383
+msgid "No categories"
+msgstr "No hay categorías"
+
+#: ../class/avh-ec.widgets.php:24
+msgid "An extended version of the default Categories widget."
+msgstr "Una versión extendida del widget de categorías predeterminado."
+
+#: ../class/avh-ec.widgets.php:84
+#: ../class/avh-ec.widgets.php:429
+msgid "Select Category"
+msgstr "Seleccionar categoría"
+
+#: ../class/avh-ec.widgets.php:197
+#: ../class/avh-ec.widgets.php:524
+msgid "Title"
+msgstr "Título"
+
+#: ../class/avh-ec.widgets.php:206
+msgid "Show selected categories only"
+msgstr "Mostrar solo categorías seleccionadas"
+
+#: ../class/avh-ec.widgets.php:212
+#: ../class/avh-ec.widgets.php:540
+msgid "Show post counts"
+msgstr "Mostrar contadores de entradas"
+
+#: ../class/avh-ec.widgets.php:218
+msgid "Show hierarchy"
+msgstr "Mostrar jerarquía"
+
+#: ../class/avh-ec.widgets.php:223
+msgid "How many levels to show"
+msgstr "Cuantos niveles mostrar"
+
+#: ../class/avh-ec.widgets.php:226
+msgid "All Levels"
+msgstr "Todos los niveles"
+
+#: ../class/avh-ec.widgets.php:227
+msgid "Toplevel only"
+msgstr "Primer nivel"
+
+#: ../class/avh-ec.widgets.php:229
+msgid "Child "
+msgstr "Hijo "
+
+#: ../class/avh-ec.widgets.php:236
+msgid "Hide empty categories"
+msgstr "Esconder categorías vacías"
+
+#: ../class/avh-ec.widgets.php:243
+#: ../class/avh-ec.widgets.php:545
+msgid "Sort by "
+msgstr "Ordenar por "
+
+#: ../class/avh-ec.widgets.php:245
+#: ../class/avh-ec.widgets.php:547
+msgid "ID"
+msgstr "ID"
+
+#: ../class/avh-ec.widgets.php:246
+#: ../class/avh-ec.widgets.php:548
+msgid "Name"
+msgstr "Nombre"
+
+#: ../class/avh-ec.widgets.php:247
+#: ../class/avh-ec.widgets.php:549
+msgid "Count"
+msgstr "Número"
+
+#: ../class/avh-ec.widgets.php:253
+#: ../class/avh-ec.widgets.php:555
+msgid "Sort order "
+msgstr "Orden "
+
+#: ../class/avh-ec.widgets.php:255
+#: ../class/avh-ec.widgets.php:557
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: ../class/avh-ec.widgets.php:256
+#: ../class/avh-ec.widgets.php:558
+msgid "Descending"
+msgstr "Descendente"
+
+#: ../class/avh-ec.widgets.php:262
+#: ../class/avh-ec.widgets.php:564
+msgid "Display style "
+msgstr "Estilo de visualización "
+
+#: ../class/avh-ec.widgets.php:264
+#: ../class/avh-ec.widgets.php:566
+msgid "List"
+msgstr "Lista"
+
+#: ../class/avh-ec.widgets.php:265
+#: ../class/avh-ec.widgets.php:567
+msgid "Drop down"
+msgstr "Desplegable"
+
+#: ../class/avh-ec.widgets.php:275
+#: ../class/avh-ec.widgets.php:577
+msgid "Show RSS Feed"
+msgstr "Mostrar RSS feed"
+
+#: ../class/avh-ec.widgets.php:280
+#: ../class/avh-ec.widgets.php:582
+msgid "Path (URI) to RSS image"
+msgstr "Ruta (URI) al RSS feed"
+
+#: ../class/avh-ec.widgets.php:286
+msgid "Select categories"
+msgstr "Elija categorías"
+
+#: ../class/avh-ec.widgets.php:291
+msgid "All Categories"
+msgstr "Todas las categorías"
+
+#: ../class/avh-ec.widgets.php:301
+msgid "Exclude the selected categories"
+msgstr "Excluir las categorías seleccionadas"
+
+#: ../class/avh-ec.widgets.php:386
+msgid "Shows the top categories."
+msgstr "Mostrar las principales categorías"
+
+#: ../class/avh-ec.widgets.php:387
+msgid "AVH Extended Categories Top"
+msgstr "AVH Extended Categories Top"
+
+#: ../class/avh-ec.widgets.php:531
+msgid "How many categories to show"
+msgstr "Cuantas categorías mostrar"
+
