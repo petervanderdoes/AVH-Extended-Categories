@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AVH Extended Categories\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-17 14:16-0500\n"
+"POT-Creation-Date: 2009-09-28 08:44-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter van der Does <peter@avirtualhome.com>\n"
 "Language-Team: \n"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: ../class/avh-ec.admin.php:241
+#: ../class/avh-ec.admin.php:242
 msgid "Settings"
 msgstr ""
 
@@ -49,6 +49,10 @@ msgstr ""
 
 #: ../class/avh-ec.widgets.php:24
 msgid "An extended version of the default Categories widget."
+msgstr ""
+
+#: ../class/avh-ec.widgets.php:25
+msgid "AVH Extended Categories"
 msgstr ""
 
 #: ../class/avh-ec.widgets.php:84
