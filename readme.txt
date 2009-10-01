@@ -1,4 +1,4 @@
-=== Extended Categories Widget ===
+=== AVH Extended Category Widgets ===
 Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories

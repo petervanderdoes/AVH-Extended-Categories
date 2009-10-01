@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Extended Category Widget
+Plugin Name: AVH Extended Category Widgets
 Plugin URI: http://blog.avirtualhome.com/wordpress-plugins
 Description: Replacement of the category widget to allow for greater customization of the category widget.
 Version: 2.3.2
