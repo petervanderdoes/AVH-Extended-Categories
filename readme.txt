@@ -76,6 +76,9 @@ I have also setup a project in Launchpad for translating the plugin. Just visit 
 None
 
 == Changelog ==
+= Version 3.0 =
+* Renamed the plugin to AVH Extended Category Widgets
+
 = Version 2.3.2 =
 * Bugfix: Saving the option didn't work
 * Added translation: Spanish - Español (es_ES)
