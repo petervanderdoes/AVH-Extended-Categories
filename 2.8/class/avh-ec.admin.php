@@ -200,8 +200,9 @@ class AVH_EC_Admin
 		echo '</p>';
 		echo '<p>';
 		echo '<span class="b">Available Languages</span></p><p>';
-		echo 'Czech - Čeština (cs_CZ) by Dirty Mind - <a href="http://dirtymind.ic.cz" target="_blank">http://dirtymind.ic.cz</a><br />';
-		echo 'Spanish - Español (es_ES) in Launchpad<br/>';
+		echo 'Czech - Čeština (cs_CZ)  in Launchpad - Dirty Mind - <a href="http://dirtymind.ic.cz" target="_blank">http://dirtymind.ic.cz</a><br />';
+		echo 'Spanish - Español (es_ES) in Launchpad<br />';
+		echo 'Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - <a href="http://gidibao.net" target="_blank">http://gidibao.net</a><br />';
 		echo '</p>';
 	}
 

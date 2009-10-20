@@ -42,6 +42,7 @@ The Top Categories widget gives you the following customizable options:
 Translations:
 * Czech - Čeština (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz
 * Spanish - Español (es_ES) in Launchpad
+* Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
 
 == Installation ==
 
