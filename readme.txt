@@ -40,8 +40,9 @@ The Top Categories widget gives you the following customizable options:
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 Translations:
-* Czech - Čeština (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz
+* Czech - Čeština (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz in Launchpad
 * Spanish - Español (es_ES) in Launchpad
+* Italian - Italiano (it_IT) in Launchpad
 
 == Installation ==
 
@@ -79,6 +80,7 @@ None
 
 = Version 3.0 =
 * Renamed the plugin to AVH Extended Category Widgets
+* Added translation: Italian - Italiano (it_IT)
 
 = Version 2.3.3 =
 * Bugfix: Validation error on dropdown categories.
