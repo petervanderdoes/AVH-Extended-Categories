@@ -1,0 +1,186 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AVH Extended Categories in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-28 08:44-0500\n"
+"PO-Revision-Date: 2009-10-26 19:39+0000\n"
+"Last-Translator: nashis <Unknown>\n"
+"Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-12-17 21:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SearchPath-1: ..\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __ngettext:1,2;__;_e\n"
+
+#: ../class/avh-ec.admin.php:43
+msgid "Options"
+msgstr "Opzioni"
+
+#: ../class/avh-ec.admin.php:44
+msgid "Translation"
+msgstr "Traduzione"
+
+#: ../class/avh-ec.admin.php:107
+msgid "Options saved"
+msgstr "Le opzioni sono state salvate"
+
+#: ../class/avh-ec.admin.php:160
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: ../class/avh-ec.admin.php:242
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: ../class/avh-ec.core.php:354
+#: ../class/avh-ec.widgets.php:62
+#: ../class/avh-ec.widgets.php:407
+msgid "Categories"
+msgstr "Categorie"
+
+#: ../class/avh-ec.core.php:381
+#: ../class/avh-ec.core.php:383
+msgid "No categories"
+msgstr "Nessuna categoria"
+
+#: ../class/avh-ec.widgets.php:24
+msgid "An extended version of the default Categories widget."
+msgstr "Una versione estesa del widget predefinito per le categorie"
+
+#: ../class/avh-ec.widgets.php:25
+msgid "AVH Extended Categories"
+msgstr "AVH Extended Categories"
+
+#: ../class/avh-ec.widgets.php:84
+#: ../class/avh-ec.widgets.php:429
+msgid "Select Category"
+msgstr "Selezione categoria"
+
+#: ../class/avh-ec.widgets.php:197
+#: ../class/avh-ec.widgets.php:524
+msgid "Title"
+msgstr "Titolo"
+
+#: ../class/avh-ec.widgets.php:206
+msgid "Show selected categories only"
+msgstr "Mostra le sole categorie selezionate"
+
+#: ../class/avh-ec.widgets.php:212
+#: ../class/avh-ec.widgets.php:540
+msgid "Show post counts"
+msgstr "Mostra il computo degli articoli"
+
+#: ../class/avh-ec.widgets.php:218
+msgid "Show hierarchy"
+msgstr "Mostra la gerachia"
+
+#: ../class/avh-ec.widgets.php:223
+msgid "How many levels to show"
+msgstr "Quanti livelli desideri mostrare?"
+
+#: ../class/avh-ec.widgets.php:226
+msgid "All Levels"
+msgstr "tutti i livelli"
+
+#: ../class/avh-ec.widgets.php:227
+msgid "Toplevel only"
+msgstr "solo i principali"
+
+#: ../class/avh-ec.widgets.php:229
+msgid "Child "
+msgstr "figlio "
+
+#: ../class/avh-ec.widgets.php:236
+msgid "Hide empty categories"
+msgstr "Nascondi le categorie vuote"
+
+#: ../class/avh-ec.widgets.php:243
+#: ../class/avh-ec.widgets.php:545
+msgid "Sort by "
+msgstr "Disposti per "
+
+#: ../class/avh-ec.widgets.php:245
+#: ../class/avh-ec.widgets.php:547
+msgid "ID"
+msgstr "ID"
+
+#: ../class/avh-ec.widgets.php:246
+#: ../class/avh-ec.widgets.php:548
+msgid "Name"
+msgstr "nome"
+
+#: ../class/avh-ec.widgets.php:247
+#: ../class/avh-ec.widgets.php:549
+msgid "Count"
+msgstr "conteggio"
+
+#: ../class/avh-ec.widgets.php:253
+#: ../class/avh-ec.widgets.php:555
+msgid "Sort order "
+msgstr "Ordine "
+
+#: ../class/avh-ec.widgets.php:255
+#: ../class/avh-ec.widgets.php:557
+msgid "Ascending"
+msgstr "ascendente"
+
+#: ../class/avh-ec.widgets.php:256
+#: ../class/avh-ec.widgets.php:558
+msgid "Descending"
+msgstr "discendente"
+
+#: ../class/avh-ec.widgets.php:262
+#: ../class/avh-ec.widgets.php:564
+msgid "Display style "
+msgstr "Stile "
+
+#: ../class/avh-ec.widgets.php:264
+#: ../class/avh-ec.widgets.php:566
+msgid "List"
+msgstr "lista"
+
+#: ../class/avh-ec.widgets.php:265
+#: ../class/avh-ec.widgets.php:567
+msgid "Drop down"
+msgstr "menu a cascata"
+
+#: ../class/avh-ec.widgets.php:275
+#: ../class/avh-ec.widgets.php:577
+msgid "Show RSS Feed"
+msgstr "Mostra feed RSS"
+
+#: ../class/avh-ec.widgets.php:280
+#: ../class/avh-ec.widgets.php:582
+msgid "Path (URI) to RSS image"
+msgstr "Percorso (URI) alla immagine RSS"
+
+#: ../class/avh-ec.widgets.php:286
+msgid "Select categories"
+msgstr "Selezione categorie"
+
+#: ../class/avh-ec.widgets.php:291
+msgid "All Categories"
+msgstr "Tutte le categorie"
+
+#: ../class/avh-ec.widgets.php:301
+msgid "Exclude the selected categories"
+msgstr "Escludi le categorie selezionate"
+
+#: ../class/avh-ec.widgets.php:386
+msgid "Shows the top categories."
+msgstr "Mostra le categorie top"
+
+#: ../class/avh-ec.widgets.php:387
+msgid "AVH Extended Categories Top"
+msgstr "AVH Extended Categories Top"
+
+#: ../class/avh-ec.widgets.php:531
+msgid "How many categories to show"
+msgstr "Quante categorie desideri mostrare"
