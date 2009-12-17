@@ -15,7 +15,7 @@ class AVHExtendedCategoriesCore
 	 */
 	function __construct ()
 	{
-		$this->version = '2.3.2';
+		$this->version = '2.3.3';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 1;
 		$this->db_options_core = 'avhec';
@@ -290,13 +290,13 @@ class AVHExtendedCategoriesCore
 			if ( $show_option_all ) {
 				$show_option_all = apply_filters( 'list_cats', $show_option_all );
 				$selected = ('0' === strval( $r['selected'] )) ? " selected='selected'" : '';
-				$output .= '\t<option value="0"' . $selected . '>' . $show_option_all . '</option>' . "\n";
+				$output .= "\t".'<option value="0"' . $selected . '>' . $show_option_all . '</option>' . "\n";
 			}
 
 			if ( $show_option_none ) {
 				$show_option_none = apply_filters( 'list_cats', $show_option_none );
 				$selected = ('-1' === strval( $r['selected'] )) ? " selected='selected'" : '';
-				$output .= '\t<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
+				$output .= "\t".'<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
 			}
 
 			if ( $hierarchical && (! $selectonly) ) {
