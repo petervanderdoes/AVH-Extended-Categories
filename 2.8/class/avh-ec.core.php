@@ -273,15 +273,22 @@ class AVHExtendedCategoriesCore
 		$defaults['selected'] = (is_category()) ? get_query_var( 'cat' ) : 0;
 
 		$r = wp_parse_args( $args, $defaults );
-		$r['include_last_update_time'] = $r['show_last_update'];
 
+		if ( !isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
+			$r['pad_counts'] = true;
+		}
+
+		$r['include_last_update_time'] = $r['show_last_update'];
 		extract( $r );
+
 
 		$tab_index_attribute = '';
 		if ( ( int ) $tab_index > 0 )
 			$tab_index_attribute = ' tabindex="' . $tab_index . '"';
 
 		$categories = get_categories( $r );
+		$name = esc_attr($name);
+		$class = esc_attr($class);
 
 		$output = '';
 		if ( ! empty( $categories ) ) {
@@ -359,6 +366,10 @@ class AVHExtendedCategoriesCore
 			$r['pad_counts'] = true;
 		}
 
+		if ( !isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
+			$r['pad_counts'] = true;
+		}
+
 		if ( isset( $r['show_date'] ) ) {
 			$r['include_last_update_time'] = $r['show_date'];
 		}
@@ -371,6 +382,8 @@ class AVHExtendedCategoriesCore
 		extract( $r );
 
 		$categories = get_categories( $r );
+		$name = esc_attr($name);
+		$class = esc_attr($class);
 
 		$output = '';
 		if ( $title_li && 'list' == $style )
