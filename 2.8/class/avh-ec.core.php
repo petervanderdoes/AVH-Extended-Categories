@@ -15,7 +15,7 @@ class AVHExtendedCategoriesCore
 	 */
 	function __construct ()
 	{
-		$this->version = '2.3.3';
+		$this->version = '3.0-dev1';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 1;
 		$this->db_options_core = 'avhec';
