@@ -88,8 +88,6 @@ class AVH_EC_Admin
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Overview', 'avh-ec' ) . '</h2>';
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
@@ -103,10 +101,14 @@ class AVH_EC_Admin
 
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
-
-
 		echo '</div>'; // wrap
 
+		echo '<form style="display:none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
 
 		$this->printMetaboxJS( 'overview' );
 		$this->printAdminFooter();
@@ -206,8 +208,6 @@ class AVH_EC_Admin
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
@@ -226,6 +226,12 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
+		echo '<form style="display:none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
 
 		$this->printMetaboxJS( 'general' );
 		$this->printAdminFooter();
@@ -272,8 +278,6 @@ class AVH_EC_Admin
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-groupedoptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_groupedoptions' );
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
@@ -292,6 +296,12 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
+		echo '<form style="display:none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
 
 		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
@@ -354,16 +364,16 @@ class AVH_EC_Admin
 		do_meta_boxes( $this->hooks['avhec_menu_faq'], 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
-		echo '<form style="display: none" method="get" action="">';
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '</div>'; // wrap
+
+		echo '<form style="display:none" method="get" action="">';
 		echo '<p>';
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 		echo '</p>';
 		echo '</form>';
-		echo '<br class="clear"/>';
-		echo '	</div>'; //dashboard-widgets-wrap
-		echo '</div>'; // wrap
-
 
 		$this->printMetaboxJS( 'faq' );
 		$this->printAdminFooter();
