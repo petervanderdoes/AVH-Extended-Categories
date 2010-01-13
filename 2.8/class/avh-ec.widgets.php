@@ -362,7 +362,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			// Then the rest of them
 			echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
 		} else {
-			$return( $all_categories );
+			return( $all_categories );
 		}
 	}
 }
