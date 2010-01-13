@@ -35,9 +35,9 @@ class AVH_EC_Admin
 		// Add menu system
 		$folder = $this->core->getBaseDirectory( plugin_basename( $this->core->info['plugin_dir'] ) );
 		add_menu_page( __( 'AVH E.C.' ), __( 'AVH E.C.' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
-		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuOverview' ) );
-		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuGeneral' ) );
-		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Group Categories', 'avh-ec' ), __( 'Group Categories', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuGrouped' ) );
+		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
+		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
+		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Group Categories', 'avh-ec' ), __( 'Group Categories', 'avh-ec' ), 'manage_options', 'avhec-grouped', array (&$this, 'doMenuGrouped' ) );
 
 		// Add actions for menu pages
 		add_action( 'load-' . $this->hooks['avhec_menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
