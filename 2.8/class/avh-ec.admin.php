@@ -103,13 +103,7 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
-		echo '<form style="display:none" method="get" action="">';
-		echo '<p>';
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
-		echo '</p>';
-		echo '</form>';
-
+		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'overview' );
 		$this->printAdminFooter();
 	}
@@ -226,13 +220,7 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
-		echo '<form style="display:none" method="get" action="">';
-		echo '<p>';
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
-		echo '</p>';
-		echo '</form>';
-
+		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'general' );
 		$this->printAdminFooter();
 	}
@@ -296,13 +284,7 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
-		echo '<form style="display:none" method="get" action="">';
-		echo '<p>';
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
-		echo '</p>';
-		echo '</form>';
-
+		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
 	}
@@ -368,13 +350,7 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
-		echo '<form style="display:none" method="get" action="">';
-		echo '<p>';
-		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
-		echo '</p>';
-		echo '</form>';
-
+		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'faq' );
 		$this->printAdminFooter();
 	}
@@ -503,7 +479,18 @@ class AVH_EC_Admin
 
 	############## Admin WP Helper ##############
 
+	/**
+	 * Prints the general nonces, used by the AJAX
+	 */
+	function printMetaboxGeneralNonces() {
+		echo '<form style="display:none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
 
+	}
 	/**
 	 * Print the Metabox JS for toggling closed and open
 	 *
