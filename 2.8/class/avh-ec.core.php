@@ -108,7 +108,7 @@ class AVHExtendedCategoriesCore
 		$options = $this->getOptions();
 
 		if ( $options['general']['dbversion'] < 2 ) {
-			$all_cats = get_categories();
+			$categories = get_categories();
 			foreach ( $categories as $category ) {
 				$all_cat_id[] = $category->term_id;
 			}
@@ -119,13 +119,13 @@ class AVHExtendedCategoriesCore
 
 		// Add none existing sections and/or elements to the options
 		foreach ( $this->default_options as $section => $default_data ) {
-			if ( ! array_key_exists( $section, $data ) ) {
-				$data[$section] = $default_data;
+			if ( ! array_key_exists( $section, $options ) ) {
+				$options[$section] = $default_data;
 				continue;
 			}
 			foreach ( $default_data as $element => $default_value ) {
-				if ( ! array_key_exists( $element, $data[$section] ) ) {
-					$data[$section][$element] = $default_value;
+				if ( ! array_key_exists( $element, $options[$section] ) ) {
+					$options[$section][$element] = $default_value;
 				}
 			}
 		}
