@@ -241,7 +241,7 @@ class AVH_EC_Admin
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-general\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -316,7 +316,7 @@ class AVH_EC_Admin
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-grouped\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -391,6 +391,16 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
+
+		echo '<script type="text/javascript">' . "\n";
+		echo '	//<![CDATA[' . "\n";
+		echo '	jQuery(document).ready( function($) {' . "\n";
+		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
+		echo '		// postboxes setup' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-faq\');' . "\n";
+		echo '	});' . "\n";
+		echo '	//]]>' . "\n";
+		echo '</script>';
 
 		$this->printAdminFooter();
 
