@@ -7,6 +7,7 @@ class AVHExtendedCategoriesCore
 	var $db_options_core;
 	var $default_options;
 	var $default_general_options;
+	var $default_grouped_cats;
 	var $options;
 
 	/**
@@ -17,7 +18,7 @@ class AVHExtendedCategoriesCore
 	{
 		$this->version = '3.0-dev1';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
-		$db_version = 1;
+		$db_version = 2;
 		$this->db_options_core = 'avhec';
 
 		// Determine installation path & url
@@ -40,7 +41,10 @@ class AVHExtendedCategoriesCore
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
-		$this->default_options = array ('general' => $this->default_general_options );
+
+		$this->default_grouped_cats = array ('home' => '', 'default' => '' );
+
+		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cats );
 
 		/**
 		 * Set the options for the program
@@ -103,8 +107,18 @@ class AVHExtendedCategoriesCore
 	{
 		$options = $this->getOptions();
 
-		// Add none existing sections and/or elements to the data
-		foreach ( $this->default_data as $section => $default_data ) {
+		if ( $options['general']['dbversion'] < 2 ) {
+			$all_cats = get_categories();
+			foreach ( $categories as $category ) {
+				$all_cat_id[] = $category->term_id;
+			}
+			$a = implode( ',', $all_cat_id );
+			$this->default_options['groupedcats']['home'] = $a;
+			$this->default_options['groupedcatd']['default'] = $a;
+		}
+
+		// Add none existing sections and/or elements to the options
+		foreach ( $this->default_options as $section => $default_data ) {
 			if ( ! array_key_exists( $section, $data ) ) {
 				$data[$section] = $default_data;
 				continue;
@@ -274,21 +288,20 @@ class AVHExtendedCategoriesCore
 
 		$r = wp_parse_args( $args, $defaults );
 
-		if ( !isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
+		if ( ! isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
 			$r['pad_counts'] = true;
 		}
 
 		$r['include_last_update_time'] = $r['show_last_update'];
 		extract( $r );
 
-
 		$tab_index_attribute = '';
 		if ( ( int ) $tab_index > 0 )
 			$tab_index_attribute = ' tabindex="' . $tab_index . '"';
 
 		$categories = get_categories( $r );
-		$name = esc_attr($name);
-		$class = esc_attr($class);
+		$name = esc_attr( $name );
+		$class = esc_attr( $class );
 
 		$output = '';
 		if ( ! empty( $categories ) ) {
@@ -297,13 +310,13 @@ class AVHExtendedCategoriesCore
 			if ( $show_option_all ) {
 				$show_option_all = apply_filters( 'list_cats', $show_option_all );
 				$selected = ('0' === strval( $r['selected'] )) ? " selected='selected'" : '';
-				$output .= "\t".'<option value="0"' . $selected . '>' . $show_option_all . '</option>' . "\n";
+				$output .= "\t" . '<option value="0"' . $selected . '>' . $show_option_all . '</option>' . "\n";
 			}
 
 			if ( $show_option_none ) {
 				$show_option_none = apply_filters( 'list_cats', $show_option_none );
 				$selected = ('-1' === strval( $r['selected'] )) ? " selected='selected'" : '';
-				$output .= "\t".'<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
+				$output .= "\t" . '<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
 			}
 
 			if ( $hierarchical && (! $selectonly) ) {
@@ -366,7 +379,7 @@ class AVHExtendedCategoriesCore
 			$r['pad_counts'] = true;
 		}
 
-		if ( !isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
+		if ( ! isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] ) {
 			$r['pad_counts'] = true;
 		}
 
@@ -382,8 +395,8 @@ class AVHExtendedCategoriesCore
 		extract( $r );
 
 		$categories = get_categories( $r );
-		$name = esc_attr($name);
-		$class = esc_attr($class);
+		$name = esc_attr( $name );
+		$class = esc_attr( $class );
 
 		$output = '';
 		if ( $title_li && 'list' == $style )
