@@ -15,6 +15,10 @@ class AVH_EC_Admin
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
 		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
 
+		// Register Style and Scripts
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
+		wp_register_style( 'avhec-admin-css', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
+
 		return;
 	}
 
@@ -38,25 +42,30 @@ class AVH_EC_Admin
 		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
 		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Group Categories', 'avh-ec' ), __( 'Group Categories', 'avh-ec' ), 'manage_options', 'avhec-grouped', array (&$this, 'doMenuGrouped' ) );
+		$this->hooks['avhec_menu_faq'] = add_submenu_page( $folder, 'AVH Extended Categories:' . __( 'F.A.Q', 'avh-ec' ), __( 'F.A.Q', 'avh-ec' ), 'manage_options', 'avhec-faq', array (&$this, 'doMenuFAQ' ) );
 
 		// Add actions for menu pages
 		add_action( 'load-' . $this->hooks['avhec_menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
 		add_action( 'load-' . $this->hooks['avhec_menu_general'], array (&$this, 'actionLoadPageHook_General' ) );
 		add_action( 'load-' . $this->hooks['avhec_menu_grouped'], array (&$this, 'actionLoadPageHook_Grouped' ) );
+		add_action( 'load-' . $this->hooks['avhec_menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
 	}
 
 	function actionLoadPageHook_Overview ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_overview'], 'normal', 'core' );
+
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
-		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
-		wp_admin_css( 'css/dashboard' );
+		// WordPress core Styles and Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+		wp_admin_css( 'css/dashboard' );
+
+		// Plugin Style and Scripts
+		wp_enqueue_style( 'avhec-admin-css');
 	}
 
 	function doMenuOverview ()
@@ -118,11 +127,14 @@ class AVH_EC_Admin
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
-		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
-		wp_admin_css( 'css/dashboard' );
+		// WordPress core Styles and Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+		wp_admin_css( 'css/dashboard' );
+
+		// Plugin Style and Scripts
+		wp_enqueue_style( 'avhec-admin-css');
 	}
 
 	function doMenuGeneral ()
@@ -244,11 +256,14 @@ class AVH_EC_Admin
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
-		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
-		wp_admin_css( 'css/dashboard' );
+		// WordPress core Styles and Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+		wp_admin_css( 'css/dashboard' );
+
+		// Plugin Style and Scripts
+		wp_enqueue_style( 'avhec-admin-css');
 	}
 
 	function doMenuGrouped ()
@@ -306,6 +321,76 @@ class AVH_EC_Admin
 		echo '</script>';
 
 		$this->printAdminFooter();
+	}
+
+		/**
+	 * Setup everything needed for the FAQ page
+	 *
+	 */
+	function actionLoadPageHook_faq ()
+	{
+		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_overview'], 'normal', 'core' );
+
+		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+
+		// WordPress core Styles and Scripts
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
+		wp_admin_css( 'css/dashboard' );
+
+		// Plugin Style and Scripts
+		wp_enqueue_style( 'avhec-admin-css');
+
+	}
+
+	/**
+	 * Menu Page FAQ
+	 *
+	 * @return none
+	 */
+	function doMenuFAQ ()
+	{
+		global $screen_layout_columns;
+
+		// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhfdasBoxDonations', __( 'Donations', 'avhfdas' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhfdas_menu_faq'], 'side', 'core' );
+		$hide2 = '';
+		switch ( $screen_layout_columns )
+		{
+			case 2 :
+				$width = 'width:49%;';
+				break;
+			default :
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
+		}
+
+		echo '<div class="wrap avhfdas-wrap">';
+		echo $this->displayIcon( 'index' );
+		echo '<h2>' . __( 'AVH First Defense Against Spam Overview', 'avhfdas' ) . '</h2>';
+		echo '	<div id="dashboard-widgets-wrap">';
+		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhfdas_menu_faq'], 'normal', '' );
+		echo '			</div>';
+		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhfdas_menu_faq'], 'side', '' );
+		echo '			</div>';
+		echo '		</div>';
+		echo '<form style="display: none" method="get" action="">';
+		echo '<p>';
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+		echo '</p>';
+		echo '</form>';
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '</div>'; // wrap
+
+
+		$this->printAdminFooter();
+
 	}
 
 	/**
