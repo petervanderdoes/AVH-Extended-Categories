@@ -81,6 +81,7 @@ None
 = Version 3.0 =
 * Renamed the plugin to AVH Extended Category Widgets
 * Added translation: Italian - Italiano (it_IT)
+* Redid settings. Now is seperate menu.
 
 = Version 2.3.3 =
 * Bugfix: Validation error on dropdown categories.
