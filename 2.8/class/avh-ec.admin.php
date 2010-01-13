@@ -330,6 +330,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_faq ()
 	{
 		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxFAQ', __( 'F.A.Q.', 'avh-ec' ), array (&$this, 'metaboxFAQ' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -442,6 +443,25 @@ class AVH_EC_Admin
 		echo '</p>';
 	}
 
+	/***
+	 * F.A.Q Metabox
+	 * @return none
+	 */
+	function metaboxFAQ() {
+
+echo '<p>';
+echo '<span class="b">What about support?</span><br />';
+echo 'I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.<br />';
+echo '</p>';
+
+echo '<p>';
+echo '<span class="b">What is depth selection?</span><br />';
+echo 'Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.<br /><br />';
+echo 'Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:<br />';
+echo 'You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.<br />';
+echo '</p>';
+
+	}
 	/**
 	 * Sets the amount of columns wanted for a particuler screen
 	 *
