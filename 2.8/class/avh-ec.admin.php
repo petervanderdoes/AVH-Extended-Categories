@@ -213,10 +213,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->pagehook_OptionsPage, 'normal', $data );
+		do_meta_boxes( $this->hooks['avhec_menu_general'], 'normal', $data );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->pagehook_OptionsPage, 'side', $data );
+		do_meta_boxes( $this->hooks['avhec_menu_general'], 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -285,10 +285,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'normal', $data );
+		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'normal', $data );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'side', $data );
+		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
 
