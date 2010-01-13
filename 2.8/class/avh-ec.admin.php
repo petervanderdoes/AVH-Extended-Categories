@@ -38,7 +38,7 @@ class AVH_EC_Admin
 
 		// Add menu system
 		$folder = $this->core->getBaseDirectory( plugin_basename( $this->core->info['plugin_dir'] ) );
-		add_menu_page( 'AVH Extended Categories' , 'AVH Extended Categories', 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
+		add_menu_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
 		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Group Categories', 'avh-ec' ), __( 'Group Categories', 'avh-ec' ), 'manage_options', 'avhec-grouped', array (&$this, 'doMenuGrouped' ) );
@@ -65,7 +65,7 @@ class AVH_EC_Admin
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
-		wp_enqueue_style( 'avhec-admin-css');
+		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
 	function doMenuOverview ()
@@ -87,7 +87,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'Overview', 'avh-ec' ) . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Overview', 'avh-ec' ) . '</h2>';
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
@@ -103,6 +103,7 @@ class AVH_EC_Admin
 
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
+
 
 		echo '</div>'; // wrap
 
@@ -134,7 +135,7 @@ class AVH_EC_Admin
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
-		wp_enqueue_style( 'avhec-admin-css');
+		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
 	function doMenuGeneral ()
@@ -210,7 +211,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'General Options', 'avh-ec' ) . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __( 'General Options', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -263,7 +264,7 @@ class AVH_EC_Admin
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
-		wp_enqueue_style( 'avhec-admin-css');
+		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
 	function doMenuGrouped ()
@@ -285,7 +286,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'Grouped Categories', 'avh-ec' ) . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Grouped Categories', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-groupedoptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_groupedoptions' );
@@ -323,14 +324,15 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
-		/**
+	/**
 	 * Setup everything needed for the FAQ page
 	 *
 	 */
 	function actionLoadPageHook_faq ()
 	{
-		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
+
 		add_meta_box( 'avhecBoxFAQ', __( 'F.A.Q.', 'avh-ec' ), array (&$this, 'metaboxFAQ' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -341,7 +343,7 @@ class AVH_EC_Admin
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
-		wp_enqueue_style( 'avhec-admin-css');
+		wp_enqueue_style( 'avhec-admin-css' );
 
 	}
 
@@ -369,7 +371,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'F.A.Q', 'avh-ec' ) . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __( 'F.A.Q', 'avh-ec' ) . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
@@ -447,21 +449,23 @@ class AVH_EC_Admin
 	 * F.A.Q Metabox
 	 * @return none
 	 */
-	function metaboxFAQ() {
+	function metaboxFAQ ()
+	{
 
-echo '<p>';
-echo '<span class="b">What about support?</span><br />';
-echo 'I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.<br />';
-echo '</p>';
+		echo '<p>';
+		echo '<span class="b">What about support?</span><br />';
+		echo 'I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.<br />';
+		echo '</p>';
 
-echo '<p>';
-echo '<span class="b">What is depth selection?</span><br />';
-echo 'Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.<br /><br />';
-echo 'Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:<br />';
-echo 'You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.<br />';
-echo '</p>';
+		echo '<p>';
+		echo '<span class="b">What is depth selection?</span><br />';
+		echo 'Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.<br /><br />';
+		echo 'Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:<br />';
+		echo 'You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.<br />';
+		echo '</p>';
 
 	}
+
 	/**
 	 * Sets the amount of columns wanted for a particuler screen
 	 *
