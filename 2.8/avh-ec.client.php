@@ -30,6 +30,7 @@ function avhextendedcategories_widgets_init ()
 {
 	register_widget( 'WP_Widget_AVH_ExtendedCategories_Normal' );
 	register_widget( 'WP_Widget_AVH_ExtendedCategories_Top' );
+	register_widget( 'WP_Widget_AVH_ExtendedCategories_Grouped' );
 }
 
 add_action( 'plugins_loaded', 'avhextendedcategories_init' );
