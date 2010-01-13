@@ -87,7 +87,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories - Overview' . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'Overview', 'avhfdas' ) . '</h2>';
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
@@ -210,7 +210,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories - General Options' . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'General Options', 'avhfdas' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -285,7 +285,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories - Grouped Categories' . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'Grouped Categories', 'avhfdas' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-groupedoptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_groupedoptions' );
@@ -354,7 +354,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhfdasBoxDonations', __( 'Donations', 'avhfdas' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhfdas_menu_faq'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_faq'], 'side', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -368,14 +368,14 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhfdas-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . __( 'AVH First Defense Against Spam Overview', 'avhfdas' ) . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'F.A.Q', 'avhfdas' ) . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhfdas_menu_faq'], 'normal', '' );
+		do_meta_boxes( $this->hooks['avhec_menu_faq'], 'normal', '' );
 		echo '			</div>';
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhfdas_menu_faq'], 'side', '' );
+		do_meta_boxes( $this->hooks['avhec_menu_faq'], 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
 		echo '<form style="display: none" method="get" action="">';
@@ -463,6 +463,10 @@ class AVH_EC_Admin
 			case $this->hooks['avhec_menu_grouped'] :
 				$columns[$this->hooks['avhec_menu_grouped']] = 2;
 				break;
+			case $this->hooks['avhec_menu_faq'] :
+				$columns[$this->hooks['avhec_menu_faq']] = 2;
+				break;
+
 		}
 		return $columns;
 	}
