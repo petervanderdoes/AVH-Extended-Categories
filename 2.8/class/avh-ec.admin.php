@@ -2,7 +2,7 @@
 class AVH_EC_Admin
 {
 	var $core;
-	var $pagehook_OptionsPage;
+	var $hooks = array ();
 	var $message;
 
 	function __construct ()
@@ -32,15 +32,22 @@ class AVH_EC_Admin
 	function actionAdminMenu ()
 	{
 
-		$this->pagehook_OptionsPage = add_options_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', 'avhec_options', array (&$this, 'doPageOptions' ) );
-		add_action( 'load-' . $this->pagehook_OptionsPage, array (&$this, 'actionLoadpagehook_OptionsPage' ) );
+		// Add menu system
+		$folder = plugin_basename( $this->core->info['plugin_dir'] );
+		add_menu_page( __( 'AVH E.C.' ), __( 'AVH E.C.' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
+		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuOverview' ) );
+		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuGeneral' ) );
+		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Group Categories', 'avh-ec' ), __( 'Group Categories', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuGrouped' ) );
 
+		// Add actions for menu pages
+		add_action( 'load-' . $this->hooks['avhec_menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
+	add_action( 'load-' . $this->hooks['avhec_menu_general'], array (&$this, 'actionLoadPageHook_General' ) );
+	add_action( 'load-' . $this->hooks['avhec_menu_grouped'], array (&$this, 'actionLoadPageHook_Grouped' ) );
 	}
 
-	function actionLoadpagehook_OptionsPage ()
+	function actionLoadPageHook_Overview ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxOptions', __( 'Options', 'avh-ec' ), array (&$this, 'metaboxOptions' ), $this->pagehook_OptionsPage, 'normal', 'core' );
 		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
@@ -52,24 +59,77 @@ class AVH_EC_Admin
 		wp_enqueue_script( 'postbox' );
 	}
 
-	/**
-	 * Sets the amount of columns wanted for a particuler screen
-	 *
-	 * @WordPress filter screen_meta_screen
-	 * @param $screen
-	 * @return strings
-	 */
 
-	function filterScreenLayoutColumns ( $columns, $screen )
-	{
-		if ( $screen == $this->pagehook_OptionsPage ) {
-			$columns[$this->pagehook_OptionsPage] = 2;
+	function doMenuOverview(){
+		global $screen_layout_columns;
+
+			// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook_OptionsPage, 'side', 'core' );
+		$hide2 = '';
+		switch ( $screen_layout_columns )
+		{
+			case 2 :
+				$width = 'width:49%;';
+				break;
+			default :
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
 		}
-		return $columns;
 
+				echo '<div class="wrap avhec-wrap">';
+		echo $this->displayIcon( 'index' );
+		echo '<h2>' . 'AVH Extended Categories Overview' . '</h2>';
+		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
+		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
+		wp_nonce_field( 'avh_ec_generaloptions' );
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+
+		echo '	<div id="dashboard-widgets-wrap">';
+		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'normal', $data );
+		echo "			</div>";
+		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'side', $data );
+		echo '			</div>';
+		echo '		</div>';
+
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
+		echo '</form>';
+
+		echo '</div>'; // wrap
+
+
+		echo '<script type="text/javascript">' . "\n";
+		echo '	//<![CDATA[' . "\n";
+		echo '	jQuery(document).ready( function($) {' . "\n";
+		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
+		echo '		// postboxes setup' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
+		echo '	});' . "\n";
+		echo '	//]]>' . "\n";
+		echo '</script>';
+
+		$this->printAdminFooter();
 	}
 
-	function doPageOptions ()
+	function actionLoadPageHook_General() {
+			// Add metaboxes
+		add_meta_box( 'avhecBoxOptions', __( 'Options', 'avh-ec' ), array (&$this, 'metaboxOptions' ), $this->pagehook_OptionsPage, 'normal', 'core' );
+
+		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+
+		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
+		wp_admin_css( 'css/dashboard' );
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
+	}
+
+	function doMenuGeneral ()
 	{
 		global $screen_layout_columns;
 
@@ -88,7 +148,8 @@ class AVH_EC_Admin
 				$option_key = rtrim( $option[0], ']' );
 				$option_key = substr( $option_key, strpos( $option_key, '][' ) + 2 );
 
-				switch ( $section ) {
+				switch ( $section )
+				{
 					case 'general' :
 						$current_value = $options[$section][$option_key];
 						break;
@@ -96,7 +157,8 @@ class AVH_EC_Admin
 				// Every field in a form is set except unchecked checkboxes. Set an unchecked checkbox to 0.
 				$newval = (isset( $formoptions[$section][$option_key] ) ? attribute_escape( $formoptions[$section][$option_key] ) : 0);
 				if ( $newval != $current_value ) { // Only process changed fields.
-					switch ( $section ) {
+					switch ( $section )
+					{
 						case 'general' :
 							$options[$section][$option_key] = $newval;
 							break;
@@ -113,7 +175,8 @@ class AVH_EC_Admin
 		$actual_options = $this->core->getOptions();
 
 		$hide2 = '';
-		switch ( $screen_layout_columns ) {
+		switch ( $screen_layout_columns )
+		{
 			case 2 :
 				$width = 'width:49%;';
 				break;
@@ -127,7 +190,8 @@ class AVH_EC_Admin
 		// This box can't be unselectd in the the Screen Options
 		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook_OptionsPage, 'side', 'core' );
 		$hide2 = '';
-		switch ( $screen_layout_columns ) {
+		switch ( $screen_layout_columns )
+		{
 			case 2 :
 				$width = 'width:49%;';
 				break;
@@ -138,7 +202,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories' . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories General Options' . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -152,6 +216,77 @@ class AVH_EC_Admin
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
 		do_meta_boxes( $this->pagehook_OptionsPage, 'side', $data );
+		echo '			</div>';
+		echo '		</div>';
+
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
+		echo '</form>';
+
+		echo '</div>'; // wrap
+
+
+		echo '<script type="text/javascript">' . "\n";
+		echo '	//<![CDATA[' . "\n";
+		echo '	jQuery(document).ready( function($) {' . "\n";
+		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
+		echo '		// postboxes setup' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
+		echo '	});' . "\n";
+		echo '	//]]>' . "\n";
+		echo '</script>';
+
+		$this->printAdminFooter();
+	}
+
+		function actionLoadPageHook_Grouped ()
+	{
+		// Add metaboxes
+		//add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
+
+		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+
+		wp_enqueue_style( 'avhecadmin', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
+		wp_admin_css( 'css/dashboard' );
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
+	}
+
+
+	function doMenuGrouped(){
+		global $screen_layout_columns;
+
+			// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->pagehook_OptionsPage, 'side', 'core' );
+		$hide2 = '';
+		switch ( $screen_layout_columns )
+		{
+			case 2 :
+				$width = 'width:49%;';
+				break;
+			default :
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
+		}
+
+				echo '<div class="wrap avhec-wrap">';
+		echo $this->displayIcon( 'index' );
+		echo '<h2>' . 'AVH Extended Categories Overview' . '</h2>';
+		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
+		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
+		wp_nonce_field( 'avh_ec_generaloptions' );
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+
+		echo '	<div id="dashboard-widgets-wrap">';
+		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'normal', $data );
+		echo "			</div>";
+		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -223,6 +358,31 @@ class AVH_EC_Admin
 		echo '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S85FXJ9EBHAF2&lc=US&item_name=AVH%20Plugins&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank" title="Donate">';
 		echo '<img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate"/></a>';
 		echo '</p>';
+	}
+
+		/**
+	 * Sets the amount of columns wanted for a particuler screen
+	 *
+	 * @WordPress filter screen_meta_screen
+	 * @param $screen
+	 * @return strings
+	 */
+
+	function filterScreenLayoutColumns ( $columns, $screen )
+	{
+		switch ( $screen )
+		{
+			case $this->hooks['avhec_menu_overview'] :
+				$columns[$this->hooks['avhec_menu_overview']] = 2;
+				break;
+			case $this->hooks['avhec_menu_general'] :
+				$columns[$this->hooks['avhec_menu_general']] = 2;
+				break;
+			case $this->hooks['avhec_menu_grouped'] :
+				$columns[$this->hooks['avhec_menu_grouped']] = 2;
+				break;
+		}
+		return $columns;
 	}
 
 	/**
@@ -299,7 +459,8 @@ class AVH_EC_Admin
 				$output .= '<tr style="vertical-align: top;"><td class="helper" colspan="2">' . $option[4] . '</td></tr>' . "\n";
 				continue;
 			}
-			switch ( $option[2] ) {
+			switch ( $option[2] )
+			{
 				case 'checkbox' :
 					$input_type = '<input type="checkbox" id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape( $option[3] ) . '" ' . $this->isChecked( '1', $option_actual[$section][$option_key] ) . ' />' . "\n";
 					$explanation = $option[4];
