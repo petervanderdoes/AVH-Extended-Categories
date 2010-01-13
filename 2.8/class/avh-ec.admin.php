@@ -78,7 +78,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories Overview' . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - Overview' . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -203,7 +203,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories General Options' . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - General Options' . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -275,7 +275,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories Overview' . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - Grouped Categories' . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
