@@ -33,7 +33,7 @@ class AVH_EC_Admin
 	{
 
 		// Add menu system
-		$folder = plugin_basename( $this->core->info['plugin_dir'] );
+		$folder = $this->core->getBaseDirectory( plugin_basename( $this->core->info['plugin_dir'] ) );
 		add_menu_page( __( 'AVH E.C.' ), __( 'AVH E.C.' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec_options', array (&$this, 'doMenuGeneral' ) );
@@ -402,7 +402,7 @@ class AVH_EC_Admin
 		if ( $file )
 			$file = $this->core->getBaseDirectory( $file );
 		if ( $file == $this_plugin ) {
-			$settings_link = '<a href="options-general.php?page=avhec_options">' . __( 'Settings', 'avh-ec' ) . '</a>';
+			$settings_link = '<a href="options-general.php?page=extended-categories-widget">' . __( 'Settings', 'avh-ec' ) . '</a>';
 			array_unshift( $links, $settings_link ); // before other links
 		//$links = array_merge ( array (	$settings_link ), $links ); // before other links
 		}
