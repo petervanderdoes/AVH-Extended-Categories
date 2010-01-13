@@ -108,16 +108,7 @@ class AVH_EC_Admin
 		echo '</div>'; // wrap
 
 
-		echo '<script type="text/javascript">' . "\n";
-		echo '	//<![CDATA[' . "\n";
-		echo '	jQuery(document).ready( function($) {' . "\n";
-		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
-		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
-		echo '	});' . "\n";
-		echo '	//]]>' . "\n";
-		echo '</script>';
-
+		$this->printMetaboxJS( 'overview' );
 		$this->printAdminFooter();
 	}
 
@@ -236,16 +227,7 @@ class AVH_EC_Admin
 		echo '</div>'; // wrap
 
 
-		echo '<script type="text/javascript">' . "\n";
-		echo '	//<![CDATA[' . "\n";
-		echo '	jQuery(document).ready( function($) {' . "\n";
-		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
-		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-general\');' . "\n";
-		echo '	});' . "\n";
-		echo '	//]]>' . "\n";
-		echo '</script>';
-
+		$this->printMetaboxJS( 'general' );
 		$this->printAdminFooter();
 	}
 
@@ -311,16 +293,7 @@ class AVH_EC_Admin
 		echo '</div>'; // wrap
 
 
-		echo '<script type="text/javascript">' . "\n";
-		echo '	//<![CDATA[' . "\n";
-		echo '	jQuery(document).ready( function($) {' . "\n";
-		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
-		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-grouped\');' . "\n";
-		echo '	});' . "\n";
-		echo '	//]]>' . "\n";
-		echo '</script>';
-
+		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
 	}
 
@@ -392,18 +365,8 @@ class AVH_EC_Admin
 		echo '</div>'; // wrap
 
 
-		echo '<script type="text/javascript">' . "\n";
-		echo '	//<![CDATA[' . "\n";
-		echo '	jQuery(document).ready( function($) {' . "\n";
-		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
-		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-faq\');' . "\n";
-		echo '	});' . "\n";
-		echo '	//]]>' . "\n";
-		echo '</script>';
-
+		$this->printMetaboxJS( 'faq' );
 		$this->printAdminFooter();
-
 	}
 
 	/**
@@ -529,6 +492,27 @@ class AVH_EC_Admin
 	}
 
 	############## Admin WP Helper ##############
+
+
+	/**
+	 * Print the Metabox JS for toggling closed and open
+	 *
+	 * @param $boxid
+	 */
+	function printMetaboxJS ( $boxid )
+	{
+		echo '<script type="text/javascript">' . "\n";
+		echo '	//<![CDATA[' . "\n";
+		echo '	jQuery(document).ready( function($) {' . "\n";
+		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
+		echo '		// postboxes setup' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-' . $boxid . '\');' . "\n";
+		echo '	});' . "\n";
+		echo '	//]]>' . "\n";
+		echo '</script>';
+
+	}
+
 	/**
 	 * Display plugin Copyright
 	 *
