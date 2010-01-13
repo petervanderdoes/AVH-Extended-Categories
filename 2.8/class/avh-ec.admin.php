@@ -87,7 +87,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'Overview', 'avhfdas' ) . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'Overview', 'avh-ec' ) . '</h2>';
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 
@@ -112,7 +112,7 @@ class AVH_EC_Admin
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -174,7 +174,7 @@ class AVH_EC_Admin
 				}
 			}
 			$this->core->saveOptions( $options );
-			$this->message = __( 'Options saved', 'avhfdas' );
+			$this->message = __( 'Options saved', 'avh-ec' );
 			$this->status = 'updated fade';
 
 		}
@@ -210,7 +210,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'General Options', 'avhfdas' ) . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'General Options', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
@@ -240,7 +240,7 @@ class AVH_EC_Admin
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -285,7 +285,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'Grouped Categories', 'avhfdas' ) . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'Grouped Categories', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 		echo '<form name="avhec-groupedoptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_groupedoptions' );
@@ -315,7 +315,7 @@ class AVH_EC_Admin
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhfdas-menu-overview\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'avhec-menu-overview\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
@@ -367,9 +367,9 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		echo '<div class="wrap avhfdas-wrap">';
+		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' .'AVH Extended Categories - '. __( 'F.A.Q', 'avhfdas' ) . '</h2>';
+		echo '<h2>' .'AVH Extended Categories - '. __( 'F.A.Q', 'avh-ec' ) . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";

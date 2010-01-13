@@ -9,23 +9,28 @@ div.clearer {
 	font-size: 1px;
 	height: 1px;
 }
+
+/* Metabox in General */
+table.avhec-options {
+	font-size: 11px;
+}
+
 .avhec-wrap span.description {
+	font-size: 11px;
+}
+
+.avhec-wrap .b {
+	font-weight: bold;
+}
+
+#avhec-options input {
 	font-size: 11px;
 }
 #avhec-generaloptions input {
 	font-size: 11px;
 }
 
-table.avhec-options {
-	font-size: 11px;
-}
-.avhfec-wrap .b {
-	font-weight: bold;
-}
-
-#avhecBoxDonations .b {
-	font-weight: bold;
-}
+/* Metabox Donations*/
 #avhecBoxDonations .inside {
 	font-size: 12px;
 }
@@ -34,6 +39,8 @@ table.avhec-options {
 	padding: 6px 10px 12px;
 }
 
+/* Metabox Donations*/
 #avhecBoxTranslation .inside {
 	font-size: 12px;
 }
+
