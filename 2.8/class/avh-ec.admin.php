@@ -31,6 +31,9 @@ class AVH_EC_Admin
 
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
+
+		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
+
 		return;
 	}
 
@@ -65,6 +68,33 @@ class AVH_EC_Admin
 			}
 		}
 		echo '</select>';
+	}
+
+	function actionSaveGroupCatTaxonomy ( $post_id )
+	{
+		if ( ! wp_verify_nonce( $_POST['avhec_groupcat_nonce'], 'avhec_groupcat_nonce' ) ) {
+			return $post_id;
+		}
+
+		// verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return $post_id;
+
+		// Check permissions
+		if ( 'page' == $_POST['post_type'] ) {
+			if ( ! current_user_can( 'edit_page', $post_id ) )
+				return $post_id;
+		} else {
+			if ( ! current_user_can( 'edit_post', $post_id ) )
+				return $post_id;
+		}
+
+		// OK, we're authenticated: we need to find and save the data
+		$groupcat = $_POST['post_avhec_groupcat'];
+		wp_set_object_terms( $post_id, $groupcat, 'groupcat' );
+
+		return $groupcat;
+
 	}
 
 	/**
