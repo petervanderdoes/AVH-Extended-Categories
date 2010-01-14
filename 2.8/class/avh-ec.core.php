@@ -51,18 +51,30 @@ class AVHExtendedCategoriesCore
 
 		$this->default_options = array ('general' => $this->default_general_options );
 
-		$this->default_cat_groups_row = array ('name' => '', 'cats' => '', 'disabled'=>0 );
-		$default_group = array ('name' => 'default', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
-		$home_group = array ('name' => 'home', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
-		$this->default_cat_groups = array (0 => $default_group, 1 => $home_group );
-		unset( $default_group );
-		unset( $home_group );
+		/**
+		 * Setup Group Categories Taxonomy
+		 */
+		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+
+		$none_group_id = wp_insert_term( 'none', 'groupcat' );
+		$default_group_id = wp_insert_term( 'default', 'groupcat' );
+		$home_group_id = wp_insert_term( 'home', 'groupcat' );
+
+		$this->default_cat_groups_row = array ('cats' => '', 'disabled' => 0 );
+
+		$this->default_cat_groups = array ($none_group_id['term_id'] => 'none', $default_group_id['term_id'] => $this->default_cat_groups_row, $home_group_id['term_id'] => $this->default_cat_groups_row );
+
+		unset( $home_group_id );
+		unset( $default_group_id );
+		unset( $none_group_id );
 
 		/**
 		 * Set the options for the program
 		 *
 		 */
 		$this->loadOptions();
+		$this->loadCatGroups();
 
 		// Check if we have to do upgrades
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
@@ -290,7 +302,7 @@ class AVHExtendedCategoriesCore
 	{
 		$options = get_option( $this->db_cat_groups );
 		if ( false === $options ) { // New installation
-			$this->resetToCatGroups();
+			$this->resetToDefaultCatGroupsCatGroups();
 		} else {
 			$this->setCatGroups( $options );
 		}
@@ -307,7 +319,8 @@ class AVHExtendedCategoriesCore
 		if ( ! empty( $this->cat_groups[$id]['cats'] ) ) {
 			$return = $this->cat_groups[$id]['cats'];
 		} else {
-			$return = $this->cat_groups[0]['cats']; // Default Category Group
+			$row = get_term_by( 'name', 'default', 'groupcat' );
+			$return = $this->cat_groups[$row->term_id]['cats']; // Default Category Group
 		}
 		retunr( $return );
 	}
@@ -334,8 +347,10 @@ class AVHExtendedCategoriesCore
 			$all_cat_id[] = $category->term_id;
 		}
 		$a = implode( ',', $all_cat_id );
-		$this->default_cat_groups[0]['cats'] = $a; // default group
-		$this->default_cat_groups[1]['cats'] = $a; // home group
+		$row = get_term_by( 'name', 'default', 'groupcat' );
+		$this->default_cat_groups[$row->term_id]['cats'] = $a; // default group
+		$row = get_term_by( 'name', 'home', 'groupcat' );
+		$this->default_cat_groups[$row->term_id]['cats'] = $a; // home group
 	}
 
 	/****
@@ -343,44 +358,27 @@ class AVHExtendedCategoriesCore
 	 */
 
 	/**
-	 * Set Group Name
-	 * @param $name
-	 */
-	function setCatGroupRowName ( $name )
-	{
-		$this->cat_group_row['name'] = $name;
-	}
-
-	/**
-	 * Set Categories
-	 * @param $cats
-	 */
-	function setCatGroupRowCats ( $cats )
-	{
-		$this->cat_group_row['cats'] = $cats;
-	}
-
-	/**
 	 * Set Category Group Row
- * If the $grouparr parameter has 'ID' set to a value, then post will be updated.
- *
- *
- * The defaults for the parameter $postarr are:
- *     'cats   '   - Default is ''.
- *     'disabled'     - Default is FALSE.
- *
- * @param array $grouparr Optional. Overrides defaults.
- * @param bool $wp_error Optional. Allow return of WP_Error on failure.
- */
-	function setCatGroupRow ( $grouparr=array() )
+	 * If the $grouparr parameter has 'ID' set to a value, then post will be updated.
+	 *
+	 *
+	 * The defaults for the parameter $postarr are:
+	 *     'cats   '   - Default is ''.
+	 *     'disabled'     - Default is FALSE.
+	 *
+	 * @param array $grouparr Optional. Overrides defaults.
+	 * @param bool $wp_error Optional. Allow return of WP_Error on failure.
+	 */
+	function setCatGroupRow ( $grouparr = array() )
 	{
-		$defaults = array( 'cats' => '', 'disabled' => FALSE);
-		$grouparr = wp_parse_args($grouparr, $defaults);
+		$defaults = array ('cats' => '', 'disabled' => FALSE );
+		$grouparr = wp_parse_args( $grouparr, $defaults );
 		// export array as variables
-		extract($grouparr, EXTR_SKIP);
+		extract( $grouparr, EXTR_SKIP );
 
-		$this->setCatGroupRow( $name );
-		$this->setCatGroupRowCats( $cats );
+		$this->cat_group_row['cats'] = $cats;
+		$this->cat_group_row['disabled'] = $disabled;
+
 	}
 
 	/**

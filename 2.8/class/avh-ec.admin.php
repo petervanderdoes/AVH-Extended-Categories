@@ -19,18 +19,8 @@ class AVH_EC_Admin
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_register_style( 'avhec-admin-css', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
 
-		/**
-		 * Setup Group Categories Taxonomy
-		 */
-		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
-		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
-
-		wp_insert_term( 'none', 'groupcat' );
-		wp_insert_term( 'default', 'groupcat' );
-		wp_insert_term( 'home', 'groupcat' );
-
-		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
-		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
 
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 
@@ -42,7 +32,7 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
-	function metaboxGroupCat ($post)
+	function metaboxGroupCat ( $post )
 	{
 		// This function gets called in edit-form-advanced.php
 
