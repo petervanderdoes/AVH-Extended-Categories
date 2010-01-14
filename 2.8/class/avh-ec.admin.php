@@ -247,7 +247,7 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
-		$cat_name_new='NEW';
+		$cat_name_new='';
 
 		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 
@@ -292,7 +292,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		$data_add_group = array('name'=>$cat_name_new);
+		$data_add_group['add'] = array('name'=>$cat_name_new);
 		$data['add'] = array('form'=>$options_add_group,'data'=>$data_add_group);
 
 		// This box can't be unselectd in the the Screen Options
