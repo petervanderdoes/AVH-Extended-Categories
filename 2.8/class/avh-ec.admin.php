@@ -498,12 +498,13 @@ class AVH_EC_Admin
 	 */
 	function printMetaboxJS ( $boxid )
 	{
+		$a=$this->hooks['avhec_menu_'.$boxid];
 		echo '<script type="text/javascript">' . "\n";
 		echo '	//<![CDATA[' . "\n";
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\'avhec-menu-' . $boxid . '\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\''. $a . '\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
