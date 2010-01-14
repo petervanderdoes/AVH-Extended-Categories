@@ -5,6 +5,7 @@ class AVHExtendedCategoriesCore
 	var $comment;
 	var $info;
 	var $db_options_core;
+	var $db_cat_groups;
 	var $default_options;
 	var $default_general_options;
 
@@ -24,6 +25,7 @@ class AVHExtendedCategoriesCore
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 2;
 		$this->db_options_core = 'avhec';
+		$this->db_cat_groups = 'avhec_catgroups';
 
 		// Determine installation path & url
 		$path = str_replace( '\\', '/', dirname( __FILE__ ) );
@@ -49,10 +51,9 @@ class AVHExtendedCategoriesCore
 		$this->default_options = array ('general' => $this->default_general_options );
 
 		$this->default_cat_groups_row = array ('name' => '', 'cats' => '' );
-		$default_group = array ('name' => 'Default', 'cats' => '' );
-		$home_group = array ('name' => 'Home', 'cats' => '' );
+		$default_group = array ('name' => 'Default', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
+		$home_group = array ('name' => 'Home', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
 		$this->default_cat_groups = array (0 => $default_group, 1 => $home_group );
-		$this->setDefaultCatGroups();
 		unset( $default_group );
 		unset( $home_group );
 
@@ -169,19 +170,6 @@ class AVHExtendedCategoriesCore
 		return $public_base;
 	}
 
-	/**
-	 * Set the default category groups Default and Home
-	 *
-	 */
-	function setDefaultCatGroups() {
-		$categories = get_categories();
-			foreach ( $categories as $category ) {
-				$all_cat_id[] = $category->term_id;
-			}
-			$a = implode( ',', $all_cat_id );
-			$this->default_cat_groups[0]['cats'] = $a; // default group
-			$this->default_cat_groups[1]['cats'] = $a; // home group
-	}
 	/*********************************
 	 *                               *
 	 * Methods for variable: options *
@@ -256,6 +244,97 @@ class AVHExtendedCategoriesCore
 	{
 		$this->options = $this->default_options;
 		$this->saveOptions( $this->default_options );
+	}
+
+	/************************************
+	 *                                  *
+	 * Methods for variable: cat_groups *
+	 *                                  *
+	 ************************************/
+
+	/**
+	 * @param array $data
+	 */
+	function setCatGroups ( $a )
+	{
+		$this->cat_groups = $a;
+	}
+
+	/**
+	 * return array
+	 */
+	function getCatGroups ()
+	{
+		return ($this->cat_groups);
+	}
+
+	/**
+	 * Save all current options and set the options
+	 *
+	 */
+	function saveCatGroups ( $a )
+	{
+		update_option( $this->db_cat_groups, $a );
+		wp_cache_flush(); // Delete cache
+		$this->setCatGroups( $a );
+	}
+
+	/**
+	 * Retrieves the plugin Category Groups from the WordPress options table and assigns to class variable.
+	 * If the Category Groups do not exists, like a new installation, the Category Groups are set to the default value.
+	 *
+	 * @return none
+	 */
+	function loadCatGroups ()
+	{
+		$options = get_option( $this->db_cat_groups );
+		if ( false === $options ) { // New installation
+			$this->resetToCatGroups();
+		} else {
+			$this->setCatGroups( $options );
+		}
+	}
+
+	/**
+	 * Get the categories from a given group, if the categories is empty return the default value.
+	 *
+	 * @param $id Category Group ID
+	 * @return string
+	 */
+	function getCatGroupsCategories ( $id )
+	{
+		if ( ! empty( $this->cat_groups[$id]['cats'] ) ) {
+			$return = $this->cat_groups[$id]['cats'];
+		} else {
+			$return = $this->cat_groups[0]['cats']; // Default Category Group
+		}
+		retunr( $return );
+	}
+
+	/**
+	 * Reset to default options and save in DB
+	 *
+	 */
+	function resetToDefaultCatGroups ()
+	{
+		$this->cat_groups = $this->default_cat_groups;
+		$this->setDefaultCatGroups();
+		$this->saveCatGroups( $this->default_cat_groups );
+	}
+
+	/**
+	 * Set the default category groups Default and Home
+	 *
+	 */
+	function setDefaultCatGroups ()
+	{
+		$categories = get_categories();
+		foreach ( $categories as $category ) {
+			$all_cat_id[] = $category->term_id;
+		}
+		$a = implode( ',', $all_cat_id );
+		$this->default_cat_groups[0]['cats'] = $a; // default group
+		$this->default_cat_groups[1]['cats'] = $a; // home group
 	}
 
 	/**
