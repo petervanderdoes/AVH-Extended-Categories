@@ -302,7 +302,7 @@ class AVHExtendedCategoriesCore
 	{
 		$options = get_option( $this->db_cat_groups );
 		if ( false === $options ) { // New installation
-			$this->resetToDefaultCatGroupsCatGroups();
+			$this->resetToDefaultCatGroups();
 		} else {
 			$this->setCatGroups( $options );
 		}
@@ -322,7 +322,7 @@ class AVHExtendedCategoriesCore
 			$row = get_term_by( 'name', 'default', 'groupcat' );
 			$return = $this->cat_groups[$row->term_id]['cats']; // Default Category Group
 		}
-		retunr( $return );
+		return( $return );
 	}
 
 	/**
