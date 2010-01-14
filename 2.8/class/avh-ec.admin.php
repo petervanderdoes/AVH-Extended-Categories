@@ -247,7 +247,7 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
-		$cat_name_new='';
+		$cat_name_new='NEW';
 
 		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 
@@ -327,7 +327,7 @@ class AVH_EC_Admin
 	function metaboxGroupedAdd($data) {
 		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_addgroup' );
-		$this->printOptions($data['add']['form'],$data['add']['data']);
+		echo $this->printOptions($data['add']['form'],$data['add']['data']);
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avhfdas' ) . '" /></p>';
 		echo '</form>';
 	}
