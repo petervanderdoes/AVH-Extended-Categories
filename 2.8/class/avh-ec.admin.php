@@ -53,10 +53,11 @@ class AVH_EC_Admin
 		$names = wp_get_object_terms( $post->ID, 'groupcat' );
 
 		foreach ( $groupcats as $groupcat ) {
+			$name=ucwords($groupcat->name);
 			if ( ! is_wp_error( $names ) && ! empty( $names ) && ! strcmp( $groupcat->name, $groupcat[0]->name ) )
-				echo "<option class='theme-option' value='" . $groupcat->name . "' selected>" . $groupcat->name . "</option>\n";
+				echo "<option class='theme-option' value='" . $groupcat->name . "' selected>" . $name . "</option>\n";
 			else
-				echo "<option class='theme-option' value='" . $groupcat->name . "'>" . $groupcat->name . "</option>\n";
+				echo "<option class='theme-option' value='" . $groupcat->name . "'>" . $name . "</option>\n";
 		}
 		echo '</select>';
 	}
