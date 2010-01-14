@@ -42,7 +42,7 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
-	function metaboxGroupCat ()
+	function metaboxGroupCat ($post)
 	{
 		// This function gets called in edit-form-advanced.php
 
