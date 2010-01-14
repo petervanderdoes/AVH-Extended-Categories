@@ -53,14 +53,14 @@ class AVH_EC_Admin
 		$groupcats = get_terms( 'groupcat', 'hide_empty=0' );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\'>';
-		$names = wp_get_object_terms( $post->ID, 'groupcat' );
+		$current_groupcat = wp_get_object_terms( $post->ID, 'groupcat' );
 
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
-			if ( ! is_wp_error( $names ) && ! empty( $names ) && ! strcmp( $groupcat->name, $groupcats[0]->name ) ) {
+			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->name, $current_groupcat[0]->name ) ) {
 				echo '<option class="theme-option" value="' . $groupcat->name . ' selected=\'selected\'>"' . $name . "</option>\n";
 			} else {
-				if ( empty( $names ) && 'none' == $groupcat->name ) {
+				if ( empty( $current_groupcat ) && 'none' == $groupcat->name ) {
 					echo '<option class="theme-option" value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
 					echo '<option class="theme-option" value="' . $groupcat->name . '">' . $name . "</option>\n";
