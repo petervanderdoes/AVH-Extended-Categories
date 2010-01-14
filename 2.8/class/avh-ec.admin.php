@@ -228,7 +228,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_Grouped ()
 	{
 		// Add metaboxes
-		//add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->pagehook_OptionsPage, 'normal', 'core' );
+		add_meta_box( 'avhecBoxGroupedOverview', __( 'Administration', 'avh-ec' ), array (&$this, 'metaboxGroupedOverview' ), $this->hooks['avhec_menu_grouped'], 'normal', 'core' );
 
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
@@ -248,7 +248,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -288,6 +288,7 @@ class AVH_EC_Admin
 		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
 	}
+
 
 	/**
 	 * Setup everything needed for the FAQ page
@@ -355,6 +356,9 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
+	function metaboxGroupedOverview($data) {
+		echo '1';
+	}
 	/**
 	 * Options Metabox
 	 *
