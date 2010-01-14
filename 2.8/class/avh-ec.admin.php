@@ -302,8 +302,6 @@ class AVH_EC_Admin
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Grouped Categories', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
-		echo '<form name="avhec-groupedoptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec_options' . '" accept-charset="utf-8" >';
-		wp_nonce_field( 'avh_ec_groupedoptions' );
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
@@ -317,8 +315,6 @@ class AVH_EC_Admin
 
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
-		echo '</form>';
 
 		echo '</div>'; // wrap
 
