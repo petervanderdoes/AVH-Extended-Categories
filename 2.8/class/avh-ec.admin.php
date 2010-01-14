@@ -58,7 +58,7 @@ class AVH_EC_Admin
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
 			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->name, $current_groupcat[0]->name ) ) {
-				echo '<option class="theme-option" value="' . $groupcat->name . ' selected=\'selected\'>"' . $name . "</option>\n";
+				echo '<option class="theme-option" value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
 				if ( empty( $current_groupcat ) && 'none' == $groupcat->name ) {
 					echo '<option class="theme-option" value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
