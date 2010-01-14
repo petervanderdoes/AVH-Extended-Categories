@@ -7,8 +7,12 @@ class AVHExtendedCategoriesCore
 	var $db_options_core;
 	var $default_options;
 	var $default_general_options;
-	var $default_grouped_cats;
+
+	var $default_cat_groups;
+	var $default_cat_groups_row;
+
 	var $options;
+	var $cat_groups;
 
 	/**
 	 * PHP5 constructor
@@ -42,9 +46,15 @@ class AVHExtendedCategoriesCore
 
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
 
-		$this->default_grouped_cats = array ('home' => '', 'default' => '' );
+		$this->default_options = array ('general' => $this->default_general_options );
 
-		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cats );
+		$this->default_cat_groups_row = array ('name' => '', 'cats' => '' );
+		$default_group = array ('name' => 'Default', 'cats' => '' );
+		$home_group = array ('name' => 'Home', 'cats' => '' );
+		$this->default_cat_groups = array (0 => $default_group, 1 => $home_group );
+		$this->setDefaultCatGroups();
+		unset( $default_group );
+		unset( $home_group );
 
 		/**
 		 * Set the options for the program
@@ -107,16 +117,6 @@ class AVHExtendedCategoriesCore
 	{
 		$options = $this->getOptions();
 
-		if ( $options['general']['dbversion'] < 2 ) {
-			$categories = get_categories();
-			foreach ( $categories as $category ) {
-				$all_cat_id[] = $category->term_id;
-			}
-			$a = implode( ',', $all_cat_id );
-			$this->default_options['groupedcats']['home'] = $a;
-			$this->default_options['groupedcatd']['default'] = $a;
-		}
-
 		// Add none existing sections and/or elements to the options
 		foreach ( $this->default_options as $section => $default_data ) {
 			if ( ! array_key_exists( $section, $options ) ) {
@@ -169,6 +169,19 @@ class AVHExtendedCategoriesCore
 		return $public_base;
 	}
 
+	/**
+	 * Set the default category groups Default and Home
+	 *
+	 */
+	function setDefaultCatGroups() {
+		$categories = get_categories();
+			foreach ( $categories as $category ) {
+				$all_cat_id[] = $category->term_id;
+			}
+			$a = implode( ',', $all_cat_id );
+			$this->default_cat_groups[0]['cats'] = $a; // default group
+			$this->default_cat_groups[1]['cats'] = $a; // home group
+	}
 	/*********************************
 	 *                               *
 	 * Methods for variable: options *
