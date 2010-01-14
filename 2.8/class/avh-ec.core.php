@@ -14,6 +14,7 @@ class AVHExtendedCategoriesCore
 
 	var $options;
 	var $cat_groups;
+	var $cat_group_row;
 
 	/**
 	 * PHP5 constructor
@@ -51,8 +52,8 @@ class AVHExtendedCategoriesCore
 		$this->default_options = array ('general' => $this->default_general_options );
 
 		$this->default_cat_groups_row = array ('name' => '', 'cats' => '' );
-		$default_group = array ('name' => 'Default', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
-		$home_group = array ('name' => 'Home', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
+		$default_group = array ('name' => 'default', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
+		$home_group = array ('name' => 'home', 'cats' => '' ); // The categories will be filled during the loadCatGroups call or when we explicitely call resetToDefaultCatGroups
 		$this->default_cat_groups = array (0 => $default_group, 1 => $home_group );
 		unset( $default_group );
 		unset( $home_group );
@@ -335,6 +336,39 @@ class AVHExtendedCategoriesCore
 		$a = implode( ',', $all_cat_id );
 		$this->default_cat_groups[0]['cats'] = $a; // default group
 		$this->default_cat_groups[1]['cats'] = $a; // home group
+	}
+
+	/****
+	 * Methods for class variable cat_group_row
+	 */
+
+	/**
+	 * Set Group Name
+	 * @param $name
+	 */
+	function setCatGroupRowName ( $name )
+	{
+		$this->cat_group_row['name'] = $name;
+	}
+
+	/**
+	 * Set Categories
+	 * @param $cats
+	 */
+	function setCatGroupRowCats ( $cats )
+	{
+		$this->cat_group_row['cats'] = $cats;
+	}
+
+	/**
+	 * Set Category Group Row
+	 * @param $name
+	 * @param $cats
+	 */
+	function setCatGroupRow ( $name, $cats = '' )
+	{
+		$this->setCatGroupRow( $name );
+		$this->setCatGroupRowCats( $cats );
 	}
 
 	/**

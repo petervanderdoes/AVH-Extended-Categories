@@ -103,6 +103,7 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
+
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'overview' );
 		$this->printAdminFooter();
@@ -220,6 +221,7 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
+
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'general' );
 		$this->printAdminFooter();
@@ -228,8 +230,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_Grouped ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxGroupedOverview', __( 'Administration', 'avh-ec' ), array (&$this, 'metaboxGroupedOverview' ), $this->hooks['avhec_menu_grouped'], 'normal', 'core' );
-
+		add_meta_box( 'avhecBoxGroupedAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxGroupedAdd' ), $this->hooks['avhec_menu_grouped'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -246,9 +247,40 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
+		$cat_name_new='';
 
-		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
+
+		if ( isset( $_POST['addgroup'] ) ) {
+			check_admin_referer( 'avh_ec_addgroup' );
+
+			$formoptions = $_POST['avhec_cat_groups_add'];
+			$cat_groups = $this->core->getCatGroups();
+
+			$duplicate = false;
+			$cat_name_new = strtolower( $formoptions['add']['name'] );
+			foreach ( $cat_groups as $cat_group ) {
+				if ( $cat_name_new == strtolower( $cat_group['name'] ) ) {
+					$duplicate = true;
+					break;
+				}
+			}
+
+			if ( ! $duplicate ) {
+				$this->core->setCatGroupRow( $cat_name_new, '' );
+				$cat_groups[] = $this->core->cat_group_row;
+
+				$this->core->saveCatGroups( $cat_groups );
+				$this->message = __( 'Category group saved', 'avh-ec' );
+				$this->status = 'updated fade';
+				$cat_name_new='';
+			} else {
+				$this->message = __( 'Category group already exists', 'avh-ec' );
+				$this->status = 'error';
+			}
+			$this->displayMessage();
+		}
+
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -259,6 +291,12 @@ class AVH_EC_Admin
 				$width = 'width:98%;';
 				$hide2 = 'display:none;';
 		}
+
+		$data_add_group = array('name'=>$cat_name_new);
+		$data['add'] = array('form'=>$options_add_group,'data'=>$data_add_group);
+
+		// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
@@ -284,12 +322,19 @@ class AVH_EC_Admin
 
 		echo '</div>'; // wrap
 
+
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
 	}
 
-
+	function metaboxGroupedAdd($data) {
+		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="" accept-charset="utf-8" >';
+		wp_nonce_field( 'avh_ec_addgroup' );
+		$this->printOptions($data['add']['form'],$data['add']['data']);
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avhfdas' ) . '" /></p>';
+		echo '</form>';
+	}
 	/**
 	 * Setup everything needed for the FAQ page
 	 *
@@ -351,14 +396,12 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
+
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'faq' );
 		$this->printAdminFooter();
 	}
 
-	function metaboxGroupedOverview($data) {
-		echo '1';
-	}
 	/**
 	 * Options Metabox
 	 *
@@ -483,10 +526,12 @@ class AVH_EC_Admin
 
 	############## Admin WP Helper ##############
 
+
 	/**
 	 * Prints the general nonces, used by the AJAX
 	 */
-	function printMetaboxGeneralNonces() {
+	function printMetaboxGeneralNonces ()
+	{
 		echo '<form style="display:none" method="get" action="">';
 		echo '<p>';
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
@@ -495,6 +540,7 @@ class AVH_EC_Admin
 		echo '</form>';
 
 	}
+
 	/**
 	 * Print the Metabox JS for toggling closed and open
 	 *
@@ -502,13 +548,13 @@ class AVH_EC_Admin
 	 */
 	function printMetaboxJS ( $boxid )
 	{
-		$a=$this->hooks['avhec_menu_'.$boxid];
+		$a = $this->hooks['avhec_menu_' . $boxid];
 		echo '<script type="text/javascript">' . "\n";
 		echo '	//<![CDATA[' . "\n";
 		echo '	jQuery(document).ready( function($) {' . "\n";
 		echo '		$(\'.if-js-closed\').removeClass(\'if-js-closed\').addClass(\'closed\');' . "\n";
 		echo '		// postboxes setup' . "\n";
-		echo '		postboxes.add_postbox_toggles(\''. $a . '\');' . "\n";
+		echo '		postboxes.add_postbox_toggles(\'' . $a . '\');' . "\n";
 		echo '	});' . "\n";
 		echo '	//]]>' . "\n";
 		echo '</script>';
