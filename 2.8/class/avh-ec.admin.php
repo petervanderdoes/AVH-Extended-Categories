@@ -22,20 +22,43 @@ class AVH_EC_Admin
 		/**
 		 * Setup Group Categories Taxonomy
 		 */
-		register_taxonomy( 'groupcat', 'post', array( 'hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
-		register_taxonomy( 'groupcat', 'page', array( 'hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
+		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
+		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
 
-		wp_insert_term('default', 'groupcat');
-		wp_insert_term('home', 'groupcat');
+		wp_insert_term( 'none', 'groupcat' );
+		wp_insert_term( 'default', 'groupcat' );
+		wp_insert_term( 'home', 'groupcat' );
 
-		add_meta_box('groupcat_box_ID', __('Category Group'), array(&$this,'metaboxGroupCat'), 'post', 'side', 'core');
-		add_meta_box('groupcat_box_ID', __('Category Group'), array(&$this,'metaboxGroupCat'), 'page', 'side', 'core');
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
 		return;
 	}
 
 	function AVH_EC_Admin ()
 	{
 		$this->__construct();
+	}
+
+	function metaboxGroupCat ()
+	{
+		// This function gets called in edit-form-advanced.php
+
+
+		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
+
+		// Get all theme taxonomy terms
+		$groupcats = get_terms( 'groupcat', 'hide_empty=0' );
+
+		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\'>';
+		$names = wp_get_object_terms( $post->ID, 'groupcat' );
+
+		foreach ( $groupcats as $groupcat ) {
+			if ( ! is_wp_error( $names ) && ! empty( $names ) && ! strcmp( $groupcat->name, $groupcat[0]->name ) )
+				echo "<option class='theme-option' value='" . $groupcat->name . "' selected>" . $groupcat->name . "</option>\n";
+			else
+				echo "<option class='theme-option' value='" . $groupcat->name . "'>" . $groupcat->name . "</option>\n";
+		}
+		echo '</select>';
 	}
 
 	/**
@@ -258,7 +281,7 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
-		$cat_name_new='';
+		$cat_name_new = '';
 
 		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 
@@ -284,7 +307,7 @@ class AVH_EC_Admin
 				$this->core->saveCatGroups( $cat_groups );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
-				$cat_name_new='';
+				$cat_name_new = '';
 			} else {
 				$this->message = __( 'Category group already exists', 'avh-ec' );
 				$this->status = 'error';
@@ -303,8 +326,8 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		$data_add_group['add'] = array('name'=>$cat_name_new);
-		$data['add'] = array('form'=>$options_add_group,'data'=>$data_add_group);
+		$data_add_group['add'] = array ('name' => $cat_name_new );
+		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
 		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
@@ -327,6 +350,7 @@ class AVH_EC_Admin
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
 
+
 		echo '</div>'; // wrap
 
 
@@ -335,13 +359,15 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
-	function metaboxGroupedAdd($data) {
+	function metaboxGroupedAdd ( $data )
+	{
 		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_addgroup' );
-		echo $this->printOptions($data['add']['form'],$data['add']['data']);
+		echo $this->printOptions( $data['add']['form'], $data['add']['data'] );
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avhfdas' ) . '" /></p>';
 		echo '</form>';
 	}
+
 	/**
 	 * Setup everything needed for the FAQ page
 	 *
