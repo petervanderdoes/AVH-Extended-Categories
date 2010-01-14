@@ -25,7 +25,6 @@ class AVH_EC_Admin
 		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
 		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => 'Category Groups', 'query_var' => true, 'rewrite' => true ) );
 
-		wp_insert_term( 'none', 'groupcat' );
 		wp_insert_term( 'default', 'groupcat' );
 		wp_insert_term( 'home', 'groupcat' );
 
