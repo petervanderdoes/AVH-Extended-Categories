@@ -8,6 +8,7 @@ class AVH_EC_Core
 	var $db_cat_groups;
 	var $default_options;
 	var $default_general_options;
+	var $default_grouped_cat_options;
 
 	var $default_cat_groups;
 	var $default_cat_groups_row;
@@ -48,8 +49,8 @@ class AVH_EC_Core
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
-
-		$this->default_options = array ('general' => $this->default_general_options );
+		$this->default_grouped_cat_options = array ('no-cat-group' => 'none');
+		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats'=>$this->default_grouped_cat_options );
 
 		/**
 		 * Setup Group Categories Taxonomy

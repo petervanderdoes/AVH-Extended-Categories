@@ -649,7 +649,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 
 		if ( empty( $row ) ) { // There is no group associated with the post
 			$options = $this->core->options;
-			$no_cat_group = $options['groupedcat']['no-cat-group'];
+			$no_cat_group = $options['groupedcats']['no-cat-group'];
 			$row = get_term_by( 'name', $no_cat_group, 'groupcat' );
 		}
 
