@@ -9,7 +9,7 @@ class AVH_EC_Admin
 	{
 
 		// Initialize the plugin
-		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
+		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
@@ -35,7 +35,7 @@ class AVH_EC_Admin
 	// This function gets called in edit-form-advanced.php
 	function metaboxGroupCat ( $post )
 	{
-
+		wp_enqueue_style( 'avhec-admin-css' );
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
