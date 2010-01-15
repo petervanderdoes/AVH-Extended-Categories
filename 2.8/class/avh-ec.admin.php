@@ -32,10 +32,11 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
+	// This function gets called in edit-form-advanced.php
 	function metaboxGroupCat ( $post )
 	{
-		// This function gets called in edit-form-advanced.php
 
+		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
@@ -58,6 +59,7 @@ class AVH_EC_Admin
 			}
 		}
 		echo '</select>';
+		echo '</p>';
 	}
 
 	function actionSaveGroupCatTaxonomy ( $post_id )
