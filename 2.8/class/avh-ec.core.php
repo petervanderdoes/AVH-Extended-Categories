@@ -58,9 +58,9 @@ class AVH_EC_Core
 		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
 		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
 
-		$none_group_id = wp_insert_term( 'none', 'groupcat' );
-		$all_group_id = wp_insert_term( 'all', 'groupcat' );
-		$home_group_id = wp_insert_term( 'home', 'groupcat' );
+		$none_group_id = wp_insert_term( 'none', 'groupcat',array('description'=>'This group will not show the widget.') );
+		$all_group_id = wp_insert_term( 'all', ',groupcat',array('description'=>'Holds all the categories.') );
+		$home_group_id = wp_insert_term( 'home', 'groupcat',array('description'=>'This group will be shown on the front page.') );
 
 		$this->default_cat_groups_row = array ('cats' => '', 'disabled' => 0 );
 
