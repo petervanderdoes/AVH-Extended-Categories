@@ -41,6 +41,7 @@ class AVH_EC_Admin
 	 */
 	function metaboxGroupCat ( $post )
 	{
+		$options=$this->core->getOptions;
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
@@ -56,7 +57,7 @@ class AVH_EC_Admin
 			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->name, $current_groupcat[0]->name ) ) {
 				echo '<option value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && 'none' == $groupcat->name ) {
+				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->name ) {
 					echo '<option value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
 					echo '<option value="' . $groupcat->name . '">' . $name . "</option>\n";
