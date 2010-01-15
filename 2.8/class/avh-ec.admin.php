@@ -23,6 +23,7 @@ class AVH_EC_Admin
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
 		add_action('load-post.php',array(&$this,'actionLoadPostPage'));
+		add_action('load-page.php',array(&$this,'actionLoadPostPage'));
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 
 		return;
