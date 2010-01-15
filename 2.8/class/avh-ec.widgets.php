@@ -13,7 +13,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
+		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		//Convert the old option widget_extended_categories to widget_extended-categories
 		$old = get_option( 'widget_extended_categories' );
@@ -381,7 +381,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
+		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		$widget_ops = array ('description' => __( "Shows the top categories.", 'avh-ec' ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );
@@ -603,7 +603,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
+		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Grouped' ), $widget_ops );
@@ -644,49 +644,49 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		if ( is_home() ) {
 			$row = get_term_by( 'name', 'home', 'groupcat' );
 		} else {
-			$row = wp_get_object_terms( $post->ID,'groupcat' );
+			$row = wp_get_object_terms( $post->ID, 'groupcat' );
 		}
 
-		if ( null === $groupid ) {
-			$row = get_term_by( 'name', 'none', 'groupcat' );
+		if ( empty( $row ) ) { // There is no group associated with the post
+			$options = $this->core->options;
+			$no_cat_group = $options['groupedcat']['no-cat-group'];
+			$row = get_term_by( 'name', $no_cat_group, 'groupcat' );
 		}
 
-		if ( ! isset( $options['groupedcats'][$groupid] ) ) {
-			$groupid = 'default';
+		if ( ! ('none' == $row->name) ) {
+			$groupid = $row->term_id;
+			$included_cats = $options['groupedcats'][$groupid];
+
+			$show_option_none = __( 'Select Category', 'avh-ec' );
+			if ( $options['general']['selectcategory'] ) {
+				$show_option_none = $options['general']['selectcategory'];
+			}
+
+			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+			echo $before_widget;
+			echo $this->core->comment;
+			echo $before_title . $title . $after_title;
+
+			if ( $style == 'list' ) {
+				echo '<ul>';
+				$this->core->avh_wp_list_categories( $cat_args, TRUE );
+				echo '</ul>';
+			} else {
+				$this->core->avh_wp_dropdown_categories( $cat_args, TRUE );
+				echo '<script type=\'text/javascript\'>' . "\n";
+				echo '/* <![CDATA[ */' . "\n";
+				echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");' . "\n";
+				echo '            function ec_onCatChange_' . $this->number . '() {' . "\n";
+				echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {' . "\n";
+				echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;' . "\n";
+				echo '                }' . "\n";
+				echo '            }' . "\n";
+				echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';' . "\n";
+				echo '/* ]]> */' . "\n";
+				echo '</script>' . "\n";
+			}
+			echo $after_widget;
 		}
-
-		$groupid = $row->term_id;
-		$included_cats = $options['groupedcats'][$groupid];
-
-		$show_option_none = __( 'Select Category', 'avh-ec' );
-		if ( $options['general']['selectcategory'] ) {
-			$show_option_none = $options['general']['selectcategory'];
-		}
-
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical'=>false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
-		echo $before_widget;
-		echo $this->core->comment;
-		echo $before_title . $title . $after_title;
-
-		if ( $style == 'list' ) {
-			echo '<ul>';
-			$this->core->avh_wp_list_categories( $cat_args, TRUE );
-			echo '</ul>';
-		} else {
-			$this->core->avh_wp_dropdown_categories( $cat_args, TRUE );
-			echo '<script type=\'text/javascript\'>' . "\n";
-			echo '/* <![CDATA[ */' . "\n";
-			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");' . "\n";
-			echo '            function ec_onCatChange_' . $this->number . '() {' . "\n";
-			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {' . "\n";
-			echo '                    location.href = "' . get_option( 'home' ) . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;' . "\n";
-			echo '                }' . "\n";
-			echo '            }' . "\n";
-			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';' . "\n";
-			echo '/* ]]> */' . "\n";
-			echo '</script>' . "\n";
-		}
-		echo $after_widget;
 	}
 
 	/**
