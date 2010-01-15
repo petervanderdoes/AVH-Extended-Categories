@@ -13,7 +13,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVHExtendedCategoriesCore::getInstance();
+		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 
 		//Convert the old option widget_extended_categories to widget_extended-categories
 		$old = get_option( 'widget_extended_categories' );
@@ -381,7 +381,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVHExtendedCategoriesCore::getInstance();
+		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 
 		$widget_ops = array ('description' => __( "Shows the top categories.", 'avh-ec' ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );
@@ -603,7 +603,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 	 */
 	function __construct ()
 	{
-		$this->core = & AVHExtendedCategoriesCore::getInstance();
+		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Grouped' ), $widget_ops );

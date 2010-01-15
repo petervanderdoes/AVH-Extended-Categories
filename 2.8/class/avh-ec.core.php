@@ -1,5 +1,5 @@
 <?php
-class AVHExtendedCategoriesCore
+class AVH_EC_Core
 {
 	var $version;
 	var $comment;
@@ -90,23 +90,9 @@ class AVHExtendedCategoriesCore
 	 *
 	 * @return AVHExtendedCategoriesCore
 	 */
-	function AVHExtendedCategoriesCore ()
+	function AVH_EC_Core ()
 	{
 		$this->__construct();
-	}
-
-	/**
-	 * Singleton method
-	 *
-	 * @return object
-	 */
-	function getInstance ()
-	{
-		static $_instance;
-		if ( $_instance === null ) {
-			$_instance = & new AVHExtendedCategoriesCore( );
-		}
-		return $_instance;
 	}
 
 	/**
