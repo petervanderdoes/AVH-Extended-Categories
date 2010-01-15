@@ -33,7 +33,12 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
-	// This function gets called in edit-form-advanced.php
+	/**
+	 * Shows a metabox on the page post.php and page.php
+	 * This function gets called in edit-form-advanced.php
+	 *
+	 * @param $post
+	 */
 	function metaboxGroupCat ( $post )
 	{
 		echo '<p id=\'avhec-groupcat\'';
@@ -62,6 +67,10 @@ class AVH_EC_Admin
 		echo '</p>';
 	}
 
+	/**
+	 * Called when the post/page is saved. It associates the selected Category Group with the post
+	 * @param $post_id
+	 */
 	function actionSaveGroupCatTaxonomy ( $post_id )
 	{
 		if ( ! wp_verify_nonce( $_POST['avhec_groupcat_nonce'], 'avhec_groupcat_nonce' ) ) {
@@ -89,6 +98,9 @@ class AVH_EC_Admin
 
 	}
 
+	/**
+	 * Enqueues the style on the post.php and page.php pages
+	 */
 	function actionLoadPostPage ()
 	{
 		wp_enqueue_style( 'avhec-admin-css' );
