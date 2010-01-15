@@ -18,7 +18,7 @@ class AVH_EC_Singleton
 						require_once (dirname( __FILE__ ) . '/class/avh-ec.core.php');
 						break;
 					case 'AVH_EC_Admin' :
-						require_once (dirname( __FILE__ ) . '/class/avh-fdas.admin.php');
+						require_once (dirname( __FILE__ ) . '/class/avh-ec.admin.php');
 						break;
 				}
 			}
