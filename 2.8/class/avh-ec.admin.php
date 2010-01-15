@@ -19,9 +19,10 @@ class AVH_EC_Admin
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_register_style( 'avhec-admin-css', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
 
+
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
-
+		add_action('load-post.php',array(&$this,'actionLoadPostPage'));
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 
 		return;
@@ -35,7 +36,6 @@ class AVH_EC_Admin
 	// This function gets called in edit-form-advanced.php
 	function metaboxGroupCat ( $post )
 	{
-		wp_enqueue_style( 'avhec-admin-css' );
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
@@ -89,6 +89,9 @@ class AVH_EC_Admin
 
 	}
 
+	function actionLoadPostPage() {
+		wp_enqueue_style('avhec-admin-css');
+	}
 	/**
 	 * Add the Tools and Options to the Management and Options page repectively
 	 *
