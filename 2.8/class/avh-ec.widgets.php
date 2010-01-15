@@ -609,7 +609,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		WP_Widget::__construct( false, __( 'AVH Extended Categories Grouped' ), $widget_ops );
 	}
 
-	function WP_Widget_AVH_ExtendedCategories_Top ()
+	function WP_Widget_AVH_ExtendedCategories_Grouped ()
 	{
 		$this->__construct();
 	}
@@ -622,6 +622,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 	 */
 	function widget ( $args, $instance )
 	{
+		global $post;
 		extract( $args );
 
 		$c = $instance['count'] ? '1' : '0';
@@ -641,19 +642,20 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		$options = $this->core->getOptions();
 
 		if ( is_home() ) {
-			$groupid = 'home';
+			$row = get_term_by( 'name', 'home', 'groupcat' );
 		} else {
-			$groupid = get_post_custom_values( 'avhec-groupid' );
+			$row = wp_get_object_terms( $post->ID,'groupcat' );
 		}
 
 		if ( null === $groupid ) {
-			$groupid = 'default';
+			$row = get_term_by( 'name', 'none', 'groupcat' );
 		}
 
 		if ( ! isset( $options['groupedcats'][$groupid] ) ) {
 			$groupid = 'default';
 		}
 
+		$groupid = $row->term_id;
 		$included_cats = $options['groupedcats'][$groupid];
 
 		$show_option_none = __( 'Select Category', 'avh-ec' );
