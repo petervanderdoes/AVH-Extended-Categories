@@ -40,9 +40,10 @@ The Top Categories widget gives you the following customizable options:
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 Translations:
-* Czech - Čeština (cs_CZ) by Dirty Mind - http://dirtymind.ic.cz in Launchpad
+* Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
 * Spanish - Español (es_ES) in Launchpad
 * Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
+* French - Français (fr_FR) in Launchpad
 
 == Installation ==
 

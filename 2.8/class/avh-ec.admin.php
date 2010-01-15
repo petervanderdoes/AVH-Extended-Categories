@@ -508,6 +508,7 @@ class AVH_EC_Admin
 		echo 'Czech - Čeština (cs_CZ)  in Launchpad - Dirty Mind - <a href="http://dirtymind.ic.cz" target="_blank">http://dirtymind.ic.cz</a><br />';
 		echo 'Spanish - Español (es_ES) in Launchpad<br />';
 		echo 'Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - <a href="http://gidibao.net" target="_blank">http://gidibao.net</a><br />';
+		echo 'French - Français (fr_FR) in Launchpad<br />';
 		echo '</p>';
 	}
 
