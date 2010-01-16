@@ -70,6 +70,7 @@ class AVH_EC_Core
 		 */
 		$this->loadOptions();
 		$this->loadCatGroups();
+		$this->setTables();
 
 		// Check if we have to do upgrades
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
