@@ -108,6 +108,18 @@ class AVH_EC_Core
 
 	}
 
+		/**
+	 * Setup DB Tables
+	 * @return unknown_type
+	 */
+	function setTables ()
+	{
+		global $wpdb;
+
+		// add DB pointer
+		$wpdb->avhecgroupcat = $wpdb->prefix . 'avhec_group_cat';
+	}
+
 	/**
 	 * Checks if running version is newer and do upgrades if necessary
 	 *

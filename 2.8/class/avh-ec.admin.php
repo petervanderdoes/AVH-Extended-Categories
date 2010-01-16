@@ -11,6 +11,8 @@ class AVH_EC_Admin
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
+		$this->installPlugin();
+
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
 		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
@@ -34,6 +36,40 @@ class AVH_EC_Admin
 	}
 
 	/**
+	 * Called on activation of the plugin.
+	 *
+	 */
+	function installPlugin ()
+	{
+		global $wpdb;
+
+		//require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+
+
+		// Setup the DB Tables
+		$charset_collate = '';
+
+		if ( version_compare( mysql_get_server_info(), '4.1.0', '>=' ) ) {
+			if ( ! empty( $wpdb->charset ) )
+				$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
+			if ( ! empty( $wpdb->collate ) )
+				$charset_collate .= ' COLLATE ' . $wpdb->collate;
+		}
+
+		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhecgroupcat . '\'' ) != $wpdb->avhecgroupcat ) {
+
+			$sql = 'CREATE TABLE `' . $wpdb->avhecgroupcat . '` (
+  					`term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0,
+  					`term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT NULL,
+  					PRIMARY KEY (`term_taxonomy_id`, `term_id`)
+				)' . $charset_collate . ';';
+
+			$result = $wpdb->query( $sql );
+		}
+
+	}
+
+	/**
 	 * Shows a metabox on the page post.php and page.php
 	 * This function gets called in edit-form-advanced.php
 	 *
@@ -41,7 +77,7 @@ class AVH_EC_Admin
 	 */
 	function metaboxGroupCat ( $post )
 	{
-		$options=$this->core->getOptions;
+		$options = $this->core->getOptions;
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
