@@ -82,8 +82,8 @@ class AVH_EC_Admin
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
-		// Get all theme taxonomy terms
-		$groupcats = get_terms( 'groupcat', 'hide_empty=0' );
+		// Get the groupcat taxonomy term ID's
+		$groupcats = get_terms( 'groupcat', array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
 		$current_groupcat = wp_get_object_terms( $post->ID, 'groupcat' );
