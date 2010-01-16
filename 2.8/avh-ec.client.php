@@ -44,7 +44,11 @@ function avhextendedcategories_init ()
 	// Admin
 	if ( is_admin() ) {
 		$avhec_admin = & AVH_EC_Singleton::getInstance('AVH_EC_Admin');
+			// Activation Hook
+			register_activation_hook( __FILE__, array (&$avhfdas_admin, 'installPlugin' ) );
 	}
+
+
 	add_action( 'widgets_init', 'avhextendedcategories_widgets_init' );
 
 } // End avhamazon_init()

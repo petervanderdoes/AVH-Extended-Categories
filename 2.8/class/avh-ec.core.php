@@ -14,8 +14,6 @@ class AVH_EC_Core
 	var $default_cat_groups_row;
 
 	var $options;
-	var $cat_groups;
-	var $cat_group_row;
 
 	/**
 	 * PHP5 constructor
@@ -48,10 +46,6 @@ class AVH_EC_Core
 		// Set class property for info
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
-		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
-		$this->default_grouped_cat_options = array ('no-cat-group' => 'none', 'default-group' => 'all' );
-		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cat_options );
-
 		/**
 		 * Setup Group Categories Taxonomy
 		 */
@@ -62,9 +56,9 @@ class AVH_EC_Core
 		$all_group_id = wp_insert_term( 'all', 'groupcat',array('description'=>'Holds all the categories.') );
 		$home_group_id = wp_insert_term( 'home', 'groupcat',array('description'=>'This group will be shown on the front page.') );
 
-		$this->default_cat_groups_row = array ('cats' => '', 'disabled' => 0 );
-
-		$this->default_cat_groups = array ($none_group_id['term_id'] => 'none', $all_group_id['term_id'] => $this->default_cat_groups_row, $home_group_id['term_id'] => $this->default_cat_groups_row );
+		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
+		$this->default_grouped_cat_options = array ('no-cat-group' => 'none', 'default-group' => $all_group_id['term_id'] );
+		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cat_options );
 
 		unset( $home_group_id );
 		unset( $all_group_id );

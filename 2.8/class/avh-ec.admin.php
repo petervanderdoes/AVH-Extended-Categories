@@ -82,7 +82,7 @@ class AVH_EC_Admin
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
-		// Get the groupcat taxonomy term ID's
+		// Get all the groupcat taxonomy terms
 		$groupcats = get_terms( 'groupcat', array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
@@ -90,13 +90,13 @@ class AVH_EC_Admin
 
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
-			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->name, $current_groupcat[0]->name ) ) {
-				echo '<option value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
+			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_id, $current_groupcat[0]->term_id ) ) {
+				echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->name ) {
-					echo '<option value="' . $groupcat->name . '" selected=\'selected\'>' . $name . "</option>\n";
+				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->term_id ) {
+					echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
-					echo '<option value="' . $groupcat->name . '">' . $name . "</option>\n";
+					echo '<option value="' . $groupcat->term_id . '">' . $name . "</option>\n";
 				}
 			}
 		}
