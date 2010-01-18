@@ -21,6 +21,8 @@ class AVH_EC_Core
 	 */
 	function __construct ()
 	{
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+
 		$this->version = '3.0-dev1';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 2;
@@ -43,33 +45,25 @@ class AVH_EC_Core
 		}
 
 		$info['lang_dir'] = $path . '/lang';
+
 		// Set class property for info
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
-		/**
-		 * Setup Group Categories Taxonomy
-		 */
-		register_taxonomy( 'groupcat', 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-		register_taxonomy( 'groupcat', 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+		// Setup the standard groups
+		$none_group_id = $catgrp->doInsertTerm( 'none', array ('description' => 'This group will not show the widget.' ) );
+		$all_group_id = $catgrp->doInsertTerm( 'all', array ('description' => 'Holds all the categories.' ) );
+		$home_group_id = $catgrp->doInsertTerm( 'home', array ('description' => 'This group will be shown on the front page.' ) );
 
-		$none_group_id = wp_insert_term( 'none', 'groupcat',array('description'=>'This group will not show the widget.') );
-		$all_group_id = wp_insert_term( 'all', 'groupcat',array('description'=>'Holds all the categories.') );
-		$home_group_id = wp_insert_term( 'home', 'groupcat',array('description'=>'This group will be shown on the front page.') );
-
+		// Set the default options
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
-		$this->default_grouped_cat_options = array ('no-cat-group' => 'none', 'default-group' => $all_group_id['term_id'] );
+		$this->default_grouped_cat_options = array ('no-cat-group' => $none_group_id['term_id'], 'default-group' => $all_group_id['term_id'] );
 		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cat_options );
-
-		unset( $home_group_id );
-		unset( $all_group_id );
-		unset( $none_group_id );
 
 		/**
 		 * Set the options for the program
 		 *
 		 */
 		$this->loadOptions();
-		$this->loadCatGroups();
 		$this->setTables();
 
 		// Check if we have to do upgrades
@@ -78,7 +72,6 @@ class AVH_EC_Core
 		}
 
 		$this->handleTextdomain();
-
 	}
 
 	/**
@@ -103,7 +96,7 @@ class AVH_EC_Core
 
 	}
 
-		/**
+	/**
 	 * Setup DB Tables
 	 * @return unknown_type
 	 */
@@ -253,89 +246,6 @@ class AVH_EC_Core
 		$this->saveOptions( $this->default_options );
 	}
 
-	/************************************
-	 *                                  *
-	 * Methods for variable: cat_groups *
-	 *                                  *
-	 ************************************/
-
-	/**
-	 * @param array $data
-	 */
-	function setCatGroups ( $a )
-	{
-		$this->cat_groups = $a;
-	}
-
-	/**
-	 * return array
-	 */
-	function getCatGroups ()
-	{
-		return ($this->cat_groups);
-	}
-
-	/**
-	 * Save all current options and set the options
-	 *
-	 */
-	function saveCatGroups ( $a )
-	{
-		update_option( $this->db_cat_groups, $a );
-		wp_cache_flush(); // Delete cache
-		$this->setCatGroups( $a );
-	}
-
-	/**
-	 * Retrieves the plugin Category Groups from the WordPress options table and assigns to class variable.
-	 * If the Category Groups do not exists, like a new installation, the Category Groups are set to the default value.
-	 *
-	 * @return none
-	 */
-	function loadCatGroups ()
-	{
-		$options = get_option( $this->db_cat_groups );
-		if ( false === $options ) { // New installation
-			$this->resetToDefaultCatGroups();
-		} else {
-			$categories = get_categories();
-			foreach ( $categories as $category ) {
-				$all_cat_id[] = $category->term_id;
-			}
-			$a = implode( ',', $all_cat_id );
-			$row = get_term_by( 'name', 'all', 'groupcat' );
-			$options[$row->term_id]['cats'] = $a; // all group
-			$this->setCatGroups( $options );
-		}
-	}
-
-	/**
-	 * Get the categories from a given group, if the categories is empty return the default value.
-	 *
-	 * @param $id Category Group ID
-	 * @return string
-	 */
-	function getCatGroupsCategories ( $id )
-	{
-		if ( ! empty( $this->cat_groups[$id]['cats'] ) ) {
-			$return = $this->cat_groups[$id]['cats'];
-		} else {
-			$row = get_term_by( 'name', 'all', 'groupcat' );
-			$return = $this->cat_groups[$row->term_id]['cats']; // All Category Group
-		}
-		return ($return);
-	}
-
-	/**
-	 * Reset to default options and save in DB
-	 *
-	 */
-	function resetToDefaultCatGroups ()
-	{
-		$this->cat_groups = $this->default_cat_groups;
-		$this->setDefaultCatGroups();
-		$this->saveCatGroups( $this->default_cat_groups );
-	}
 
 	/**
 	 * Set the default category groups Default and Home
@@ -343,14 +253,12 @@ class AVH_EC_Core
 	 */
 	function setDefaultCatGroups ()
 	{
-		$categories = get_categories();
-		foreach ( $categories as $category ) {
-			$all_cat_id[] = $category->term_id;
-		}
-		$a = implode( ',', $all_cat_id );
-		$row = get_term_by( 'name', 'all', 'groupcat' );
+		//@TODO Save the groups
+		$catgrp=& AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$a = $catgrp->getAllGroups();
+		$row = get_term_by( 'name', 'all',$catgrp->taxonomy_name );
 		$this->default_cat_groups[$row->term_id]['cats'] = $a; // all group
-		$row = get_term_by( 'name', 'home', 'groupcat' );
+		$row = get_term_by( 'name', 'home',$catgrp->taxonomy_name );
 		$this->default_cat_groups[$row->term_id]['cats'] = $a; // home group
 	}
 

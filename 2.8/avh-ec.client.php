@@ -20,8 +20,8 @@ class AVH_EC_Singleton
 					case 'AVH_EC_Admin' :
 						require_once (dirname( __FILE__ ) . '/class/avh-ec.admin.php');
 						break;
-					case 'AVH_EC_DB' :
-						require_once (dirname( __FILE__ ) . '/class/avh-ec.db.php');
+					case 'AVH_EC_Category_Group' :
+						require_once (dirname( __FILE__ ) . '/class/av-ec.category-group.php');
 						break;
 
 				}
