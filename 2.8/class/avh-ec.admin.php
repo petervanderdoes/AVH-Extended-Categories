@@ -92,17 +92,17 @@ class AVH_EC_Admin
 		$groupcats = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
-		$current_groupcat = wp_get_object_terms( $post->ID, 'groupcat' );
+		$current_groupcat = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
-			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_id, $current_groupcat[0]->term_id ) ) {
-				echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_taxonomy_id, $current_groupcat[0]->term_taxonomy_id ) ) {
+				echo '<option value="' . $groupcat->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->term_id ) {
-					echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->term_taxonomy_id ) {
+					echo '<option value="' . $groupcat->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
-					echo '<option value="' . $groupcat->term_id . '">' . $name . "</option>\n";
+					echo '<option value="' . $groupcat->term_taxonomy_id . '">' . $name . "</option>\n";
 				}
 			}
 		}
@@ -116,6 +116,7 @@ class AVH_EC_Admin
 	 */
 	function actionSaveGroupCatTaxonomy ( $post_id )
 	{
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		if ( ! wp_verify_nonce( $_POST['avhec_groupcat_nonce'], 'avhec_groupcat_nonce' ) ) {
 			return $post_id;
 		}
@@ -135,7 +136,7 @@ class AVH_EC_Admin
 
 		// OK, we're authenticated: we need to find and save the data
 		$groupcat = $_POST['post_avhec_groupcat'];
-		wp_set_object_terms( $post_id, $groupcat, 'groupcat' );
+		wp_set_object_terms( $post_id, $groupcat, $catgrp->taxonomy_name );
 
 		return $groupcat;
 
