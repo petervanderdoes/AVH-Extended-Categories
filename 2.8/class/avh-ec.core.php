@@ -50,9 +50,9 @@ class AVH_EC_Core
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
 		// Setup the standard groups
-		$none_group_id = $catgrp->doInsertTerm( 'none', array ('description' => 'This group will not show the widget.' ) );
-		$all_group_id = $catgrp->doInsertTerm( 'all', array ('description' => 'Holds all the categories.' ) );
-		$home_group_id = $catgrp->doInsertTerm( 'home', array ('description' => 'This group will be shown on the front page.' ) );
+		$none_group_id = wp_insert_term( 'none', $catgrp->taxonomy_name,array ('description' => 'This group will not show the widget.' ) );
+		$all_group_id = wp_insert_term( 'all', $catgrp->taxonomy_name,array ('description' => 'Holds all the categories.' ) );
+		$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name,array ('description' => 'This group will be shown on the front page.' ) );
 
 		// Set the default options
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
