@@ -65,5 +65,61 @@ class AVH_EC_Category_Group
 		return ($all_cat_id);
 	}
 
+	/**
+	 * Get the categories from the given group from the DB
+	 *
+	 * @param int $group_id The Taxonomy Term ID
+	 * @return Array|False categories. Will return FALSE, if the row does not exists.
+	 *
+	 */
+	function getCategoriesFromGroup ( $group_id )
+	{
+		global $wpdb;
+
+		// Query database
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->avhec_cat_group WHERE term_taxonomy_id = %s", $group_id ) );
+
+		if ( is_object( $result ) ) {
+			$categories = $result->avhec_categories;
+			$return = unserialize( $categories );
+		} else {
+			$return = false;
+		}
+		return ($return);
+	}
+
+	/**
+	 * Set the categories for the given group from the DB. Insert the group if it doesn't exists.
+	 *
+	 * @param int $group_id The Taxonomy Term ID
+	 * @param array $categories The categories
+	 * @return Object (false if not found)
+	 *
+	 */
+	function setCategoriesForGroup ( $group_id, $newcategories = array() )
+	{
+		global $wpdb;
+
+		$oldcategories = $this->getCategoriesFromGroup( $group_id );
+		$newcategories = serialize( $categories );
+		// If the new and old values are the same, no need to update.
+		if ( $newcategories === $oldcategories )
+			return false;
+
+		if ( false === $oldoldcategories ) {
+			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_taxonomy_id, avhec_categories) VALUES (%d, %s)", $group_id, $$newcategories );
+		} else {
+			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_taxonomy_id=%d", $newcategories, $group_id );
+		}
+
+		// Query database
+		$result = $wpdb->query( $sql );
+
+		if ( $result ) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
 }
 ?>
