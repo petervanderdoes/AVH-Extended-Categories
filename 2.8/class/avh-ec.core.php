@@ -242,49 +242,6 @@ class AVH_EC_Core
 	}
 
 	/**
-	 * Set the default category groups Default and Home
-	 *
-	 */
-	function setDefaultCatGroups ()
-	{
-		//@TODO Save the groups
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-		$a = $catgrp->getAllGroups();
-		$row = get_term_by( 'name', 'all', $catgrp->taxonomy_name );
-		$this->default_cat_groups[$row->term_id]['cats'] = $a; // all group
-		$row = get_term_by( 'name', 'home', $catgrp->taxonomy_name );
-		$this->default_cat_groups[$row->term_id]['cats'] = $a; // home group
-	}
-
-	/****
-	 * Methods for class variable cat_group_row
-	 */
-
-	/**
-	 * Set Category Group Row
-	 * If the $grouparr parameter has 'ID' set to a value, then post will be updated.
-	 *
-	 *
-	 * The defaults for the parameter $postarr are:
-	 *     'cats   '   - Default is ''.
-	 *     'disabled'     - Default is FALSE.
-	 *
-	 * @param array $grouparr Optional. Overrides defaults.
-	 * @param bool $wp_error Optional. Allow return of WP_Error on failure.
-	 */
-	function setCatGroupRow ( $grouparr = array() )
-	{
-		$defaults = array ('cats' => '', 'disabled' => FALSE );
-		$grouparr = wp_parse_args( $grouparr, $defaults );
-		// export array as variables
-		extract( $grouparr, EXTR_SKIP );
-
-		$this->cat_group_row['cats'] = $cats;
-		$this->cat_group_row['disabled'] = $disabled;
-
-	}
-
-	/**
 	 * Display or retrieve the HTML dropdown list of categories.
 	 *
 	 * The list of arguments is below:

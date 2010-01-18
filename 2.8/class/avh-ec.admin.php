@@ -68,9 +68,10 @@ class AVH_EC_Admin
 		$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
 
 		//Fill the standard groups with all categories
-		$all_categories=$catgrp->getAllGroups();
-		$catgrp->setCategoriesForGroup($all_group_id,$all_categories);
-		$catgrp->setCategoriesForGroup($home_group_id,$all_categories);
+//		$all_categories=$catgrp->getAllGroups();
+//		$catgrp->setCategoriesForGroup($all_group_id,$all_categories);
+//		$catgrp->setCategoriesForGroup($home_group_id,$all_categories);
+
 	}
 
 	/**
