@@ -43,6 +43,8 @@ class AVH_EC_Admin
 	{
 		global $wpdb;
 
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+
 		// Setup the DB Tables
 		$charset_collate = '';
 
@@ -60,6 +62,15 @@ class AVH_EC_Admin
 			$result = $wpdb->query( $sql );
 		}
 
+		// Setup the standard groups
+		$none_group_id = wp_insert_term( 'none', $catgrp->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
+		$all_group_id = wp_insert_term( 'all', $catgrp->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
+		$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
+
+		//Fill the standard groups with all categories
+		$all_categories=$catgrp->getAllGroups();
+		$catgrp->setCategoriesForGroup($all_group_id,$all_categories);
+		$catgrp->setCategoriesForGroup($home_group_id,$all_categories);
 	}
 
 	/**
