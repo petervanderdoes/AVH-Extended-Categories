@@ -42,7 +42,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$selectedonly = $instance['selectedonly'] ? '1' : '0';
 		$c = $instance['count'] ? '1' : '0';
-		$h = $instance['hierarchical'] ? '1' : '0';
+		$h = $instance['hierarchical'] ? 1 : 0;
 		$d = $instance['depth'] ? $instance['depth'] : 0;
 		$e = $instance['hide_empty'] ? '1' : '0';
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
@@ -213,8 +213,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '</label>';
 		echo '<br />';
 
-		echo '<label for="' . $this->get_field_id( 'hierachical' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierachical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->core->isChecked( true, $hierarchical ) . ' /> ';
+		echo '<label for="' . $this->get_field_id( 'hierarchical' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierarchical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->core->isChecked( true, $hierarchical ) . ' /> ';
 		_e( 'Show hierarchy', 'avh-ec' );
 		echo '</label>';
 		echo '<br />';
@@ -756,8 +756,8 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		echo '</label>';
 		echo '<br />';
 
-		echo '<label for="' . $this->get_field_id( 'hierachical' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierachical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->core->isChecked( true, $hierarchical ) . ' /> ';
+		echo '<label for="' . $this->get_field_id( 'hierarchical' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hierarchical' ) . '" name="' . $this->get_field_name( 'hierarchical' ) . '" ' . $this->core->isChecked( true, $hierarchical ) . ' /> ';
 		_e( 'Show hierarchy', 'avh-ec' );
 		echo '</label>';
 		echo '<br />';
