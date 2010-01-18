@@ -53,9 +53,9 @@ class AVH_EC_Admin
 				$charset_collate .= ' COLLATE ' . $wpdb->collate;
 		}
 
-		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhecgroupcat . '\'' ) != $wpdb->avhecgroupcat ) {
+		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
 
-			$sql = 'CREATE TABLE `' . $wpdb->avhecgroupcat . '` ( `term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_taxonomy_id`) )' . $charset_collate . ';';
+			$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_taxonomy_id`) )' . $charset_collate . ';';
 
 			$result = $wpdb->query( $sql );
 		}

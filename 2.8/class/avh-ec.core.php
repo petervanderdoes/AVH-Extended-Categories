@@ -105,7 +105,7 @@ class AVH_EC_Core
 		global $wpdb;
 
 		// add DB pointer
-		$wpdb->avhecgroupcat = $wpdb->prefix . 'avhec_cat_group';
+		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_cat_group';
 	}
 
 	/**
