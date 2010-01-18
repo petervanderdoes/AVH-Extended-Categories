@@ -82,13 +82,14 @@ class AVH_EC_Admin
 	 */
 	function metaboxGroupCat ( $post )
 	{
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$options = $this->core->getOptions;
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
 		// Get all the groupcat taxonomy terms
-		$groupcats = get_terms( 'groupcat', array ('hide_empty' => FALSE ) );
+		$groupcats = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
 		$current_groupcat = wp_get_object_terms( $post->ID, 'groupcat' );
