@@ -40,7 +40,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	{
 		extract( $args );
 
-		$selectedonly = $instance['selectedonly'] ? '1' : '0';
+		$selectedonly = $instance['selectedonly'] ? 1 : 0;
 		$c = $instance['count'] ? '1' : '0';
 		$h = $instance['hierarchical'] ? 1 : 0;
 		$d = $instance['depth'] ? $instance['depth'] : 0;
