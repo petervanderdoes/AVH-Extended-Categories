@@ -464,7 +464,7 @@ class AVH_EC_Core
 			if ( empty( $r['current_category'] ) && is_category() )
 				$r['current_category'] = $wp_query->get_queried_object_id();
 
-			if ( $hierarchical && (! $selectonly) ) {
+			if ( $hierarchical && (! $selectedonly) ) {
 				$depth = $r['depth'];
 			} else {
 				$depth = - 1; // Flat.
