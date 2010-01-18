@@ -43,7 +43,7 @@ Translations:
 * Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
 * Spanish - Español (es_ES) in Launchpad
 * Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
-* French - Français (fr_FR) in Launchpad
+* French - Français (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
 
 == Installation ==
 
@@ -85,6 +85,8 @@ None
 * Redid settings. Now is seperate menu.
 * Reduced memory foot print.
 * Increased loading speed.
+* Bugfix: The hierarchy checkmark would disappear.
+* Bugfix: In dropdown hierarchy would appear despite the fact that "Show selected categories only" was selected.
 
 = Version 2.3.3 =
 * Bugfix: Validation error on dropdown categories.
