@@ -26,9 +26,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // Include WordPress version
 require (ABSPATH . WPINC . '/version.php');
+global $plugin;
+$dir = min( explode( '/', $plugin ) );
 
 if ( ( float ) $wp_version >= 2.8 ) {
-	require (dirname ( __FILE__ ) . '/2.8/avh-ec.client.php');
+	define(AVHEC_PLUGIN_DIR,WP_PLUGIN_DIR.'/'.$dir.'/2.8');
+	require (AVHEC_PLUGIN_DIR . '/avh-ec.client.php');
 } else {
 	require_once 'widget-pre2.8.php';
 }
