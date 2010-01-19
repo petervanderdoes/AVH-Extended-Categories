@@ -82,11 +82,11 @@ None
 = Version 3.0 =
 * Renamed the plugin to AVH Extended Categories Widgets
 * Added translation: Italian - Italiano (it_IT)
-* Redid settings. Now is seperate menu.
+* Redid settings. Settings are now a seperate menu.
 * Reduced memory foot print.
-* Increased loading speed.
-* Better way to include files.
-* Bugfix: The hierarchy checkmark would disappear.
+* Increased speed.
+* Development improvements.
+* Bugfix: The hierarchy checkmark in the widgets would disappear.
 * Bugfix: In dropdown hierarchy would appear despite the fact that "Show selected categories only" was selected.
 
 = Version 2.3.3 =
