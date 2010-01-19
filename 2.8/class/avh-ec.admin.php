@@ -632,19 +632,8 @@ class AVH_EC_Admin
 	 */
 	function filterPluginActions ( $links, $file )
 	{
-		static $this_plugin;
-
-		if ( ! $this_plugin ) {
-			$this_plugin = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR.'/foo.php' );
-		}
-		if ( $file ) {
-			$file = $this->core->getBaseDirectory( $file );
-		}
-		if ( $file == $this_plugin ) {
 			$settings_link = '<a href="admin.php?page=extended-categories-widget">' . __( 'Settings', 'avh-ec' ) . '</a>';
 			array_unshift( $links, $settings_link ); // before other links
-		//$links = array_merge ( array (	$settings_link ), $links ); // before other links
-		}
 		return $links;
 
 	}

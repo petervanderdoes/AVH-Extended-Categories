@@ -145,14 +145,10 @@ class AVH_EC_Core
 	 */
 	function getBaseDirectory ( $directory )
 	{
-		//get public directory structure eg "/top/second/third"
-		$public_directory = dirname( $directory );
-		//place each directory into array
-		$directory_array = explode( '/', $public_directory );
-		//get highest or top level in array of directory strings
-		$public_base = end( $directory_array );
+		//place each directory into array and get the last element
+		$return = end(explode( '/', $directory ));
 
-		return $public_base;
+		return $return;
 	}
 
 	/*********************************
