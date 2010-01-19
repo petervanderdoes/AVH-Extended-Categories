@@ -85,6 +85,7 @@ None
 * Redid settings. Now is seperate menu.
 * Reduced memory foot print.
 * Increased loading speed.
+* Better way to include files.
 * Bugfix: The hierarchy checkmark would disappear.
 * Bugfix: In dropdown hierarchy would appear despite the fact that "Show selected categories only" was selected.
 

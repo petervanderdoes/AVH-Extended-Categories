@@ -68,9 +68,9 @@ class AVH_EC_Admin
 		$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
 
 		//Fill the standard groups with all categories
-//		$all_categories=$catgrp->getAllGroups();
-//		$catgrp->setCategoriesForGroup($all_group_id,$all_categories);
-//		$catgrp->setCategoriesForGroup($home_group_id,$all_categories);
+		$all_categories = $catgrp->getAllGroups();
+		$catgrp->setCategoriesForGroup( $all_group_id['term_taxonomy_id'], $all_categories );
+		$catgrp->setCategoriesForGroup( $home_group_id['term_taxonomy_id'], $all_categories );
 
 	}
 
@@ -160,7 +160,7 @@ class AVH_EC_Admin
 	{
 
 		// Add menu system
-		$folder = $this->core->getBaseDirectory( plugin_basename( $this->core->info['plugin_dir'] ) );
+		$folder = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR );
 		add_menu_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
 		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
@@ -634,10 +634,12 @@ class AVH_EC_Admin
 	{
 		static $this_plugin;
 
-		if ( ! $this_plugin )
-			$this_plugin = $this->core->getBaseDirectory( plugin_basename( $this->core->info['plugin_dir'] ) );
-		if ( $file )
+		if ( ! $this_plugin ) {
+			$this_plugin = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR.'/foo.php' );
+		}
+		if ( $file ) {
 			$file = $this->core->getBaseDirectory( $file );
+		}
 		if ( $file == $this_plugin ) {
 			$settings_link = '<a href="admin.php?page=extended-categories-widget">' . __( 'Settings', 'avh-ec' ) . '</a>';
 			array_unshift( $links, $settings_link ); // before other links

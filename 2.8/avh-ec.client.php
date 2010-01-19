@@ -15,13 +15,13 @@ class AVH_EC_Singleton
 				switch ( $class )
 				{
 					case 'AVH_EC_Core' :
-						require_once (AVHEC_PLUGIN_DIR . '/class/avh-ec.core.php');
+						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.core.php');
 						break;
 					case 'AVH_EC_Admin' :
-						require_once (AVHEC_PLUGIN_DIR . '/class/avh-ec.admin.php');
+						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.admin.php');
 						break;
 					case 'AVH_EC_Category_Group' :
-						require_once (AVHEC_PLUGIN_DIR . '/class/av-ec.category-group.php');
+						require_once (AVHEC_WORKING_DIR . '/class/av-ec.category-group.php');
 						break;
 
 				}
@@ -33,7 +33,7 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
-require_once (AVHEC_PLUGIN_DIR . '/class/avh-ec.widgets.php');
+require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
  * Initialize the plugin
