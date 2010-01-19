@@ -96,7 +96,7 @@ class AVH_EC_Category_Group
 	 * @return Object (false if not found)
 	 *
 	 */
-	function setCategoriesForGroup ( $group_id, $newcategories = array() )
+	function setCategoriesForGroup ( $group_id, $categories = array() )
 	{
 		global $wpdb;
 
@@ -106,8 +106,8 @@ class AVH_EC_Category_Group
 		if ( $newcategories === $oldcategories )
 			return false;
 
-		if ( false === $oldoldcategories ) {
-			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_taxonomy_id, avhec_categories) VALUES (%d, %s)", $group_id, $$newcategories );
+		if ( false === $oldcategories ) {
+			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_taxonomy_id, avhec_categories) VALUES (%d, %s)", $group_id, $newcategories );
 		} else {
 			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_taxonomy_id=%d", $newcategories, $group_id );
 		}
