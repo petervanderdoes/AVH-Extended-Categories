@@ -11,7 +11,7 @@ class AVH_EC_Admin
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
-		$this->installPlugin();
+//		$this->installPlugin();
 
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
