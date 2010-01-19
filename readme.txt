@@ -1,4 +1,4 @@
-=== AVH Extended Category Widgets ===
+=== AVH Extended Categories Widgets ===
 Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
@@ -6,10 +6,10 @@ Requires at least: 2.3
 Tested up to: 2.9
 Stable tag: 3.0-dev1
 
-The AVH Extended Categories Widget gives you two widgets for displaying categories.
+The AVH Extended Categories Widgets gives you two widgets for displaying categories.
 == Description ==
 
-The AVH Extended Categories Widget gives you two widgets for displaying categories.
+The AVH Extended Categories Widgets gives you two widgets for displaying categories.
 
 1. Replacement of the default category widget to allow for greater customization.
 
@@ -47,7 +47,7 @@ Translations:
 
 == Installation ==
 
-The Extended Categories Widget can be installed in 3 easy steps:
+The AVH Extended Categories Widgets can be installed in 3 easy steps:
 
 1. Unzip the extended-categories-widget archive and put the directory "extended-categories-widget" into your "plugins" folder (wp-content/plugins/).
 
@@ -80,7 +80,7 @@ None
 == Changelog ==
 
 = Version 3.0 =
-* Renamed the plugin to AVH Extended Category Widgets
+* Renamed the plugin to AVH Extended Categories Widgets
 * Added translation: Italian - Italiano (it_IT)
 * Redid settings. Now is seperate menu.
 * Reduced memory foot print.
