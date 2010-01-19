@@ -80,8 +80,11 @@ class AVH_EC_Category_Group
 		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->avhec_cat_group WHERE term_taxonomy_id = %s", $group_id ) );
 
 		if ( is_object( $result ) ) {
-			$categories = $result->avhec_categories;
-			$return = unserialize( $categories );
+			if (empty($result->avhec_categories)) {
+				$return = array();
+			} else {
+				$return = unserialize( $result->avhec_categories );
+			}
 		} else {
 			$return = false;
 		}
