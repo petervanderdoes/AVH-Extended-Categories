@@ -150,7 +150,7 @@ class AVH_EC_Core
 		//place each directory into array
 		$directory_array = explode( '/', $public_directory );
 		//get highest or top level in array of directory strings
-		$public_base = max( $directory_array );
+		$public_base = end( $directory_array );
 
 		return $public_base;
 	}
