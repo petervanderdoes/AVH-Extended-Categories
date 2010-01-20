@@ -77,11 +77,11 @@ class AVH_EC_Category_Group
 		global $wpdb;
 
 		// Query database
-		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->avhec_cat_group WHERE term_taxonomy_id = %s", $group_id ) );
+		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->avhec_cat_group WHERE term_id = %s", $group_id ) );
 
 		if ( is_object( $result ) ) {
-			if (empty($result->avhec_categories)) {
-				$return = array();
+			if ( empty( $result->avhec_categories ) ) {
+				$return = array ();
 			} else {
 				$return = unserialize( $result->avhec_categories );
 			}
@@ -110,9 +110,9 @@ class AVH_EC_Category_Group
 			return false;
 
 		if ( false === $oldcategories ) {
-			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_taxonomy_id, avhec_categories) VALUES (%d, %s)", $group_id, $newcategories );
+			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_id, avhec_categories) VALUES (%d, %s)", $group_id, $newcategories );
 		} else {
-			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_taxonomy_id=%d", $newcategories, $group_id );
+			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_id=%d", $newcategories, $group_id );
 		}
 
 		// Query database
@@ -123,6 +123,13 @@ class AVH_EC_Category_Group
 		} else {
 			return false;
 		}
+	}
+
+	function getTermIDBy ( $field, $value )
+	{
+		$row = get_term_by( $field, $value, $this->taxonomy_name );
+		$return = $row->term_id;
+		return ($return);
 	}
 }
 ?>

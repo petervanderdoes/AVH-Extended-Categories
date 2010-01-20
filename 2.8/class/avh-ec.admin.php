@@ -11,7 +11,8 @@ class AVH_EC_Admin
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
-//		$this->installPlugin();
+		//		$this->installPlugin();
+
 
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
@@ -57,7 +58,7 @@ class AVH_EC_Admin
 
 		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
 
-			$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_taxonomy_id`) )' . $charset_collate . ';';
+			$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_id`) )' . $charset_collate . ';';
 
 			$result = $wpdb->query( $sql );
 		}
@@ -69,8 +70,8 @@ class AVH_EC_Admin
 
 		//Fill the standard groups with all categories
 		$all_categories = $catgrp->getAllGroups();
-		$catgrp->setCategoriesForGroup( $all_group_id['term_taxonomy_id'], $all_categories );
-		$catgrp->setCategoriesForGroup( $home_group_id['term_taxonomy_id'], $all_categories );
+		$catgrp->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
+		$catgrp->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
 
 	}
 
@@ -96,13 +97,13 @@ class AVH_EC_Admin
 
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
-			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_taxonomy_id, $current_groupcat[0]->term_taxonomy_id ) ) {
-				echo '<option value="' . $groupcat->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
+			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_id, $current_groupcat[0]->term_id ) ) {
+				echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->term_taxonomy_id ) {
-					echo '<option value="' . $groupcat->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
+				if ( empty( $current_groupcat ) && $options['groupcats']['default-group'] == $groupcat->term_id ) {
+					echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
-					echo '<option value="' . $groupcat->term_taxonomy_id . '">' . $name . "</option>\n";
+					echo '<option value="' . $groupcat->term_id . '">' . $name . "</option>\n";
 				}
 			}
 		}
@@ -632,8 +633,8 @@ class AVH_EC_Admin
 	 */
 	function filterPluginActions ( $links, $file )
 	{
-			$settings_link = '<a href="admin.php?page=extended-categories-widget">' . __( 'Settings', 'avh-ec' ) . '</a>';
-			array_unshift( $links, $settings_link ); // before other links
+		$settings_link = '<a href="admin.php?page=extended-categories-widget">' . __( 'Settings', 'avh-ec' ) . '</a>';
+		array_unshift( $links, $settings_link ); // before other links
 		return $links;
 
 	}

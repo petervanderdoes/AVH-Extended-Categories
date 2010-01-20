@@ -643,7 +643,8 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		$options = $this->core->getOptions();
 
 		if ( is_home() ) {
-			$row = get_term_by('name','home',$catgrp->taxonomy_name );
+			$row = get_term_by( 'name', 'home', $catgrp->taxonomy_name );
+
 		} else {
 			$row = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 		}
@@ -656,7 +657,8 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 
 		if ( ! ('none' == $row->name) ) {
 			$groupid = $row->term_id;
-			$included_cats = $options['groupedcats'][$groupid];
+			$cats = $catgrp->getCategoriesFromGroup( $groupid );
+			$included_cats = implode( ',', $cats );
 
 			$show_option_none = __( 'Select Category', 'avh-ec' );
 			if ( $options['general']['selectcategory'] ) {
