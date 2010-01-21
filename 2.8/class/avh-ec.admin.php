@@ -13,10 +13,6 @@ class AVH_EC_Admin
 
 		//		$this->installPlugin();
 
-		// Activation Hook
-		add_action('activate_' .AVHEC_PLUGIN_NAME, array (&$avhec_admin, 'installPlugin' ) );
-
-
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
 		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
@@ -39,44 +35,6 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
-	/**
-	 * Called on activation of the plugin.
-	 *
-	 */
-	function installPlugin ()
-	{
-		global $wpdb;
-
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-
-		// Setup the DB Tables
-		$charset_collate = '';
-
-		if ( version_compare( mysql_get_server_info(), '4.1.0', '>=' ) ) {
-			if ( ! empty( $wpdb->charset ) )
-				$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
-			if ( ! empty( $wpdb->collate ) )
-				$charset_collate .= ' COLLATE ' . $wpdb->collate;
-		}
-
-		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
-
-			$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_id`) )' . $charset_collate . ';';
-
-			$result = $wpdb->query( $sql );
-		}
-
-		// Setup the standard groups
-		$none_group_id = wp_insert_term( 'none', $catgrp->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
-		$all_group_id = wp_insert_term( 'all', $catgrp->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
-		$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
-
-		//Fill the standard groups with all categories
-		$all_categories = $catgrp->getAllGroups();
-		$catgrp->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
-		$catgrp->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
-
-	}
 
 	/**
 	 * Shows a metabox on the page post.php and page.php
