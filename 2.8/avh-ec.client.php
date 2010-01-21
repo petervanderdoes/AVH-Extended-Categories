@@ -44,8 +44,6 @@ function avhextendedcategories_init ()
 	// Admin
 	if ( is_admin() ) {
 		$avhec_admin = & AVH_EC_Singleton::getInstance('AVH_EC_Admin');
-			// Activation Hook
-			register_activation_hook(AVHEC_PLUGIN_NAME, array (&$avhec_admin, 'installPlugin' ) );
 	}
 
 

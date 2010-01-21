@@ -13,6 +13,9 @@ class AVH_EC_Admin
 
 		//		$this->installPlugin();
 
+		// Activation Hook
+		add_action('activate_' .AVHEC_PLUGIN_NAME, array (&$avhec_admin, 'installPlugin' ) );
+
 
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
