@@ -49,7 +49,6 @@ class AVH_EC_Core
 		 *
 		 */
 		$this->loadOptions();
-		$this->setTables();
 
 		// Check if we have to do upgrades
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
@@ -79,18 +78,6 @@ class AVH_EC_Core
 
 		load_plugin_textdomain( 'avh-ec', false, $this->info['lang_dir'] );
 
-	}
-
-	/**
-	 * Setup DB Tables
-	 * @return unknown_type
-	 */
-	function setTables ()
-	{
-		global $wpdb;
-
-		// add DB pointer
-		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_cat_group';
 	}
 
 	/**

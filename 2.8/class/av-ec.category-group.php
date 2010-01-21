@@ -29,9 +29,14 @@ class AVH_EC_Category_Group
 	 */
 	function __construct ()
 	{
+		global $wpdb;
+
 		register_shutdown_function( array (&$this, '__destruct' ) );
 
 		$this->taxonomy_name = 'avhec_catgroup';
+
+		// add DB pointer
+		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_cat_group';
 
 		/**
 		 * Setup Group Categories Taxonomy
