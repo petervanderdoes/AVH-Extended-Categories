@@ -130,10 +130,20 @@ class AVH_EC_Category_Group
 		}
 	}
 
+	/**
+	 * Same as get_term_by, but returns the ID only if found, else false
+	 * @param string $field
+	 * @param string $value
+	 * @return int|boolean
+	 */
 	function getTermIDBy ( $field, $value )
 	{
 		$row = get_term_by( $field, $value, $this->taxonomy_name );
-		$return = $row->term_id;
+		if ( false === $row ) {
+			$return = false;
+		} else {
+			$return = $row->term_id;
+		}
 		return ($return);
 	}
 }
