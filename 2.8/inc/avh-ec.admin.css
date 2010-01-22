@@ -43,7 +43,10 @@ table.avhec-options {
 #avhecBoxTranslation .inside {
 	font-size: 12px;
 }
-
+/* Metabox Add Group */
+#avhecBoxGroupedAdd .inside {
+	font-size: 12px;
+}
 /* Metabox in post and page */
 #side-sortables #avhec-groupcat select {
 width:100%;
