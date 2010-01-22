@@ -332,7 +332,7 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
-		$catgrp =  & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$groupname_new = '';
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
@@ -344,12 +344,18 @@ class AVH_EC_Admin
 			$formoptions = $_POST['avhec_add_group'];
 
 			$groupname_new = strtolower( $formoptions['add']['name'] );
-			$a=$catgrp->getTermIDBy ( 'name', $groupname_new );
-			wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
+			$new = $catgrp->getTermIDBy( 'name', $groupname_new );
+			if ( ! $new ) {
+				wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
 
-			$this->message = __( 'Category group saved', 'avh-ec' );
-			$this->status = 'updated fade';
-			$groupname_new = '';
+				$this->message = __( 'Category group saved', 'avh-ec' );
+				$this->status = 'updated fade';
+				$groupname_new = '';
+			} else {
+				$this->message = __( 'Category group exists', 'avh-ec' );
+				$this->status = 'error';
+
+			}
 			$this->displayMessage();
 		}
 
