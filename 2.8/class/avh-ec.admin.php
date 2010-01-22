@@ -13,6 +13,7 @@ class AVH_EC_Admin
 
 		//		$this->installPlugin();
 
+
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
 		add_filter( 'plugin_action_links_extended-categories-widget/widget_extended_categories.php', array (&$this, 'filterPluginActions' ), 10, 2 );
@@ -34,7 +35,6 @@ class AVH_EC_Admin
 	{
 		$this->__construct();
 	}
-
 
 	/**
 	 * Shows a metabox on the page post.php and page.php
@@ -332,11 +332,10 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
-		$cat_name_new = '';
+		$groupname_new = '';
 
 		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
-		$options_add_group[] = array ('avhec_cat_groups[add][desc]', ' Description', 'textarea', 40, 'Description is not prominent by default.',5 );
-
+		$options_add_group[] = array ('avhec_cat_groups[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
 		if ( isset( $_POST['addgroup'] ) ) {
 			check_admin_referer( 'avh_ec_addgroup' );
@@ -344,27 +343,12 @@ class AVH_EC_Admin
 			$formoptions = $_POST['avhec_cat_groups_add'];
 			$cat_groups = $this->core->getCatGroups();
 
-			$duplicate = false;
-			$cat_name_new = strtolower( $formoptions['add']['name'] );
-			foreach ( $cat_groups as $cat_group ) {
-				if ( $cat_name_new == strtolower( $cat_group['name'] ) ) {
-					$duplicate = true;
-					break;
-				}
-			}
+			$groupname_new = strtolower( $formoptions['add']['name'] );
+			wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
 
-			if ( ! $duplicate ) {
-				$this->core->setCatGroupRow( $cat_name_new, '' );
-				$cat_groups[] = $this->core->cat_group_row;
-
-				$this->core->saveCatGroups( $cat_groups );
-				$this->message = __( 'Category group saved', 'avh-ec' );
-				$this->status = 'updated fade';
-				$cat_name_new = '';
-			} else {
-				$this->message = __( 'Category group already exists', 'avh-ec' );
-				$this->status = 'error';
-			}
+			$this->message = __( 'Category group saved', 'avh-ec' );
+			$this->status = 'updated fade';
+			$groupname_new = '';
 			$this->displayMessage();
 		}
 
@@ -379,7 +363,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		$data_add_group['add'] = array ('name' => $cat_name_new );
+		$data_add_group['add'] = array ('name' => $groupname_new );
 		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
