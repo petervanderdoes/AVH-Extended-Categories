@@ -344,6 +344,7 @@ class AVH_EC_Admin
 			$formoptions = $_POST['avhec_add_group'];
 
 			$groupname_new = strtolower( $formoptions['add']['name'] );
+			$a=$catgrp->getTermIDBy ( 'name', $groupname_new );
 			wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
 
 			$this->message = __( 'Category group saved', 'avh-ec' );
