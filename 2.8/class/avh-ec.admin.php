@@ -335,6 +335,8 @@ class AVH_EC_Admin
 		$cat_name_new = '';
 
 		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
+		$options_add_group[] = array ('avhec_cat_groups[add][desc]', ' Description', 'textarea', 40, 'Description is not prominent by default.',5 );
+
 
 		if ( isset( $_POST['addgroup'] ) ) {
 			check_admin_referer( 'avh_ec_addgroup' );
@@ -704,16 +706,16 @@ class AVH_EC_Admin
 					$explanation = $option[5];
 					break;
 				case 'text-color' :
-					$input_type = '<input type="text" ' . (($option[3] > 50) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape( $option_actual[$section][$option_key] ) . '" size="' . $option[3] . '" /><div class="box_color ' . $option[0] . '"></div>' . "\n";
+					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape( $option_actual[$section][$option_key] ) . '" size="' . $option[3] . '" /><div class="box_color ' . $option[0] . '"></div>' . "\n";
 					$explanation = $option[4];
 					break;
 				case 'textarea' :
-					$input_type = '<textarea rows="' . $option[5] . '" ' . (($option[3] > 50) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" size="' . $option[3] . '" />' . attribute_escape( $option_actual[$section][$option_key] ) . '</textarea>';
+					$input_type = '<textarea rows="' . $option[5] . '" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" size="' . $option[3] . '" />' . attribute_escape( $option_actual[$section][$option_key] ) . '</textarea>';
 					$explanation = $option[4];
 					break;
 				case 'text' :
 				default :
-					$input_type = '<input type="text" ' . (($option[3] > 50) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape( $option_actual[$section][$option_key] ) . '" size="' . $option[3] . '" />' . "\n";
+					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape( $option_actual[$section][$option_key] ) . '" size="' . $option[3] . '" />' . "\n";
 					$explanation = $option[4];
 					break;
 			}
