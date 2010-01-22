@@ -31,13 +31,12 @@ class AVH_EC_Core
 
 		$info['siteurl'] = get_option( 'siteurl' );
 
-		$info['plugin_url'] = WP_PLUGIN_URL;
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
 
 		$info['lang_dir'] = AVHEC_WORKING_DIR . '/lang';
 
 		// Set class property for info
-		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_url' => $info['plugin_url'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
+		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
 		// Set the default options
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );

@@ -19,7 +19,7 @@ class AVH_EC_Admin
 
 		// Register Style and Scripts
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_register_style( 'avhec-admin-css', $this->core->info['plugin_url'] . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
+		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
 
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
