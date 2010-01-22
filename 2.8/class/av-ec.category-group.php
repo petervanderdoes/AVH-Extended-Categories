@@ -146,5 +146,11 @@ class AVH_EC_Category_Group
 		}
 		return ($return);
 	}
+
+	function doInsertTerm ( $term, $args = array() )
+	{
+		$row = wp_insert_term( $term, $this->taxonomy_name, $args );
+		return ($row['term_id']);
+	}
 }
 ?>

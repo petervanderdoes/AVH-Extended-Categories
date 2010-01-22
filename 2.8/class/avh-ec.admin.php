@@ -346,8 +346,8 @@ class AVH_EC_Admin
 			$groupname_new = strtolower( $formoptions['add']['name'] );
 			$new = $catgrp->getTermIDBy( 'name', $groupname_new );
 			if ( ! $new ) {
-				wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
-
+				$groupid = $catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
+				$catgrp->setCategoriesForGroup( $groupid );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
