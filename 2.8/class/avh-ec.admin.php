@@ -22,8 +22,8 @@ class AVH_EC_Admin
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array (), $this->core->version, 'screen' );
 
-		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'post', 'side', 'core' );
-		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxGroupCat' ), 'page', 'side', 'core' );
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
+		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
@@ -42,7 +42,7 @@ class AVH_EC_Admin
 	 *
 	 * @param $post
 	 */
-	function metaboxGroupCat ( $post )
+	function metaboxPostCategoryGroup ( $post )
 	{
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$options = $this->core->getOptions;
