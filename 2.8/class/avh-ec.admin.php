@@ -334,13 +334,13 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 		$groupname_new = '';
 
-		$options_add_group[] = array ('avhec_cat_groups[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
-		$options_add_group[] = array ('avhec_cat_groups[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
+		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
+		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
 		if ( isset( $_POST['addgroup'] ) ) {
 			check_admin_referer( 'avh_ec_addgroup' );
 
-			$formoptions = $_POST['avhec_cat_groups_add'];
+			$formoptions = $_POST['avhec_add_group'];
 			$cat_groups = $this->core->getCatGroups();
 
 			$groupname_new = strtolower( $formoptions['add']['name'] );
@@ -401,7 +401,7 @@ class AVH_EC_Admin
 		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_addgroup' );
 		echo $this->printOptions( $data['add']['form'], $data['add']['data'] );
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avhfdas' ) . '" /></p>';
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
 	}
 
