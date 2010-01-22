@@ -332,6 +332,7 @@ class AVH_EC_Admin
 	function doMenuGrouped ()
 	{
 		global $screen_layout_columns;
+		$catgrp =  & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$groupname_new = '';
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
