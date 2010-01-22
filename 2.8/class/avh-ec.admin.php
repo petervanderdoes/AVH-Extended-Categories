@@ -341,7 +341,6 @@ class AVH_EC_Admin
 			check_admin_referer( 'avh_ec_addgroup' );
 
 			$formoptions = $_POST['avhec_add_group'];
-			$cat_groups = $this->core->getCatGroups();
 
 			$groupname_new = strtolower( $formoptions['add']['name'] );
 			wp_insert_term( $groupname_new, $catgrp->taxonomy_name, array ('description' => $formoptions['add']['description'] ) );
