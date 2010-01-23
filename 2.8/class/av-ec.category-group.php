@@ -61,7 +61,7 @@ class AVH_EC_Category_Group
 	 *
 	 * @return array Term_id
 	 */
-	function getAllGroups ()
+	function getAllCategoriesTermID ()
 	{
 		$categories = get_categories();
 		foreach ( $categories as $category ) {

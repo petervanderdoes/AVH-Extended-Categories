@@ -27,6 +27,7 @@ class AVH_EC_Admin
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
+		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
 
 		return;
 	}
@@ -34,6 +35,13 @@ class AVH_EC_Admin
 	function AVH_EC_Admin ()
 	{
 		$this->__construct();
+	}
+
+	function filterManageCategoriesGroupColumns ( $columns )
+	{
+		$categories_group_columns = array ('cb' => '<input type="checkbox" />', 'name' => __( 'Name' ), 'description' => __( 'Description' ) );
+		$categories_group_columns = array ('name' => __( 'Name' ), 'description' => __( 'Description' ) );
+		return $categories_group_columns;
 	}
 
 	/**
@@ -316,6 +324,7 @@ class AVH_EC_Admin
 	{
 		// Add metaboxes
 		add_meta_box( 'avhecBoxGroupedAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxGroupedAdd' ), $this->hooks['avhec_menu_grouped'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxGroupedList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxGroupedList' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -333,6 +342,7 @@ class AVH_EC_Admin
 	{
 		global $screen_layout_columns;
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+
 		$groupname_new = '';
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
@@ -359,6 +369,19 @@ class AVH_EC_Admin
 			$this->displayMessage();
 		}
 
+		if (isset($_GET['action'])) {
+			$action=$_GET['action'];
+
+			switch ($action) {
+				case edit:
+				;
+				break;
+
+				default:
+					;
+				break;
+			}
+		}
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -374,7 +397,8 @@ class AVH_EC_Admin
 		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
@@ -410,6 +434,37 @@ class AVH_EC_Admin
 		echo $this->printOptions( $data['add']['form'], $data['add']['data'] );
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
+	}
+
+	function metaboxGroupedList ( $data )
+	{
+		echo '<form id="posts-filter" action="" method="get">';
+
+		echo '<div class="clear"></div>';
+
+		echo '<table class="widefat fixed" cellspacing="0">';
+		echo '<thead>';
+		echo '<tr>';
+		print_column_headers( 'categories_group' );
+		echo '</tr>';
+		echo '</thead>';
+
+		echo '<tfoot>';
+		echo '<tr>';
+		print_column_headers( 'categories_group', false );
+		echo '</tr>';
+		echo '</tfoot>';
+
+		echo '<tbody id="the-list" class="list:cat">';
+		$this->printCategoryGroupRows();
+		echo '</tbody>';
+		echo '</table>';
+
+		echo '<br class="clear" />';
+		echo '</div>';
+		echo '</form>';
+
+		echo '</div>';
 	}
 
 	/**
@@ -595,6 +650,100 @@ class AVH_EC_Admin
 
 	############## Admin WP Helper ##############
 
+
+	function printCategoryGroupRows ()
+	{
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$cat_groups = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+		foreach ( $cat_groups as $group ) {
+			$o = $this->printCategoryGroupRow( $group->term_id );
+			echo $o;
+		}
+	}
+
+	/**
+	 * {@internal Missing Short Description}}
+	 *
+	 * @since unknown
+	 *
+	 * @param unknown_type $category
+	 * @param unknown_type $level
+	 * @param unknown_type $name_override
+	 * @return unknown
+	 */
+	function printCategoryGroupRow ( $groupid )
+	{
+		static $row_class = '';
+
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$group = get_term( $groupid, $catgrp->taxonomy_name, OBJECT, 'display' );
+
+		$no_delete[$catgrp->getTermIDBy('name','all')]=0;
+		$no_delete[$catgrp->getTermIDBy('name','home')]=0;
+
+		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
+		if ( current_user_can( 'manage_categories' ) ) {
+			$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . ucwords( esc_attr( $group->name ) ) . '</a><br />';
+			$actions = array ();
+			$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
+			if ( !(array_key_exists($group->term_id,$no_delete ))) {
+				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-category_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+			}
+			$action_count = count( $actions );
+			$i = 0;
+			$edit .= '<div class="row-actions">';
+			foreach ( $actions as $action => $link ) {
+				++ $i;
+				($i == $action_count) ? $sep = '' : $sep = ' | ';
+				$edit .= "<span class='$action'>$link$sep</span>";
+			}
+			$edit .= '</div>';
+		} else {
+			$edit = $group->name;
+		}
+
+		$row_class = 'alternate' == $row_class ? '' : 'alternate';
+		$qe_data = get_term( $group->term_id, $catgrp->taxonomy_name, OBJECT, 'edit' );
+
+		$output = "<tr id='cat-$group->term_id' class='iedit $row_class'>";
+
+		$columns = get_column_headers( 'categories_group' );
+		$hidden = get_hidden_columns( 'categories_group' );
+		foreach ( $columns as $column_name => $column_display_name ) {
+			$class = 'class="' . $column_name . ' column-' . $column_name . '"';
+
+			$style = '';
+			if ( in_array( $column_name, $hidden ) )
+				$style = ' style="display:none;"';
+
+			$attributes = $class . $style;
+
+			switch ( $column_name )
+			{
+				case 'cb' :
+					$output .= '<th scope="row" class="check-column">';
+					if ( $default_cat_id != $group->term_id ) {
+						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_id . '" />';
+					} else {
+						$output .= "&nbsp;";
+					}
+					$output .= '</th>';
+					break;
+				case 'name' :
+					$output .= '<td ' . $attributes . '>' . $edit;
+					$output .= '<div class="hidden" id="inline_' . $qe_data->term_id . '">';
+					$output .= '<div class="name">' . $qe_data->name . '</div>';
+					$output .= '</div></td>';
+					break;
+				case 'description' :
+					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
+					break;
+			}
+		}
+		$output .= '</tr>';
+
+		return $output;
+	}
 
 	/**
 	 * Prints the general nonces, used by the AJAX
