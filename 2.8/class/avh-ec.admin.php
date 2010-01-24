@@ -39,8 +39,7 @@ class AVH_EC_Admin
 
 	function filterManageCategoriesGroupColumns ( $columns )
 	{
-		$categories_group_columns = array ('cb' => '<input type="checkbox" />', 'name' => __( 'Name' ), 'description' => __( 'Description' ) );
-		$categories_group_columns = array ('name' => __( 'Name' ), 'description' => __( 'Description' ) );
+		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
 		return $categories_group_columns;
 	}
 
@@ -657,7 +656,7 @@ class AVH_EC_Admin
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$cat_groups = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
-		$noshowid=$catgrp->getTermIDBy('name','none');
+		$noshowid = $catgrp->getTermIDBy( 'name', 'none' );
 
 		foreach ( $cat_groups as $group ) {
 			if ( $group->term_id != $noshowid ) {
@@ -743,6 +742,17 @@ class AVH_EC_Admin
 				case 'description' :
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
+				case 'cat-in-group' :
+					$cats=$catgrp->getCategoriesFromGroup($groupid);
+					$catname=array();
+					foreach ($cats as $cat_id) {
+						$catname[]= get_cat_name($cat_id);
+					}
+					natsort( $catname );
+					$cat=implode(', ',$catname);
+					$output .= '<td ' . $attributes . '>' . $cat . '</td>';
+					break;
+
 			}
 		}
 		$output .= '</tr>';
