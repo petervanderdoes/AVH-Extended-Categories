@@ -373,7 +373,8 @@ class AVH_EC_Admin
 
 			switch ( $action )
 			{
-				case edit :
+				case 'edit' :
+					add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
 					;
 					break;
 
@@ -407,20 +408,19 @@ class AVH_EC_Admin
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
-		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
+
+		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
 		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'normal', $data );
 		echo "			</div>";
+
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
 		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'side', $data );
 		echo '			</div>';
-		echo '		</div>';
 
-		echo '<br class="clear"/>';
+		echo '		</div>'; // dashboard-widgets
+		echo '<br class="clear" />';
 		echo '	</div>'; //dashboard-widgets-wrap
-
-
 		echo '</div>'; // wrap
-
 
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'grouped' );
@@ -743,13 +743,13 @@ class AVH_EC_Admin
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
 				case 'cat-in-group' :
-					$cats=$catgrp->getCategoriesFromGroup($groupid);
-					$catname=array();
-					foreach ($cats as $cat_id) {
-						$catname[]= get_cat_name($cat_id);
+					$cats = $catgrp->getCategoriesFromGroup( $groupid );
+					$catname = array ();
+					foreach ( $cats as $cat_id ) {
+						$catname[] = get_cat_name( $cat_id );
 					}
 					natsort( $catname );
-					$cat=implode(', ',$catname);
+					$cat = implode( ', ', $catname );
 					$output .= '<td ' . $attributes . '>' . $cat . '</td>';
 					break;
 
