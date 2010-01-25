@@ -85,7 +85,7 @@ class AVH_EC_Category_Group
 		$result = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->avhec_cat_group WHERE term_id = %s", $group_id ) );
 
 		if ( is_object( $result ) ) {
-			if ( empty( $result->avhec_categories ) ) {
+			if ( null === $result->avhec_categories || empty( $result->avhec_categories ) ) {
 				$return = array ();
 			} else {
 				$return = unserialize( $result->avhec_categories );
@@ -109,6 +109,9 @@ class AVH_EC_Category_Group
 		global $wpdb;
 
 		$oldcategories = $this->getCategoriesFromGroup( $group_id );
+		if (!is_array($categories)) {
+			$categories=array();
+		}
 		$newcategories = serialize( $categories );
 		// If the new and old values are the same, no need to update.
 		if ( $newcategories === $oldcategories )
@@ -150,6 +153,12 @@ class AVH_EC_Category_Group
 	function doInsertTerm ( $term, $args = array() )
 	{
 		$row = wp_insert_term( $term, $this->taxonomy_name, $args );
+		return ($row['term_id']);
+	}
+
+	function doUpdateTerm ( $term_id, $args = array() )
+	{
+		$row = wp_update_term( $term_id, $this->taxonomy_name, $args );
 		return ($row['term_id']);
 	}
 }

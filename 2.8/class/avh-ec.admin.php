@@ -343,9 +343,14 @@ class AVH_EC_Admin
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 
 		$groupname_new = '';
+		$description_new = '';
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
+
+		//$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'Category group name.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
+		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
 		if ( isset( $_POST['addgroup'] ) ) {
 			check_admin_referer( 'avh_ec_addgroup' );
@@ -353,6 +358,8 @@ class AVH_EC_Admin
 			$formoptions = $_POST['avhec_add_group'];
 
 			$groupname_new = strtolower( $formoptions['add']['name'] );
+			$description_new = $formoptions['add']['description'];
+
 			$new = $catgrp->getTermIDBy( 'name', $groupname_new );
 			if ( ! $new ) {
 				$groupid = $catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
@@ -360,6 +367,7 @@ class AVH_EC_Admin
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
+				$description_new = '';
 			} else {
 				$this->message = __( 'Category group exists', 'avh-ec' );
 				$this->status = 'error';
@@ -374,8 +382,14 @@ class AVH_EC_Admin
 			switch ( $action )
 			{
 				case 'edit' :
-					add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
-					;
+					$groupid = $_GET['group_ID'];
+					$group = get_term( $groupid, $catgrp->taxonomy_name, OBJECT, 'raw' );
+					$cats = $catgrp->getCategoriesFromGroup( $groupid );
+
+					$data_edit_group['edit'] = array ('groupid' => $groupid, 'description' => $group->description, 'categories' => $cats );
+					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
+
+					add_meta_box( 'avhecBoxEditGroup', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxEditGroup' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
 					break;
 
 				default :
@@ -383,6 +397,33 @@ class AVH_EC_Admin
 					break;
 			}
 		}
+
+		if ( isset( $_POST['editgroup'] ) ) {
+			check_admin_referer( 'avh_ec_editgroup' );
+
+			$formoptions = $_POST['avhec_edit_group'];
+			$selected_categories = $_POST['post_category'];
+
+			$groupid = ( int ) $_POST['avhec-groupid'];
+			$description_new = $formoptions['edit']['description'];
+
+			$term = is_term( $groupid, $catgrp->taxonomy_name );
+			if ( is_array( $term ) ) {
+
+				$groupid = $catgrp->doUpdateTerm( $groupid, array ('description' => $description_new ) );
+				$catgrp->setCategoriesForGroup( $groupid, $selected_categories );
+				$this->message = __( 'Category group saved', 'avh-ec' );
+				$this->status = 'updated fade';
+				$groupname_new = '';
+				$description_new = '';
+			} else {
+				$this->message = __( 'Category group exists', 'avh-ec' );
+				$this->status = 'error';
+
+			}
+			$this->displayMessage();
+		}
+
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -394,7 +435,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		$data_add_group['add'] = array ('name' => $groupname_new );
+		$data_add_group['add'] = array ('name' => $groupname_new, 'description' => $description_new );
 		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
@@ -422,6 +463,7 @@ class AVH_EC_Admin
 		echo '	</div>'; //dashboard-widgets-wrap
 		echo '</div>'; // wrap
 
+
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS( 'grouped' );
 		$this->printAdminFooter();
@@ -429,7 +471,7 @@ class AVH_EC_Admin
 
 	function metaboxGroupedAdd ( $data )
 	{
-		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="" accept-charset="utf-8" >';
+		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_addgroup' );
 		echo $this->printOptions( $data['add']['form'], $data['add']['data'] );
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
@@ -465,6 +507,16 @@ class AVH_EC_Admin
 		echo '</form>';
 
 		echo '</div>';
+	}
+
+	function metaboxEditGroup ( $data )
+	{
+		echo '<form name="avhec-editgroup" id="avhec-editgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
+		wp_nonce_field( 'avh_ec_editgroup' );
+		echo $this->printOptions( $data['edit']['form'], $data['edit']['data'] );
+		echo '<input type="hidden" value="' . $data['edit']['data']['edit']['groupid'] . '" name="avhec-groupid" id="avhec-groupid">';
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="editgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
+		echo '</form>';
 	}
 
 	/**
@@ -650,6 +702,24 @@ class AVH_EC_Admin
 
 	############## Admin WP Helper ##############
 
+
+	/**
+	 * Get the backlink for forms
+	 *
+	 * @return strings
+	 */
+	function getBackLink ()
+	{
+		$page = basename( __FILE__ );
+		if ( isset( $_GET['page'] ) && ! empty( $_GET['page'] ) ) {
+			$page = preg_replace( '[^a-zA-Z0-9\.\_\-]', '', $_GET['page'] );
+		}
+
+		if ( function_exists( "admin_url" ) )
+			return admin_url( basename( $_SERVER["PHP_SELF"] ) ) . "?page=" . $page;
+		else
+			return $_SERVER['PHP_SELF'] . "?page=" . $page;
+	}
 
 	function printCategoryGroupRows ()
 	{
@@ -866,6 +936,15 @@ class AVH_EC_Admin
 					break;
 				case 'textarea' :
 					$input_type = '<textarea rows="' . $option[5] . '" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" size="' . $option[3] . '" />' . attribute_escape( $option_actual[$section][$option_key] ) . '</textarea>';
+					$explanation = $option[4];
+					break;
+				case 'catlist' :
+					ob_start();
+					echo '<ul id="avhec-catlist">';
+					wp_category_checklist( 0, 0, $option_actual[$section][$option_key] );
+					echo '</ul>';
+					$input_type = ob_get_contents();
+					ob_end_clean();
 					$explanation = $option[4];
 					break;
 				case 'text' :

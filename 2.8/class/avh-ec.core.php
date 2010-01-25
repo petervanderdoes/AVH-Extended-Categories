@@ -132,7 +132,7 @@ class AVH_EC_Core
 	function getBaseDirectory ( $directory )
 	{
 		//place each directory into array and get the last element
-		$return = end(explode( '/', $directory ));
+		$return = end( explode( '/', $directory ) );
 
 		return $return;
 	}

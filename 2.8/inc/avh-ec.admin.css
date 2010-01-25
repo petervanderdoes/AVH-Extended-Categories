@@ -46,5 +46,22 @@ table.avhec-options {
 
 /* Metabox in post and page */
 #side-sortables #avhec-groupcat select {
-width:100%;
+	width:100%;
+}
+
+#avhec-catlist {
+		-moz-border-radius:4px 4px 4px 4px;
+	background-color:#FFFFFF;
+	border-color:#DFDFDF;
+	border-style:solid;
+	border-width:1px;
+}
+#avhec-catlist ul {
+	list-style:none outside none;
+	margin:0;
+	padding:0;
+}
+
+#avhec-catlist li {
+margin-bottom: 0px;
 }
