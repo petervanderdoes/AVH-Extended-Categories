@@ -13,6 +13,7 @@ class AVH_EC_Category_Group
 	 */
 	var $taxonomy_name;
 
+
 	/**
 	 * PHP4 constructor.
 	 *

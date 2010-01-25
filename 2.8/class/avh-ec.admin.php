@@ -752,6 +752,7 @@ class AVH_EC_Admin
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$group = get_term( $groupid, $catgrp->taxonomy_name, OBJECT, 'display' );
 
+		$no_edit[$catgrp->getTermIDBy( 'name', 'all' )] = 0;
 		$no_delete[$catgrp->getTermIDBy( 'name', 'all' )] = 0;
 		$no_delete[$catgrp->getTermIDBy( 'name', 'home' )] = 0;
 
@@ -759,7 +760,9 @@ class AVH_EC_Admin
 		if ( current_user_can( 'manage_categories' ) ) {
 			$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . ucwords( esc_attr( $group->name ) ) . '</a><br />';
 			$actions = array ();
-			$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
+			if ( ! array_key_exists( $group->term_id, $no_edit ) ) {
+				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
+			}
 			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
 				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-category_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}

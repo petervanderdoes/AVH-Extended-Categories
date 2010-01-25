@@ -644,7 +644,6 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 
 		if ( is_home() ) {
 			$row = get_term_by( 'name', 'home', $catgrp->taxonomy_name );
-
 		} else {
 			$row = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 		}
