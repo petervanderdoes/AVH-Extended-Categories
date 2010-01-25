@@ -221,8 +221,17 @@ class AVH_EC_Admin
 	function doMenuGeneral ()
 	{
 		global $screen_layout_columns;
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$groups = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+		foreach ( $groups as $group ) {
+			$groupid[] = $group->term_id;
+			$groupname[] = ucwords( $group->name );
+		}
 
 		$options_general[] = array ('avhec[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
+		$options_general[] = array ('avhec[general][homecategory]', 'Home Group', 'dropdown', $groupid, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[general][nocategory]', 'Nonexistence Group', 'dropdown', $groupid, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
 
@@ -348,7 +357,6 @@ class AVH_EC_Admin
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
-		//$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'Category group name.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
@@ -515,7 +523,7 @@ class AVH_EC_Admin
 		wp_nonce_field( 'avh_ec_editgroup' );
 		echo $this->printOptions( $data['edit']['form'], $data['edit']['data'] );
 		echo '<input type="hidden" value="' . $data['edit']['data']['edit']['groupid'] . '" name="avhec-groupid" id="avhec-groupid">';
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="editgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
+		echo '<p class="submit"><input	class="button-primary"	type="submit" name="editgroup" value="' . __( 'Update', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
 	}
 
@@ -924,8 +932,8 @@ class AVH_EC_Admin
 					$explanation = $option[4];
 					break;
 				case 'dropdown' :
-					$selvalue = explode( '/', $option[3] );
-					$seltext = explode( '/', $option[4] );
+					$selvalue = $option[3];
+					$seltext = $option[4];
 					$seldata = '';
 					foreach ( ( array ) $selvalue as $key => $sel ) {
 						$seldata .= '<option value="' . $sel . '" ' . (($option_actual[$section][$option_key] == $sel) ? 'selected="selected"' : '') . ' >' . ucfirst( $seltext[$key] ) . '</option>' . "\n";
