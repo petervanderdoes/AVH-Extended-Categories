@@ -11,7 +11,7 @@ class AVH_EC_Admin
 
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
-		$this->catgrp = new AVH_EC_Category_Group();
+		$this->catgrp = new AVH_EC_Category_Group( );
 
 		//		$this->installPlugin();
 
@@ -22,7 +22,7 @@ class AVH_EC_Admin
 
 		// Register Style and Scripts
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
-		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array ('wp-admin'), $this->core->version, 'screen' );
+		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
 
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
 		add_meta_box( 'groupcat_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
@@ -410,7 +410,19 @@ class AVH_EC_Admin
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
 					break;
+				case 'delete' :
+					if ( ! isset( $_GET['group_ID'] ) ) {
+						wp_redirect( $this->getBackLink() );
+						exit();
+					}
 
+					$group_ID = ( int ) $_GET['group_ID'];
+					check_admin_referer( 'delete-group_' . $group_ID );
+
+					if ( ! current_user_can( 'manage_categories' ) )
+						wp_die( __( 'Cheatin&#8217; uh?' ) );
+
+					break;
 				default :
 					;
 					break;
@@ -772,7 +784,7 @@ class AVH_EC_Admin
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 			}
 			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-category_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-group_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
@@ -807,7 +819,7 @@ class AVH_EC_Admin
 			{
 				case 'cb' :
 					$output .= '<th scope="row" class="check-column">';
-					if ( !(array_key_exists( $group->term_id, $no_delete ) ) ) {
+					if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
 						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_id . '" />';
 					} else {
 						$output .= "&nbsp;";
