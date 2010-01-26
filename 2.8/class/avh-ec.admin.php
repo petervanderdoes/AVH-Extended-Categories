@@ -237,7 +237,7 @@ class AVH_EC_Admin
 			$groupname[] = ucwords( $group->name );
 		}
 
-		$options_general[] = array ('avhec[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
+		$options_general[] = array ('avhec[general][alternative_name_select_category]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
 		$options_general[] = array ('avhec[cat-group][homegroup]', 'Home Group', 'dropdown', $group_id, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
 		$options_general[] = array ('avhec[cat-group][nogroup]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
 		$options_general[] = array ('avhec[cat-group][defaultgroup]', 'Default Group', 'dropdown', $group_id, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );

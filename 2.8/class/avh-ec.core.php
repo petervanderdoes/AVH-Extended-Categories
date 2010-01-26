@@ -6,8 +6,8 @@ class AVH_EC_Core
 	var $info;
 	var $db_options_core;
 	var $default_options;
-	var $default_general_options;
-	var $default_grouped_cat_options;
+	var $default_options_general;
+	var $default_options_category_group;
 
 	var $options;
 
@@ -34,15 +34,15 @@ class AVH_EC_Core
 		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
 
 		// Set the default options
-		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
+		$this->default_options_general = array ('version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
 
 		// Set the default category group options
 		$no_group_id=$catgrp->getTermIDBy('name','all');
 		$home_group_id=$catgrp->getTermIDBy('name','home');
 		$default_group_id=$catgrp->getTermIDBy('name','all');
-		$this->default_grouped_cat_options = array ('nogroup' => $no_group_id, 'homegroup' => $home_group_id, 'defaultgroup'=>$default_group_id );
+		$this->default_options_category_group = array ('nogroup' => $no_group_id, 'homegroup' => $home_group_id, 'defaultgroup'=>$default_group_id );
 
-		$this->default_options = array ('general' => $this->default_general_options, 'cat-group' => $this->default_grouped_cat_options );
+		$this->default_options = array ('general' => $this->default_options_general, 'cat-group' => $this->default_options_category_group );
 
 		/**
 		 * Set the options for the program

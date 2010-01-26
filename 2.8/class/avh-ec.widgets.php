@@ -82,8 +82,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		$options = $this->core->getOptions();
 		$show_option_none = __( 'Select Category', 'avh-ec' );
-		if ( $options['general']['selectcategory'] ) {
-			$show_option_none = $options['general']['selectcategory'];
+		if ( $options['general']['alternative_name_select_category'] ) {
+			$show_option_none = $options['general']['alternative_name_select_category'];
 		}
 
 		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
@@ -427,8 +427,8 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 		$options = $this->core->getOptions();
 		$show_option_none = __( 'Select Category', 'avh-ec' );
-		if ( $options['general']['selectcategory'] ) {
-			$show_option_none = $options['general']['selectcategory'];
+		if ( $options['general']['alternative_name_select_category'] ) {
+			$show_option_none = $options['general']['alternative_name_select_category'];
 		}
 
 		$top_cats = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false ) );
@@ -660,8 +660,8 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 			$included_cats = implode( ',', $cats );
 
 			$show_option_none = __( 'Select Category', 'avh-ec' );
-			if ( $options['general']['selectcategory'] ) {
-				$show_option_none = $options['general']['selectcategory'];
+			if ( $options['general']['alternative_name_select_category'] ) {
+				$show_option_none = $options['general']['alternative_name_select_category'];
 			}
 
 			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
