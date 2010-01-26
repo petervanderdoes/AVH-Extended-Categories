@@ -655,8 +655,8 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		}
 
 		if ( ! ('none' == $row->name) ) {
-			$groupid = $row->term_id;
-			$cats = $catgrp->getCategoriesFromGroup( $groupid );
+			$group_id = $row->term_id;
+			$cats = $catgrp->getCategoriesFromGroup( $group_id );
 			$included_cats = implode( ',', $cats );
 
 			$show_option_none = __( 'Select Category', 'avh-ec' );

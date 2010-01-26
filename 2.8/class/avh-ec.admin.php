@@ -46,9 +46,9 @@ class AVH_EC_Admin
 		return $categories_group_columns;
 	}
 
-	function filterExplainNonceDeleteGroup ( $text, $groupid )
+	function filterExplainNonceDeleteGroup ( $text, $group_id )
 	{
-		$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'display' );
+		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
 		$return = sprintf(__( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.'), ucwords($group->name) );
 		return ($return);
@@ -233,14 +233,14 @@ class AVH_EC_Admin
 
 		$groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 		foreach ( $groups as $group ) {
-			$groupid[] = $group->term_id;
+			$group_id[] = $group->term_id;
 			$groupname[] = ucwords( $group->name );
 		}
 
 		$options_general[] = array ('avhec[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
-		$options_general[] = array ('avhec[cat-group][homegroup]', 'Home Group', 'dropdown', $groupid, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
-		$options_general[] = array ('avhec[cat-group][nogroup]', 'Nonexistence Group', 'dropdown', $groupid, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
-		$options_general[] = array ('avhec[cat-group][defaultgroup]', 'Default Group', 'dropdown', $groupid, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][homegroup]', 'Home Group', 'dropdown', $group_id, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][nogroup]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][defaultgroup]', 'Default Group', 'dropdown', $group_id, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
 
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
@@ -390,8 +390,8 @@ class AVH_EC_Admin
 
 			$new = $this->catgrp->getTermIDBy( 'name', $groupname_new );
 			if ( ! $new ) {
-				$groupid = $this->catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
-				$this->catgrp->setCategoriesForGroup( $groupid );
+				$group_id = $this->catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
+				$this->catgrp->setCategoriesForGroup( $group_id );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
@@ -410,11 +410,11 @@ class AVH_EC_Admin
 			switch ( $action )
 			{
 				case 'edit' :
-					$groupid = $_GET['group_ID'];
-					$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
-					$cats = $this->catgrp->getCategoriesFromGroup( $groupid );
+					$group_id = $_GET['group_ID'];
+					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
+					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
-					$data_edit_group['edit'] = array ('groupid' => $groupid, 'description' => $group->description, 'categories' => $cats );
+					$data_edit_group['edit'] = array ('group_id' => $group_id, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
@@ -444,14 +444,14 @@ class AVH_EC_Admin
 			$formoptions = $_POST['avhec_edit_group'];
 			$selected_categories = $_POST['post_category'];
 
-			$groupid = ( int ) $_POST['avhec-groupid'];
+			$group_id = ( int ) $_POST['avhec-group_id'];
 			$description_new = $formoptions['edit']['description'];
 
-			$term = is_term( $groupid, $this->catgrp->taxonomy_name );
+			$term = is_term( $group_id, $this->catgrp->taxonomy_name );
 			if ( is_array( $term ) ) {
 
-				$groupid = $this->catgrp->doUpdateTerm( $groupid, array ('description' => $description_new ) );
-				$this->catgrp->setCategoriesForGroup( $groupid, $selected_categories );
+				$group_id = $this->catgrp->doUpdateTerm( $group_id, array ('description' => $description_new ) );
+				$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
@@ -554,7 +554,7 @@ class AVH_EC_Admin
 		echo '<form name="avhec-editgroup" id="avhec-editgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_editgroup' );
 		echo $this->printOptions( $data['edit']['form'], $data['edit']['data'] );
-		echo '<input type="hidden" value="' . $data['edit']['data']['edit']['groupid'] . '" name="avhec-groupid" id="avhec-groupid">';
+		echo '<input type="hidden" value="' . $data['edit']['data']['edit']['group_id'] . '" name="avhec-group_id" id="avhec-group_id">';
 		echo '<p class="submit"><input	class="button-primary"	type="submit" name="editgroup" value="' . __( 'Update', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
 	}
@@ -775,11 +775,11 @@ class AVH_EC_Admin
 	 * @param unknown_type $name_override
 	 * @return unknown
 	 */
-	function printCategoryGroupRow ( $groupid )
+	function printCategoryGroupRow ( $group_id )
 	{
 		static $row_class = '';
 
-		$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'display' );
+		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
 		$no_edit[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
 		$no_delete[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
@@ -845,7 +845,7 @@ class AVH_EC_Admin
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
 				case 'cat-in-group' :
-					$cats = $this->catgrp->getCategoriesFromGroup( $groupid );
+					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 					$catname = array ();
 					foreach ( $cats as $cat_id ) {
 						$catname[] = get_cat_name( $cat_id );
