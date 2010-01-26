@@ -15,6 +15,9 @@ table.avhec-options {
 	font-size: 11px;
 }
 
+#avhecBoxOptions option{
+	padding: .5em;
+}
 .avhec-wrap span.description {
 	font-size: 11px;
 }
@@ -50,11 +53,12 @@ table.avhec-options {
 }
 
 #avhec-catlist {
-		-moz-border-radius:4px 4px 4px 4px;
+	-moz-border-radius:4px 4px 4px 4px;
 	background-color:#FFFFFF;
 	border-color:#DFDFDF;
 	border-style:solid;
 	border-width:1px;
+	padding: 3px;
 }
 #avhec-catlist ul {
 	list-style:none outside none;
