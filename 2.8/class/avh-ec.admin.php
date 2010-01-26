@@ -140,16 +140,16 @@ class AVH_EC_Admin
 		// Add menu system
 		$folder = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR );
 		add_menu_page( 'AVH Extended Categories', 'AVH Extended Categories', 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
-		$this->hooks['avhec_menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
-		$this->hooks['avhec_menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
-		$this->hooks['avhec_menu_grouped'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Category Groups', 'avh-ec' ), __( 'Category Groups', 'avh-ec' ), 'manage_options', 'avhec-grouped', array (&$this, 'doMenuCategoryGroup' ) );
-		$this->hooks['avhec_menu_faq'] = add_submenu_page( $folder, 'AVH Extended Categories:' . __( 'F.A.Q', 'avh-ec' ), __( 'F.A.Q', 'avh-ec' ), 'manage_options', 'avhec-faq', array (&$this, 'doMenuFAQ' ) );
+		$this->hooks['menu_overview'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Overview', 'avh-ec' ), __( 'Overview', 'avh-ec' ), 'manage_options', $folder, array (&$this, 'doMenuOverview' ) );
+		$this->hooks['menu_general'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'General Options', 'avh-ec' ), __( 'General Options', 'avh-ec' ), 'manage_options', 'avhec-general', array (&$this, 'doMenuGeneral' ) );
+		$this->hooks['menu_category_groups'] = add_submenu_page( $folder, 'AVH Extended Categories: ' . __( 'Category Groups', 'avh-ec' ), __( 'Category Groups', 'avh-ec' ), 'manage_options', 'avhec-grouped', array (&$this, 'doMenuCategoryGroup' ) );
+		$this->hooks['menu_faq'] = add_submenu_page( $folder, 'AVH Extended Categories:' . __( 'F.A.Q', 'avh-ec' ), __( 'F.A.Q', 'avh-ec' ), 'manage_options', 'avhec-faq', array (&$this, 'doMenuFAQ' ) );
 
 		// Add actions for menu pages
-		add_action( 'load-' . $this->hooks['avhec_menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
-		add_action( 'load-' . $this->hooks['avhec_menu_general'], array (&$this, 'actionLoadPageHook_General' ) );
-		add_action( 'load-' . $this->hooks['avhec_menu_grouped'], array (&$this, 'actionLoadPageHook_CategoryGroup' ) );
-		add_action( 'load-' . $this->hooks['avhec_menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
+		add_action( 'load-' . $this->hooks['menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
+		add_action( 'load-' . $this->hooks['menu_general'], array (&$this, 'actionLoadPageHook_General' ) );
+		add_action( 'load-' . $this->hooks['menu_category_groups'], array (&$this, 'actionLoadPageHook_CategoryGroup' ) );
+		add_action( 'load-' . $this->hooks['menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
 	}
 
 	function actionLoadPageHook_Overview ()
@@ -174,7 +174,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_overview'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -193,10 +193,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'normal', $data );
+		do_meta_boxes( $this->hooks['menu_overview'], 'normal', $data );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_overview'], 'side', $data );
+		do_meta_boxes( $this->hooks['menu_overview'], 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -213,7 +213,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_General ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxOptions', __( 'Options', 'avh-ec' ), array (&$this, 'metaboxOptions' ), $this->hooks['avhec_menu_general'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxOptions', __( 'Options', 'avh-ec' ), array (&$this, 'metaboxOptions' ), $this->hooks['menu_general'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -298,7 +298,7 @@ class AVH_EC_Admin
 		$data['actual_options'] = $actual_options;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_general'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['menu_general'], 'side', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -320,10 +320,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_general'], 'normal', $data );
+		do_meta_boxes( $this->hooks['menu_general'], 'normal', $data );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_general'], 'side', $data );
+		do_meta_boxes( $this->hooks['menu_general'], 'side', $data );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -352,8 +352,8 @@ class AVH_EC_Admin
 	function actionLoadPageHook_CategoryGroup ()
 	{
 		// Add metaboxes
-		add_meta_box( 'avhecBoxCategoryGroupAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupAdd' ), $this->hooks['avhec_menu_grouped'], 'normal', 'core' );
-		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+		add_meta_box( 'avhecBoxCategoryGroupAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupAdd' ), $this->hooks['menu_category_groups'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_category_groups'], 'side', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -417,7 +417,7 @@ class AVH_EC_Admin
 					$data_edit_group['edit'] = array ('group_id' => $group_id, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
-					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['avhec_menu_grouped'], 'normal', 'low' );
+					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
 					break;
 				case 'delete' :
 					if ( ! isset( $_GET['group_ID'] ) ) {
@@ -479,7 +479,7 @@ class AVH_EC_Admin
 		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
-		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_grouped'], 'side', 'core' );
+		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_category_groups'], 'side', 'core' );
 
 
 		echo '<div class="wrap avhec-wrap">';
@@ -491,11 +491,11 @@ class AVH_EC_Admin
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'normal', $data );
+		do_meta_boxes( $this->hooks['menu_category_groups'], 'normal', $data );
 		echo "			</div>";
 
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_grouped'], 'side', $data );
+		do_meta_boxes( $this->hooks['menu_category_groups'], 'side', $data );
 		echo '			</div>';
 
 		echo '		</div>'; // dashboard-widgets
@@ -566,8 +566,8 @@ class AVH_EC_Admin
 	function actionLoadPageHook_faq ()
 	{
 
-		add_meta_box( 'avhecBoxFAQ', __( 'F.A.Q.', 'avh-ec' ), array (&$this, 'metaboxFAQ' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
-		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['avhec_menu_faq'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxFAQ', __( 'F.A.Q.', 'avh-ec' ), array (&$this, 'metaboxFAQ' ), $this->hooks['menu_faq'], 'normal', 'core' );
+		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['menu_faq'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -592,7 +592,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['avhec_menu_faq'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_faq'], 'side', 'core' );
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -610,10 +610,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_faq'], 'normal', '' );
+		do_meta_boxes( $this->hooks['menu_faq'], 'normal', '' );
 		echo '			</div>';
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['avhec_menu_faq'], 'side', '' );
+		do_meta_boxes( $this->hooks['menu_faq'], 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
 		echo '<br class="clear"/>';
@@ -700,17 +700,17 @@ class AVH_EC_Admin
 	{
 		switch ( $screen )
 		{
-			case $this->hooks['avhec_menu_overview'] :
-				$columns[$this->hooks['avhec_menu_overview']] = 2;
+			case $this->hooks['menu_overview'] :
+				$columns[$this->hooks['menu_overview']] = 2;
 				break;
-			case $this->hooks['avhec_menu_general'] :
-				$columns[$this->hooks['avhec_menu_general']] = 2;
+			case $this->hooks['menu_general'] :
+				$columns[$this->hooks['menu_general']] = 2;
 				break;
-			case $this->hooks['avhec_menu_grouped'] :
-				$columns[$this->hooks['avhec_menu_grouped']] = 2;
+			case $this->hooks['menu_category_groups'] :
+				$columns[$this->hooks['menu_category_groups']] = 2;
 				break;
-			case $this->hooks['avhec_menu_faq'] :
-				$columns[$this->hooks['avhec_menu_faq']] = 2;
+			case $this->hooks['menu_faq'] :
+				$columns[$this->hooks['menu_faq']] = 2;
 				break;
 
 		}
@@ -883,7 +883,7 @@ class AVH_EC_Admin
 	 */
 	function printMetaboxJS ( $boxid )
 	{
-		$a = $this->hooks['avhec_menu_' . $boxid];
+		$a = $this->hooks['menu_' . $boxid];
 		echo '<script type="text/javascript">' . "\n";
 		echo '	//<![CDATA[' . "\n";
 		echo '	jQuery(document).ready( function($) {' . "\n";
