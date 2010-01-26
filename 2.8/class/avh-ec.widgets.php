@@ -384,7 +384,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		$widget_ops = array ('description' => __( "Shows the top categories.", 'avh-ec' ) );
-		WP_Widget::__construct( false, __( 'AVH Extended Categories Top' ), $widget_ops );
+		WP_Widget::__construct( false, __( 'AVH Extended Categories: Top Categories' ), $widget_ops );
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Top ()
@@ -606,7 +606,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
-		WP_Widget::__construct( false, __( 'AVH Extended Category Group' ), $widget_ops );
+		WP_Widget::__construct( false, __( 'AVH Extended Category: Category Group' ), $widget_ops );
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Category_Group ()
