@@ -484,7 +484,7 @@ class AVH_EC_Admin
 
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
-		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Grouped Categories', 'avh-ec' ) . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Category Groups', 'avh-ec' ) . '</h2>';
 		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 
 		echo '	<div id="dashboard-widgets-wrap">';
