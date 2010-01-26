@@ -17,13 +17,6 @@ class AVH_EC_Singleton
 					case 'AVH_EC_Core' :
 						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.core.php');
 						break;
-					case 'AVH_EC_Admin' :
-						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.admin.php');
-						break;
-					case 'AVH_EC_Category_Group' :
-						require_once (AVHEC_WORKING_DIR . '/class/av-ec.category-group.php');
-						break;
-
 				}
 			}
 			$instances[$class] = new $class( $arg1 );
@@ -33,7 +26,7 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
-
+require_once (AVHEC_WORKING_DIR . '/class/av-ec.category-group.php');
 require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
@@ -44,8 +37,8 @@ function avhextendedcategories_init ()
 {
 	// Admin
 	if ( is_admin() ) {
-		$avhec_admin = & AVH_EC_Singleton::getInstance( 'AVH_EC_Admin' );
-
+		require_once (AVHEC_WORKING_DIR . '/class/avh-ec.admin.php');
+		$avhec_admin = new AVH_EC_Admin();
 	}
 	add_action( 'widgets_init', 'avhextendedcategories_widgets_init' );
 
@@ -74,7 +67,7 @@ function avhec_installPlugin ()
 {
 	global $wpdb;
 
-	$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+	$catgrp = new AVH_EC_Category_Group();
 
 	// Setup the DB Tables
 	$charset_collate = '';

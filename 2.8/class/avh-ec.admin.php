@@ -2,6 +2,7 @@
 class AVH_EC_Admin
 {
 	var $core;
+	var $catgrp;
 	var $hooks = array ();
 	var $message;
 
@@ -10,6 +11,7 @@ class AVH_EC_Admin
 
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
+		$this->catgrp = new AVH_EC_Category_Group();
 
 		//		$this->installPlugin();
 
@@ -51,17 +53,16 @@ class AVH_EC_Admin
 	 */
 	function metaboxPostCategoryGroup ( $post )
 	{
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$options = $this->core->getOptions;
 		echo '<p id=\'avhec-groupcat\'';
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
 		// Get all the groupcat taxonomy terms
-		$groupcats = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+		$groupcats = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
-		$current_groupcat = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
+		$current_groupcat = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
 
 		foreach ( $groupcats as $groupcat ) {
 			$name = ucwords( $groupcat->name );
@@ -85,7 +86,6 @@ class AVH_EC_Admin
 	 */
 	function actionSaveGroupCatTaxonomy ( $post_id )
 	{
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		if ( ! wp_verify_nonce( $_POST['avhec_groupcat_nonce'], 'avhec_groupcat_nonce' ) ) {
 			return $post_id;
 		}
@@ -105,7 +105,7 @@ class AVH_EC_Admin
 
 		// OK, we're authenticated: we need to find and save the data
 		$groupcat = $_POST['post_avhec_groupcat'];
-		wp_set_object_terms( $post_id, $groupcat, $catgrp->taxonomy_name );
+		wp_set_object_terms( $post_id, $groupcat, $this->catgrp->taxonomy_name );
 
 		return $groupcat;
 
@@ -221,8 +221,8 @@ class AVH_EC_Admin
 	function doMenuGeneral ()
 	{
 		global $screen_layout_columns;
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-		$groups = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+
+		$groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 		foreach ( $groups as $group ) {
 			$groupid[] = $group->term_id;
 			$groupname[] = ucwords( $group->name );
@@ -361,7 +361,6 @@ class AVH_EC_Admin
 	function doMenuCategoryGroup ()
 	{
 		global $screen_layout_columns;
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 
 		$groupname_new = '';
 		$description_new = '';
@@ -380,10 +379,10 @@ class AVH_EC_Admin
 			$groupname_new = strtolower( $formoptions['add']['name'] );
 			$description_new = $formoptions['add']['description'];
 
-			$new = $catgrp->getTermIDBy( 'name', $groupname_new );
+			$new = $this->catgrp->getTermIDBy( 'name', $groupname_new );
 			if ( ! $new ) {
-				$groupid = $catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
-				$catgrp->setCategoriesForGroup( $groupid );
+				$groupid = $this->catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
+				$this->catgrp->setCategoriesForGroup( $groupid );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
@@ -403,8 +402,8 @@ class AVH_EC_Admin
 			{
 				case 'edit' :
 					$groupid = $_GET['group_ID'];
-					$group = get_term( $groupid, $catgrp->taxonomy_name, OBJECT, 'raw' );
-					$cats = $catgrp->getCategoriesFromGroup( $groupid );
+					$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
+					$cats = $this->catgrp->getCategoriesFromGroup( $groupid );
 
 					$data_edit_group['edit'] = array ('groupid' => $groupid, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
@@ -427,11 +426,11 @@ class AVH_EC_Admin
 			$groupid = ( int ) $_POST['avhec-groupid'];
 			$description_new = $formoptions['edit']['description'];
 
-			$term = is_term( $groupid, $catgrp->taxonomy_name );
+			$term = is_term( $groupid, $this->catgrp->taxonomy_name );
 			if ( is_array( $term ) ) {
 
-				$groupid = $catgrp->doUpdateTerm( $groupid, array ('description' => $description_new ) );
-				$catgrp->setCategoriesForGroup( $groupid, $selected_categories );
+				$groupid = $this->catgrp->doUpdateTerm( $groupid, array ('description' => $description_new ) );
+				$this->catgrp->setCategoriesForGroup( $groupid, $selected_categories );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
@@ -734,10 +733,9 @@ class AVH_EC_Admin
 
 	function printCategoryGroupRows ()
 	{
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-		$cat_groups = get_terms( $catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+		$cat_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
-		$noshowid = $catgrp->getTermIDBy( 'name', 'none' );
+		$noshowid = $this->catgrp->getTermIDBy( 'name', 'none' );
 
 		foreach ( $cat_groups as $group ) {
 			if ( $group->term_id != $noshowid ) {
@@ -760,12 +758,11 @@ class AVH_EC_Admin
 	{
 		static $row_class = '';
 
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-		$group = get_term( $groupid, $catgrp->taxonomy_name, OBJECT, 'display' );
+		$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
-		$no_edit[$catgrp->getTermIDBy( 'name', 'all' )] = 0;
-		$no_delete[$catgrp->getTermIDBy( 'name', 'all' )] = 0;
-		$no_delete[$catgrp->getTermIDBy( 'name', 'home' )] = 0;
+		$no_edit[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
+		$no_delete[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
+		$no_delete[$this->catgrp->getTermIDBy( 'name', 'home' )] = 0;
 
 		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
 		if ( current_user_can( 'manage_categories' ) ) {
@@ -791,7 +788,7 @@ class AVH_EC_Admin
 		}
 
 		$row_class = 'alternate' == $row_class ? '' : 'alternate';
-		$qe_data = get_term( $group->term_id, $catgrp->taxonomy_name, OBJECT, 'edit' );
+		$qe_data = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
 
 		$output = "<tr id='cat-$group->term_id' class='iedit $row_class'>";
 
@@ -827,7 +824,7 @@ class AVH_EC_Admin
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
 				case 'cat-in-group' :
-					$cats = $catgrp->getCategoriesFromGroup( $groupid );
+					$cats = $this->catgrp->getCategoriesFromGroup( $groupid );
 					$catname = array ();
 					foreach ( $cats as $cat_id ) {
 						$catname[] = get_cat_name( $cat_id );

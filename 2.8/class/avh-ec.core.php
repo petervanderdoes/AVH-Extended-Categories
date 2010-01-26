@@ -21,7 +21,7 @@ class AVH_EC_Core
 	 */
 	function __construct ()
 	{
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$catgrp = new AVH_EC_Category_Group();
 
 		$this->version = '3.0-dev1';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';

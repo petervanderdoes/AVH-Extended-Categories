@@ -623,7 +623,7 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 	function widget ( $args, $instance )
 	{
 		global $post;
-		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$catgrp = new AVH_EC_Category_Group();
 		extract( $args );
 
 		$c = $instance['count'] ? '1' : '0';
