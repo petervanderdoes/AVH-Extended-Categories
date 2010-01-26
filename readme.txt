@@ -9,11 +9,13 @@ Stable tag: 3.0-dev1
 The AVH Extended Categories Widgets gives you two widgets for displaying categories.
 == Description ==
 
-The AVH Extended Categories Widgets gives you two widgets for displaying categories.
+The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 
 1. Replacement of the default category widget to allow for greater customization.
 
 1. A top categories widget. Shows the top X categories. This requires WordPress 2.8 or higher.
+
+1. A Category Group widget. Shows categories from a group. The group can be associated with a post. This requires WordPress 2.8 or higher.
 
 The replacement widget gives you the following customizable options:
 
@@ -39,6 +41,24 @@ The Top Categories widget gives you the following customizable options:
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
+The Category Group widget gives you the following customizable options:
+
+* Title of the widget.
+* Display as List or Dropdown.
+* Show number of posts (Count) after the category.
+* Hide empty categories.
+* Sort by ID, Name,Count.
+* Sort ascending or descending.
+* Show RSS link after the category as text or image.
+
+You can set the following options for the Category Group Widget:
+
+* Which group to show on the home page.
+* Which group to show when no group is associated with a post. Useful for older posts that don't have the association.
+* Set the default group when editing or creating a post.
+
+You can also select not to show the Category Group widget by selecting the group: None
+ 
 Translations:
 * Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
 * Spanish - Español (es_ES) in Launchpad
@@ -81,13 +101,14 @@ None
 
 = Version 3.0 =
 * Renamed the plugin to AVH Extended Categories Widgets
+* Added new widget: Category Group. You can create groups with caetgories and associate the group with a post. The widget will show the categories from the group.
 * Added translation: Italian - Italiano (it_IT)
 * Redid settings. Settings are now a seperate menu.
 * Reduced memory foot print.
 * Increased speed.
 * Development improvements.
 * Bugfix: The hierarchy checkmark in the widgets would disappear.
-* Bugfix: In dropdown hierarchy would appear despite the fact that "Show selected categories only" was selected.
+* Bugfix: In dropdown list the hierarchy would appear despite the fact that "Show selected categories only" was selected.
 
 = Version 2.3.3 =
 * Bugfix: Validation error on dropdown categories.
