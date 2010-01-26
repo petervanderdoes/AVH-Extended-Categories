@@ -78,7 +78,7 @@ class AVH_EC_Admin
 			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_id, $current_groupcat[0]->term_id ) ) {
 				echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && $options['cat-group']['default_group'] == $groupcat->term_id ) {
+				if ( empty( $current_groupcat ) && $options['cat_group']['default_group'] == $groupcat->term_id ) {
 					echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
 					echo '<option value="' . $groupcat->term_id . '">' . $name . "</option>\n";
@@ -238,9 +238,9 @@ class AVH_EC_Admin
 		}
 
 		$options_general[] = array ('avhec[general][alternative_name_select_category]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
-		$options_general[] = array ('avhec[cat-group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
-		$options_general[] = array ('avhec[cat-group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
-		$options_general[] = array ('avhec[cat-group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
 
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
@@ -259,7 +259,7 @@ class AVH_EC_Admin
 				switch ( $section )
 				{
 					case 'general' :
-					case 'cat-group' :
+					case 'cat_group' :
 						$current_value = $options[$section][$option_key];
 						break;
 				}
@@ -269,7 +269,7 @@ class AVH_EC_Admin
 					switch ( $section )
 					{
 						case 'general' :
-						case 'cat-group' :
+						case 'cat_group' :
 							$options[$section][$option_key] = $newval;
 							break;
 					}
