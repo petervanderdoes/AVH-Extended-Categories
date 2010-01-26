@@ -40,8 +40,14 @@ class AVH_EC_Core
 
 		// Set the default options
 		$this->default_general_options = array ('version' => $this->version, 'dbversion' => $db_version, 'selectcategory' => '' );
-		$this->default_grouped_cat_options = array ('no-cat-group' => $none_group_id['term_id'], 'default-group' => $all_group_id['term_id'] );
-		$this->default_options = array ('general' => $this->default_general_options, 'groupedcats' => $this->default_grouped_cat_options );
+
+		// Set the default category group options
+		$nogroupid=$catgrp->getTermIDBy('name','all');
+		$homegroupid=$catgrp->getTermIDBy('name','home');
+		$defaultgroupid=$catgrp->getTermIDBy('name','all');
+		$this->default_grouped_cat_options = array ('nogroup' => $nogroup, 'homegroup' => $homegroupid, 'defaultgroup'=>$defaultgroupid );
+
+		$this->default_options = array ('general' => $this->default_general_options, 'cat-group' => $this->default_grouped_cat_options );
 
 		/**
 		 * Set the options for the program

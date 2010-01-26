@@ -229,8 +229,9 @@ class AVH_EC_Admin
 		}
 
 		$options_general[] = array ('avhec[general][selectcategory]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
-		$options_general[] = array ('avhec[general][homecategory]', 'Home Group', 'dropdown', $groupid, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
-		$options_general[] = array ('avhec[general][nocategory]', 'Nonexistence Group', 'dropdown', $groupid, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][homegroup]', 'Home Group', 'dropdown', $groupid, $groupname, 'Select which group to show on the home page.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][nogroup]', 'Nonexistence Group', 'dropdown', $groupid, $groupname, 'Select which group to show when there is no group associated with the post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
+		$options_general[] = array ('avhec[cat-group][defaultgroup]', 'Default Group', 'dropdown', $groupid, $groupname, 'Select which group will be the default group when editing a post.<br />The group <em>none</em> implies not showing any category group and not showing the Grouped widget.' );
 
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
@@ -249,6 +250,7 @@ class AVH_EC_Admin
 				switch ( $section )
 				{
 					case 'general' :
+					case 'cat-group' :
 						$current_value = $options[$section][$option_key];
 						break;
 				}
@@ -258,6 +260,7 @@ class AVH_EC_Admin
 					switch ( $section )
 					{
 						case 'general' :
+						case 'cat-group' :
 							$options[$section][$option_key] = $newval;
 							break;
 					}

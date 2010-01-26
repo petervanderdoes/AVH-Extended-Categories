@@ -146,7 +146,7 @@ class AVH_EC_Category_Group
 		if ( false === $row ) {
 			$return = false;
 		} else {
-			$return = $row->term_id;
+			$return = (int) $row->term_id;
 		}
 		return ($return);
 	}
