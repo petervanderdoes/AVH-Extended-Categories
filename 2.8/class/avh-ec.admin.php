@@ -30,6 +30,7 @@ class AVH_EC_Admin
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
+		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ),10,2 );
 
 		return;
 	}
@@ -43,6 +44,14 @@ class AVH_EC_Admin
 	{
 		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
 		return $categories_group_columns;
+	}
+
+	function filterExplainNonceDeleteGroup ( $text, $groupid )
+	{
+		$group = get_term( $groupid, $this->catgrp->taxonomy_name, OBJECT, 'display' );
+
+		$return = sprintf(__( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.'), ucwords($group->name) );
+		return ($return);
 	}
 
 	/**
@@ -417,7 +426,7 @@ class AVH_EC_Admin
 					}
 
 					$group_ID = ( int ) $_GET['group_ID'];
-					check_admin_referer( 'delete-group_' . $group_ID );
+					check_admin_referer( 'delete-avhecgroup_' . $group_ID );
 
 					if ( ! current_user_can( 'manage_categories' ) )
 						wp_die( __( 'Cheatin&#8217; uh?' ) );
@@ -784,7 +793,7 @@ class AVH_EC_Admin
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 			}
 			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-group_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
