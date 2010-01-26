@@ -55,15 +55,19 @@ table.avhec-options {
 #avhec-catlist {
 	-moz-border-radius:4px 4px 4px 4px;
 	background-color:#FFFFFF;
-	border-color:#DFDFDF;
-	border-style:solid;
-	border-width:1px;
+	border:1px solid #DFDFDF;
+	height:20em;
+	margin-bottom:-1.8em;
+	overflow:auto;
+	width:95%;
+}
+
+#avhec-catlist ul {
 	padding: 3px;
 }
-#avhec-catlist ul {
-	list-style:none outside none;
-	margin:0;
-	padding:0;
+
+#avhec-catlist li ul {
+	padding: 0px;
 }
 
 #avhec-catlist li {

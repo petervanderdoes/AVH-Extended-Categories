@@ -954,9 +954,11 @@ class AVH_EC_Admin
 					break;
 				case 'catlist' :
 					ob_start();
-					echo '<ul id="avhec-catlist">';
+					echo '<div id="avhec-catlist">';
+					echo '<ul>';
 					wp_category_checklist( 0, 0, $option_actual[$section][$option_key] );
 					echo '</ul>';
+					echo '</div>';
 					$input_type = ob_get_contents();
 					ob_end_clean();
 					$explanation = $option[4];
