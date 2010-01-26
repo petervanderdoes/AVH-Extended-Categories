@@ -56,7 +56,7 @@ function avhextendedcategories_widgets_init ()
 {
 	register_widget( 'WP_Widget_AVH_ExtendedCategories_Normal' );
 	register_widget( 'WP_Widget_AVH_ExtendedCategories_Top' );
-	register_widget( 'WP_Widget_AVH_ExtendedCategories_Grouped' );
+	register_widget( 'WP_Widget_AVH_ExtendedCategories_Category_Group' );
 }
 
 /**

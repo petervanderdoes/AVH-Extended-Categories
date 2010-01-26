@@ -593,7 +593,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
  * Widget Class for displaying the grouped categories
  *
  */
-class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
+class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 {
 	var $core;
 
@@ -606,10 +606,10 @@ class WP_Widget_AVH_ExtendedCategories_Grouped extends WP_Widget
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
-		WP_Widget::__construct( false, __( 'AVH Extended Categories Grouped' ), $widget_ops );
+		WP_Widget::__construct( false, __( 'AVH Extended Category Group' ), $widget_ops );
 	}
 
-	function WP_Widget_AVH_ExtendedCategories_Grouped ()
+	function WP_Widget_AVH_ExtendedCategories_Category_Group ()
 	{
 		$this->__construct();
 	}
