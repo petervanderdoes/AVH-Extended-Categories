@@ -807,7 +807,7 @@ class AVH_EC_Admin
 			{
 				case 'cb' :
 					$output .= '<th scope="row" class="check-column">';
-					if ( $default_cat_id != $group->term_id ) {
+					if ( !(array_key_exists( $group->term_id, $no_delete ) ) ) {
 						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_id . '" />';
 					} else {
 						$output .= "&nbsp;";
