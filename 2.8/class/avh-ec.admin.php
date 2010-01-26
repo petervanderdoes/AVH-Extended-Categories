@@ -67,21 +67,21 @@ class AVH_EC_Admin
 
 		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
 
-		// Get all the groupcat taxonomy terms
-		$groupcats = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+		// Get all the taxonomy terms
+		$category_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
 		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
-		$current_groupcat = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
+		$current_category_group = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
 
-		foreach ( $groupcats as $groupcat ) {
-			$name = ucwords( $groupcat->name );
-			if ( ! is_wp_error( $current_groupcat ) && ! empty( $current_groupcat ) && ! strcmp( $groupcat->term_id, $current_groupcat[0]->term_id ) ) {
-				echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+		foreach ( $category_groups as $group ) {
+			$name = ucwords( $group->name );
+			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_id, $current_category_group[0]->term_id ) ) {
+				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_groupcat ) && $options['cat_group']['default_group'] == $groupcat->term_id ) {
-					echo '<option value="' . $groupcat->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_id ) {
+					echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
-					echo '<option value="' . $groupcat->term_id . '">' . $name . "</option>\n";
+					echo '<option value="' . $group->term_id . '">' . $name . "</option>\n";
 				}
 			}
 		}
