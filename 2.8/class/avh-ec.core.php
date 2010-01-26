@@ -5,13 +5,9 @@ class AVH_EC_Core
 	var $comment;
 	var $info;
 	var $db_options_core;
-	var $db_cat_groups;
 	var $default_options;
 	var $default_general_options;
 	var $default_grouped_cat_options;
-
-	var $default_cat_groups;
-	var $default_cat_groups_row;
 
 	var $options;
 
@@ -27,7 +23,6 @@ class AVH_EC_Core
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 2;
 		$this->db_options_core = 'avhec';
-		$this->db_cat_groups = 'avhec_catgroups';
 
 		$info['siteurl'] = get_option( 'siteurl' );
 

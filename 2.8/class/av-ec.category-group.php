@@ -109,19 +109,19 @@ class AVH_EC_Category_Group
 	{
 		global $wpdb;
 
-		$oldcategories = $this->getCategoriesFromGroup( $group_id );
+		$old_categories = $this->getCategoriesFromGroup( $group_id );
 		if (!is_array($categories)) {
 			$categories=array();
 		}
-		$newcategories = serialize( $categories );
+		$new_categories = serialize( $categories );
 		// If the new and old values are the same, no need to update.
-		if ( $newcategories === $oldcategories )
+		if ( $new_categories === $old_categories )
 			return false;
 
-		if ( false === $oldcategories ) {
-			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_id, avhec_categories) VALUES (%d, %s)", $group_id, $newcategories );
+		if ( false === $old_categories ) {
+			$sql = $wpdb->prepare( "INSERT INTO $wpdb->avhec_cat_group (term_id, avhec_categories) VALUES (%d, %s)", $group_id, $new_categories );
 		} else {
-			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_id=%d", $newcategories, $group_id );
+			$sql = $wpdb->prepare( "UPDATE $wpdb->avhec_cat_group SET avhec_categories=%s WHERE term_id=%d", $new_categories, $group_id );
 		}
 
 		// Query database
