@@ -26,7 +26,7 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
-require_once (AVHEC_WORKING_DIR . '/class/av-ec.category-group.php');
+require_once (AVHEC_WORKING_DIR . '/class/avh-ec.category-group.php');
 require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**

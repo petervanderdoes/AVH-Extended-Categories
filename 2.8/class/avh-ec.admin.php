@@ -15,6 +15,7 @@ class AVH_EC_Admin
 
 		//		$this->installPlugin();
 
+		add_action( 'wp_ajax_delete-group', array (&$this, 'ajaxDeleteGroup' ) );
 
 		// Admin menu
 		add_action( 'admin_menu', array (&$this, 'actionAdminMenu' ) );
@@ -352,6 +353,7 @@ class AVH_EC_Admin
 
 	function actionLoadPageHook_CategoryGroup ()
 	{
+
 		// Add metaboxes
 		add_meta_box( 'avhecBoxCategoryGroupAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupAdd' ), $this->hooks['menu_category_groups'], 'normal', 'core' );
 		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_category_groups'], 'side', 'core' );
@@ -362,7 +364,7 @@ class AVH_EC_Admin
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
-		wp_enqueue_script('avhec-categorygroup-js');
+		wp_enqueue_script( 'avhec-categorygroup-js' );
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
@@ -412,7 +414,7 @@ class AVH_EC_Admin
 			switch ( $action )
 			{
 				case 'edit' :
-					$group_id = (int) $_GET['group_ID'];
+					$group_id = ( int ) $_GET['group_ID'];
 					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
@@ -433,7 +435,7 @@ class AVH_EC_Admin
 					if ( ! current_user_can( 'manage_categories' ) ) {
 						wp_die( __( 'Cheatin&#8217; uh?' ) );
 					}
-					$this->catgrp->doDeleteGroup($group_id);
+					$this->catgrp->doDeleteGroup( $group_id );
 					break;
 				default :
 					;
@@ -540,7 +542,7 @@ class AVH_EC_Admin
 		echo '</tr>';
 		echo '</tfoot>';
 
-		echo '<tbody id="the-list" class="list:cat">';
+		echo '<tbody id="the-list" class="list:group">';
 		$this->printCategoryGroupRows();
 		echo '</tbody>';
 		echo '</table>';
@@ -796,7 +798,7 @@ class AVH_EC_Admin
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 			}
 			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:cat-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+				$actions['delete'] = "<a class='delete:the-list:group-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
@@ -814,7 +816,7 @@ class AVH_EC_Admin
 		$row_class = 'alternate' == $row_class ? '' : 'alternate';
 		$qe_data = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
 
-		$output = "<tr id='cat-$group->term_id' class='iedit $row_class'>";
+		$output = "<tr id='group-$group->term_id' class='iedit $row_class'>";
 
 		$columns = get_column_headers( 'categories_group' );
 		$hidden = get_hidden_columns( 'categories_group' );
@@ -1023,5 +1025,24 @@ class AVH_EC_Admin
 		return ('<div class="icon32" id="icon-' . $icon . '"><br/></div>');
 	}
 
+	function ajaxDeleteGroup ()
+	{
+		$group_id = isset( $_POST['id'] ) ? ( int ) $_POST['id'] : 0;
+		check_ajax_referer( 'delete-avhecgroup_'.$group_id );
+
+		if ( ! current_user_can( 'manage_categories' ) ) {
+			die( '-1' );
+		}
+		$check = $this->catgrp->getTermIDBy('id',$group_id);
+		if ( false === $cat  ) {
+			die('1');
+		}
+
+		if ($this->catgrp->doDeleteGroup( $group_id )){
+			die('1');
+		}else {
+			die('0');
+		}
+	}
 }
 ?>

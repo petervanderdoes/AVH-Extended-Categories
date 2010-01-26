@@ -168,7 +168,8 @@ class AVH_EC_Category_Group
 		global $wpdb;
 
 		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->avhec_cat_group WHERE term_id=%d", $group_id ));
-		wp_delete_term($group_id,$this->taxonomy_name);
+		$return = wp_delete_term($group_id,$this->taxonomy_name);
+		return ($return);
 	}
 }
 ?>
