@@ -162,5 +162,13 @@ class AVH_EC_Category_Group
 		$row = wp_update_term( $term_id, $this->taxonomy_name, $args );
 		return ($row['term_id']);
 	}
+
+	function doDeleteGroup($group_id) {
+
+		global $wpdb;
+
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->avhec_cat_group WHERE term_id=%d", $group_id ));
+		wp_delete_term($group_id,$this->taxonomy_name);
+	}
 }
 ?>

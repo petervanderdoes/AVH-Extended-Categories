@@ -30,7 +30,7 @@ class AVH_EC_Admin
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
-		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ),10,2 );
+		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ), 10, 2 );
 
 		return;
 	}
@@ -50,7 +50,7 @@ class AVH_EC_Admin
 	{
 		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
-		$return = sprintf(__( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.'), ucwords($group->name) );
+		$return = sprintf( __( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.' ), ucwords( $group->name ) );
 		return ($return);
 	}
 
@@ -410,7 +410,7 @@ class AVH_EC_Admin
 			switch ( $action )
 			{
 				case 'edit' :
-					$group_id = $_GET['group_ID'];
+					$group_id = (int) $_GET['group_ID'];
 					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
@@ -425,12 +425,13 @@ class AVH_EC_Admin
 						exit();
 					}
 
-					$group_ID = ( int ) $_GET['group_ID'];
-					check_admin_referer( 'delete-avhecgroup_' . $group_ID );
+					$group_id = ( int ) $_GET['group_ID'];
+					check_admin_referer( 'delete-avhecgroup_' . $group_id );
 
-					if ( ! current_user_can( 'manage_categories' ) )
+					if ( ! current_user_can( 'manage_categories' ) ) {
 						wp_die( __( 'Cheatin&#8217; uh?' ) );
-
+					}
+					$this->catgrp->doDeleteGroup($group_id);
 					break;
 				default :
 					;
