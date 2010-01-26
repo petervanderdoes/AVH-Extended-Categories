@@ -48,7 +48,7 @@ table.avhec-options {
 }
 
 /* Metabox in post and page */
-#side-sortables #avhec-groupcat select {
+#post_avhec_category_group {
 	width:100%;
 }
 

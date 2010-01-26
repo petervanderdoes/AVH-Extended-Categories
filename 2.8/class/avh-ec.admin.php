@@ -63,14 +63,14 @@ class AVH_EC_Admin
 	function metaboxPostCategoryGroup ( $post )
 	{
 		$options = $this->core->getOptions;
-		echo '<p id=\'avhec-groupcat\'';
+		echo '<p id=\'avhec-cat-group\'';
 
-		echo '<input type="hidden" name="avhec_groupcat_nonce" id="avhec_groupcat_nonce" value="' . wp_create_nonce( 'avhec_groupcat_nonce' ) . '" />';
+		echo '<input type="hidden" name="avhec_category_group_nonce" id="avhec_category_group_nonce" value="' . wp_create_nonce( 'avhec_category_group_nonce' ) . '" />';
 
 		// Get all the taxonomy terms
 		$category_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
-		echo ' <select name=\'post_avhec_groupcat\' id=\'post_avhec_groupcat\' class=\'postform\'>';
+		echo ' <select name=\'post_avhec_category_group\' id=\'post_avhec_category_group\' class=\'postform\'>';
 		$current_category_group = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
 
 		foreach ( $category_groups as $group ) {
@@ -95,7 +95,7 @@ class AVH_EC_Admin
 	 */
 	function actionSaveGroupCatTaxonomy ( $post_id )
 	{
-		if ( ! wp_verify_nonce( $_POST['avhec_groupcat_nonce'], 'avhec_groupcat_nonce' ) ) {
+		if ( ! wp_verify_nonce( $_POST['avhec_category_group_nonce'], 'avhec_category_group_nonce' ) ) {
 			return $post_id;
 		}
 
