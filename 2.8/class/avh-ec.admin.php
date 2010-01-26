@@ -22,6 +22,7 @@ class AVH_EC_Admin
 
 		// Register Style and Scripts
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
+		wp_register_script( 'avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array ('jquery' ), $this->core->version, true );
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
 
 		add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
@@ -361,6 +362,7 @@ class AVH_EC_Admin
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+		wp_enqueue_script('avhec-categorygroup-js');
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
