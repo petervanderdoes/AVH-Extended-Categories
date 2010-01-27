@@ -15,6 +15,7 @@ class AVH_EC_Admin
 
 		//		$this->installPlugin();
 
+
 		add_action( 'wp_ajax_delete-group', array (&$this, 'ajaxDeleteGroup' ) );
 
 		// Admin menu
@@ -40,20 +41,6 @@ class AVH_EC_Admin
 	function AVH_EC_Admin ()
 	{
 		$this->__construct();
-	}
-
-	function filterManageCategoriesGroupColumns ( $columns )
-	{
-		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
-		return $categories_group_columns;
-	}
-
-	function filterExplainNonceDeleteGroup ( $text, $group_id )
-	{
-		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
-
-		$return = sprintf( __( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.' ), ucwords( $group->name ) );
-		return ($return);
 	}
 
 	/**
@@ -93,7 +80,9 @@ class AVH_EC_Admin
 
 	/**
 	 * Called when the post/page is saved. It associates the selected Category Group with the post
+	 *
 	 * @param $post_id
+	 * @return
 	 */
 	function actionSaveGroupCatTaxonomy ( $post_id )
 	{
@@ -124,6 +113,8 @@ class AVH_EC_Admin
 
 	/**
 	 * Enqueues the style on the post.php and page.php pages
+	 * @WordPress Action load-$pagenow
+	 *
 	 */
 	function actionLoadPostPage ()
 	{
@@ -554,6 +545,10 @@ class AVH_EC_Admin
 		echo '</div>';
 	}
 
+	/**
+	 * Metabox Category Group Edit
+	 *
+	 */
 	function metaboxCategoryGroupEdit ( $data )
 	{
 		echo '<form name="avhec-editgroup" id="avhec-editgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
@@ -734,6 +729,37 @@ class AVH_EC_Admin
 		array_unshift( $links, $settings_link ); // before other links
 		return $links;
 
+	}
+
+	/**
+	 * Creates a new array for columns headers. Used in print_column_headers. The filter is called from get_column_headers
+	 *
+	 * @param $columns
+	 * @return Array
+	 * @see print_column_headers
+	 * @see get_column_headers
+	 */
+	function filterManageCategoriesGroupColumns ( $columns )
+	{
+		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
+		return $categories_group_columns;
+	}
+
+	/**
+	 * When not using AJAX, this function is called when the deletion fails.
+	 *
+	 * @param string $text
+	 * @param int $group_id
+	 * @return string
+	 * @WordPress Filter explain_nonce_$verb-$noun
+	 * @see wp_explain_nonce
+	 */
+	function filterExplainNonceDeleteGroup ( $text, $group_id )
+	{
+		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
+
+		$return = sprintf( __( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.' ), ucwords( $group->name ) );
+		return ($return);
 	}
 
 	############## Admin WP Helper ##############
@@ -1025,23 +1051,26 @@ class AVH_EC_Admin
 		return ('<div class="icon32" id="icon-' . $icon . '"><br/></div>');
 	}
 
+	/**
+	 * Ajax Helper: inline delete of the groups
+	 */
 	function ajaxDeleteGroup ()
 	{
 		$group_id = isset( $_POST['id'] ) ? ( int ) $_POST['id'] : 0;
-		check_ajax_referer( 'delete-avhecgroup_'.$group_id );
+		check_ajax_referer( 'delete-avhecgroup_' . $group_id );
 
 		if ( ! current_user_can( 'manage_categories' ) ) {
 			die( '-1' );
 		}
-		$check = $this->catgrp->getTermIDBy('id',$group_id);
-		if ( false === $cat  ) {
-			die('1');
+		$check = $this->catgrp->getTermIDBy( 'id', $group_id );
+		if ( false === $cat ) {
+			die( '1' );
 		}
 
-		if ($this->catgrp->doDeleteGroup( $group_id )){
-			die('1');
-		}else {
-			die('0');
+		if ( $this->catgrp->doDeleteGroup( $group_id ) ) {
+			die( '1' );
+		} else {
+			die( '0' );
 		}
 	}
 }
