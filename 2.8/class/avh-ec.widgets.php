@@ -648,6 +648,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		if ( is_home() ) {
 			$row = get_term_by( 'id', $options['cat_group']['home_group'], $catgrp->taxonomy_name );
+			if (false === $row) { // The home group doesn't exists
+				$row='';
+			}
 		} else {
 			$row = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 		}
