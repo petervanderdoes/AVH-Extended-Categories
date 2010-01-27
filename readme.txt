@@ -103,6 +103,7 @@ None
 * Renamed the plugin to AVH Extended Categories Widgets
 * Added new widget: Category Group. You can create groups with caetgories and associate the group with a post. The widget will show the categories from the group.
 * Added translation: Italian - Italiano (it_IT)
+* Added css file for widgets. Using the CSS you can change the layout of the text.
 * Redid settings. Settings are now a seperate menu.
 * Reduced memory foot print.
 * Increased speed.
