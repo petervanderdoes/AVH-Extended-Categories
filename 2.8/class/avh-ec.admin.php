@@ -372,6 +372,7 @@ class AVH_EC_Admin
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
+		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'Category group name.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
@@ -409,7 +410,7 @@ class AVH_EC_Admin
 					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
-					$data_edit_group['edit'] = array ('group_id' => $group_id, 'description' => $group->description, 'categories' => $cats );
+					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
@@ -441,12 +442,13 @@ class AVH_EC_Admin
 			$selected_categories = $_POST['post_category'];
 
 			$group_id = ( int ) $_POST['avhec-group_id'];
+			$name_new = strtolower( $formoptions['edit']['name'] );
 			$description_new = $formoptions['edit']['description'];
 
 			$term = is_term( $group_id, $this->catgrp->taxonomy_name );
 			if ( is_array( $term ) ) {
 
-				$group_id = $this->catgrp->doUpdateTerm( $group_id, array ('description' => $description_new ) );
+				$group_id = $this->catgrp->doUpdateTerm( $group_id, array ('name' => $name_new, 'description' => $description_new ) );
 				$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
