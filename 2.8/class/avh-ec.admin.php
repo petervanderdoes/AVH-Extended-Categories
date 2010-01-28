@@ -322,7 +322,7 @@ class AVH_EC_Admin
 
 		echo '<br class="clear"/>';
 		echo '	</div>'; //dashboard-widgets-wrap
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
+		echo '<p class="submit"><input	class="button"	type="submit" name="updateoptions" value="' . __( 'Save Changes', 'avhf-ec' ) . '" /></p>';
 		echo '</form>';
 
 		echo '</div>'; // wrap
@@ -369,10 +369,11 @@ class AVH_EC_Admin
 		$groupname_new = '';
 		$description_new = '';
 
-		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'Category group name.' );
+		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
-		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'Category group name.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
@@ -410,7 +411,7 @@ class AVH_EC_Admin
 					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
-					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'description' => $group->description, 'categories' => $cats );
+					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
@@ -512,7 +513,7 @@ class AVH_EC_Admin
 		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_addgroup' );
 		echo $this->printOptions( $data['add']['form'], $data['add']['data'] );
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="addgroup" value="' . __( 'Save Changes', 'avh-ec' ) . '" /></p>';
+		echo '<p class="submit"><input	class="button"	type="submit" name="addgroup" value="' . __( 'Add group', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
 	}
 
@@ -557,7 +558,7 @@ class AVH_EC_Admin
 		wp_nonce_field( 'avh_ec_editgroup' );
 		echo $this->printOptions( $data['edit']['form'], $data['edit']['data'] );
 		echo '<input type="hidden" value="' . $data['edit']['data']['edit']['group_id'] . '" name="avhec-group_id" id="avhec-group_id">';
-		echo '<p class="submit"><input	class="button-primary"	type="submit" name="editgroup" value="' . __( 'Update', 'avh-ec' ) . '" /></p>';
+		echo '<p class="submit"><input	class="button"	type="submit" name="editgroup" value="' . __( 'Update group', 'avh-ec' ) . '" /></p>';
 		echo '</form>';
 	}
 
