@@ -27,11 +27,19 @@ class AVH_EC_Admin
 		wp_register_script( 'avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array ('jquery' ), $this->core->version, true );
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
 
+		// Metaboxes for the Category Group on the post and page pages
 		add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
 		add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
+
+		// Actions used for editing posts
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
+
+		// Actions related to adding and deletes categories
+		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
+		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
+
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
 		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ), 10, 2 );
 
@@ -793,8 +801,8 @@ class AVH_EC_Admin
 		$noshowid = $this->catgrp->getTermIDBy( 'slug', 'none' );
 
 		foreach ( $cat_groups as $group ) {
-			if ( $group->term_id != $noshowid ) {
-				echo $this->printCategoryGroupRow( $group->term_id );
+			if ( $group->term_taxonomy_id != $noshowid ) {
+				echo $this->printCategoryGroupRow( $group->term_id, $group->term_taxonomy_id );
 			}
 		}
 	}
@@ -809,11 +817,11 @@ class AVH_EC_Admin
 	 * @param unknown_type $name_override
 	 * @return unknown
 	 */
-	function printCategoryGroupRow ( $group_id )
+	function printCategoryGroupRow ( $group_term_id, $group_term_taxonomy_id )
 	{
 		static $row_class = '';
 
-		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
+		$group = get_term( $group_term_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
 		$no_edit[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
@@ -882,7 +890,7 @@ class AVH_EC_Admin
 					$output .= "<td $attributes>" . apply_filters('editable_slug', $qe_data->slug) . "</td>";
 					break;
 				case 'cat-in-group' :
-					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
+					$cats = $this->catgrp->getCategoriesFromGroup( $group_term_taxonomy_id );
 					$catname = array ();
 					foreach ( $cats as $cat_id ) {
 						$catname[] = get_cat_name( $cat_id );

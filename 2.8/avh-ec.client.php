@@ -93,8 +93,8 @@ function avhec_installPlugin ()
 
 	//Fill the standard groups with all categories
 	$all_categories = $catgrp->getAllCategoriesTermID();
-	$catgrp->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
-	$catgrp->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
+	$catgrp->setCategoriesForGroup( $all_group_id['term_taxonomy_id'], $all_categories );
+	$catgrp->setCategoriesForGroup( $home_group_id['term_taxonomy_id'], $all_categories );
 
 }
 
