@@ -743,7 +743,7 @@ class AVH_EC_Admin
 	 */
 	function filterManageCategoriesGroupColumns ( $columns )
 	{
-		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
+		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'slug'=>'Slug','description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
 		return $categories_group_columns;
 	}
 
@@ -814,9 +814,9 @@ class AVH_EC_Admin
 
 		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
-		$no_edit[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
-		$no_delete[$this->catgrp->getTermIDBy( 'name', 'all' )] = 0;
-		$no_delete[$this->catgrp->getTermIDBy( 'name', 'home' )] = 0;
+		$no_edit[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
+		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
+		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'home' )] = 0;
 
 		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
 		if ( current_user_can( 'manage_categories' ) ) {
@@ -872,10 +872,14 @@ class AVH_EC_Admin
 					$output .= '<td ' . $attributes . '>' . $edit;
 					$output .= '<div class="hidden" id="inline_' . $qe_data->term_id . '">';
 					$output .= '<div class="name">' . $qe_data->name . '</div>';
+					$output .= '<div class="slug">' . apply_filters('editable_slug', $qe_data->slug) . '</div>';
 					$output .= '</div></td>';
 					break;
 				case 'description' :
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
+					break;
+				case 'slug':
+					$output .= "<td $attributes>" . apply_filters('editable_slug', $qe_data->slug) . "</td>";
 					break;
 				case 'cat-in-group' :
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
