@@ -797,10 +797,8 @@ class AVH_EC_Admin
 	{
 		$cat_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
-		$noshowid = $this->catgrp->getTermIDBy( 'slug', 'none' );
-
 		foreach ( $cat_groups as $group ) {
-			if ( $group->term_taxonomy_id != $noshowid ) {
+			if ( 'none' != $group->slug ) {
 				echo $this->printCategoryGroupRow( $group->term_id, $group->term_taxonomy_id );
 			}
 		}
@@ -849,7 +847,7 @@ class AVH_EC_Admin
 		}
 
 		$row_class = 'alternate' == $row_class ? '' : 'alternate';
-		$qe_data = get_term( $group->term_taxonomy_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
+		$qe_data = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
 
 		$output = "<tr id='group-$group->term_taxonomy_id' class='iedit $row_class'>";
 
