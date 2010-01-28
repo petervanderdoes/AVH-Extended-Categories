@@ -374,10 +374,11 @@ class AVH_EC_Admin
 	{
 		global $screen_layout_columns;
 
-		$groupname_new = '';
-		$description_new = '';
+		$data_add_group_default = array ('name' => '', 'slug' => '', 'description' => '' );
+		$data_add_group_new = $data_add_group_default;
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
+		$options_add_group[] = array ('avhec_edit_group[add][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
 		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
@@ -390,27 +391,29 @@ class AVH_EC_Admin
 
 			$formoptions = $_POST['avhec_add_group'];
 
-			$groupname_new = $formoptions['add']['name'];
-			$description_new = $formoptions['add']['description'];
-			$slug_new = sanitize_title($groupname_new);
+			$data_add_group_new['name'] = $formoptions['add']['name'];
+			$data_add_group_new['slug'] = empty( $formoptions['add']['slug'] ) ? sanitize_title( $data_add_group_new['name'] ) : sanitize_title( $formoptions['add']['slug'] );
+			$data_add_group_new['decsription'] = $formoptions['add']['description'];
 
-			$id = $this->catgrp->getTermIDBy( 'slug', $slug_new );
+			$id = $this->catgrp->getTermIDBy( 'slug', $data_add_group_new['slug'] );
 			if ( ! $id ) {
-				$group_id = $this->catgrp->doInsertGroup( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
+				$group_id = $this->catgrp->doInsertGroup( $data_add_group_new['name'], array ('description' => $data_add_group_new['description'], 'slug' => $data_add_group_new['slug'] ) );
 				$this->catgrp->setCategoriesForGroup( $group_id );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
-				$groupname_new = '';
-				$description_new = '';
+				$data_add_group_new = $data_add_group_default;
+
 			} else {
-				$group = $this->catgrp->getGroup($id);
-				$this->message = __( 'Category group conflicts with ', 'avh-ec' ).$group->name;
-				$this->message .= '<br />'.__( 'Same slug would be used. ', 'avh-ec' );
+				$group = $this->catgrp->getGroup( $id );
+				$this->message = __( 'Category group conflicts with ', 'avh-ec' ) . $group->name;
+				$this->message .= '<br />' . __( 'Same slug is used. ', 'avh-ec' );
 				$this->status = 'error';
 
 			}
 			$this->displayMessage();
 		}
+		$data_add_group['add'] = $data_add_group_new;
+		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		if ( isset( $_GET['action'] ) ) {
 			$action = $_GET['action'];
@@ -456,15 +459,16 @@ class AVH_EC_Admin
 			$group_id = ( int ) $_POST['avhec-group_id'];
 			$group = $this->catgrp->getGroup( $group_id );
 			if ( is_object( $group ) ) {
-				$name_new = $formoptions['edit']['name'];
-				$description_new = $formoptions['edit']['description'];
-
-				$group_id = $this->catgrp->doUpdateTerm( $group->term_id, array ('name' => $name_new, 'description' => $description_new ) );
-				$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
-				$this->message = __( 'Category group saved', 'avh-ec' );
-				$this->status = 'updated fade';
-				$groupname_new = '';
-				$description_new = '';
+				$id = wp_update_term( $group->term_id, $this->catgrp->taxonomy_name, array ('name' => $formoptions['edit']['name'], 'slug' => $formoptions['edit']['slug'], 'description' => $formoptions['edit']['description'] ) );
+				if (!is_wp_error($id)){
+					$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
+					$this->message = __( 'Category group updated', 'avh-ec' );
+					$this->status = 'updated fade';
+				} else {
+					$this->message = __( 'Category group not updated', 'avh-ec' );
+					$this->message .= '<br />'.__( 'Duplicate slug detected', 'avh-ec' );
+					$this->status = 'error';
+				}
 			} else {
 				$this->message = __( 'Unknown category group', 'avh-ec' );
 				$this->status = 'error';
@@ -482,9 +486,6 @@ class AVH_EC_Admin
 				$width = 'width:98%;';
 				$hide2 = 'display:none;';
 		}
-
-		$data_add_group['add'] = array ('name' => $groupname_new, 'description' => $description_new );
-		$data['add'] = array ('form' => $options_add_group, 'data' => $data_add_group );
 
 		// This box can't be unselectd in the the Screen Options
 		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_category_groups'], 'side', 'core' );
