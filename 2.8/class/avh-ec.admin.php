@@ -40,6 +40,7 @@ class AVH_EC_Admin
 		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
 		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
 
+
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
 		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ), 10, 2 );
 
@@ -395,7 +396,7 @@ class AVH_EC_Admin
 
 			$new = $this->catgrp->getTermIDBy( 'name', $groupname_new );
 			if ( ! $new ) {
-				$group_id = $this->catgrp->doInsertTerm( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
+				$group_id = $this->catgrp->doInsertGroup( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
 				$this->catgrp->setCategoriesForGroup( $group_id );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
@@ -416,7 +417,7 @@ class AVH_EC_Admin
 			{
 				case 'edit' :
 					$group_id = ( int ) $_GET['group_ID'];
-					$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'raw' );
+					$group = $this->catgrp->getGroup( $group_id );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
 					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'description' => $group->description, 'categories' => $cats );
@@ -451,22 +452,20 @@ class AVH_EC_Admin
 			$selected_categories = $_POST['post_category'];
 
 			$group_id = ( int ) $_POST['avhec-group_id'];
-			$name_new = strtolower( $formoptions['edit']['name'] );
-			$description_new = $formoptions['edit']['description'];
+			$group = $this->catgrp->getGroup( $group_id );
+			if ( is_object( $group ) ) {
+				$name_new = strtolower( $formoptions['edit']['name'] );
+				$description_new = $formoptions['edit']['description'];
 
-			$term = is_term( $group_id, $this->catgrp->taxonomy_name );
-			if ( is_array( $term ) ) {
-
-				$group_id = $this->catgrp->doUpdateTerm( $group_id, array ('name' => $name_new, 'description' => $description_new ) );
+				$group_id = $this->catgrp->doUpdateTerm( $group->term_id, array ('name' => $name_new, 'description' => $description_new ) );
 				$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
 				$groupname_new = '';
 				$description_new = '';
 			} else {
-				$this->message = __( 'Category group exists', 'avh-ec' );
+				$this->message = __( 'Unknown category group', 'avh-ec' );
 				$this->status = 'error';
-
 			}
 			$this->displayMessage();
 		}
@@ -752,7 +751,7 @@ class AVH_EC_Admin
 	 */
 	function filterManageCategoriesGroupColumns ( $columns )
 	{
-		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'slug'=>'Slug','description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
+		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'slug' => 'Slug', 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
 		return $categories_group_columns;
 	}
 
@@ -880,14 +879,14 @@ class AVH_EC_Admin
 					$output .= '<td ' . $attributes . '>' . $edit;
 					$output .= '<div class="hidden" id="inline_' . $qe_data->term_taxonomy_id . '">';
 					$output .= '<div class="name">' . $qe_data->name . '</div>';
-					$output .= '<div class="slug">' . apply_filters('editable_slug', $qe_data->slug) . '</div>';
+					$output .= '<div class="slug">' . apply_filters( 'editable_slug', $qe_data->slug ) . '</div>';
 					$output .= '</div></td>';
 					break;
 				case 'description' :
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
-				case 'slug':
-					$output .= "<td $attributes>" . apply_filters('editable_slug', $qe_data->slug) . "</td>";
+				case 'slug' :
+					$output .= "<td $attributes>" . apply_filters( 'editable_slug', $qe_data->slug ) . "</td>";
 					break;
 				case 'cat-in-group' :
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_term_taxonomy_id );
@@ -1076,8 +1075,8 @@ class AVH_EC_Admin
 		if ( ! current_user_can( 'manage_categories' ) ) {
 			die( '-1' );
 		}
-		$check = $this->catgrp->getTermIDBy( 'id', $group_id );
-		if ( false === $cat ) {
+		$check = $this->catgrp->getGroup( $group_id );
+		if ( false === $check ) {
 			die( '1' );
 		}
 
