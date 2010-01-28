@@ -72,13 +72,13 @@ class AVH_EC_Admin
 
 		foreach ( $category_groups as $group ) {
 			$name = ucwords( $group->name );
-			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_id, $current_category_group[0]->term_id ) ) {
+			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_taxonomy_id, $current_category_group[0]->term_taxonomy_id ) ) {
 				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
 			} else {
-				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_id ) {
-					echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_taxonomy_id ) {
+					echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
 				} else {
-					echo '<option value="' . $group->term_id . '">' . $name . "</option>\n";
+					echo '<option value="' . $group->term_taxonomy_id . '">' . $name . "</option>\n";
 				}
 			}
 		}
@@ -234,7 +234,7 @@ class AVH_EC_Admin
 
 		$groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 		foreach ( $groups as $group ) {
-			$group_id[] = $group->term_id;
+			$group_id[] = $group->term_taxonomy_id;
 			$groupname[] = ucwords( $group->name );
 		}
 
@@ -826,15 +826,15 @@ class AVH_EC_Admin
 		$no_edit[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 
-		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
+		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_taxonomy_id";
 		if ( current_user_can( 'manage_categories' ) ) {
 			$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . ucwords( esc_attr( $group->name ) ) . '</a><br />';
 			$actions = array ();
-			if ( ! array_key_exists( $group->term_id, $no_edit ) ) {
+			if ( ! array_key_exists( $group->term_taxonomy_id, $no_edit ) ) {
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 			}
-			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:group-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+			if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
+				$actions['delete'] = "<a class='delete:the-list:group-$group->term_taxonomy_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_taxonomy_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
@@ -850,9 +850,9 @@ class AVH_EC_Admin
 		}
 
 		$row_class = 'alternate' == $row_class ? '' : 'alternate';
-		$qe_data = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
+		$qe_data = get_term( $group->term_taxonomy_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
 
-		$output = "<tr id='group-$group->term_id' class='iedit $row_class'>";
+		$output = "<tr id='group-$group->term_taxonomy_id' class='iedit $row_class'>";
 
 		$columns = get_column_headers( 'categories_group' );
 		$hidden = get_hidden_columns( 'categories_group' );
@@ -869,8 +869,8 @@ class AVH_EC_Admin
 			{
 				case 'cb' :
 					$output .= '<th scope="row" class="check-column">';
-					if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
-						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_id . '" />';
+					if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
+						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_taxonomy_id . '" />';
 					} else {
 						$output .= "&nbsp;";
 					}
@@ -878,7 +878,7 @@ class AVH_EC_Admin
 					break;
 				case 'name' :
 					$output .= '<td ' . $attributes . '>' . $edit;
-					$output .= '<div class="hidden" id="inline_' . $qe_data->term_id . '">';
+					$output .= '<div class="hidden" id="inline_' . $qe_data->term_taxonomy_id . '">';
 					$output .= '<div class="name">' . $qe_data->name . '</div>';
 					$output .= '<div class="slug">' . apply_filters('editable_slug', $qe_data->slug) . '</div>';
 					$output .= '</div></td>';

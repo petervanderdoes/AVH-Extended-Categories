@@ -659,7 +659,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 
 		if ( ! ('none' == $row->name) ) {
-			$group_id = $row->term_id;
+			$group_id = $row->term_taxonomy_id;
 			$cats = $catgrp->getCategoriesFromGroup( $group_id );
 			$included_cats = implode( ',', $cats );
 

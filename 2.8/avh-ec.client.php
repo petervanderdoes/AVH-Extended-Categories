@@ -81,7 +81,7 @@ function avhec_installPlugin ()
 
 	if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
 
-		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `avhec_categories` LONGTEXT NOT NULL, PRIMARY KEY (`term_id`) )' . $charset_collate . ';';
+		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`term_taxonomy_id`, `term_id`) )' . $charset_collate . ';';
 
 		$result = $wpdb->query( $sql );
 	}
