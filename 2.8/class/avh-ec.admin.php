@@ -72,14 +72,13 @@ class AVH_EC_Admin
 		$current_category_group = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
 
 		foreach ( $category_groups as $group ) {
-			$name = ucwords( $group->name );
 			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_taxonomy_id, $current_category_group[0]->term_taxonomy_id ) ) {
-				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $name . "</option>\n";
+				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 			} else {
 				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_taxonomy_id ) {
-					echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $name . "</option>\n";
+					echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 				} else {
-					echo '<option value="' . $group->term_taxonomy_id . '">' . $name . "</option>\n";
+					echo '<option value="' . $group->term_taxonomy_id . '">' . $group->name . "</option>\n";
 				}
 			}
 		}
@@ -236,7 +235,7 @@ class AVH_EC_Admin
 		$groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 		foreach ( $groups as $group ) {
 			$group_id[] = $group->term_taxonomy_id;
-			$groupname[] = ucwords( $group->name );
+			$groupname[] = $group->name;
 		}
 
 		$options_general[] = array ('avhec[general][alternative_name_select_category]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
@@ -391,11 +390,12 @@ class AVH_EC_Admin
 
 			$formoptions = $_POST['avhec_add_group'];
 
-			$groupname_new = strtolower( $formoptions['add']['name'] );
+			$groupname_new = $formoptions['add']['name'];
 			$description_new = $formoptions['add']['description'];
+			$slug_new = sanitize_title($groupname_new);
 
-			$new = $this->catgrp->getTermIDBy( 'name', $groupname_new );
-			if ( ! $new ) {
+			$id = $this->catgrp->getTermIDBy( 'slug', $slug_new );
+			if ( ! $id ) {
 				$group_id = $this->catgrp->doInsertGroup( $groupname_new, array ('description' => $formoptions['add']['description'] ) );
 				$this->catgrp->setCategoriesForGroup( $group_id );
 				$this->message = __( 'Category group saved', 'avh-ec' );
@@ -403,7 +403,9 @@ class AVH_EC_Admin
 				$groupname_new = '';
 				$description_new = '';
 			} else {
-				$this->message = __( 'Category group exists', 'avh-ec' );
+				$group = $this->catgrp->getGroup($id);
+				$this->message = __( 'Category group conflicts with ', 'avh-ec' ).$group->name;
+				$this->message .= '<br />'.__( 'Same slug would be used. ', 'avh-ec' );
 				$this->status = 'error';
 
 			}
@@ -423,7 +425,7 @@ class AVH_EC_Admin
 					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
-					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . ucwords( $group->name ), array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
+					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . $group->name, array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
 					break;
 				case 'delete' :
 					if ( ! isset( $_GET['group_ID'] ) ) {
@@ -454,7 +456,7 @@ class AVH_EC_Admin
 			$group_id = ( int ) $_POST['avhec-group_id'];
 			$group = $this->catgrp->getGroup( $group_id );
 			if ( is_object( $group ) ) {
-				$name_new = strtolower( $formoptions['edit']['name'] );
+				$name_new = $formoptions['edit']['name'];
 				$description_new = $formoptions['edit']['description'];
 
 				$group_id = $this->catgrp->doUpdateTerm( $group->term_id, array ('name' => $name_new, 'description' => $description_new ) );
@@ -768,7 +770,7 @@ class AVH_EC_Admin
 	{
 		$group = get_term( $group_id, $this->catgrp->taxonomy_name, OBJECT, 'display' );
 
-		$return = sprintf( __( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.' ), ucwords( $group->name ) );
+		$return = sprintf( __( 'Your attempt to delete this group: &#8220;%s&#8221; has failed.' ), $group->name );
 		return ($return);
 	}
 
@@ -823,12 +825,15 @@ class AVH_EC_Admin
 		$no_edit[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 
-		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_taxonomy_id";
 		if ( current_user_can( 'manage_categories' ) ) {
-			$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . ucwords( esc_attr( $group->name ) ) . '</a><br />';
 			$actions = array ();
 			if ( ! array_key_exists( $group->term_taxonomy_id, $no_edit ) ) {
+				$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_taxonomy_id";
+				$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . esc_attr( $group->name ) . '</a><br />';
+
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
+			} else {
+				$edit = esc_attr( $group->name );
 			}
 			if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
 				$actions['delete'] = "<a class='delete:the-list:group-$group->term_taxonomy_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_taxonomy_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
