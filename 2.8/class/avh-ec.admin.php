@@ -790,7 +790,7 @@ class AVH_EC_Admin
 	{
 		$cat_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 
-		$noshowid = $this->catgrp->getTermIDBy( 'name', 'none' );
+		$noshowid = $this->catgrp->getTermIDBy( 'slug', 'none' );
 
 		foreach ( $cat_groups as $group ) {
 			if ( $group->term_id != $noshowid ) {
@@ -817,7 +817,6 @@ class AVH_EC_Admin
 
 		$no_edit[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
 		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'all' )] = 0;
-		$no_delete[$this->catgrp->getTermIDBy( 'slug', 'home' )] = 0;
 
 		$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
 		if ( current_user_can( 'manage_categories' ) ) {
