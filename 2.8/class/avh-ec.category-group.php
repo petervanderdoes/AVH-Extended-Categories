@@ -82,7 +82,7 @@ class AVH_EC_Category_Group
 		global $wpdb;
 
 		// Query database
-		$result = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM '.$wpdb->terms .'t, '.$wpdb->term_taxonomy.' tt, '.$wpdb->avhec_cat_group.' cg WHERE t.term_id = cg.term_id AND tt.term_taxonomy_id = cg.term_taxonomy_id and cg.term_taxonomy_id = %d', $group_id ) );
+		$result = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM '.$wpdb->terms.' t, '.$wpdb->term_taxonomy.' tt, '.$wpdb->avhec_cat_group.' cg WHERE t.term_id = cg.term_id AND tt.term_taxonomy_id = cg.term_taxonomy_id and cg.term_taxonomy_id = %d', $group_id ) );
 
 		if ( is_array( $result ) ) { // Call succeeded
 			if ( empty( $result ) ) { // No rows found
