@@ -135,7 +135,7 @@ class AVH_EC_Category_Group
 
 		if ( ! empty( $removed ) ) {
 			$delete = implode( ',', $removed );
-			$sql = $wpdb->prepare( "DELETE FROM $wpdb->avhec_cat_group WHERE term_taxonomy_id=%d and term_id IN (%s)", $delete );
+			$sql = $wpdb->prepare( 'DELETE FROM '.$wpdb->avhec_cat_group.' WHERE term_taxonomy_id=%d and term_id IN ('.$delete.')', $group_id );
 			$result = $wpdb->query( $sql );
 
 		}
