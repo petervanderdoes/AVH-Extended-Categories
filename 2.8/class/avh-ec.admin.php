@@ -37,8 +37,8 @@ class AVH_EC_Admin
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 
 		// Actions related to adding and deletes categories
-		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
-		//add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
+		add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
+		add_action ("delete_category", array($this,'actionDeleteCategory'),10,2);
 
 
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
@@ -119,6 +119,25 @@ class AVH_EC_Admin
 
 	}
 
+	/**
+	 * When a category is created this function is called to add the new category to the group all
+	 * @param $term_id
+	 * @param $term_taxonomy_id
+	 */
+	function actionCreatedCategory($term_id, $term_taxonomy_id){
+		$group_id=$this->catgrp->getTermIDBy('slug','all');
+		$this->catgrp->setCategoriesForGroup($group_id, (array)$term_id);
+	}
+
+	/**
+	 * When a category is deleted this function is called so the category is deleted from every group as well.
+	 *
+	 * @param object $term
+	 * @param int $term_taxonomy_id
+	 */
+	function actionDeleteCategory($term_id, $term_taxonomy_id) {
+		$this->catgrp->doDeleteCategoryFromGroup($term_id);
+	}
 	/**
 	 * Enqueues the style on the post.php and page.php pages
 	 * @WordPress Action load-$pagenow
