@@ -619,7 +619,6 @@ class AVH_EC_Admin
 		echo '</table>';
 
 		echo '<br class="clear" />';
-		echo '</div>';
 		echo '</form>';
 
 		//echo '</div>';
