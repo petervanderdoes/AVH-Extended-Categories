@@ -156,7 +156,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_Overview ()
 	{
 		// Add metaboxes
-
+		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_overview'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
@@ -176,6 +176,7 @@ class AVH_EC_Admin
 
 		// This box can't be unselectd in the the Screen Options
 		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', 'core' );
+
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
