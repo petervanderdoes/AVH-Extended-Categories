@@ -160,6 +160,12 @@ class AVH_EC_Category_Group
 		return ($return);
 	}
 
+	/**
+	 * Gets all information of a group
+	 *
+	 * @param $group_id
+	 * @return Object|False Returns False when the group doesn't exists.
+	 */
 	function getGroup($group_id) {
 		global $wpdb;
 
@@ -171,12 +177,23 @@ class AVH_EC_Category_Group
 		return ($result);
 	}
 
+	/**
+	 * Inserts a new group
+	 *
+	 * @param $term
+	 * @param array $args
+	 */
 	function doInsertGroup ( $term, $args = array() )
 	{
 		$row = wp_insert_term( $term, $this->taxonomy_name, $args );
 		return ($row['term_taxonomy_id']);
 	}
 
+	/**
+	 * Deletes a group
+	 *
+	 * @param $group_id
+	 */
 	function doDeleteGroup ( $group_id )
 	{
 
