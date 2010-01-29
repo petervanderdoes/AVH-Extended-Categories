@@ -88,8 +88,8 @@ function avhec_installPlugin ()
 
 	// Setup the standard groups
 	$none_group_id = wp_insert_term( 'none', $catgrp->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
-	$all_group_id = wp_insert_term( 'all', $catgrp->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
-	$home_group_id = wp_insert_term( 'home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
+	$all_group_id = wp_insert_term( 'All', $catgrp->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
+	$home_group_id = wp_insert_term( 'Home', $catgrp->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
 
 	//Fill the standard groups with all categories
 	$all_categories = $catgrp->getAllCategoriesTermID();
