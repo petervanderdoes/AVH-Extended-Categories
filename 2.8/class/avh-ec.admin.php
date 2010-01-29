@@ -182,7 +182,7 @@ class AVH_EC_Admin
 		add_action( 'load-' . $this->hooks['menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
 	}
 
-		/**
+	/**
 	 * Setup everything needed for the Overview page
 	 *
 	 */
@@ -203,7 +203,7 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
-		/**
+	/**
 	 * Menu Page Overview
 	 *
 	 * @return none
@@ -213,7 +213,8 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', 'core' );
+		add_meta_box( 'avhecBoxAnnouncements', __('Announcements','avh-ec'), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '' );
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', '' );
 
 		$hide2 = '';
 		switch ( $screen_layout_columns )
@@ -229,14 +230,13 @@ class AVH_EC_Admin
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Overview', 'avh-ec' ) . '</h2>';
-
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
-		echo '		<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['menu_overview'], 'normal', $data );
+		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes( $this->hooks['menu_overview'], 'normal','' );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['menu_overview'], 'side', $data );
+		do_meta_boxes( $this->hooks['menu_overview'], 'side','' );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -250,7 +250,7 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
-		/**
+	/**
 	 * Setup everything needed for the General Options page
 	 *
 	 */
@@ -271,7 +271,7 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
-		/**
+	/**
 	 * Menu Page General Options
 	 *
 	 * @return none
@@ -347,7 +347,8 @@ class AVH_EC_Admin
 		$data['actual_options'] = $actual_options;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxDonations', 'Donations', array (&$this, 'metaboxDonations' ), $this->hooks['menu_general'], 'side', 'core' );
+		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_general'], 'side', 'core' );
+
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -422,7 +423,7 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
-		/**
+	/**
 	 * Menu Page Category Group
 	 *
 	 * @return none
@@ -621,7 +622,7 @@ class AVH_EC_Admin
 		echo '</div>';
 		echo '</form>';
 
-		echo '</div>';
+		//echo '</div>';
 	}
 
 	/**
@@ -671,7 +672,9 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
+		add_meta_box( 'avhecBoxAnnouncements', __('Announcements','avh-ec'), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core' );
 		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_faq'], 'side', 'core' );
+
 		$hide2 = '';
 		switch ( $screen_layout_columns )
 		{
@@ -763,6 +766,26 @@ class AVH_EC_Admin
 		echo 'Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.<br /><br />';
 		echo 'Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:<br />';
 		echo 'You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.<br />';
+		echo '</p>';
+
+	}
+
+	function metaboxAnnouncements ()
+	{
+		$php5 = version_compare( '5', phpversion(), '<' );
+		echo '<p>';
+		echo '<span class="b">PHP4 Support</span><br />';
+		echo 'The next major release of the plugin will no longer support PHP4.<br />';
+		echo 'It will be written for PHP 5 and ';
+		if ( $php5 ) {
+			echo 'your blog already runs the needed PHP version. When the new release comes out you can safely update.<br />';
+		} else {
+			echo 'your blog still runs PHP4. When the new release comes out you can not use it.<br />';
+			echo 'I don\'t have a timeline for the next version but consider contacting your host if PHP5 is available.<br />';
+			echo 'If your hosts doesn\'t offer PHP5 you might want to consider switching hosts.<br />';
+			echo 'A host to consider is <a href="http://www.lunarpages.com/id/pdoes" target="_blank">Lunarpages</a>.';
+			echo 'I run my personal blog there and I am very happy with their services. You can get an account with unlimited bandwidth, storage and much more for $4.95 a month (This is the current price in February 2010).';
+		}
 		echo '</p>';
 
 	}
