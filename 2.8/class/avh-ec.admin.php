@@ -6,6 +6,10 @@ class AVH_EC_Admin
 	var $hooks = array ();
 	var $message;
 
+	/**
+	 * PHP5 constructor
+	 *
+	 */
 	function __construct ()
 	{
 
@@ -37,9 +41,8 @@ class AVH_EC_Admin
 		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
 
 		// Actions related to adding and deletes categories
-		add_action ("created_category", array($this,'actionCreatedCategory'),10,2);
-		add_action ("delete_category", array($this,'actionDeleteCategory'),10,2);
-
+		add_action( "created_category", array ($this, 'actionCreatedCategory' ), 10, 2 );
+		add_action( "delete_category", array ($this, 'actionDeleteCategory' ), 10, 2 );
 
 		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
 		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ), 10, 2 );
@@ -47,6 +50,10 @@ class AVH_EC_Admin
 		return;
 	}
 
+	/**
+	 *  PHP4 Constructor
+	 *
+	 */
 	function AVH_EC_Admin ()
 	{
 		$this->__construct();
@@ -124,9 +131,10 @@ class AVH_EC_Admin
 	 * @param $term_id
 	 * @param $term_taxonomy_id
 	 */
-	function actionCreatedCategory($term_id, $term_taxonomy_id){
-		$group_id=$this->catgrp->getTermIDBy('slug','all');
-		$this->catgrp->setCategoriesForGroup($group_id, (array)$term_id);
+	function actionCreatedCategory ( $term_id, $term_taxonomy_id )
+	{
+		$group_id = $this->catgrp->getTermIDBy( 'slug', 'all' );
+		$this->catgrp->setCategoriesForGroup( $group_id, ( array ) $term_id );
 	}
 
 	/**
@@ -135,9 +143,11 @@ class AVH_EC_Admin
 	 * @param object $term
 	 * @param int $term_taxonomy_id
 	 */
-	function actionDeleteCategory($term_id, $term_taxonomy_id) {
-		$this->catgrp->doDeleteCategoryFromGroup($term_id);
+	function actionDeleteCategory ( $term_id, $term_taxonomy_id )
+	{
+		$this->catgrp->doDeleteCategoryFromGroup( $term_id );
 	}
+
 	/**
 	 * Enqueues the style on the post.php and page.php pages
 	 * @WordPress Action load-$pagenow
@@ -172,6 +182,10 @@ class AVH_EC_Admin
 		add_action( 'load-' . $this->hooks['menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
 	}
 
+		/**
+	 * Setup everything needed for the Overview page
+	 *
+	 */
 	function actionLoadPageHook_Overview ()
 	{
 		// Add metaboxes
@@ -189,6 +203,11 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
+		/**
+	 * Menu Page Overview
+	 *
+	 * @return none
+	 */
 	function doMenuOverview ()
 	{
 		global $screen_layout_columns;
@@ -231,6 +250,10 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
+		/**
+	 * Setup everything needed for the General Options page
+	 *
+	 */
 	function actionLoadPageHook_General ()
 	{
 		// Add metaboxes
@@ -248,6 +271,11 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
+		/**
+	 * Menu Page General Options
+	 *
+	 * @return none
+	 */
 	function doMenuGeneral ()
 	{
 		global $screen_layout_columns;
@@ -370,6 +398,10 @@ class AVH_EC_Admin
 		echo $this->printOptions( $data['options_general'], $data['actual_options'] );
 	}
 
+	/**
+	 * Setup everything needed for the Category Group page
+	 *
+	 */
 	function actionLoadPageHook_CategoryGroup ()
 	{
 
@@ -390,6 +422,11 @@ class AVH_EC_Admin
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
+		/**
+	 * Menu Page Category Group
+	 *
+	 * @return none
+	 */
 	function doMenuCategoryGroup ()
 	{
 		global $screen_layout_columns;
@@ -480,13 +517,13 @@ class AVH_EC_Admin
 			$group = $this->catgrp->getGroup( $group_id );
 			if ( is_object( $group ) ) {
 				$id = wp_update_term( $group->term_id, $this->catgrp->taxonomy_name, array ('name' => $formoptions['edit']['name'], 'slug' => $formoptions['edit']['slug'], 'description' => $formoptions['edit']['description'] ) );
-				if (!is_wp_error($id)){
+				if ( ! is_wp_error( $id ) ) {
 					$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
 					$this->message = __( 'Category group updated', 'avh-ec' );
 					$this->status = 'updated fade';
 				} else {
 					$this->message = __( 'Category group not updated', 'avh-ec' );
-					$this->message .= '<br />'.__( 'Duplicate slug detected', 'avh-ec' );
+					$this->message .= '<br />' . __( 'Duplicate slug detected', 'avh-ec' );
 					$this->status = 'error';
 				}
 			} else {
@@ -538,6 +575,10 @@ class AVH_EC_Admin
 		$this->printAdminFooter();
 	}
 
+	/**
+	 * Metabox for Adding a group
+	 * @param $data
+	 */
 	function metaboxCategoryGroupAdd ( $data )
 	{
 		echo '<form name="avhec-addgroup" id="avhec-addgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
@@ -547,6 +588,11 @@ class AVH_EC_Admin
 		echo '</form>';
 	}
 
+	/**
+	 * Metabox for showing the groups as a list
+	 *
+	 * @param $data
+	 */
 	function metaboxCategoryGroupList ( $data )
 	{
 		echo '<form id="posts-filter" action="" method="get">';
@@ -816,6 +862,12 @@ class AVH_EC_Admin
 			return $_SERVER['PHP_SELF'] . "?page=" . $page;
 	}
 
+	/**
+	 * Print all Category Group rows
+	 *
+	 * @uses printCategoryGroupRow
+	 *
+	 */
 	function printCategoryGroupRows ()
 	{
 		$cat_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
@@ -828,14 +880,11 @@ class AVH_EC_Admin
 	}
 
 	/**
-	 * {@internal Missing Short Description}}
+	 * Displays all the information of a group in a row
+	 * Adds inline link for delete and/or edit.
 	 *
-	 * @since unknown
-	 *
-	 * @param unknown_type $category
-	 * @param unknown_type $level
-	 * @param unknown_type $name_override
-	 * @return unknown
+	 * @param int $group_term_id
+	 * @param int $group_term_taxonomy_id
 	 */
 	function printCategoryGroupRow ( $group_term_id, $group_term_taxonomy_id )
 	{
@@ -1083,6 +1132,11 @@ class AVH_EC_Admin
 		return $return;
 	}
 
+	/**
+	 * Displays the icon on the menu pages
+	 *
+	 * @param $icon
+	 */
 	function displayIcon ( $icon )
 	{
 		return ('<div class="icon32" id="icon-' . $icon . '"><br/></div>');

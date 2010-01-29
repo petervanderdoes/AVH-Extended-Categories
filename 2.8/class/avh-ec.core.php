@@ -412,6 +412,11 @@ class AVH_EC_Core
 	}
 }
 
+/**
+ * Create HTML dropdown list of Categories.
+ *
+ * @uses Walker
+ */
 class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 {
 
@@ -489,11 +494,9 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 		return $output;
 	}
 }
-	/**
+/**
  * Create HTML list of categories.
  *
- * @package WordPress
- * @since 2.1.0
  * @uses Walker
  */
 class AVHEC_Walker_Category extends Walker {
