@@ -929,7 +929,7 @@ class AVH_EC_Admin
 				$edit = esc_attr( $group->name );
 			}
 			if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:group-$group->term_taxonomy_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_taxonomy_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
+				$actions['delete'] = "<a class='delete:the-list:group-$group->term_taxonomy_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_taxonomy_id", 'delete-avhecgroup_' . $group->term_taxonomy_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
