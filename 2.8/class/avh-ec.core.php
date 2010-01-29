@@ -57,7 +57,7 @@ class AVH_EC_Core
 
 		$this->handleTextdomain();
 
-		wp_register_style( 'avhec-widget-css', AVHEC_PLUGIN_URL . '/inc/avh-ec.widget.css', array (), $this->version, 'screen' );
+		wp_register_style( 'avhec-widget-css', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array (), $this->version, 'screen' );
 	}
 
 	/**
