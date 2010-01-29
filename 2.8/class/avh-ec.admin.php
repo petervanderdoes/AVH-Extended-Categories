@@ -200,6 +200,7 @@ class AVH_EC_Admin
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
+		wp_enqueue_script( 'avhec-categorygroup-js' );
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
