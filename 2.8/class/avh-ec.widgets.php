@@ -646,10 +646,14 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$options = $this->core->getOptions();
 
+		$row=array();
 		if ( is_home() ) {
 			$row = get_term_by( 'id', $options['cat_group']['home_group'], $catgrp->taxonomy_name ); // Returns false when non-existance. (empty(false)=true)
 		} else {
-			$row = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
+			$terms = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
+			if (!empty($terms)) {
+				$row=$terms[0];
+			}
 		}
 
 		if ( empty( $row ) ) { // There is no group associated with the post or the home group is empty
