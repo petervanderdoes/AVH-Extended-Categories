@@ -38,7 +38,7 @@ class AVH_EC_Admin
 		// Actions used for editing posts
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
-		add_action( 'save_post', array (&$this, 'actionSaveGroupCatTaxonomy' ) );
+		add_action( 'save_post', array (&$this, 'actionSaveCategoryGroupTaxonomy' ) );
 
 		// Actions related to adding and deletes categories
 		add_action( "created_category", array ($this, 'actionCreatedCategory' ), 10, 2 );
@@ -80,7 +80,7 @@ class AVH_EC_Admin
 
 		foreach ( $category_groups as $group ) {
 			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_taxonomy_id, $current_category_group[0]->term_taxonomy_id ) ) {
-				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
+				echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 			} else {
 				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_taxonomy_id ) {
 					echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
@@ -99,7 +99,7 @@ class AVH_EC_Admin
 	 * @param $post_id
 	 * @return
 	 */
-	function actionSaveGroupCatTaxonomy ( $post_id )
+	function actionSaveCategoryGroupTaxonomy ( $post_id )
 	{
 		if ( ! wp_verify_nonce( $_POST['avhec_category_group_nonce'], 'avhec_category_group_nonce' ) ) {
 			return $post_id;
@@ -119,10 +119,10 @@ class AVH_EC_Admin
 		}
 
 		// OK, we're authenticated: we need to find and save the data
-		$groupcat = $_POST['post_avhec_groupcat'];
-		wp_set_object_terms( $post_id, $groupcat, $this->catgrp->taxonomy_name );
+		$group_id = $_POST['post_avhec_category_group'];
+		wp_set_object_terms( $post_id, $group_id, $this->catgrp->taxonomy_name );
 
-		return $groupcat;
+		return $group_id;
 
 	}
 
