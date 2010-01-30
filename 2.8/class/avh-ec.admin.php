@@ -79,13 +79,13 @@ class AVH_EC_Admin
 		$current_category_group = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
 
 		foreach ( $category_groups as $group ) {
-			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_taxonomy_id, $current_category_group[0]->term_taxonomy_id ) ) {
-				echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
+			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_id, $current_category_group[0]->term_id ) ) {
+				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 			} else {
 				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_taxonomy_id ) {
-					echo '<option value="' . $group->term_taxonomy_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
+					echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 				} else {
-					echo '<option value="' . $group->term_taxonomy_id . '">' . $group->name . "</option>\n";
+					echo '<option value="' . $group->term_id . '">' . $group->name . "</option>\n";
 				}
 			}
 		}
@@ -119,8 +119,8 @@ class AVH_EC_Admin
 		}
 
 		// OK, we're authenticated: we need to find and save the data
-		$group_id = $_POST['post_avhec_category_group'];
-		wp_set_object_terms( $post_id, $group_id, $this->catgrp->taxonomy_name );
+		$group_term_id = (int) $_POST['post_avhec_category_group'];
+		wp_set_object_terms( $post_id, $group_term_id, $this->catgrp->taxonomy_name );
 
 		return $group_id;
 
