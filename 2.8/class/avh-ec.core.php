@@ -367,8 +367,6 @@ class AVH_EC_Core
 		extract( $r );
 
 		$categories = get_categories( $r );
-		$name = esc_attr( $name );
-		$class = esc_attr( $class );
 
 		$output = '';
 		if ( $title_li && 'list' == $style )
