@@ -82,7 +82,7 @@ function avhec_installPlugin ()
 
 	if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
 
-		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `term_taxonomy_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`term_taxonomy_id`, `term_id`) )' . $charset_collate . ';';
+		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `group_term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`group_term_id`, `term_id`) )' . $charset_collate . ';';
 
 		$result = $wpdb->query( $sql );
 	}
@@ -94,8 +94,8 @@ function avhec_installPlugin ()
 
 	//Fill the standard groups with all categories
 	$all_categories = $catgrp->getAllCategoriesTermID();
-	$catgrp->setCategoriesForGroup( $all_group_id['term_taxonomy_id'], $all_categories );
-	$catgrp->setCategoriesForGroup( $home_group_id['term_taxonomy_id'], $all_categories );
+	$catgrp->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
+	$catgrp->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
 
 }
 

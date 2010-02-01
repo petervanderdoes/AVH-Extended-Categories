@@ -82,7 +82,7 @@ class AVH_EC_Category_Group
 		global $wpdb;
 
 		// Query database
-		$result = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM '.$wpdb->terms.' t, '.$wpdb->term_taxonomy.' tt, '.$wpdb->avhec_cat_group.' cg WHERE t.term_id = cg.term_id AND tt.term_taxonomy_id = cg.term_taxonomy_id and cg.term_taxonomy_id = %d', $group_id ) );
+		$result = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->terms . ' t, ' . $wpdb->avhec_cat_group . ' cg WHERE t.term_id = cg.term_id AND cg.group_term_id = %d', $group_id ) );
 
 		if ( is_array( $result ) ) { // Call succeeded
 			if ( empty( $result ) ) { // No rows found
@@ -128,14 +128,14 @@ class AVH_EC_Category_Group
 				$insert[] = '(' . $group_id . ',' . $cat_term_id . ')';
 			}
 			$value = implode( ',', $insert );
-			$sql = 'INSERT INTO ' . $wpdb->avhec_cat_group . ' (term_taxonomy_id, term_id) VALUES ' . $value;
+			$sql = 'INSERT INTO ' . $wpdb->avhec_cat_group . ' (group_term_id, term_id) VALUES ' . $value;
 			$result = $wpdb->query( $sql );
 
 		}
 
 		if ( ! empty( $removed ) ) {
 			$delete = implode( ',', $removed );
-			$sql = $wpdb->prepare( 'DELETE FROM '.$wpdb->avhec_cat_group.' WHERE term_taxonomy_id=%d and term_id IN ('.$delete.')', $group_id );
+			$sql = $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d and term_id IN (' . $delete . ')', $group_id );
 			$result = $wpdb->query( $sql );
 
 		}
@@ -155,7 +155,7 @@ class AVH_EC_Category_Group
 		if ( false === $row ) {
 			$return = false;
 		} else {
-			$return = ( int ) $row->term_taxonomy_id;
+			$return = ( int ) $row->term_id;
 		}
 		return ($return);
 	}
@@ -166,13 +166,13 @@ class AVH_EC_Category_Group
 	 * @param $group_id
 	 * @return Object|False Returns False when the group doesn't exists.
 	 */
-	function getGroup($group_id) {
+	function getGroup ( $group_id )
+	{
 		global $wpdb;
 
-		$sql=$wpdb->prepare('SELECT * FROM '.$wpdb->terms.' t, '.$wpdb->term_taxonomy.' tt WHERE t.term_id=tt.term_id AND tt.term_taxonomy_id=%d', $group_id);
-		$result = $wpdb->get_row( $sql );
-		if (null === $result) {
-			$result=false;
+		$result = get_term( ( int ) $group_id, $this->taxonomy_name );
+		if ( null === $result ) {
+			$result = false;
 		}
 		return ($result);
 	}
@@ -186,7 +186,7 @@ class AVH_EC_Category_Group
 	function doInsertGroup ( $term, $args = array() )
 	{
 		$row = wp_insert_term( $term, $this->taxonomy_name, $args );
-		return ($row['term_taxonomy_id']);
+		return ($row['term_id']);
 	}
 
 	/**
@@ -199,8 +199,8 @@ class AVH_EC_Category_Group
 
 		global $wpdb;
 
-		$group=$this->getGroup($group_id);
-		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM '.$wpdb->avhec_cat_group.' WHERE term_taxonomy_id=%d', $group_id ) );
+		$group = $this->getGroup( $group_id );
+		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d', $group_id ) );
 		$return = wp_delete_term( $group->term_id, $this->taxonomy_name );
 		return ($return);
 	}
@@ -210,9 +210,10 @@ class AVH_EC_Category_Group
 	 *
 	 * @param $category_id
 	 */
-	function doDeleteCategoryFromGroup($category_id){
+	function doDeleteCategoryFromGroup ( $category_id )
+	{
 		global $wpdb;
-		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM '.$wpdb->avhec_cat_group.' WHERE term_id=%d', $category_id ) );
+		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE term_id=%d', $category_id ) );
 	}
 }
 ?>

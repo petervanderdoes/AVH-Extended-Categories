@@ -284,7 +284,7 @@ class AVH_EC_Admin
 
 		$groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
 		foreach ( $groups as $group ) {
-			$group_id[] = $group->term_taxonomy_id;
+			$group_id[] = $group->term_id;
 			$groupname[] = $group->name;
 		}
 
@@ -921,16 +921,16 @@ class AVH_EC_Admin
 
 		if ( current_user_can( 'manage_categories' ) ) {
 			$actions = array ();
-			if ( ! array_key_exists( $group->term_taxonomy_id, $no_edit ) ) {
-				$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_taxonomy_id";
+			if ( ! array_key_exists( $group->term_id, $no_edit ) ) {
+				$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
 				$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;' ), $group->name ) ) . "'>" . esc_attr( $group->name ) . '</a><br />';
 
 				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 			} else {
 				$edit = esc_attr( $group->name );
 			}
-			if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
-				$actions['delete'] = "<a class='delete:the-list:group-$group->term_taxonomy_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_taxonomy_id", 'delete-avhecgroup_' . $group->term_taxonomy_id ) . "'>" . __( 'Delete' ) . "</a>";
+			if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
+				$actions['delete'] = "<a class='delete:the-list:group-$group->term_id submitdelete' href='" . wp_nonce_url( "admin.php?page=avhec-grouped&amp;action=delete&amp;group_ID=$group->term_id", 'delete-avhecgroup_' . $group->term_id ) . "'>" . __( 'Delete' ) . "</a>";
 			}
 			$action_count = count( $actions );
 			$i = 0;
@@ -948,7 +948,7 @@ class AVH_EC_Admin
 		$row_class = 'alternate' == $row_class ? '' : 'alternate';
 		$qe_data = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
 
-		$output = "<tr id='group-$group->term_taxonomy_id' class='iedit $row_class'>";
+		$output = "<tr id='group-$group->term_id' class='iedit $row_class'>";
 
 		$columns = get_column_headers( 'categories_group' );
 		$hidden = get_hidden_columns( 'categories_group' );
@@ -965,8 +965,8 @@ class AVH_EC_Admin
 			{
 				case 'cb' :
 					$output .= '<th scope="row" class="check-column">';
-					if ( ! (array_key_exists( $group->term_taxonomy_id, $no_delete )) ) {
-						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_taxonomy_id . '" />';
+					if ( ! (array_key_exists( $group->term_id, $no_delete )) ) {
+						$output .= '<input type="checkbox" name="delete[]" value="' . $group->term_id . '" />';
 					} else {
 						$output .= "&nbsp;";
 					}
@@ -974,7 +974,7 @@ class AVH_EC_Admin
 					break;
 				case 'name' :
 					$output .= '<td ' . $attributes . '>' . $edit;
-					$output .= '<div class="hidden" id="inline_' . $qe_data->term_taxonomy_id . '">';
+					$output .= '<div class="hidden" id="inline_' . $qe_data->term_id . '">';
 					$output .= '<div class="name">' . $qe_data->name . '</div>';
 					$output .= '<div class="slug">' . apply_filters( 'editable_slug', $qe_data->slug ) . '</div>';
 					$output .= '</div></td>';
@@ -986,7 +986,7 @@ class AVH_EC_Admin
 					$output .= "<td $attributes>" . apply_filters( 'editable_slug', $qe_data->slug ) . "</td>";
 					break;
 				case 'cat-in-group' :
-					$cats = $this->catgrp->getCategoriesFromGroup( $group_term_taxonomy_id );
+					$cats = $this->catgrp->getCategoriesFromGroup( $group_term_id );
 					$catname = array ();
 					foreach ( $cats as $cat_id ) {
 						$catname[] = get_cat_name( $cat_id );
