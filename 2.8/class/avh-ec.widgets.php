@@ -47,15 +47,16 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		extract( $args );
 
 		$selectedonly = $instance['selectedonly'] ? 1 : 0;
-		$c = $instance['count'] ? '1' : '0';
+		$c = $instance['count'] ? 1 : 0;
 		$h = $instance['hierarchical'] ? 1 : 0;
 		$d = $instance['depth'] ? $instance['depth'] : 0;
-		$e = $instance['hide_empty'] ? '1' : '0';
+		$e = $instance['hide_empty'] ? 1 : 0;
+		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
 		$i = $instance['rssimage'] ? $instance['rssimage'] : '';
-		$invert = $instance['invert_included'] ? '1' : '0';
+		$invert = $instance['invert_included'] ? 1 : 0;
 
 		if ( empty( $r ) ) {
 			$i = '';
@@ -92,7 +93,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			$show_option_none = $options['general']['alternative_name_select_category'];
 		}
 
-		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -139,6 +140,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$instance['count'] = $new_instance['count'] ? 1 : 0;
 		$instance['hierarchical'] = $new_instance['hierarchical'] ? 1 : 0;
 		$instance['hide_empty'] = $new_instance['hide_empty'] ? 1 : 0;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
@@ -179,6 +181,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$hierarchical = ( bool ) $instance['hierarchical'];
 		$depth = ( int ) $instance['depth'];
 		$hide_empty = ( bool ) $instance['hide_empty'];
+		$use_desc_for_title = ( bool ) $instance['use_desc_for_title'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
 		$sort_name = ($instance['sort_column'] == 'name') ? ' SELECTED' : '';
 		$sort_count = ($instance['sort_column'] == 'count') ? ' SELECTED' : '';
@@ -240,6 +243,12 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<label for="' . $this->get_field_id( 'hide_empty' ) . '">';
 		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hide_empty' ) . '"	name="' . $this->get_field_name( 'hide_empty' ) . '" ' . $this->core->isChecked( true, $hide_empty ) . '/> ';
 		_e( 'Hide empty categories', 'avh-ec' );
+		echo '</label>';
+		echo '<br />';
+
+		echo '<label for="' . $this->get_field_id( 'use_desc_for_title' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'use_desc_for_title' ) . '"	name="' . $this->get_field_name( 'use_desc_for_title' ) . '" ' . $this->core->isChecked( true, $use_desc_for_title ) . '/> ';
+		_e( 'Use description for title', 'avh-ec' );
 		echo '</label>';
 		echo '<br />';
 		echo '</p>';
@@ -423,6 +432,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 			$a = 1;
 		}
 		$c = $instance['count'] ? '1' : '0';
+		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
@@ -445,7 +455,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		$top_cats = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false ) );
 		$included_cats = implode( ",", $top_cats );
 
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => - 1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => - 1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -493,6 +503,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['amount'] = ( int ) $new_instance['amount'];
 		$instance['count'] = $new_instance['count'] ? 1 : 0;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
@@ -517,6 +528,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 			$amount = 5;
 		}
 		$count = ( bool ) $instance['count'];
+		$use_desc_for_title = ( bool ) $instance['use_desc_for_title'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
 		$sort_name = ($instance['sort_column'] == 'name') ? ' SELECTED' : '';
 		$sort_count = ($instance['sort_column'] == 'count') ? ' SELECTED' : '';
@@ -549,6 +561,12 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		echo '<label for="' . $this->get_field_id( 'count' ) . '">';
 		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'count' ) . '"	name="' . $this->get_field_name( 'count' ) . '" ' . $this->core->isChecked( true, $count ) . ' /> ';
 		_e( 'Show post counts', 'avh-ec' );
+		echo '</label>';
+		echo '<br />';
+
+		echo '<label for="' . $this->get_field_id( 'use_desc_for_title' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'use_desc_for_title' ) . '"	name="' . $this->get_field_name( 'use_desc_for_title' ) . '" ' . $this->core->isChecked( true, $use_desc_for_title ) . '/> ';
+		_e( 'Use description for title', 'avh-ec' );
 		echo '</label>';
 		echo '<br />';
 
@@ -644,6 +662,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$c = $instance['count'] ? '1' : '0';
 		$e = $instance['hide_empty'] ? '1' : '0';
+		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
@@ -684,7 +703,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				$show_option_none = $options['general']['alternative_name_select_category'];
 			}
 
-			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 			echo $before_widget;
 			echo $this->core->comment;
 			echo $before_title . $title . $after_title;
@@ -730,6 +749,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['count'] = $new_instance['count'] ? 1 : 0;
 		$instance['hide_empty'] = $new_instance['hide_empty'] ? 1 : 0;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
@@ -752,6 +772,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$title = esc_attr( $instance['title'] );
 		$count = ( bool ) $instance['count'];
 		$hide_empty = ( bool ) $instance['hide_empty'];
+		$use_desc_for_title = ( bool ) $instance['use_desc_for_title'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
 		$sort_name = ($instance['sort_column'] == 'name') ? ' SELECTED' : '';
 		$sort_count = ($instance['sort_column'] == 'count') ? ' SELECTED' : '';
@@ -786,6 +807,12 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		echo '<label for="' . $this->get_field_id( 'hide_empty' ) . '">';
 		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'hide_empty' ) . '"	name="' . $this->get_field_name( 'hide_empty' ) . '" ' . $this->core->isChecked( true, $hide_empty ) . '/> ';
 		_e( 'Hide empty categories', 'avh-ec' );
+		echo '</label>';
+		echo '<br />';
+
+		echo '<label for="' . $this->get_field_id( 'use_desc_for_title' ) . '">';
+		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'use_desc_for_title' ) . '"	name="' . $this->get_field_name( 'use_desc_for_title' ) . '" ' . $this->core->isChecked( true, $use_desc_for_title ) . '/> ';
+		_e( 'Use description for title', 'avh-ec' );
 		echo '</label>';
 		echo '<br />';
 		echo '</p>';
