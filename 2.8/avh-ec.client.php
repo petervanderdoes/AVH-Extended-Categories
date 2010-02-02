@@ -1,10 +1,16 @@
 <?php
 /**
  * Singleton Class
+ *
  */
 class AVH_EC_Singleton
 {
 
+	/**
+	 *
+	 * @param $class
+	 * @param $arg1
+	 */
 	function &getInstance ( $class, $arg1 = null )
 	{
 		static $instances = array (); // array of instance names

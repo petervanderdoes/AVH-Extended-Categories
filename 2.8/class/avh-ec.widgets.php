@@ -5,6 +5,10 @@
  */
 class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 {
+	/**
+	 *
+	 * @var AVH_EC_Core
+	 */
 	var $core;
 
 	/**
@@ -375,6 +379,10 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
  */
 class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 {
+	/**
+	 *
+	 * @var AVH_EC_Core
+	 */
 	var $core;
 
 	/**
@@ -598,6 +606,10 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
  */
 class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 {
+	/**
+	 *
+	 * @var AVH_EC_Core
+	 */
 	var $core;
 
 	/**
@@ -627,7 +639,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	function widget ( $args, $instance )
 	{
 		global $post;
-		$catgrp = new AVH_EC_Category_Group();
+		$catgrp = new AVH_EC_Category_Group( );
 		extract( $args );
 
 		$c = $instance['count'] ? '1' : '0';
@@ -646,13 +658,13 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$options = $this->core->getOptions();
 
-		$row=array();
+		$row = array ();
 		if ( is_home() ) {
 			$row = get_term_by( 'id', $options['cat_group']['home_group'], $catgrp->taxonomy_name ); // Returns false when non-existance. (empty(false)=true)
 		} else {
 			$terms = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
-			if (!empty($terms)) {
-				$row=$terms[0];
+			if ( ! empty( $terms ) ) {
+				$row = $terms[0];
 			}
 		}
 

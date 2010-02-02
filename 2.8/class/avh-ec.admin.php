@@ -1,8 +1,18 @@
 <?php
 class AVH_EC_Admin
 {
+	/**
+	 *
+	 * @var AVH_EC_Core
+	 */
 	var $core;
+
+	/**
+	 *
+	 * @var AVH_EC_Category_Group
+	 */
 	var $catgrp;
+
 	var $hooks = array ();
 	var $message;
 
@@ -16,9 +26,6 @@ class AVH_EC_Admin
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
 		$this->catgrp = new AVH_EC_Category_Group( );
-
-		//		$this->installPlugin();
-
 
 		add_action( 'wp_ajax_delete-group', array (&$this, 'ajaxDeleteGroup' ) );
 
