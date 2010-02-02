@@ -82,7 +82,7 @@ class AVH_EC_Admin
 			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_id, $current_category_group[0]->term_id ) ) {
 				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 			} else {
-				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_taxonomy_id ) {
+				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_id ) {
 					echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
 				} else {
 					echo '<option value="' . $group->term_id . '">' . $group->name . "</option>\n";
