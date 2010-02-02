@@ -739,13 +739,16 @@ class AVH_EC_Admin
 	{
 		echo '<p>If you enjoy this plug-in please consider a donation. There are several ways you can show your appreciation</p>';
 		echo '<p>';
-		echo '<span class="b">Amazon Wish List</span><br />';
+		echo '<span class="b">Amazon</span><br />';
+		echo 'If you decide to buy something from Amazon click the button.<br />';
+		echo '<a href="https://www.amazon.com/?&tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' . $this->core->info['graphics_url'] . '/us_banner_logow_120x60.gif" /></a></p>';
+		echo '<p>';
 		echo 'You can send me something from my <a href="http://www.amazon.com/gp/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">Amazon Wish List</a>';
 		echo '</p>';
 		echo '<p>';
 		echo '<span class="b">Through Paypal.</span><br />';
-		echo 'Click on the Donate button and you will be directed to Paypal where you can make your donation and you don\'t need to have a Paypal account to make a donation.';
-		echo '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S85FXJ9EBHAF2&lc=US&item_name=AVH%20Plugins&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank" title="Donate">';
+		echo 'Click on the Donate button and you will be directed to Paypal where you can make your donation and you don\'t need to have a Paypal account to make a donation.<br />';
+		echo '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S85FXJ9EBHAF2&lc=US&item_name=AVH%20Plugins&item_number=fdas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank" title="Donate">';
 		echo '<img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate"/></a>';
 		echo '</p>';
 	}
