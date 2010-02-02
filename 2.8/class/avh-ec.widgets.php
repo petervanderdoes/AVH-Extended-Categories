@@ -46,17 +46,17 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	{
 		extract( $args );
 
-		$selectedonly = $instance['selectedonly'] ? 1 : 0;
-		$c = $instance['count'] ? 1 : 0;
-		$h = $instance['hierarchical'] ? 1 : 0;
+		$selectedonly = $instance['selectedonly'] ? true : false;
+		$c = $instance['count'] ? true : false;
+		$h = $instance['hierarchical'] ? true : false;
 		$d = $instance['depth'] ? $instance['depth'] : 0;
-		$e = $instance['hide_empty'] ? 1 : 0;
-		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
+		$e = $instance['hide_empty'] ? true : false;
+		$use_desc_for_title = $instance['use_desc_for_title'] ? true : false;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
 		$i = $instance['rssimage'] ? $instance['rssimage'] : '';
-		$invert = $instance['invert_included'] ? 1 : 0;
+		$invert = $instance['invert_included'] ? true : false;
 
 		if ( empty( $r ) ) {
 			$i = '';
@@ -93,7 +93,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			$show_option_none = $options['general']['alternative_name_select_category'];
 		}
 
-		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+		$cat_args = array ($inc_exc => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => $h, 'depth' => $d, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -136,15 +136,15 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$instance = $old_instance;
 
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
-		$instance['selectedonly'] = $new_instance['selectedonly'] ? 1 : 0;
-		$instance['count'] = $new_instance['count'] ? 1 : 0;
-		$instance['hierarchical'] = $new_instance['hierarchical'] ? 1 : 0;
-		$instance['hide_empty'] = $new_instance['hide_empty'] ? 1 : 0;
-		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
+		$instance['selectedonly'] = $new_instance['selectedonly'] ? true : false;
+		$instance['count'] = $new_instance['count'] ? true : false;
+		$instance['hierarchical'] = $new_instance['hierarchical'] ? true : false;
+		$instance['hide_empty'] = $new_instance['hide_empty'] ? true : false;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? true : false;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
-		$instance['rssfeed'] = $new_instance['rssfeed'] ? 1 : 0;
+		$instance['rssfeed'] = $new_instance['rssfeed'] ? true : false;
 		$instance['rssimage'] = strip_tags( stripslashes( $new_instance['rssimage'] ) );
 		if ( array_key_exists( 'all', $new_instance['post_category'] ) ) {
 			$instance['post_category'] = false;
@@ -155,11 +155,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		if ( $instance['depth'] < 0 || 11 < $instance['depth'] ) {
 			$instance['depth'] = 0;
 		}
-		$instance['invert_included'] = $new_instance['invert_included'] ? 1 : 0;
+		$instance['invert_included'] = $new_instance['invert_included'] ? true : false;
 
 		// If only the selected categories are to be displayed, this implies a flat view. Can't be hierarchical
-		if ( 1 == $new_instance['selectedonly'] ) {
-			$instance['hierarchical'] = 0;
+		if ( true == $new_instance['selectedonly'] ) {
+			$instance['hierarchical'] = false;
 		}
 		return $instance;
 	}
@@ -198,8 +198,8 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			$depth = 0;
 		}
 
-		if ( 1 == $selectedonly ) {
-			$hierarchical = 0;
+		if ( true == $selectedonly ) {
+			$hierarchical = false;
 		}
 		echo '<p>';
 		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
@@ -431,8 +431,8 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		} elseif ( $a < 1 ) {
 			$a = 1;
 		}
-		$c = $instance['count'] ? '1' : '0';
-		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
+		$c = $instance['count'] ? true : false;
+		$use_desc_for_title = $instance['use_desc_for_title'] ? true : false;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
@@ -455,7 +455,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		$top_cats = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false ) );
 		$included_cats = implode( ",", $top_cats );
 
-		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => 0, 'hierarchical' => 0, 'depth' => - 1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
+		$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => false, 'hierarchical' => false, 'depth' => - 1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number );
 		echo $before_widget;
 		echo $this->core->comment;
 		echo $before_title . $title . $after_title;
@@ -502,12 +502,12 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['amount'] = ( int ) $new_instance['amount'];
-		$instance['count'] = $new_instance['count'] ? 1 : 0;
-		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
+		$instance['count'] = $new_instance['count'] ? true : false;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? true : false;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
-		$instance['rssfeed'] = $new_instance['rssfeed'] ? 1 : 0;
+		$instance['rssfeed'] = $new_instance['rssfeed'] ? true : false;
 		$instance['rssimage'] = strip_tags( stripslashes( $new_instance['rssimage'] ) );
 
 		return $instance;
@@ -660,9 +660,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$catgrp = new AVH_EC_Category_Group( );
 		extract( $args );
 
-		$c = $instance['count'] ? '1' : '0';
-		$e = $instance['hide_empty'] ? '1' : '0';
-		$use_desc_for_title = $instance['use_desc_for_title'] ? 1 : 0;
+		$c = $instance['count'] ? true : false;
+		$e = $instance['hide_empty'] ? true : false;
+		$use_desc_for_title = $instance['use_desc_for_title'] ? true : false;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
 		$r = $instance['rssfeed'] ? 'RSS' : '';
@@ -703,7 +703,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				$show_option_none = $options['general']['alternative_name_select_category'];
 			}
 
-			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title'=>$use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
+			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => false, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 			echo $before_widget;
 			echo $this->core->comment;
 			echo $before_title . $title . $after_title;
@@ -747,13 +747,13 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$instance = $old_instance;
 
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
-		$instance['count'] = $new_instance['count'] ? 1 : 0;
-		$instance['hide_empty'] = $new_instance['hide_empty'] ? 1 : 0;
-		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? 1 : 0;
+		$instance['count'] = $new_instance['count'] ? true : false;
+		$instance['hide_empty'] = $new_instance['hide_empty'] ? true : false;
+		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? true : false;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
 		$instance['sort_order'] = strip_tags( stripslashes( $new_instance['sort_order'] ) );
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
-		$instance['rssfeed'] = $new_instance['rssfeed'] ? 1 : 0;
+		$instance['rssfeed'] = $new_instance['rssfeed'] ? true : false;
 		$instance['rssimage'] = strip_tags( stripslashes( $new_instance['rssimage'] ) );
 		return $instance;
 	}
