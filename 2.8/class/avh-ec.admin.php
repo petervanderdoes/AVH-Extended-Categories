@@ -44,8 +44,8 @@ class AVH_EC_Admin
 		add_action( "created_category", array ($this, 'actionCreatedCategory' ), 10, 2 );
 		add_action( "delete_category", array ($this, 'actionDeleteCategory' ), 10, 2 );
 
-		add_filter( 'manage_categories_group_columns', array (&$this, filterManageCategoriesGroupColumns ) );
-		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, filterExplainNonceDeleteGroup ), 10, 2 );
+		add_filter( 'manage_categories_group_columns', array (&$this, 'filterManageCategoriesGroupColumns' ) );
+		add_filter( 'explain_nonce_delete-avhecgroup', array (&$this, 'filterExplainNonceDeleteGroup' ), 10, 2 );
 
 		return;
 	}
