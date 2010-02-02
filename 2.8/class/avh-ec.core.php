@@ -25,13 +25,12 @@ class AVH_EC_Core
 		$this->db_options_core = 'avhec';
 
 		$info['siteurl'] = get_option( 'siteurl' );
-
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
-
 		$info['lang_dir'] = AVHEC_WORKING_DIR . '/lang';
+		$info['graphics_url']=AVHEC_PLUGIN_URL.'/images';
 
 		// Set class property for info
-		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'] );
+		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'],'graphics_url'=>$info['graphics_url'] );
 
 		// Set the default options
 		$this->default_options_general = array ('version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
