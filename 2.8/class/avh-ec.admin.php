@@ -67,7 +67,7 @@ class AVH_EC_Admin
 	 */
 	function metaboxPostCategoryGroup ( $post )
 	{
-		$options = $this->core->getOptions;
+		$options = $this->core->getOptions();
 		echo '<p id=\'avhec-cat-group\'';
 
 		echo '<input type="hidden" name="avhec_category_group_nonce" id="avhec_category_group_nonce" value="' . wp_create_nonce( 'avhec_category_group_nonce' ) . '" />';
