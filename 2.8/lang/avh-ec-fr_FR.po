@@ -1,67 +1,57 @@
-# Spanish translation for avhextendedcategories
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the avhextendedcategories package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: avhextendedcategories\n"
+"Project-Id-Version: AVH Extended Categories\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-30 19:59-0500\n"
-"PO-Revision-Date: 2010-01-30 20:00-0500\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Peter van der Does <peter@avirtualhome.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-09-26 00:32+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../class/avh-ec.admin.php:35
 #: ../class/avh-ec.admin.php:36
 msgid "Category Group"
-msgstr ""
+msgstr "Groupe de catégorie"
 
 #: ../class/avh-ec.admin.php:174
 #: ../class/avh-ec.admin.php:234
 msgid "Overview"
-msgstr ""
+msgstr "Présentation"
 
 #: ../class/avh-ec.admin.php:175
 #: ../class/avh-ec.admin.php:367
-#, fuzzy
 msgid "General Options"
-msgstr "Options"
+msgstr "Options générales"
 
 #: ../class/avh-ec.admin.php:176
 #: ../class/avh-ec.admin.php:556
 #: ../class/avh-ec.category-group.php:44
 #: ../class/avh-ec.category-group.php:45
-#, fuzzy
 msgid "Category Groups"
-msgstr "Catégories"
+msgstr "Groupes de catégorie"
 
 #: ../class/avh-ec.admin.php:177
 #: ../class/avh-ec.admin.php:692
 msgid "F.A.Q"
-msgstr ""
+msgstr "FAQ"
 
 #: ../class/avh-ec.admin.php:193
 #: ../class/avh-ec.admin.php:413
 msgid "Group Overview"
-msgstr ""
+msgstr "Group Overview"
 
 #: ../class/avh-ec.admin.php:218
 #: ../class/avh-ec.admin.php:676
 msgid "Announcements"
-msgstr ""
+msgstr "Annonces"
 
 #: ../class/avh-ec.admin.php:219
 #: ../class/avh-ec.admin.php:352
 #: ../class/avh-ec.admin.php:677
-#, fuzzy
 msgid "Donations"
-msgstr "Options"
+msgstr "Dons"
 
 #: ../class/avh-ec.admin.php:262
 msgid "Options"
@@ -77,55 +67,55 @@ msgstr "Sauver les modifications"
 
 #: ../class/avh-ec.admin.php:412
 msgid "Add Group"
-msgstr ""
+msgstr "Ajouter un groupe"
 
 #: ../class/avh-ec.admin.php:462
 msgid "Category group saved"
-msgstr ""
+msgstr "Groupe de la catégorie sauvegardée"
 
 #: ../class/avh-ec.admin.php:468
 msgid "Category group conflicts with "
-msgstr ""
+msgstr "Groupe de la catégorie en conflit avec"
 
 #: ../class/avh-ec.admin.php:469
 msgid "Same slug is used. "
-msgstr ""
+msgstr "Same slug is used. "
 
 #: ../class/avh-ec.admin.php:491
 msgid "Edit Group"
-msgstr ""
+msgstr "Editer le groupe"
 
 #: ../class/avh-ec.admin.php:503
 msgid "Cheatin&#8217; uh?"
-msgstr ""
+msgstr "Cheatin&#8217; uh?"
 
 #: ../class/avh-ec.admin.php:525
 msgid "Category group updated"
-msgstr ""
+msgstr "Groupe de categorie mis a jour"
 
 #: ../class/avh-ec.admin.php:528
 msgid "Category group not updated"
-msgstr ""
+msgstr "Groupe de catégorie non mis a jour"
 
 #: ../class/avh-ec.admin.php:529
 msgid "Duplicate slug detected"
-msgstr ""
+msgstr "Duplicate slug detected"
 
 #: ../class/avh-ec.admin.php:533
 msgid "Unknown category group"
-msgstr ""
+msgstr "Groupe de catégorie inconnu"
 
 #: ../class/avh-ec.admin.php:590
 msgid "Add group"
-msgstr ""
+msgstr "Ajouter un groupe"
 
 #: ../class/avh-ec.admin.php:639
 msgid "Update group"
-msgstr ""
+msgstr "Groupe mis a jour"
 
 #: ../class/avh-ec.admin.php:650
 msgid "F.A.Q."
-msgstr ""
+msgstr "FAQ"
 
 #: ../class/avh-ec.admin.php:651
 msgid "Translation"
@@ -133,7 +123,7 @@ msgstr "Traduction"
 
 #: ../class/avh-ec.admin.php:831
 msgid "Settings"
-msgstr "Configuration"
+msgstr "Paramètres"
 
 #: ../class/avh-ec.admin.php:847
 #: ../class/avh-ec.widgets.php:248
@@ -144,37 +134,36 @@ msgstr "Nom"
 
 #: ../class/avh-ec.admin.php:847
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: ../class/avh-ec.admin.php:847
-#, fuzzy
 msgid "Categories in the group"
-msgstr "Catégories"
+msgstr "Categorie dans le groupe"
 
 #: ../class/avh-ec.admin.php:864
 #, php-format
 msgid "Your attempt to delete this group: &#8220;%s&#8221; has failed."
-msgstr ""
+msgstr "Votre demande pour supprimer ce groupe &#8220;%s&#8221; a échoué"
 
 #: ../class/avh-ec.admin.php:926
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
-msgstr ""
+msgstr "Editer  &#8220;%s&#8221;"
 
 #: ../class/avh-ec.admin.php:928
 msgid "Edit"
-msgstr ""
+msgstr "Editer"
 
 #: ../class/avh-ec.admin.php:933
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: ../class/avh-ec.core.php:346
 #: ../class/avh-ec.widgets.php:64
 #: ../class/avh-ec.widgets.php:410
 #: ../class/avh-ec.widgets.php:644
 msgid "Categories"
-msgstr "Catégories"
+msgstr "Categories"
 
 #: ../class/avh-ec.core.php:379
 #: ../class/avh-ec.core.php:381
@@ -184,27 +173,26 @@ msgstr "Pas de catégories"
 #: ../class/avh-ec.core.php:566
 #, php-format
 msgid "View all posts filed under %s"
-msgstr ""
+msgstr "Voir tous les posts sous %s"
 
 #: ../class/avh-ec.core.php:581
 #, php-format
 msgid "Feed for all posts filed under %s"
-msgstr ""
+msgstr "Flux pour tous les posts sous %s"
 
 #: ../class/avh-ec.widgets.php:24
 msgid "An extended version of the default Categories widget."
-msgstr "Une version étendue du widget par defaut de Catégories."
+msgstr "Une version étendue de votre widget categorie"
 
 #: ../class/avh-ec.widgets.php:25
-#, fuzzy
 msgid "AVH Extended Categories"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extended Categories"
 
 #: ../class/avh-ec.widgets.php:86
 #: ../class/avh-ec.widgets.php:432
 #: ../class/avh-ec.widgets.php:670
 msgid "Select Category"
-msgstr "Selection d'une categorie"
+msgstr "Selection d'une catégorie"
 
 #: ../class/avh-ec.widgets.php:199
 #: ../class/avh-ec.widgets.php:527
@@ -214,13 +202,13 @@ msgstr "Titre"
 
 #: ../class/avh-ec.widgets.php:208
 msgid "Show selected categories only"
-msgstr "Montrer que les catégories séllectionnées"
+msgstr "Montrer que les catégories sélectionnées"
 
 #: ../class/avh-ec.widgets.php:214
 #: ../class/avh-ec.widgets.php:543
 #: ../class/avh-ec.widgets.php:764
 msgid "Show post counts"
-msgstr "Montrer le nombre d'articles"
+msgstr "Montrer les articles comptés"
 
 #: ../class/avh-ec.widgets.php:220
 #: ../class/avh-ec.widgets.php:770
@@ -229,7 +217,7 @@ msgstr "Montrer la hiérarchie"
 
 #: ../class/avh-ec.widgets.php:225
 msgid "How many levels to show"
-msgstr "combien den niveau a montrer"
+msgstr "Combien de niveau a afficher"
 
 #: ../class/avh-ec.widgets.php:228
 msgid "All Levels"
@@ -237,11 +225,11 @@ msgstr "Tous les niveaux"
 
 #: ../class/avh-ec.widgets.php:229
 msgid "Toplevel only"
-msgstr "1er niveau seulement"
+msgstr "Unqiuement le 1er niveau"
 
 #: ../class/avh-ec.widgets.php:231
 msgid "Child "
-msgstr "Enfant"
+msgstr "Enfants"
 
 #: ../class/avh-ec.widgets.php:238
 #: ../class/avh-ec.widgets.php:776
@@ -264,31 +252,31 @@ msgstr "ID"
 #: ../class/avh-ec.widgets.php:552
 #: ../class/avh-ec.widgets.php:787
 msgid "Count"
-msgstr "numero"
+msgstr "Comptée"
 
 #: ../class/avh-ec.widgets.php:255
 #: ../class/avh-ec.widgets.php:558
 #: ../class/avh-ec.widgets.php:793
 msgid "Sort order "
-msgstr "ordre"
+msgstr "Trié par ordre"
 
 #: ../class/avh-ec.widgets.php:257
 #: ../class/avh-ec.widgets.php:560
 #: ../class/avh-ec.widgets.php:795
 msgid "Ascending"
-msgstr "croissant"
+msgstr "Croissant"
 
 #: ../class/avh-ec.widgets.php:258
 #: ../class/avh-ec.widgets.php:561
 #: ../class/avh-ec.widgets.php:796
 msgid "Descending"
-msgstr "Décroissant"
+msgstr "Descendant"
 
 #: ../class/avh-ec.widgets.php:264
 #: ../class/avh-ec.widgets.php:567
 #: ../class/avh-ec.widgets.php:802
 msgid "Display style "
-msgstr "Montrer le style"
+msgstr "Afficher les style"
 
 #: ../class/avh-ec.widgets.php:266
 #: ../class/avh-ec.widgets.php:569
@@ -300,52 +288,49 @@ msgstr "Liste"
 #: ../class/avh-ec.widgets.php:570
 #: ../class/avh-ec.widgets.php:805
 msgid "Drop down"
-msgstr "déroulante"
+msgstr "Déroulante"
 
 #: ../class/avh-ec.widgets.php:277
 #: ../class/avh-ec.widgets.php:580
 #: ../class/avh-ec.widgets.php:815
 msgid "Show RSS Feed"
-msgstr "Afficher Rss Feed"
+msgstr "Afficher le flux RSS"
 
 #: ../class/avh-ec.widgets.php:282
 #: ../class/avh-ec.widgets.php:585
 #: ../class/avh-ec.widgets.php:820
 msgid "Path (URI) to RSS image"
-msgstr "chemin de l'image RSS"
+msgstr "Chemin de l'icone RSS"
 
 #: ../class/avh-ec.widgets.php:288
 msgid "Select categories"
-msgstr "Choix des catégories"
+msgstr "Selection des catégories"
 
 #: ../class/avh-ec.widgets.php:293
 msgid "All Categories"
-msgstr "Toutes les categories"
+msgstr "Toutes les catégories"
 
 #: ../class/avh-ec.widgets.php:303
 msgid "Exclude the selected categories"
-msgstr "Exclure les catégories sélectionnées"
+msgstr "Ezclure les catégories sélectionnées"
 
 #: ../class/avh-ec.widgets.php:389
 msgid "Shows the top categories."
-msgstr "Afficher les premières catégories."
+msgstr "Afficher les catégories principales"
 
 #: ../class/avh-ec.widgets.php:390
-#, fuzzy
 msgid "AVH Extended Categories: Top Categories"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extented Categories : Les catégories principales"
 
 #: ../class/avh-ec.widgets.php:534
 msgid "How many categories to show"
-msgstr "combien  de categories a afficher"
+msgstr "Nombre de catégories a afficher"
 
 #: ../class/avh-ec.widgets.php:612
-#, fuzzy
 msgid "Shows grouped categories."
-msgstr "Afficher les premières catégories."
+msgstr "Afficher les groupes de catégories"
 
 #: ../class/avh-ec.widgets.php:613
-#, fuzzy
 msgid "AVH Extended Category: Category Group"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extented Category : Groupe de catégorie"
 
