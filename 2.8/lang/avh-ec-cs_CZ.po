@@ -1,62 +1,63 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AVH Extended Categories, Czech, 20-09-2009\n"
+"Project-Id-Version: AVH Extended Categories\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-30 19:59-0500\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Peter van der Does <peter@avirtualhome.com>\n"
-"Language-Team: Dirty Mind <bluebat@seznam.cz>\n"
+"Last-Translator: Dirty Mind <bluebat@seznam.cz>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __ngettext:1,2;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
 
 #: ../class/avh-ec.admin.php:35
 #: ../class/avh-ec.admin.php:36
 msgid "Category Group"
-msgstr ""
+msgstr "Skupina rubrik"
 
 #: ../class/avh-ec.admin.php:174
 #: ../class/avh-ec.admin.php:234
 msgid "Overview"
-msgstr ""
+msgstr "Přehled"
 
 #: ../class/avh-ec.admin.php:175
 #: ../class/avh-ec.admin.php:367
-#, fuzzy
 msgid "General Options"
-msgstr "Nastavení"
+msgstr "Základní nastavení"
 
 #: ../class/avh-ec.admin.php:176
 #: ../class/avh-ec.admin.php:556
 #: ../class/avh-ec.category-group.php:44
 #: ../class/avh-ec.category-group.php:45
-#, fuzzy
 msgid "Category Groups"
-msgstr "Rubriky"
+msgstr "Skupiny rubrik"
 
 #: ../class/avh-ec.admin.php:177
 #: ../class/avh-ec.admin.php:692
 msgid "F.A.Q"
-msgstr ""
+msgstr "F.A.Q."
 
 #: ../class/avh-ec.admin.php:193
 #: ../class/avh-ec.admin.php:413
 msgid "Group Overview"
-msgstr ""
+msgstr "Přehled skupiny"
 
 #: ../class/avh-ec.admin.php:218
 #: ../class/avh-ec.admin.php:676
 msgid "Announcements"
-msgstr ""
+msgstr "Oznámení"
 
 #: ../class/avh-ec.admin.php:219
 #: ../class/avh-ec.admin.php:352
 #: ../class/avh-ec.admin.php:677
-#, fuzzy
 msgid "Donations"
-msgstr "Nastavení"
+msgstr "Podpořte nás"
 
 #: ../class/avh-ec.admin.php:262
 msgid "Options"
@@ -72,55 +73,55 @@ msgstr "Uložit změny"
 
 #: ../class/avh-ec.admin.php:412
 msgid "Add Group"
-msgstr ""
+msgstr "Přidat skupinu"
 
 #: ../class/avh-ec.admin.php:462
 msgid "Category group saved"
-msgstr ""
+msgstr "Skupina rubrik byla uložena"
 
 #: ../class/avh-ec.admin.php:468
 msgid "Category group conflicts with "
-msgstr ""
+msgstr "Skupina rubrik koliduje s"
 
 #: ../class/avh-ec.admin.php:469
 msgid "Same slug is used. "
-msgstr ""
+msgstr "Toto zjednodušené jméno je již používáno."
 
 #: ../class/avh-ec.admin.php:491
 msgid "Edit Group"
-msgstr ""
+msgstr "Upravit skupinu"
 
 #: ../class/avh-ec.admin.php:503
 msgid "Cheatin&#8217; uh?"
-msgstr ""
+msgstr "Podvádíš?"
 
 #: ../class/avh-ec.admin.php:525
 msgid "Category group updated"
-msgstr ""
+msgstr "Skupina rubrik byla aktualizována"
 
 #: ../class/avh-ec.admin.php:528
 msgid "Category group not updated"
-msgstr ""
+msgstr "Změna skupiny nebyla provedena"
 
 #: ../class/avh-ec.admin.php:529
 msgid "Duplicate slug detected"
-msgstr ""
+msgstr "Kolize stejných zkrácených jmen"
 
 #: ../class/avh-ec.admin.php:533
 msgid "Unknown category group"
-msgstr ""
+msgstr "Neznámá skupina rubrik"
 
 #: ../class/avh-ec.admin.php:590
 msgid "Add group"
-msgstr ""
+msgstr "Přidat skupinu"
 
 #: ../class/avh-ec.admin.php:639
 msgid "Update group"
-msgstr ""
+msgstr "Aktualizovat skupinu"
 
 #: ../class/avh-ec.admin.php:650
 msgid "F.A.Q."
-msgstr ""
+msgstr "F.A.Q."
 
 #: ../class/avh-ec.admin.php:651
 msgid "Translation"
@@ -139,30 +140,29 @@ msgstr "Jméno"
 
 #: ../class/avh-ec.admin.php:847
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: ../class/avh-ec.admin.php:847
-#, fuzzy
 msgid "Categories in the group"
-msgstr "Rubriky"
+msgstr "Rubriky ve skupině"
 
 #: ../class/avh-ec.admin.php:864
 #, php-format
 msgid "Your attempt to delete this group: &#8220;%s&#8221; has failed."
-msgstr ""
+msgstr "Pokus o smazání skupiny &#8220;%s&#8221; byl neúspěšný."
 
 #: ../class/avh-ec.admin.php:926
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
-msgstr ""
+msgstr "Upravit &#8220;%s&#8221;"
 
 #: ../class/avh-ec.admin.php:928
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: ../class/avh-ec.admin.php:933
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: ../class/avh-ec.core.php:346
 #: ../class/avh-ec.widgets.php:64
@@ -179,21 +179,20 @@ msgstr "Žádné rubriky"
 #: ../class/avh-ec.core.php:566
 #, php-format
 msgid "View all posts filed under %s"
-msgstr ""
+msgstr "Zobrazit všechny příspěvky pod %s"
 
 #: ../class/avh-ec.core.php:581
 #, php-format
 msgid "Feed for all posts filed under %s"
-msgstr ""
+msgstr "Feed pro všechny příspěvky pod %s"
 
 #: ../class/avh-ec.widgets.php:24
 msgid "An extended version of the default Categories widget."
-msgstr "Rozšířená verze základního widgetu Rubriky."
+msgstr "Rozšířená verze základního widgetu Rubriky (Categories)."
 
 #: ../class/avh-ec.widgets.php:25
-#, fuzzy
 msgid "AVH Extended Categories"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extended Categories"
 
 #: ../class/avh-ec.widgets.php:86
 #: ../class/avh-ec.widgets.php:432
@@ -326,21 +325,18 @@ msgid "Shows the top categories."
 msgstr "Zobrazí top rubriky."
 
 #: ../class/avh-ec.widgets.php:390
-#, fuzzy
 msgid "AVH Extended Categories: Top Categories"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extended Categories: Top rubriky"
 
 #: ../class/avh-ec.widgets.php:534
 msgid "How many categories to show"
 msgstr "Počet zobrazovaných rubrik"
 
 #: ../class/avh-ec.widgets.php:612
-#, fuzzy
 msgid "Shows grouped categories."
-msgstr "Zobrazí top rubriky."
+msgstr "Zobrazí seskupené rubriky."
 
 #: ../class/avh-ec.widgets.php:613
-#, fuzzy
 msgid "AVH Extended Category: Category Group"
-msgstr "AVH Extended Categories Top"
+msgstr "AVH Extended Category: Skupina Rubrik"
 
