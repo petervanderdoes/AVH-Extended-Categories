@@ -20,7 +20,7 @@ The AVH Extended Categories Widgets gives you three widgets for displaying categ
 The replacement widget gives you the following customizable options:
 
 * Title of the widget.
-* Display as List or Dropdown.
+* Display as List or Drop-down.
 * Show number of posts (Count) after the category.
 * Hide empty categories.
 * Show categories hierarchical.
@@ -34,7 +34,7 @@ The Top Categories widget gives you the following customizable options:
 
 * Title of the widget.
 * How many categories to show.
-* Display as List or Dropdown.
+* Display as List or Drop-down.
 * Show number of posts (Count) after the category.
 * Sort by ID, Name,Count.
 * Sort ascending or descending.
@@ -44,7 +44,7 @@ The Top Categories widget gives you the following customizable options:
 The Category Group widget gives you the following customizable options:
 
 * Title of the widget.
-* Display as List or Dropdown.
+* Display as List or Drop-down.
 * Show number of posts (Count) after the category.
 * Hide empty categories.
 * Sort by ID, Name,Count.
@@ -61,17 +61,17 @@ You can also select not to show the Category Group widget by selecting the group
  
 Translations:
 * Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
-* Spanish - Español (es_ES) in Launchpad
+* Spanish - EspaÃ±ol (es_ES) in Launchpad
 * Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
-* French - Français (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
+* French - FranÃ§ais (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
 
 == Installation ==
 
 The AVH Extended Categories Widgets can be installed in 3 easy steps:
 
-1. Unzip the extended-categories-widget archive and put the directory "extended-categories-widget" into your "plugins" folder (wp-content/plugins/).
+1. Unzip the extended-categories-widget archive and put the directory "extended-categories-widget" into your "plug-ins" folder (wp-content/plugins/).
 
-1. Activate the plugin
+1. Activate the plug-in
 
 1. Go to the Presentation/Appearance->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
 
@@ -87,36 +87,36 @@ Starting with version 2.0 and WordPress 2.8 you can select how many levels deep 
 Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:
 You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
 
-= I want to help and translate the plugin =
-The .pot file is included with the plugin.
+= I want to help and translate the plug-in =
+The .pot file is included with the plug-in.
 If you have created a language pack, or have an update of an existing one, you can send the [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can include them in future releases.
 I'll keep a list of translators and their websites here in the readme.txt and on my website.
 
-I have also setup a project in Launchpad for translating the plugin. Just visit http://bit.ly/95WyJ
+I have also setup a project in Launchpad for translating the plug-in. Just visit http://bit.ly/95WyJ
 
-== Screenshots ==
+== Screen shots ==
 None
 
 == Changelog ==
 
 = Version 3.0 =
-* Renamed the plugin to AVH Extended Categories Widgets
-* Added new widget: Category Group. You can create groups with caetgories and associate the group with a post. The widget will show the categories from the group.
+* Renamed the plug-in to AVH Extended Categories Widgets
+* Added new widget: Category Group. You can create groups with categories and associate the group with a post. The widget will show the categories from the group.
 * Added translation: Italian - Italiano (it_IT)
 * Added css file for widgets. Using the CSS you can change the layout of the text.
-* Redid settings. Settings are now a seperate menu.
+* Redid settings. Settings are now a separate menu.
 * Reduced memory foot print.
 * Increased speed.
 * Development improvements.
-* Bugfix: The hierarchy checkmark in the widgets would disappear.
-* Bugfix: In dropdown list the hierarchy would appear despite the fact that "Show selected categories only" was selected.
+* Bugfix: The hierarchy check mark in the widgets would disappear.
+* Bugfix: In drop down list the hierarchy would appear despite the fact that "Show selected categories only" was selected.
 
 = Version 2.3.3 =
-* Bugfix: Validation error on dropdown categories.
+* Bugfix: Validation error on drop down categories.
 
 = Version 2.3.2 =
 * Bugfix: Saving the option didn't work
-* Added translation: Spanish - Español (es_ES)
+* Added translation: Spanish - EspaÃ±ol (es_ES)
 
 = Version 2.3.1 =
 * Bugfix: Undefined function
@@ -128,8 +128,8 @@ None
 * Added Czech translation.
 
 = Version 2.2 =
-* RFC: Internationalization of the plugin.
-* Bugfix: W3 Validation Errors when using dropdown categories.
+* RFC: Internationalization of the plug-in.
+* Bugfix: W3 Validation Errors when using drop down categories.
 * Added option to exclude categories from displaying instead of including them. (Compliments to: Jose Luis Moya - http://www.alsur.es ) 
 
 = Version 2.1 =
@@ -150,13 +150,13 @@ None
 * With WordPress 2.8 there is a new widget, AVH Extended Categories Top. This will show the top categories based on amount of posts.
 
 = Version 1.5.1 =
-* Bugfix: Compatibility issue with the plugin wp-security-scan
+* Bugfix: Compatibility issue with the plug-in wp-security-scan
 
 = Version 1.5 =
 * RFC: Option to show RSS feed after categories
 
 = Version 1.4.1 =
-* Bugfix: Problem when using multiple widgets with the dropdown option.
+* Bugfix: Problem when using multiple widgets with the drop down option.
 
 = Version 1.4 =
 * Ability to have up to 9 widgets.
@@ -168,7 +168,7 @@ None
 * When no category or an empty category is selected the dropdown menu shows Select Category, like the default category widget.
 
 = Version 1.1 =
-* Dropdown menu didn't work. Page wasn't refreshed with selected category.
+* Drop down menu didn't work. Page wasn't refreshed with selected category.
 
 = Version 1.0 =
 * Initial version
