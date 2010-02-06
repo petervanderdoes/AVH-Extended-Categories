@@ -783,19 +783,19 @@ class AVH_EC_Admin
 
 	function metaboxAnnouncements ()
 	{
-		$php5 = version_compare( '5', phpversion(), '<' );
+		$php5 = version_compare( '5.2', phpversion(), '<' );
 		echo '<p>';
 		echo '<span class="b">PHP4 Support</span><br />';
 		echo 'The next major release of the plugin will no longer support PHP4.<br />';
-		echo 'It will be written for PHP 5 and ';
+		echo 'It will be written for PHP 5.2 and ';
 		if ( $php5 ) {
 			echo 'your blog already runs the needed PHP version. When the new release comes out you can safely update.<br />';
 		} else {
 			echo 'your blog still runs PHP4. When the new release comes out you can not use it.<br />';
-			echo 'I don\'t have a timeline for the next version but consider contacting your host if PHP5 is available.<br />';
-			echo 'If your hosts doesn\'t offer PHP5 you might want to consider switching hosts.<br />';
+			echo 'I don\'t have a timeline for the next version but consider contacting your host if PHP 5.2 is available.<br />';
+			echo 'If your hosts doesn\'t offer PHP 5.2 you might want to consider switching hosts.<br />';
 			echo 'A host to consider is <a href="http://www.lunarpages.com/id/pdoes" target="_blank">Lunarpages</a>.';
-			echo 'I run my personal blog there and I am very happy with their services. You can get an account with unlimited bandwidth, storage and much more for $4.95 a month (This is the current price in February 2010).';
+			echo 'I run my personal blog there and I am very happy with their services. You can get an account with unlimited bandwidth, storage and much more for a low price.';
 		}
 		echo '</p>';
 
