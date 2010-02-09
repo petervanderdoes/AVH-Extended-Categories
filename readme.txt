@@ -110,6 +110,7 @@ None
 * Development improvements.
 * Bugfix: The hierarchy check mark in the widgets would disappear.
 * Bugfix: In drop down list the hierarchy would appear despite the fact that "Show selected categories only" was selected.
+* Note: Some of the translations are not yet complete with version 3.0.
 
 = Version 2.3.3 =
 * Bugfix: Validation error on drop down categories.
