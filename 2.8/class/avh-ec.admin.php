@@ -341,6 +341,11 @@ class AVH_EC_Admin
 		$this->displayMessage();
 
 		$actual_options = $this->core->getOptions();
+		foreach ( $actual_options['cat_group'] as $key => $value ) {
+			if ( ! (in_array( $value, ( array ) $group_id )) ) {
+				$actual_options['cat_group'][$key] = $this->catgrp->getTermIDBy( 'slug', 'none' );
+			}
+		}
 
 		$hide2 = '';
 		switch ( $screen_layout_columns )
