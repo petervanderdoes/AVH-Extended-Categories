@@ -25,7 +25,7 @@ class AVH_EC_Admin
 
 		// Initialize the plugin
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
-		$this->catgrp = new AVH_EC_Category_Group( );
+		$this->catgrp = new AVH_EC_Category_Group();
 
 		add_action( 'wp_ajax_delete-group', array (&$this, 'ajaxDeleteGroup' ) );
 
@@ -58,7 +58,7 @@ class AVH_EC_Admin
 	}
 
 	/**
-	 *  PHP4 Constructor
+	 * PHP4 Constructor
 	 *
 	 */
 	function AVH_EC_Admin ()
@@ -127,7 +127,7 @@ class AVH_EC_Admin
 		}
 
 		// OK, we're authenticated: we need to find and save the data
-		$group_term_id = (int) $_POST['post_avhec_category_group'];
+		$group_term_id = ( int ) $_POST['post_avhec_category_group'];
 		wp_set_object_terms( $post_id, $group_term_id, $this->catgrp->taxonomy_name );
 
 		return $post_id;
@@ -222,7 +222,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxAnnouncements', __('Announcements','avh-ec'), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '' );
+		add_meta_box( 'avhecBoxAnnouncements', __( 'Announcements', 'avh-ec' ), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '' );
 		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', '' );
 
 		$hide2 = '';
@@ -242,10 +242,10 @@ class AVH_EC_Admin
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['menu_overview'], 'normal','' );
+		do_meta_boxes( $this->hooks['menu_overview'], 'normal', '' );
 		echo "			</div>";
 		echo '			<div class="postbox-container" style="' . $hide2 . $width . '">' . "\n";
-		do_meta_boxes( $this->hooks['menu_overview'], 'side','' );
+		do_meta_boxes( $this->hooks['menu_overview'], 'side', '' );
 		echo '			</div>';
 		echo '		</div>';
 
@@ -630,7 +630,7 @@ class AVH_EC_Admin
 		echo '<br class="clear" />';
 		echo '</form>';
 
-		//echo '</div>';
+	//echo '</div>';
 	}
 
 	/**
@@ -680,7 +680,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box( 'avhecBoxAnnouncements', __('Announcements','avh-ec'), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core' );
+		add_meta_box( 'avhecBoxAnnouncements', __( 'Announcements', 'avh-ec' ), array (&$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core' );
 		add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_faq'], 'side', 'core' );
 
 		$hide2 = '';
@@ -1069,7 +1069,7 @@ class AVH_EC_Admin
 			$status = $this->status;
 			$this->message = $this->status = ''; // Reset
 		}
-		if ( $message ) {
+		if ( isset( $message ) ) {
 			$status = ($status != '') ? $status : 'updated fade';
 			echo '<div id="message"	class="' . $status . '">';
 			echo '<p><strong>' . $message . '</strong></p></div>';
