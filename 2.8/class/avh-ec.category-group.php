@@ -39,6 +39,26 @@ class AVH_EC_Category_Group
 		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_category_groups';
 
 		/**
+		 * Create the table if it doesn't exist.
+		 *
+		 */
+		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
+			$this->doCreateTable();
+		}
+
+		// Setup the standard groups if the none group does not exists.
+		if ( ! (false === $this->getTermIDBy( 'slug', 'none' )) ) {
+			$none_group_id = wp_insert_term( 'none', $this->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
+			$all_group_id = wp_insert_term( 'All', $this->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
+			$home_group_id = wp_insert_term( 'Home', $this->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
+
+			//	Fill the standard groups with all categories
+			$all_categories = $this->getAllCategoriesTermID();
+			$this->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
+			$this->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
+		}
+
+		/**
 		 * Setup Group Categories Taxonomy
 		 */
 		register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
@@ -54,6 +74,26 @@ class AVH_EC_Category_Group
 	function __destruct ()
 	{
 		return true;
+	}
+
+	function doCreateTable ()
+	{
+		global $wpdb;
+
+		// Setup the DB Tables
+		$charset_collate = '';
+
+		if ( version_compare( mysql_get_server_info(), '4.1.0', '>=' ) ) {
+			if ( ! empty( $wpdb->charset ) )
+				$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
+			if ( ! empty( $wpdb->collate ) )
+				$charset_collate .= ' COLLATE ' . $wpdb->collate;
+		}
+
+		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `group_term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`group_term_id`, `term_id`) )' . $charset_collate . ';';
+
+		$result = $wpdb->query( $sql );
+
 	}
 
 	/**

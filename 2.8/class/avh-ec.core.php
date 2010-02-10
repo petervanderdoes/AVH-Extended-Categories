@@ -24,22 +24,23 @@ class AVH_EC_Core
 		$db_version = 2;
 		$this->db_options_core = 'avhec';
 
+
 		$info['siteurl'] = get_option( 'siteurl' );
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
 		$info['lang_dir'] = AVHEC_WORKING_DIR . '/lang';
-		$info['graphics_url']=AVHEC_PLUGIN_URL.'/images';
+		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 
 		// Set class property for info
-		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'],'graphics_url'=>$info['graphics_url'] );
+		$this->info = array ('home' => get_option( 'home' ), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
 
 		// Set the default options
 		$this->default_options_general = array ('version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
 
 		// Set the default category group options
-		$no_group_id=$catgrp->getTermIDBy('name','all');
-		$home_group_id=$catgrp->getTermIDBy('name','home');
-		$default_group_id=$catgrp->getTermIDBy('name','all');
-		$this->default_options_category_group = array ('no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group'=>$default_group_id );
+		$no_group_id = $catgrp->getTermIDBy( 'slug', 'all' );
+		$home_group_id = $catgrp->getTermIDBy( 'slug', 'home' );
+		$default_group_id = $catgrp->getTermIDBy( 'slug', 'all' );
+		$this->default_options_category_group = array ('no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group' => $default_group_id );
 
 		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group );
 
@@ -49,9 +50,9 @@ class AVH_EC_Core
 		 */
 		$this->loadOptions();
 
-		// Check if we have to do upgrades
+		// Check if we have to do updates
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
-			$this->doUpgrade();
+			$this->doUpdateOptions();
 		}
 
 		$this->handleTextdomain();
@@ -81,13 +82,14 @@ class AVH_EC_Core
 
 	}
 
+
 	/**
 	 * Checks if running version is newer and do upgrades if necessary
 	 *
 	 * @since 1.2.3
 	 *
 	 */
-	function doUpgrade ()
+	function doUpdateOptions ()
 	{
 		$options = $this->getOptions();
 
@@ -140,9 +142,9 @@ class AVH_EC_Core
 	}
 
 	/*********************************
-	 *                               *
+	 * *
 	 * Methods for variable: options *
-	 *                               *
+	 * *
 	 ********************************/
 
 	/**
@@ -219,24 +221,24 @@ class AVH_EC_Core
 	 * Display or retrieve the HTML dropdown list of categories.
 	 *
 	 * The list of arguments is below:
-	 *     'show_option_all' (string) - Text to display for showing all categories.
-	 *     'show_option_none' (string) - Text to display for showing no categories.
-	 *     'orderby' (string) default is 'ID' - What column to use for ordering the
+	 * 'show_option_all' (string) - Text to display for showing all categories.
+	 * 'show_option_none' (string) - Text to display for showing no categories.
+	 * 'orderby' (string) default is 'ID' - What column to use for ordering the
 	 * categories.
-	 *     'order' (string) default is 'ASC' - What direction to order categories.
-	 *     'show_last_update' (bool|int) default is 0 - See {@link get_categories()}
-	 *     'show_count' (bool|int) default is 0 - Whether to show how many posts are
+	 * 'order' (string) default is 'ASC' - What direction to order categories.
+	 * 'show_last_update' (bool|int) default is 0 - See {@link get_categories()}
+	 * 'show_count' (bool|int) default is 0 - Whether to show how many posts are
 	 * in the category.
-	 *     'hide_empty' (bool|int) default is 1 - Whether to hide categories that
+	 * 'hide_empty' (bool|int) default is 1 - Whether to hide categories that
 	 * don't have any posts attached to them.
-	 *     'child_of' (int) default is 0 - See {@link get_categories()}.
-	 *     'exclude' (string) - See {@link get_categories()}.
-	 *     'echo' (bool|int) default is 1 - Whether to display or retrieve content.
-	 *     'depth' (int) - The max depth.
-	 *     'tab_index' (int) - Tab index for select element.
-	 *     'name' (string) - The name attribute value for selected element.
-	 *     'class' (string) - The class attribute value for selected element.
-	 *     'selected' (int) - Which category ID is selected.
+	 * 'child_of' (int) default is 0 - See {@link get_categories()}.
+	 * 'exclude' (string) - See {@link get_categories()}.
+	 * 'echo' (bool|int) default is 1 - Whether to display or retrieve content.
+	 * 'depth' (int) - The max depth.
+	 * 'tab_index' (int) - Tab index for select element.
+	 * 'name' (string) - The name attribute value for selected element.
+	 * 'class' (string) - The class attribute value for selected element.
+	 * 'selected' (int) - Which category ID is selected.
 	 *
 	 * The 'hierarchical' argument, which is disabled by default, will override the
 	 * depth argument, unless it is true. When the argument is false, it will
@@ -250,7 +252,7 @@ class AVH_EC_Core
 	 */
 	function avh_wp_dropdown_categories ( $args = '', $selectedonly )
 	{
-		$mywalker = new AVH_Walker_CategoryDropdown( );
+		$mywalker = new AVH_Walker_CategoryDropdown();
 
 		$defaults = array ('show_option_all' => '', 'show_option_none' => '', 'orderby' => 'id', 'order' => 'ASC', 'show_last_update' => 0, 'show_count' => 0, 'hide_empty' => 1, 'child_of' => 0, 'exclude' => '', 'echo' => 1, 'selected' => 0, 'hierarchical' => 0, 'name' => 'cat', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'walker' => $mywalker );
 
@@ -310,29 +312,29 @@ class AVH_EC_Core
 	 * Display or retrieve the HTML list of categories.
 	 *
 	 * The list of arguments is below:
-	 *     'show_option_all' (string) - Text to display for showing all categories.
-	 *     'orderby' (string) default is 'ID' - What column to use for ordering the
+	 * 'show_option_all' (string) - Text to display for showing all categories.
+	 * 'orderby' (string) default is 'ID' - What column to use for ordering the
 	 * categories.
-	 *     'order' (string) default is 'ASC' - What direction to order categories.
-	 *     'show_last_update' (bool|int) default is 0 - See {@link
+	 * 'order' (string) default is 'ASC' - What direction to order categories.
+	 * 'show_last_update' (bool|int) default is 0 - See {@link
 	 * walk_category_dropdown_tree()}
-	 *     'show_count' (bool|int) default is 0 - Whether to show how many posts are
+	 * 'show_count' (bool|int) default is 0 - Whether to show how many posts are
 	 * in the category.
-	 *     'hide_empty' (bool|int) default is 1 - Whether to hide categories that
+	 * 'hide_empty' (bool|int) default is 1 - Whether to hide categories that
 	 * don't have any posts attached to them.
-	 *     'use_desc_for_title' (bool|int) default is 1 - Whether to use the
+	 * 'use_desc_for_title' (bool|int) default is 1 - Whether to use the
 	 * description instead of the category title.
-	 *     'feed' - See {@link get_categories()}.
-	 *     'feed_type' - See {@link get_categories()}.
-	 *     'feed_image' - See {@link get_categories()}.
-	 *     'child_of' (int) default is 0 - See {@link get_categories()}.
-	 *     'exclude' (string) - See {@link get_categories()}.
-	 *     'exclude_tree' (string) - See {@link get_categories()}.
-	 *     'echo' (bool|int) default is 1 - Whether to display or retrieve content.
-	 *     'current_category' (int) - See {@link get_categories()}.
-	 *     'hierarchical' (bool) - See {@link get_categories()}.
-	 *     'title_li' (string) - See {@link get_categories()}.
-	 *     'depth' (int) - The max depth.
+	 * 'feed' - See {@link get_categories()}.
+	 * 'feed_type' - See {@link get_categories()}.
+	 * 'feed_image' - See {@link get_categories()}.
+	 * 'child_of' (int) default is 0 - See {@link get_categories()}.
+	 * 'exclude' (string) - See {@link get_categories()}.
+	 * 'exclude_tree' (string) - See {@link get_categories()}.
+	 * 'echo' (bool|int) default is 1 - Whether to display or retrieve content.
+	 * 'current_category' (int) - See {@link get_categories()}.
+	 * 'hierarchical' (bool) - See {@link get_categories()}.
+	 * 'title_li' (string) - See {@link get_categories()}.
+	 * 'depth' (int) - The max depth.
 	 *
 	 * @since 2.1.0
 	 *
@@ -341,7 +343,7 @@ class AVH_EC_Core
 	 */
 	function avh_wp_list_categories ( $args = '', $selectedonly )
 	{
-		$mywalker=new AVHEC_Walker_Category();
+		$mywalker = new AVHEC_Walker_Category();
 		$defaults = array ('show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __( 'Categories' ), 'echo' => 1, 'depth' => 0, 'walker' => $mywalker );
 
 		$r = wp_parse_args( $args, $defaults );
@@ -496,7 +498,8 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
  *
  * @uses Walker
  */
-class AVHEC_Walker_Category extends Walker {
+class AVHEC_Walker_Category extends Walker
+{
 	/**
 	 * @see Walker::$tree_type
 	 * @since 2.1.0
@@ -510,7 +513,7 @@ class AVHEC_Walker_Category extends Walker {
 	 * @todo Decouple this
 	 * @var array
 	 */
-	var $db_fields = array ('parent' => 'parent', 'id' => 'term_id');
+	var $db_fields = array ('parent' => 'parent', 'id' => 'term_id' );
 
 	/**
 	 * @see Walker::start_lvl()
@@ -520,12 +523,13 @@ class AVHEC_Walker_Category extends Walker {
 	 * @param int $depth Depth of category. Used for tab indentation.
 	 * @param array $args Will only append content if style argument value is 'list'.
 	 */
-	function start_lvl(&$output, $depth, $args) {
+	function start_lvl ( &$output, $depth, $args )
+	{
 		if ( 'list' != $args['style'] )
 			return;
 
-		$indent = str_repeat("\t", $depth);
-		$output .= "$indent<ul class='children'>\n";
+		$indent = str_repeat( "\t", $depth );
+		$output .= $indent . '<ul class="children">' . "\n";
 	}
 
 	/**
@@ -536,12 +540,13 @@ class AVHEC_Walker_Category extends Walker {
 	 * @param int $depth Depth of category. Used for tab indentation.
 	 * @param array $args Will only append content if style argument value is 'list'.
 	 */
-	function end_lvl(&$output, $depth, $args) {
+	function end_lvl ( &$output, $depth, $args )
+	{
 		if ( 'list' != $args['style'] )
 			return;
 
-		$indent = str_repeat("\t", $depth);
-		$output .= "$indent</ul>\n";
+		$indent = str_repeat( "\t", $depth );
+		$output .= $indent . '</ul>' . "\n";
 	}
 
 	/**
@@ -553,29 +558,30 @@ class AVHEC_Walker_Category extends Walker {
 	 * @param int $depth Depth of category in reference to parents.
 	 * @param array $args
 	 */
-	function start_el(&$output, $category, $depth, $args) {
-		extract($args);
+	function start_el ( &$output, $category, $depth, $args )
+	{
+		extract( $args );
 
-		$cat_name = esc_attr( $category->name);
+		$cat_name = esc_attr( $category->name );
 		$cat_name = apply_filters( 'list_cats', $cat_name, $category );
 		$link = '<div id="avhec-widget-line"><a href="' . get_category_link( $category->term_id ) . '" ';
-		if ( $use_desc_for_title == 0 || empty($category->description) )
-			$link .= 'title="' . sprintf(__( 'View all posts filed under %s' ), $cat_name) . '"';
+		if ( $use_desc_for_title == 0 || empty( $category->description ) )
+			$link .= 'title="' . sprintf( __( 'View all posts filed under %s' ), $cat_name ) . '"';
 		else
 			$link .= 'title="' . esc_attr( strip_tags( apply_filters( 'category_description', $category->description, $category ) ) ) . '"';
 		$link .= '>';
 		$link .= $cat_name . '</a>';
 
-		if ( (! empty($feed_image)) || (! empty($feed)) ) {
+		if ( (! empty( $feed_image )) || (! empty( $feed )) ) {
 			$link .= '<div id="avhec-widget-rss"> ';
 
-			if ( empty($feed_image) )
+			if ( empty( $feed_image ) )
 				$link .= '(';
 
-			$link .= '<a href="' . get_category_feed_link($category->term_id, $feed_type) . '"';
+			$link .= '<a href="' . get_category_feed_link( $category->term_id, $feed_type ) . '"';
 
-			if ( empty($feed) )
-				$alt = ' alt="' . sprintf(__( 'Feed for all posts filed under %s' ), $cat_name ) . '"';
+			if ( empty( $feed ) )
+				$alt = ' alt="' . sprintf( __( 'Feed for all posts filed under %s' ), $cat_name ) . '"';
 			else {
 				$title = ' title="' . $feed . '"';
 				$alt = ' alt="' . $feed . '"';
@@ -585,37 +591,37 @@ class AVHEC_Walker_Category extends Walker {
 
 			$link .= '>';
 
-			if ( empty($feed_image) )
+			if ( empty( $feed_image ) )
 				$link .= $name;
 			else
-				$link .= "<img src='$feed_image'$alt$title" . ' />';
+				$link .= '<img src="' . $feed_image . '"' . $alt . $title . ' />';
 			$link .= '</a>';
-			if ( empty($feed_image) )
+			if ( empty( $feed_image ) )
 				$link .= ')';
-				$link .= '</div>';
+			$link .= '</div>';
 		}
 
-		if ( isset($show_count) && $show_count )
-			$link .= '<div id="avhec-widget-count"> (' . intval($category->count) . ')</div>';
+		if ( isset( $show_count ) && $show_count )
+			$link .= '<div id="avhec-widget-count"> (' . intval( $category->count ) . ')</div>';
 
-		if ( isset($show_date) && $show_date ) {
-			$link .= ' ' . gmdate('Y-m-d', $category->last_update_timestamp);
+		if ( isset( $show_date ) && $show_date ) {
+			$link .= ' ' . gmdate( 'Y-m-d', $category->last_update_timestamp );
 		}
 
-		if ( isset($current_category) && $current_category )
+		if ( isset( $current_category ) && $current_category )
 			$_current_category = get_category( $current_category );
 
 		if ( 'list' == $args['style'] ) {
-			$output .= "\t<li";
-			$class = 'cat-item cat-item-'.$category->term_id;
-			if ( isset($current_category) && $current_category && ($category->term_id == $current_category) )
-				$class .=  ' current-cat';
-			elseif ( isset($_current_category) && $_current_category && ($category->term_id == $_current_category->parent) )
-				$class .=  ' current-cat-parent';
-			$output .=  ' class="'.$class.'"';
-			$output .= ">$link</div>\n";
+			$output .= "\t" . '<li';
+			$class = 'cat-item cat-item-' . $category->term_id;
+			if ( isset( $current_category ) && $current_category && ($category->term_id == $current_category) )
+				$class .= ' current-cat';
+			elseif ( isset( $_current_category ) && $_current_category && ($category->term_id == $_current_category->parent) )
+				$class .= ' current-cat-parent';
+			$output .= ' class="' . $class . '"';
+			$output .= '>' . $link . '</div>' . "\n";
 		} else {
-			$output .= "\t$link</div><br />\n";
+			$output .= "\t" . $link . '</div><br />' . "\n";
 		}
 	}
 
@@ -628,12 +634,12 @@ class AVHEC_Walker_Category extends Walker {
 	 * @param int $depth Depth of category. Not used.
 	 * @param array $args Only uses 'list' for whether should append to output.
 	 */
-	function end_el(&$output, $page, $depth, $args) {
+	function end_el ( &$output, $page, $depth, $args )
+	{
 		if ( 'list' != $args['style'] )
 			return;
 
-		$output .= "</li>\n";
+		$output .= '</li>' . "\n";
 	}
 }
-
 ?>
