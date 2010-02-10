@@ -47,7 +47,7 @@ class AVH_EC_Category_Group
 		}
 
 		// Setup the standard groups if the none group does not exists.
-		if ( ! (false === $this->getTermIDBy( 'slug', 'none' )) ) {
+		if ( false === $this->getTermIDBy( 'slug', 'none' ) ) {
 			$none_group_id = wp_insert_term( 'none', $this->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
 			$all_group_id = wp_insert_term( 'All', $this->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
 			$home_group_id = wp_insert_term( 'Home', $this->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
