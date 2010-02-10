@@ -130,7 +130,7 @@ class AVH_EC_Admin
 		$group_term_id = (int) $_POST['post_avhec_category_group'];
 		wp_set_object_terms( $post_id, $group_term_id, $this->catgrp->taxonomy_name );
 
-		return $group_id;
+		return $post_id;
 
 	}
 
