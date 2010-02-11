@@ -23,6 +23,9 @@ class AVH_EC_Singleton
 					case 'AVH_EC_Core' :
 						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.core.php');
 						break;
+					case 'AVH_EC_Category_Group' :
+						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.category-group.php');
+						break;
 				}
 			}
 			$instances[$class] = new $class( $arg1 );
@@ -32,8 +35,6 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
-
-require_once (AVHEC_WORKING_DIR . '/class/avh-ec.category-group.php');
 require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
@@ -45,7 +46,7 @@ function avhextendedcategories_init ()
 	// Admin
 	if ( is_admin() ) {
 		require_once (AVHEC_WORKING_DIR . '/class/avh-ec.admin.php');
-		$avhec_admin = new AVH_EC_Admin( );
+		$avhec_admin = new AVH_EC_Admin();
 	}
 	add_action( 'widgets_init', 'avhextendedcategories_widgets_init' );
 
