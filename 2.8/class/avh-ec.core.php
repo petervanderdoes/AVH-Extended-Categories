@@ -56,7 +56,7 @@ class AVH_EC_Core
 
 		// Check if we have to do updates
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
-			$this->doUpdateOptions();
+			$this->doUpdateOptions($db_version);
 		}
 
 		$this->handleTextdomain();
@@ -93,7 +93,7 @@ class AVH_EC_Core
 	 * @since 1.2.3
 	 *
 	 */
-	function doUpdateOptions ()
+	function doUpdateOptions ($db_version)
 	{
 		$options = $this->getOptions();
 
@@ -109,7 +109,12 @@ class AVH_EC_Core
 				}
 			}
 		}
+
+		/**
+		 * Update the options to the latests versions
+		 */
 		$options['general']['version'] = $this->version;
+		$options['general']['dbversion'] = $db_version;
 		$this->saveOptions( $options );
 	}
 
