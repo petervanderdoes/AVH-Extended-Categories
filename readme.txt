@@ -61,9 +61,9 @@ You can also select not to show the Category Group widget by selecting the group
  
 Translations:
 * Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
-* Spanish - EspaÃ±ol (es_ES) in Launchpad
+* Spanish - Español (es_ES) in Launchpad
 * Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
-* French - FranÃ§ais (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
+* French - Français (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
 
 == Installation ==
 
