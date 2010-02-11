@@ -43,8 +43,10 @@ class AVH_EC_Category_Group
 		/**
 		 * Setup Group Categories Taxonomy
 		 */
-		register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-		register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+		if (!is_taxonomy($this->taxonomy_name)) {
+			register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+			register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+		}
 
 		// add DB pointer
 		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_category_groups';
