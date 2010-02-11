@@ -3,10 +3,10 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 2.9
-Stable tag: 3
+Tested up to: 2.9.1
+Stable tag: 3.0
 
-The AVH Extended Categories Widgets gives you two widgets for displaying categories.
+The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
@@ -15,7 +15,7 @@ The AVH Extended Categories Widgets gives you three widgets for displaying categ
 
 1. A top categories widget. Shows the top X categories. This requires WordPress 2.8 or higher.
 
-1. A Category Group widget. Shows categories from a group. The group can be associated with a post. This requires WordPress 2.8 or higher.
+1. A Category Group widget. Shows categories from a group which is associated with the post/page that the visitor is looking at. Categories can be added to a group. Multiple groups can be made and every post/page can be associated with a different group. This requires WordPress 2.8 or higher.
 
 The replacement widget gives you the following customizable options:
 
@@ -60,6 +60,7 @@ You can set the following options for the Category Group Widget:
 You can also select not to show the Category Group widget by selecting the group: None
  
 Translations:
+
 * Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
 * Spanish - Español (es_ES) in Launchpad
 * Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
