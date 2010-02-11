@@ -150,11 +150,14 @@ class AVH_EC_Category_Group
 	{
 		global $wpdb;
 
-		$old_categories = asort( $this->getCategoriesFromGroup( $group_id ) );
+		$old_categories = $this->getCategoriesFromGroup( $group_id );
+
 		if ( ! is_array( $categories ) ) {
 			$categories = array ();
 		}
-		$new_categories = asort( $categories );
+		$new_categories =  $categories;
+		sort($old_categories);
+		sort($new_categories);
 		// If the new and old values are the same, no need to update.
 		if ( $new_categories === $old_categories ) {
 			return false;
