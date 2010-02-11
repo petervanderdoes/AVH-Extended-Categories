@@ -33,7 +33,18 @@ class AVH_EC_Category_Group
 
 		register_shutdown_function( array (&$this, '__destruct' ) );
 
+
+		/**
+		 * Taxonomy name
+		 * @var string
+		 */
 		$this->taxonomy_name = 'avhec_catgroup';
+
+		/**
+		 * Setup Group Categories Taxonomy
+		 */
+		register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+		register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
 
 		// add DB pointer
 		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_category_groups';
@@ -57,13 +68,6 @@ class AVH_EC_Category_Group
 			$this->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
 			$this->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
 		}
-
-		/**
-		 * Setup Group Categories Taxonomy
-		 */
-		register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-		register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-
 	}
 
 	/**
