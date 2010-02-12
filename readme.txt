@@ -109,6 +109,7 @@ None
 * Reduced memory foot print.
 * Increased speed.
 * Development improvements.
+* Added uninstall capability.
 * Bugfix: The hierarchy check mark in the widgets would disappear.
 * Bugfix: In drop down list the hierarchy would appear despite the fact that "Show selected categories only" was selected.
 * Note: Some of the translations are not yet complete with version 3.0.
