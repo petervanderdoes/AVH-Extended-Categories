@@ -705,6 +705,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => FALSE, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-' . $this->number );
 			echo $before_widget;
+			echo '<div id="avhec-categorygroup-'.$row->slug.'">';
 			echo $this->core->comment;
 			echo $before_title . $title . $after_title;
 
@@ -726,6 +727,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				echo '/* ]]> */' . "\n";
 				echo '</script>' . "\n";
 			}
+			echo '</div>';
 			echo $after_widget;
 		}
 	}
