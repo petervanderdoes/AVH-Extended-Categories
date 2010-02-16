@@ -99,6 +99,9 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
+= Version 3.x =
+* Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.
+* Bugfix: If the normal widget and group widget are displayed on the same page as dropdown, the selected option could be the wrong one. 
 
 = Version 3.0.2 =
 * Bugfix: The plugin conflicts with the standard theme/plugin editor in WordPress
