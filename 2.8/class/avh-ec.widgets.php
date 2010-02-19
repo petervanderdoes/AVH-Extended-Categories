@@ -28,12 +28,21 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$widget_ops = array ('description' => __( "An extended version of the default Categories widget.", 'avh-ec' ) );
 		WP_Widget::__construct( 'extended-categories', __( 'AVH Extended Categories' ), $widget_ops );
 
-		wp_enqueue_style( 'avhec-widget-css' );
+		if ( ! is_admin() ) {
+			add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
+		}
+
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Normal ()
 	{
 		$this->__construct();
+	}
+
+	function actionWpPrintStyles ()
+	{
+		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
+		wp_enqueue_style( 'avhec-widget' );
 	}
 
 	/**
@@ -165,7 +174,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	}
 
 	/**
-	 *  Display Widget Control Form
+	 * Display Widget Control Form
 	 *
 	 * @param unknown_type $instance
 	 */
@@ -332,7 +341,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function avh_wp_category_checklist ( $post_id = 0, $descendants_and_self = 0, $selected_cats = FALSE, $popular_cats = FALSE, $number, $display = 1 )
 	{
-		$walker = new AVH_Walker_Category_Checklist( );
+		$walker = new AVH_Walker_Category_Checklist();
 		$walker->number = $number;
 		$walker->input_id = $this->get_field_id( 'post_category' );
 		$walker->input_name = $this->get_field_name( 'post_category' );
@@ -401,15 +410,24 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 	function __construct ()
 	{
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
-		wp_enqueue_style( 'avhec-widget-css' );
 
 		$widget_ops = array ('description' => __( "Shows the top categories.", 'avh-ec' ) );
 		WP_Widget::__construct( FALSE, __( 'AVH Extended Categories: Top Categories' ), $widget_ops );
+
+		if ( ! is_admin() ) {
+			add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
+		}
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Top ()
 	{
 		$this->__construct();
+	}
+
+	function actionWpPrintStyles ()
+	{
+		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
+		wp_enqueue_style( 'avhec-widget' );
 	}
 
 	/** Echo the widget content.
@@ -637,15 +655,24 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	function __construct ()
 	{
 		$this->core = & AVH_EC_Singleton::getInstance( 'AVH_EC_Core' );
-		wp_enqueue_style( 'avhec-widget-css' );
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
 		WP_Widget::__construct( FALSE, __( 'AVH Extended Category: Category Group' ), $widget_ops );
+
+		if ( ! is_admin() ) {
+			add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
+		}
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Category_Group ()
 	{
 		$this->__construct();
+	}
+
+	function actionWpPrintStyles ()
+	{
+		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
+		wp_enqueue_style( 'avhec-widget' );
 	}
 
 	/**
@@ -657,7 +684,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	function widget ( $args, $instance )
 	{
 		global $post;
-		$catgrp = new AVH_EC_Category_Group( );
+		$catgrp = new AVH_EC_Category_Group();
 		extract( $args );
 
 		$c = $instance['count'] ? TRUE : FALSE;
@@ -705,7 +732,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => FALSE, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-group-' . $this->number );
 			echo $before_widget;
-			echo '<div id="avhec-categorygroup-'.$row->slug.'">';
+			echo '<div id="avhec-categorygroup-' . $row->slug . '">';
 			echo $this->core->comment;
 			echo $before_title . $title . $after_title;
 
@@ -761,7 +788,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	}
 
 	/**
-	 *  Display Widget Control Form
+	 * Display Widget Control Form
 	 *
 	 * @param unknown_type $instance
 	 */
