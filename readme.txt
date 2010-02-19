@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 2.9.1
-Stable tag: 3.0.2
+Stable tag: 3.1-rc1
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -99,9 +99,10 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
-= Version 3.x =
+= Version 3.1-rc1 =
 * Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.
-* Bugfix: If the normal widget and group widget are displayed on the same page as dropdown, the selected option could be the wrong one. 
+* Bugfix: If the normal widget and group widget are displayed on the same page as dropdown, the selected option could be the wrong one.
+* Bugfix: In a RTL-based theme the admin menu would flip back to the left, instead of staying right.
 
 = Version 3.0.2 =
 * Bugfix: The plugin conflicts with the standard theme/plugin editor in WordPress
