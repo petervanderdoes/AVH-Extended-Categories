@@ -38,8 +38,6 @@ class AVH_EC_Admin
 		wp_register_script( 'avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array ('jquery' ), $this->core->version, true );
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
 
-
-
 		// Actions used for editing posts
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
@@ -187,9 +185,20 @@ class AVH_EC_Admin
 
 		// Add actions for menu pages
 		add_action( 'load-' . $this->hooks['menu_overview'], array (&$this, 'actionLoadPageHook_Overview' ) );
+		add_action( 'admin_print_scripts-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintScripts_Overview' ) );
+		add_action( 'admin_print_styles-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintStyles_Overview' ) );
+
 		add_action( 'load-' . $this->hooks['menu_general'], array (&$this, 'actionLoadPageHook_General' ) );
+		add_action( 'admin_print_scripts-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintScripts_General' ) );
+		add_action( 'admin_print_styles-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintStyles_General' ) );
+
 		add_action( 'load-' . $this->hooks['menu_category_groups'], array (&$this, 'actionLoadPageHook_CategoryGroup' ) );
+		add_action( 'admin_print_scripts-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintScripts_CategoryGroup' ) );
+		add_action( 'admin_print_styles-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintStyles_CategoryGroup' ) );
+
 		add_action( 'load-' . $this->hooks['menu_faq'], array (&$this, 'actionLoadPageHook_faq' ) );
+		add_action( 'admin_print_scripts-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintScripts_faq' ) );
+		add_action( 'admin_print_styles-' . $this->hooks['menu_overview'], array (&$this, 'actionAdminPrintStyles_faq' ) );
 	}
 
 	/**
@@ -202,15 +211,25 @@ class AVH_EC_Admin
 		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_overview'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+	}
 
-		// WordPress core Styles and Scripts
+	function actionAdminPrintScripts_Overview ()
+	{
+		// WordPress core Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+
+		// Plugin Scripts
+		wp_enqueue_script( 'avhec-categorygroup-js' );
+	}
+
+	function actionAdminPrintStyles_Overview ()
+	{
+		// WordPress core Styles
 		wp_admin_css( 'css/dashboard' );
 
-		// Plugin Style and Scripts
-		wp_enqueue_script( 'avhec-categorygroup-js' );
+		// Plugin Style
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
@@ -272,10 +291,19 @@ class AVH_EC_Admin
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
-		// WordPress core Styles and Scripts
+	}
+
+	function actionAdminPrintScripts_General ()
+	{
+		// WordPress core Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+	}
+
+	function actionAdminPrintStyles_General ()
+	{
+		// WordPress core Styles
 		wp_admin_css( 'css/dashboard' );
 
 		// Plugin Style and Scripts
@@ -428,14 +456,25 @@ class AVH_EC_Admin
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 
-		// WordPress core Styles and Scripts
+	}
+
+	function actionAdminPrintScripts_CategoryGroup ()
+	{
+		// WordPress core Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+
+		// Plugin Scripts
 		wp_enqueue_script( 'avhec-categorygroup-js' );
+	}
+
+	function actionAdminPrintStyles_CategoryGroup ()
+	{
+		// WordPress core Styles
 		wp_admin_css( 'css/dashboard' );
 
-		// Plugin Style and Scripts
+		// Plugin Style
 		wp_enqueue_style( 'avhec-admin-css' );
 	}
 
@@ -665,16 +704,23 @@ class AVH_EC_Admin
 		add_meta_box( 'avhecBoxTranslation', __( 'Translation', 'avh-ec' ), array (&$this, 'metaboxTranslation' ), $this->hooks['menu_faq'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
+	}
 
+	function actionAdminPrintScripts_faq ()
+	{
 		// WordPress core Styles and Scripts
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
+	}
+
+	function actionAdminPrintStyles_faq ()
+	{
+		// WordPress core Styles
 		wp_admin_css( 'css/dashboard' );
 
-		// Plugin Style and Scripts
+		// Plugin Style
 		wp_enqueue_style( 'avhec-admin-css' );
-
 	}
 
 	/**
