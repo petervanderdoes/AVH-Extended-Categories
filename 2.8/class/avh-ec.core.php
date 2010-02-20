@@ -28,7 +28,6 @@ class AVH_EC_Core
 		$db_version = 2;
 		$this->db_options_core = 'avhec';
 
-
 		$info['siteurl'] = get_option( 'siteurl' );
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
 		$info['lang_dir'] = AVHEC_WORKING_DIR . '/lang';
@@ -56,12 +55,10 @@ class AVH_EC_Core
 
 		// Check if we have to do updates
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
-			$this->doUpdateOptions($db_version);
+			$this->doUpdateOptions( $db_version );
 		}
 
 		$this->handleTextdomain();
-
-		wp_register_style( 'avhec-widget-css', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array (), $this->version, 'screen' );
 	}
 
 	/**
@@ -86,14 +83,13 @@ class AVH_EC_Core
 
 	}
 
-
 	/**
 	 * Checks if running version is newer and do upgrades if necessary
 	 *
 	 * @since 1.2.3
 	 *
 	 */
-	function doUpdateOptions ($db_version)
+	function doUpdateOptions ( $db_version )
 	{
 		$options = $this->getOptions();
 

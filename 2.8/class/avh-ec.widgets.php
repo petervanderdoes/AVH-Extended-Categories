@@ -28,10 +28,13 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$widget_ops = array ('description' => __( "An extended version of the default Categories widget.", 'avh-ec' ) );
 		WP_Widget::__construct( 'extended-categories', __( 'AVH Extended Categories' ), $widget_ops );
 
-		if ( ! is_admin() ) {
-			add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
-		}
+		add_action( 'wp_head', array (&$this, 'actionWPHead' ) );
 
+	}
+
+	function actionWPHead ()
+	{
+		add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Normal ()
