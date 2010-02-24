@@ -39,8 +39,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 	function actionWpPrintStyles ()
 	{
-		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
-		wp_enqueue_style( 'avhec-widget' );
+
+		if ( ! (FALSE === is_active_widget( FALSE, FALSE, $this->id_base, TRUE )) ) {
+			wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array (), $this->core->version );
+			wp_enqueue_style( 'avhec-widget' );
+		}
 	}
 
 	/**
@@ -51,6 +54,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 */
 	function widget ( $args, $instance )
 	{
+
 		extract( $args );
 
 		$selectedonly = $instance['selectedonly'] ? TRUE : FALSE;
@@ -411,8 +415,8 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 		$widget_ops = array ('description' => __( "Shows the top categories.", 'avh-ec' ) );
 		WP_Widget::__construct( FALSE, __( 'AVH Extended Categories: Top Categories' ), $widget_ops );
-
 		add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
+
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Top ()
@@ -422,8 +426,10 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 	function actionWpPrintStyles ()
 	{
-		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
-		wp_enqueue_style( 'avhec-widget' );
+		if ( ! (FALSE === is_active_widget( FALSE, FALSE, $this->id_base, TRUE )) ) {
+			wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array (), $this->core->version );
+			wp_enqueue_style( 'avhec-widget' );
+		}
 	}
 
 	/** Echo the widget content.
@@ -654,8 +660,8 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$widget_ops = array ('description' => __( "Shows grouped categories.", 'avh-ec' ) );
 		WP_Widget::__construct( FALSE, __( 'AVH Extended Category: Category Group' ), $widget_ops );
-
 		add_action( 'wp_print_styles', array (&$this, 'actionWpPrintStyles' ) );
+
 	}
 
 	function WP_Widget_AVH_ExtendedCategories_Category_Group ()
@@ -665,8 +671,10 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 	function actionWpPrintStyles ()
 	{
-		wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css' );
-		wp_enqueue_style( 'avhec-widget' );
+		if ( ! (FALSE === is_active_widget( FALSE, FALSE, $this->id_base, TRUE )) ) {
+			wp_register_style( 'avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array (), $this->core->version );
+			wp_enqueue_style( 'avhec-widget' );
+		}
 	}
 
 	/**
@@ -678,6 +686,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	function widget ( $args, $instance )
 	{
 		global $post;
+
 		$catgrp = new AVH_EC_Category_Group();
 		extract( $args );
 
