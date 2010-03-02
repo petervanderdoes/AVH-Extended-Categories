@@ -101,10 +101,11 @@ None
 == Changelog ==
 = Version 3.1-rc1 =
 * Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.
+* Hierarchical now works with the option "Select Categories" as well.
 * Bugfix: If the normal widget and group widget are displayed on the same page as dropdown, the selected option could be the wrong one.
 * Bugfix: In a RTL-based theme the admin menu would flip back to the left, instead of staying right.
-* Bugfix: Hierarchical works in the Category Group widget
-* Hierarchical now works with the option "Select Categories" as well
+* Bugfix: Hierarchical works in the Category Group widget.
+* Bugfix: Change div tags in widget from ID to class to comply to W3 validation.
 
 = Version 3.0.2 =
 * Bugfix: The plugin conflicts with the standard theme/plugin editor in WordPress
