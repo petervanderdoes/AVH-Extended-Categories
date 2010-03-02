@@ -569,7 +569,7 @@ class AVHEC_Walker_Category extends Walker
 
 		$cat_name = esc_attr( $category->name );
 		$cat_name = apply_filters( 'list_cats', $cat_name, $category );
-		$link = '<div id="avhec-widget-line"><a href="' . get_category_link( $category->term_id ) . '" ';
+		$link = '<div class="avhec-widget-line"><a href="' . get_category_link( $category->term_id ) . '" ';
 		if ( $use_desc_for_title == 0 || empty( $category->description ) )
 			$link .= 'title="' . sprintf( __( 'View all posts filed under %s' ), $cat_name ) . '"';
 		else
@@ -578,7 +578,7 @@ class AVHEC_Walker_Category extends Walker
 		$link .= $cat_name . '</a>';
 
 		if ( (! empty( $feed_image )) || (! empty( $feed )) ) {
-			$link .= '<div id="avhec-widget-rss"> ';
+			$link .= '<div class="avhec-widget-rss"> ';
 
 			if ( empty( $feed_image ) )
 				$link .= '(';
@@ -607,7 +607,7 @@ class AVHEC_Walker_Category extends Walker
 		}
 
 		if ( isset( $show_count ) && $show_count )
-			$link .= '<div id="avhec-widget-count"> (' . intval( $category->count ) . ')</div>';
+			$link .= '<div class="avhec-widget-count"> (' . intval( $category->count ) . ')</div>';
 
 		if ( isset( $show_date ) && $show_date ) {
 			$link .= ' ' . gmdate( 'Y-m-d', $category->last_update_timestamp );
