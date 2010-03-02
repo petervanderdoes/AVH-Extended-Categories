@@ -168,10 +168,6 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		}
 		$instance['invert_included'] = $new_instance['invert_included'] ? TRUE : FALSE;
 
-		// If only the selected categories are to be displayed, this implies a flat view. Can't be hierarchical
-		if ( TRUE == $new_instance['selectedonly'] ) {
-			$instance['hierarchical'] = FALSE;
-		}
 		return $instance;
 	}
 
@@ -692,6 +688,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$c = $instance['count'] ? TRUE : FALSE;
 		$e = $instance['hide_empty'] ? TRUE : FALSE;
+		$h = $instance['hierarchical'] ? TRUE : FALSE;
 		$use_desc_for_title = $instance['use_desc_for_title'] ? TRUE : FALSE;
 		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
 		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
@@ -733,7 +730,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				$show_option_none = $options['general']['alternative_name_select_category'];
 			}
 
-			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => true, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-group-' . $this->number );
+			$cat_args = array ('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => $e, 'hierarchical' => $h, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-select-group-' . $this->number );
 			echo $before_widget;
 			echo '<div id="avhec-categorygroup-' . $row->slug . '">';
 			echo $this->core->comment;
@@ -780,6 +777,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
 		$instance['count'] = $new_instance['count'] ? TRUE : FALSE;
+		$instance['hierarchical'] = $new_instance['hierarchical'] ? TRUE : FALSE;
 		$instance['hide_empty'] = $new_instance['hide_empty'] ? TRUE : FALSE;
 		$instance['use_desc_for_title'] = $new_instance['use_desc_for_title'] ? TRUE : FALSE;
 		$instance['sort_column'] = strip_tags( stripslashes( $new_instance['sort_column'] ) );
@@ -803,6 +801,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		// Prepare data for display
 		$title = esc_attr( $instance['title'] );
 		$count = ( bool ) $instance['count'];
+		$hierarchical = ( bool ) $instance['hierarchical'];
 		$hide_empty = ( bool ) $instance['hide_empty'];
 		$use_desc_for_title = ( bool ) $instance['use_desc_for_title'];
 		$sort_id = ($instance['sort_column'] == 'ID') ? ' SELECTED' : '';
