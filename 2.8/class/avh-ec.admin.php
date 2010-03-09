@@ -483,7 +483,7 @@ class AVH_EC_Admin
 
 			$data_add_group_new['name'] = $formoptions['add']['name'];
 			$data_add_group_new['slug'] = empty( $formoptions['add']['slug'] ) ? sanitize_title( $data_add_group_new['name'] ) : sanitize_title( $formoptions['add']['slug'] );
-			$data_add_group_new['decsription'] = $formoptions['add']['description'];
+			$data_add_group_new['description'] = $formoptions['add']['description'];
 
 			$id = $this->catgrp->getTermIDBy( 'slug', $data_add_group_new['slug'] );
 			if ( ! $id ) {

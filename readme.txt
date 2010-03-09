@@ -99,6 +99,9 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
+= Version Next =
+* Bugfix: Description of the groups didn't save.
+
 = Version 3.1 =
 * Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.
 * Hierarchical now works with the option "Select Categories" as well.
