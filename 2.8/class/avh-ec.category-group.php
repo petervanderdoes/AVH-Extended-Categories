@@ -33,21 +33,11 @@ class AVH_EC_Category_Group
 
 		register_shutdown_function( array (&$this, '__destruct' ) );
 
-
 		/**
 		 * Taxonomy name
 		 * @var string
 		 */
 		$this->taxonomy_name = 'avhec_catgroup';
-
-		/**
-		 * Setup Group Categories Taxonomy
-		 */
-		if (!is_taxonomy($this->taxonomy_name)) {
-			register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-			register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-		}
-
 		// add DB pointer
 		$wpdb->avhec_cat_group = $wpdb->prefix . 'avhec_category_groups';
 
@@ -57,6 +47,29 @@ class AVH_EC_Category_Group
 		 */
 		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
 			$this->doCreateTable();
+		}
+		add_action( 'init', array (&$this, 'doRegisterTaxonomy') );
+
+	}
+
+	/**
+	 * PHP5 style destructor and will run when database object is destroyed.
+	 *
+	 * @return bool Always true
+	 */
+	function __destruct ()
+	{
+		return true;
+	}
+
+	function doRegisterTaxonomy ()
+	{
+		/**
+		 * Setup Group Categories Taxonomy
+		 */
+		if ( ! is_taxonomy( $this->taxonomy_name ) ) {
+			register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+			register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
 		}
 
 		// Setup the standard groups if the none group does not exists.
@@ -70,16 +83,6 @@ class AVH_EC_Category_Group
 			$this->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
 			$this->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
 		}
-	}
-
-	/**
-	 * PHP5 style destructor and will run when database object is destroyed.
-	 *
-	 * @return bool Always true
-	 */
-	function __destruct ()
-	{
-		return true;
 	}
 
 	function doCreateTable ()
@@ -161,9 +164,9 @@ class AVH_EC_Category_Group
 		if ( ! is_array( $categories ) ) {
 			$categories = array ();
 		}
-		$new_categories =  $categories;
-		sort($old_categories);
-		sort($new_categories);
+		$new_categories = $categories;
+		sort( $old_categories );
+		sort( $new_categories );
 		// If the new and old values are the same, no need to update.
 		if ( $new_categories === $old_categories ) {
 			return false;
