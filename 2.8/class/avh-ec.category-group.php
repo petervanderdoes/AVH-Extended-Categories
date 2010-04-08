@@ -46,9 +46,9 @@ class AVH_EC_Category_Group
 		 *
 		 */
 		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
-			$this->doCreateTable();
+			add_action( 'init', array (&$this, 'doCreateTable' ) );
 		}
-		add_action( 'init', array (&$this, 'doRegisterTaxonomy') );
+		add_action( 'init', array (&$this, 'doRegisterTaxonomy' ) );
 
 	}
 
@@ -62,6 +62,11 @@ class AVH_EC_Category_Group
 		return true;
 	}
 
+	/**
+	 * Setup Group Categories Taxonomy
+	 * @WordPress_action init
+	 *
+	 */
 	function doRegisterTaxonomy ()
 	{
 		/**
@@ -85,6 +90,11 @@ class AVH_EC_Category_Group
 		}
 	}
 
+	/**
+	 * Create Table
+	 * @WordPress_action init
+	 *
+	 */
 	function doCreateTable ()
 	{
 		global $wpdb;
@@ -102,7 +112,6 @@ class AVH_EC_Category_Group
 		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `group_term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`group_term_id`, `term_id`) )' . $charset_collate . ';';
 
 		$result = $wpdb->query( $sql );
-
 	}
 
 	/**
