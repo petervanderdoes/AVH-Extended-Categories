@@ -267,6 +267,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '<option value="ID" ' . $sort_id . '>' . __( 'ID', 'avh-ec' ) . '</option>';
 		echo '<option value="name" ' . $sort_name . '>' . __( 'Name', 'avh-ec' ) . '</option>';
 		echo '<option value="count" ' . $sort_count . '>' . __( 'Count', 'avh-ec' ) . '</option>';
+		echo '<option value="slug" ' . $sort_count . '>' . __( 'Slug', 'avh-ec' ) . '</option>';
 		echo '</select>';
 		echo '</label>';
 		echo '<br />';
@@ -592,6 +593,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		echo '<option value="ID" ' . $sort_id . '>' . __( 'ID', 'avh-ec' ) . '</option>';
 		echo '<option value="name" ' . $sort_name . '>' . __( 'Name', 'avh-ec' ) . '</option>';
 		echo '<option value="count" ' . $sort_count . '>' . __( 'Count', 'avh-ec' ) . '</option>';
+		echo '<option value="slug" ' . $sort_count . '>' . __( 'Slug', 'avh-ec' ) . '</option>';
 		echo '</select>';
 		echo '</label>';
 		echo '<br />';
@@ -855,6 +857,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		echo '<option value="ID" ' . $sort_id . '>' . __( 'ID', 'avh-ec' ) . '</option>';
 		echo '<option value="name" ' . $sort_name . '>' . __( 'Name', 'avh-ec' ) . '</option>';
 		echo '<option value="count" ' . $sort_count . '>' . __( 'Count', 'avh-ec' ) . '</option>';
+		echo '<option value="slug" ' . $sort_count . '>' . __( 'Slug', 'avh-ec' ) . '</option>';
 		echo '</select>';
 		echo '</label>';
 		echo '<br />';

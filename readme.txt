@@ -101,6 +101,7 @@ None
 == Changelog ==
 = Version Next =
 * Bugfix: Description of the groups didn't save.
+* RFC: Option to sort the categories by slug.
 
 = Version 3.1 =
 * Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.
