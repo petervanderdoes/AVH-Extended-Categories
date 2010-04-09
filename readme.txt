@@ -99,7 +99,7 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
-= 3.1.1 =
+= 3.1.1  =
 * Bugfix: Description of the groups didn't save.
 * RFC: Option to sort the categories by slug.
 * Compatibilty issues with upcoming WordPress 3 resolved.

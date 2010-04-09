@@ -132,6 +132,19 @@ class AVH_EC_Core
 	}
 
 	/**
+	 * Used in forms to set the SELECTED option
+	 *
+	 * @param string $current
+	 * @param string $field
+	 * @return string
+	 */
+	function isSelected($current, $field) {
+		if ($current == $field) {
+			return (' SELECTED');
+		}
+		return ('');
+	}
+	/**
 	 * Get the base directory of a directory structure
 	 *
 	 * @param string $directory
