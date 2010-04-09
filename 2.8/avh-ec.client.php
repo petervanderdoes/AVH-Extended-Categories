@@ -38,6 +38,11 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
+/**
+ * Include the necessary files
+ *
+ */
+require_once (AVHEC_WORKING_DIR . '/helpers/avh-forms.php');
 require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
