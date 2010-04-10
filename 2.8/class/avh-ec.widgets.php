@@ -193,11 +193,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '</p>';
 
 		echo '<p>';
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'selectedonly' ), $this->get_field_name( 'selectedonly' ), __( 'Show selected categories only', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['selectedonly'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'selectedonly' ), $this->get_field_name( 'selectedonly' ), __( 'Show selected categories only', 'avh-ec' ),  ( bool ) $instance['selectedonly']  );
 
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'count' ), $this->get_field_name( 'count' ), __( 'Show post counts', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['count'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'count' ), $this->get_field_name( 'count' ), __( 'Show post counts', 'avh-ec' ),  ( bool ) $instance['count'] );
 
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'hierarchical' ), $this->get_field_name( 'hierarchical' ), __( 'Show hierarchy', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['hierarchical'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'hierarchical' ), $this->get_field_name( 'hierarchical' ), __( 'Show hierarchy', 'avh-ec' ),  ( bool ) $instance['hierarchical'] );
 
 		$options = array (0 => __( 'All Levels', 'avh-ec' ), 1 => __( 'Toplevel only', 'avh-ec' ) );
 		for ( $i = 2; $i <= 11; $i ++ ) {
@@ -206,9 +206,9 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		avh_doWidgetFormSelect( $this->get_field_id( 'depth' ), $this->get_field_name( 'depth' ), __( 'How many levels to show', 'avh-ec' ), $options, $depth );
 		unset( $options );
 
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'hide_empty' ), $this->get_field_name( 'hide_empty' ), __( 'Hide empty categories', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['hide_empty'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'hide_empty' ), $this->get_field_name( 'hide_empty' ), __( 'Hide empty categories', 'avh-ec' ),  ( bool ) $instance['hide_empty']  );
 
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'use_desc_for_title' ), $this->get_field_name( 'use_desc_for_title' ), __( 'Use description for title', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['use_desc_for_title'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'use_desc_for_title' ), $this->get_field_name( 'use_desc_for_title' ), __( 'Use description for title', 'avh-ec' ),  ( bool ) $instance['use_desc_for_title']  );
 		echo '</p>';
 
 		echo '<p>';
@@ -232,7 +232,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
 		echo '<p>';
 
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'rssfeed' ), $this->get_field_name( 'rssfeed' ), __( 'Show RSS Feed', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['rssfeed'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'rssfeed' ), $this->get_field_name( 'rssfeed' ), __( 'Show RSS Feed', 'avh-ec' ),  ( bool ) $instance['rssfeed']  );
 
 		avh_doWidgetFormText( $this->get_field_id( 'rssimage' ), $this->get_field_name( 'rssimage' ), __( 'Path (URI) to RSS image', 'avh-ec' ), $instance['rssimage'] );
 
@@ -252,7 +252,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		echo '</p>';
 
 		echo '<p>';
-		avh_doWidgetFormCheckbox( $this->get_field_id( 'invert_included' ), $this->get_field_name( 'invert_included' ), __( 'Exclude the selected categories', 'avh-ec' ), avh_isChecked( TRUE, ( bool ) $instance['invert_included'] ) );
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'invert_included' ), $this->get_field_name( 'invert_included' ), __( 'Exclude the selected categories', 'avh-ec' ),  ( bool ) $instance['invert_included']  );
 		echo '</p>';
 
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';

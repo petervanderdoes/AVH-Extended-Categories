@@ -42,22 +42,3 @@ if ( ! function_exists( 'avh_doWidgetFormSelect' ) ) {
 		echo '<br />';
 	}
 }
-
-if ( ! function_exists( 'avh_isChecked' ) ) {
-
-	/**
-	 * Used in forms to determine wether the checkbox should be checked-marked
-	 *
-	 * @param mixed $checked_value
-	 * @param mixed $current_value
-	 * @return bool TRUE when the box should be checked.
-	 *
-	 */
-	function avh_isChecked ( $checked_value, $current_value )
-	{
-		if ( $checked_value == $current_value ) {
-			return TRUE;
-		}
-		return FALSE;
-	}
-}
