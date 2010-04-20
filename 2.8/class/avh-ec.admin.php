@@ -469,12 +469,12 @@ class AVH_EC_Admin
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
 		$options_add_group[] = array ('avhec_add_group[add][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
-		$options_add_group[] = array ('avhec_add_group[add][widget_title]', ' Widget Title', 'textarea', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
+		$options_add_group[] = array ('avhec_add_group[add][widget_title]', ' Widget Title', 'text', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
 		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
-		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', ' Widget Title', 'textarea', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', ' Widget Title', 'text', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
