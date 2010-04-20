@@ -603,24 +603,6 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		global $post;
 
 		$catgrp = new AVH_EC_Category_Group();
-		extract( $args );
-
-		$c = $instance['count'] ? TRUE : FALSE;
-		$e = $instance['hide_empty'] ? TRUE : FALSE;
-		$h = $instance['hierarchical'] ? TRUE : FALSE;
-		$use_desc_for_title = $instance['use_desc_for_title'] ? TRUE : FALSE;
-		$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
-		$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
-		$r = $instance['rssfeed'] ? 'RSS' : '';
-		$i = $instance['rssimage'] ? $instance['rssimage'] : '';
-
-		if ( empty( $r ) ) {
-			$i = '';
-		}
-
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Categories', 'avh-ec' ) : $instance['title'] );
-		$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
-
 		$options = $this->core->getOptions();
 
 		$row = array ();
@@ -640,8 +622,34 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 
 		if ( ! ('none' == $row->name) ) {
+			extract( $args );
+
+			$c = $instance['count'] ? TRUE : FALSE;
+			$e = $instance['hide_empty'] ? TRUE : FALSE;
+			$h = $instance['hierarchical'] ? TRUE : FALSE;
+			$use_desc_for_title = $instance['use_desc_for_title'] ? TRUE : FALSE;
+			$s = $instance['sort_column'] ? $instance['sort_column'] : 'name';
+			$o = $instance['sort_order'] ? $instance['sort_order'] : 'asc';
+			$r = $instance['rssfeed'] ? 'RSS' : '';
+			$i = $instance['rssimage'] ? $instance['rssimage'] : '';
+
+			if ( empty( $r ) ) {
+				$i = '';
+			}
+
+			$style = empty( $instance['style'] ) ? 'list' : $instance['style'];
 			$group_id = $row->term_id;
 			$cats = $catgrp->getCategoriesFromGroup( $group_id );
+			if ( empty( $instance['title'] ) ) {
+				$title = $catgrp->getWidgetTitleForGroup( $group_id );
+				if ( ! $title ) {
+					$title = __( 'Categories', 'avh-ec' );
+				}
+			} else {
+				$title = $instance['title'];
+			}
+			$title = apply_filters( 'widget_title', $title );
+
 			$included_cats = implode( ',', $cats );
 
 			$show_option_none = __( 'Select Category', 'avh-ec' );
