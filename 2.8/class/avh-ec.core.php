@@ -45,7 +45,7 @@ class AVH_EC_Core
 		$default_group_id = $catgrp->getTermIDBy( 'slug', 'all' );
 		$this->default_options_category_group = array ('no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group' => $default_group_id );
 
-		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group );
+		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group, 'widget_titles'=>array() );
 
 		/**
 		 * Set the options for the program

@@ -464,15 +464,17 @@ class AVH_EC_Admin
 	{
 		global $screen_layout_columns;
 
-		$data_add_group_default = array ('name' => '', 'slug' => '', 'description' => '' );
+		$data_add_group_default = array ('name' => '', 'slug' => '', 'widget_title' => '', 'description' => '' );
 		$data_add_group_new = $data_add_group_default;
 
 		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
-		$options_add_group[] = array ('avhec_edit_group[add][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
+		$options_add_group[] = array ('avhec_add_group[add][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
+		$options_add_group[] = array ('avhec_add_group[add][widget_title]', ' Widget Title', 'textarea', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
 		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 
 		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', ' Widget Title', 'textarea', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
 
@@ -483,11 +485,12 @@ class AVH_EC_Admin
 
 			$data_add_group_new['name'] = $formoptions['add']['name'];
 			$data_add_group_new['slug'] = empty( $formoptions['add']['slug'] ) ? sanitize_title( $data_add_group_new['name'] ) : sanitize_title( $formoptions['add']['slug'] );
+			$data_add_group_new['widget_title'] = $formoptions['add']['widget_title'];
 			$data_add_group_new['description'] = $formoptions['add']['description'];
 
 			$id = $this->catgrp->getTermIDBy( 'slug', $data_add_group_new['slug'] );
 			if ( ! $id ) {
-				$group_id = $this->catgrp->doInsertGroup( $data_add_group_new['name'], array ('description' => $data_add_group_new['description'], 'slug' => $data_add_group_new['slug'] ) );
+				$group_id = $this->catgrp->doInsertGroup( $data_add_group_new['name'], array ('description' => $data_add_group_new['description'], 'slug' => $data_add_group_new['slug'] ), $data_add_group_new['widget_title'] );
 				$this->catgrp->setCategoriesForGroup( $group_id );
 				$this->message = __( 'Category group saved', 'avh-ec' );
 				$this->status = 'updated fade';
@@ -515,7 +518,7 @@ class AVH_EC_Admin
 					$group = $this->catgrp->getGroup( $group_id );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
-					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'description' => $group->description, 'categories' => $cats );
+					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'widget_title' => $group->widget_title, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . $group->name, array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
@@ -547,21 +550,22 @@ class AVH_EC_Admin
 			$selected_categories = $_POST['post_category'];
 
 			$group_id = ( int ) $_POST['avhec-group_id'];
-			$group = $this->catgrp->getGroup( $group_id );
-			if ( is_object( $group ) ) {
-				$id = wp_update_term( $group->term_id, $this->catgrp->taxonomy_name, array ('name' => $formoptions['edit']['name'], 'slug' => $formoptions['edit']['slug'], 'description' => $formoptions['edit']['description'] ) );
-				if ( ! is_wp_error( $id ) ) {
-					$this->catgrp->setCategoriesForGroup( $group_id, $selected_categories );
+			$result = $this->catgrp->doUpdateGroup( $group_id, array ('name' => $formoptions['edit']['name'], 'slug' => $formoptions['edit']['slug'], 'description' => $formoptions['edit']['description'] ), $selected_categories, $formoptions['edit']['widget_title'] );
+			switch ( $result )
+			{
+				case 1 :
 					$this->message = __( 'Category group updated', 'avh-ec' );
 					$this->status = 'updated fade';
-				} else {
+					break;
+				case 0 :
 					$this->message = __( 'Category group not updated', 'avh-ec' );
 					$this->message .= '<br />' . __( 'Duplicate slug detected', 'avh-ec' );
 					$this->status = 'error';
-				}
-			} else {
-				$this->message = __( 'Unknown category group', 'avh-ec' );
-				$this->status = 'error';
+					break;
+				case - 1 :
+					$this->message = __( 'Unknown category group', 'avh-ec' );
+					$this->status = 'error';
+					break;
 			}
 			$this->displayMessage();
 		}
