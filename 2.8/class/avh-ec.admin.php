@@ -516,9 +516,10 @@ class AVH_EC_Admin
 				case 'edit' :
 					$group_id = ( int ) $_GET['group_ID'];
 					$group = $this->catgrp->getGroup( $group_id );
+					$widget_title = $this->catgrp->getWidgetTitleForGroup( $group_id );
 					$cats = $this->catgrp->getCategoriesFromGroup( $group_id );
 
-					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'widget_title' => $group->widget_title, 'description' => $group->description, 'categories' => $cats );
+					$data_edit_group['edit'] = array ('group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'widget_title' => $widget_title, 'description' => $group->description, 'categories' => $cats );
 					$data['edit'] = array ('form' => $options_edit_group, 'data' => $data_edit_group );
 
 					add_meta_box( 'avhecBoxCategoryGroupEdit', __( 'Edit Group', 'avh-ec' ) . ': ' . $group->name, array (&$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low' );
