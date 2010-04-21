@@ -602,7 +602,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	{
 		global $post;
 
-		$catgrp = new AVH_EC_Category_Group();
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$options = $this->core->getOptions();
 
 		$row = array ();
