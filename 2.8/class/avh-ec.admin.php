@@ -883,7 +883,7 @@ class AVH_EC_Admin
 	 */
 	function filterManageCategoriesGroupColumns ( $columns )
 	{
-		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'slug' => 'Slug', 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
+		$categories_group_columns = array ('name' => __( 'Name', 'avh-ec' ), 'slug' => 'Slug', 'widget-title' => __( 'Widget Title', 'avh-ec' ), 'description' => __( 'Description', 'avh-ec' ), 'cat-in-group' => __( 'Categories in the group', 'avh-ec' ) );
 		return $categories_group_columns;
 	}
 
@@ -1018,6 +1018,11 @@ class AVH_EC_Admin
 					$output .= '<div class="slug">' . apply_filters( 'editable_slug', $qe_data->slug ) . '</div>';
 					$output .= '</div></td>';
 					break;
+				case 'widget-title' :
+					$title = $this->catgrp->getWidgetTitleForGroup($group->term_id);
+					$output .= '<td ' . $attributes . '>' . $title . '</td>';
+					break;
+
 				case 'description' :
 					$output .= '<td ' . $attributes . '>' . $qe_data->description . '</td>';
 					break;
