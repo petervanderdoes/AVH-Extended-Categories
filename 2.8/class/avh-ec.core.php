@@ -23,7 +23,7 @@ class AVH_EC_Core
 		 */
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 
-		$this->version = '3.1';
+		$this->version = '3.2';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$db_version = 2;
 		$this->db_options_core = 'avhec';
@@ -45,7 +45,7 @@ class AVH_EC_Core
 		$default_group_id = $catgrp->getTermIDBy( 'slug', 'all' );
 		$this->default_options_category_group = array ('no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group' => $default_group_id );
 
-		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group );
+		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group, 'widget_titles'=>array() );
 
 		/**
 		 * Set the options for the program
@@ -131,6 +131,19 @@ class AVH_EC_Core
 		return ('');
 	}
 
+	/**
+	 * Used in forms to set the SELECTED option
+	 *
+	 * @param string $current
+	 * @param string $field
+	 * @return string
+	 */
+	function isSelected($current, $field) {
+		if ($current == $field) {
+			return (' SELECTED');
+		}
+		return ('');
+	}
 	/**
 	 * Get the base directory of a directory structure
 	 *

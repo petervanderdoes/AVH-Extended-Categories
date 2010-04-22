@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 3.0-Beta1
-Stable tag: 3.1
+Stable tag: 3.2
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -25,7 +25,7 @@ The replacement widget gives you the following customizable options:
 * Hide empty categories.
 * Show categories hierarchical.
 * Show categories up to a certain depth. (Requires WordPress 2.8 or higher).
-* Sort by ID, Name,Count.
+* Sort by ID, Name, Count, Slug.
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
@@ -36,18 +36,18 @@ The Top Categories widget gives you the following customizable options:
 * How many categories to show.
 * Display as List or Drop-down.
 * Show number of posts (Count) after the category.
-* Sort by ID, Name,Count.
+* Sort by ID, Name, Count, Slug.
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
 
 The Category Group widget gives you the following customizable options:
 
-* Title of the widget.
+* Title of the widget. Either per widget or per group.
 * Display as List or Drop-down.
 * Show number of posts (Count) after the category.
 * Hide empty categories.
-* Sort by ID, Name,Count.
+* Sort by ID, Name, Count, Slug.
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 
@@ -99,10 +99,11 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
-= Version Next =
+= 3.2  =
+* Compatibility issues with upcoming WordPress 3 resolved.
 * Bugfix: Description of the groups didn't save.
-* RFC: Option to sort the categories by slug.
-* Compatibilty issues with upcoming WordPress 3 resolved.
+* RFC: All widgets - Option to sort the categories by slug.
+* RFC: Category Group widget - Ability to set the widget title per group.
 
 = Version 3.1 =
 * Wrap the group widget in a div with id = name of group. This enables CSS modification based on the group.

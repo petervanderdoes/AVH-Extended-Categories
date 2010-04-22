@@ -26,6 +26,9 @@ class AVH_EC_Singleton
 					case 'AVH_EC_Category_Group' :
 						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.category-group.php');
 						break;
+					case 'AVH_EC_Widget_Helper_Class' :
+						require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widget-helper.php');
+						break;
 				}
 			}
 			$instances[$class] = new $class( $arg1 );
@@ -35,6 +38,11 @@ class AVH_EC_Singleton
 	} // getInstance
 } // singleton
 
+/**
+ * Include the necessary files
+ *
+ */
+require_once (AVHEC_WORKING_DIR . '/helpers/avh-forms.php');
 require_once (AVHEC_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
