@@ -477,75 +477,45 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 			$amount = 1;
 		}
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id( 'title' ) . '">';
-		_e( 'Title', 'avh-ec' );
-		echo '<input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . esc_attr( $instance['title'] ) . '" /> ';
-		echo '</label>';
+		avh_doWidgetFormText( $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), __( 'Title', 'avh-ec' ), $instance['title'] );
 		echo '</p>';
 
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id( 'amount' ) . '">';
-		_e( 'How many categories to show', 'avh-ec' );
-		echo '</label>';
-		echo '<input class="widefat" id="' . $this->get_field_id( 'amount' ) . '" name="' . $this->get_field_name( 'amount' ) . '" type="text" value="' . $amount . '" /> ';
-		echo '</select>';
+		avh_doWidgetFormText( $this->get_field_id( 'amount' ), $this->get_field_name( 'amount' ), __( 'How many categories to show', 'avh-ec' ), $amount );
 		echo '</p>';
 
 		echo '<p>';
-		echo '<label for="' . $this->get_field_id( 'count' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'count' ) . '"	name="' . $this->get_field_name( 'count' ) . '" ' . $this->core->isChecked( TRUE, ( bool ) $instance['count'] ) . ' /> ';
-		_e( 'Show post counts', 'avh-ec' );
-		echo '</label>';
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'count' ), $this->get_field_name( 'count' ), __( 'Show post counts', 'avh-ec' ), ( bool ) $instance['count'] );
 		echo '<br />';
 
-		echo '<label for="' . $this->get_field_id( 'use_desc_for_title' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'use_desc_for_title' ) . '"	name="' . $this->get_field_name( 'use_desc_for_title' ) . '" ' . $this->core->isChecked( TRUE, ( bool ) $instance['use_desc_for_title'] ) . '/> ';
-		_e( 'Use description for title', 'avh-ec' );
-		echo '</label>';
-		echo '<br />';
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'use_desc_for_title' ), $this->get_field_name( 'use_desc_for_title' ), __( 'Use description for title', 'avh-ec' ), ( bool ) $instance['use_desc_for_title'] );
+		echo '</p>';
 
-		echo '<label for="' . $this->get_field_id( 'sort_column' ) . '">';
-		_e( 'Sort by ', 'avh-ec' );
-		echo '<select id="' . $this->get_field_id( 'sort_column' ) . '" name="' . $this->get_field_name( 'sort_column' ) . '"> ';
-		echo '<option value="ID" ' . $this->core->isSelected( $instance['sort_column'], 'ID' ) . '>' . __( 'ID', 'avh-ec' ) . '</option>';
-		echo '<option value="name" ' . $this->core->isSelected( $instance['sort_column'], 'name' ) . '>' . __( 'Name', 'avh-ec' ) . '</option>';
-		echo '<option value="count" ' . $this->core->isSelected( $instance['sort_column'], 'count' ) . '>' . __( 'Count', 'avh-ec' ) . '</option>';
-		echo '<option value="slug" ' . $this->core->isSelected( $instance['sort_column'], 'slug' ) . '>' . __( 'Slug', 'avh-ec' ) . '</option>';
-		echo '</select>';
-		echo '</label>';
-		echo '<br />';
+		echo '<p>';
+		$options['ID'] = __( 'ID', 'avh-ec' );
+		$options['name'] = __( 'Name', 'avh-ec' );
+		$options['count'] = __( 'Count', 'avh-ec' );
+		$options['slug'] = __( 'Slug', 'avh-ec' );
+		avh_doWidgetFormSelect( $this->get_field_id( 'sort_column' ), $this->get_field_name( 'sort_column' ), __( 'Sort by', 'avh-ec' ), $options, $instance['sort_column'] );
+		unset( $options );
 
-		echo '<label for="' . $this->get_field_id( 'sort_order' ) . '">';
-		_e( 'Sort order ', 'avh-ec' );
-		echo '<select id="' . $this->get_field_id( 'sort_order' ) . '"	name="' . $this->get_field_name( 'sort_order' ) . '"> ';
-		echo '<option value="asc" ' . $this->core->isSelected( $instance['sort_order'], 'asc' ) . '>' . __( 'Ascending', 'avh-ec' ) . '</option>';
-		echo '<option value="desc" ' . $this->core->isSelected( $instance['sort_order'], 'desc' ) . '>' . __( 'Descending', 'avh-ec' ) . '</option>';
-		echo '</select>';
-		echo '</label>';
-		echo '<br />';
+		$options['asc'] = __( 'Ascending', 'avh-ec' );
+		$options['desc'] = __( 'Descending', 'avh-ec' );
+		avh_doWidgetFormSelect( $this->get_field_id( 'sort_order' ), $this->get_field_name( 'sort_order' ), __( 'Sort order', 'avh-ec' ), $options, $instance['sort_order'] );
+		unset( $options );
 
-		echo '<label for="' . $this->get_field_id( 'style' ) . '">';
-		_e( 'Display style ', 'avh-ec' );
-		echo '<select id="' . $this->get_field_id( 'style' ) . '" name="' . $this->get_field_name( 'style' ) . '"> ';
-		echo '<option value="list" ' . $this->core->isSelected( $instance['style'], 'list' ) . '>' . __( 'List', 'avh-ec' ) . '</option>';
-		echo '<option value="drop" ' . $this->core->isSelected( $instance['style'], 'drop' ) . '>' . __( 'Drop down', 'avh-ec' ) . '</option>';
-		echo '</select>';
-		echo '</label>';
-		echo '<br />';
+		$options['list'] = __( 'List', 'avh-ec' );
+		$options['drop'] = __( 'Drop down', 'avh-ec' );
+		avh_doWidgetFormSelect( $this->get_field_id( 'style' ), $this->get_field_name( 'style' ), __( 'Display style', 'avh-ec' ), $options, $instance['style'] );
+		unset( $options );
 		echo '</p>';
 
 		echo '<p>';
 
-		echo '<label for="' . $this->get_field_id( 'rssfeed' ) . '">';
-		echo '<input class="checkbox" type="checkbox" id="' . $this->get_field_id( 'rssfeed' ) . '" name="' . $this->get_field_name( 'rssfeed' ) . '" ' . $this->core->isChecked( TRUE, ( bool ) $instance['rssfeed'] ) . '/> ';
-		_e( 'Show RSS Feed', 'avh-ec' );
-		echo '</label>';
-		echo '<br />';
+		avh_doWidgetFormCheckbox( $this->get_field_id( 'rssfeed' ), $this->get_field_name( 'rssfeed' ), __( 'Show RSS Feed', 'avh-ec' ), ( bool ) $instance['rssfeed'] );
 
-		echo '<label for="">';
-		_e( 'Path (URI) to RSS image', 'avh-ec' );
-		echo '<input class="widefat" id="' . $this->get_field_id( 'rssimage' ) . '" name="' . $this->get_field_name( 'rssimage' ) . '" type="text" value="' . esc_attr( $instance['rssimage'] ) . '" />';
-		echo '</label>';
+		avh_doWidgetFormText( $this->get_field_id( 'rssimage' ), $this->get_field_name( 'rssimage' ), __( 'Path (URI) to RSS image', 'avh-ec' ), $instance['rssimage'] );
+
 		echo '</p>';
 
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';
