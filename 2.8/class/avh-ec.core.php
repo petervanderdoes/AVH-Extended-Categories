@@ -427,6 +427,15 @@ class AVH_EC_Core
 		else
 			return $output;
 	}
+
+	function avhGetCategories ( $postid )
+	{
+		static $_categories = NULL;
+		if ( NULL === $_categories ) {
+			$_categories = wp_get_post_categories( $post_id );
+		}
+		return $_categories;
+	}
 }
 
 /**

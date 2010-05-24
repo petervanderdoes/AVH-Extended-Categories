@@ -281,7 +281,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		if ( is_array( $selected_cats ) )
 			$args['selected_cats'] = $selected_cats;
 		elseif ( $post_id )
-			$args['selected_cats'] = wp_get_post_categories( $post_id );
+			$args['selected_cats'] = $this->core->getCategories( $post_id );
 		else
 			$args['selected_cats'] = array ();
 
