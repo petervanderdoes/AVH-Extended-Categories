@@ -7,7 +7,7 @@ function widget_extended_categories_init() {
 	}
 
 	function widget_extended_categories($args, $number = 1) {
-		$version = '3.2.0.1';
+		$version = '3.2.1';
 		// Check for version
 		require (ABSPATH . WPINC . '/version.php');
 		if ( version_compare($wp_version, '2.5.1', '<') ) {
