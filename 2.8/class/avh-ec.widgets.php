@@ -247,7 +247,9 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		_e( 'All Categories', 'avh-ec' );
 		echo '</label>';
 		echo '</li>';
-		$this->avh_wp_category_checklist( 0, 0, $selected_cats, FALSE, $this->number, 1 );
+		ob_start();
+		$this->avh_wp_category_checklist( $selected_cats, $this->number );
+		ob_end_flush();
 		echo '</ul>';
 		echo '</p>';
 
@@ -267,55 +269,45 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 	 * @param array $popular_cats
 	 * @param int $number
 	 */
-	function avh_wp_category_checklist ( $post_id = 0, $descendants_and_self = 0, $selected_cats = FALSE, $popular_cats = FALSE, $number, $display = 1 )
+	function avh_wp_category_checklist ( $selected_cats, $number)
 	{
+
 		$walker = new AVH_Walker_Category_Checklist();
 		$walker->number = $number;
 		$walker->input_id = $this->get_field_id( 'post_category' );
 		$walker->input_name = $this->get_field_name( 'post_category' );
 		$walker->li_id = $this->get_field_id( 'category--1' );
 
-		$descendants_and_self = ( int ) $descendants_and_self;
+		$args = array ('taxonomy' => 'category',
+		'descendants_and_self' => 0,
+		'selected_cats' => $selected_cats,
+		'popular_cats' => array(),
+		'walker' => $walker,
+		'checked_ontop' => true,
+		'popular_cats' => array ());
 
-		$args = array ();
 		if ( is_array( $selected_cats ) )
 			$args['selected_cats'] = $selected_cats;
-		elseif ( $post_id )
-			$args['selected_cats'] = $this->core->getCategories( $post_id );
 		else
 			$args['selected_cats'] = array ();
 
-		if ( is_array( $popular_cats ) )
-			$args['popular_cats'] = $popular_cats;
-		else
-			$args['popular_cats'] = get_terms( 'category', array ('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => 10, 'hierarchical' => FALSE ) );
-
-		if ( $descendants_and_self ) {
-			$categories = get_categories( "child_of=$descendants_and_self&hierarchical=0&hide_empty=0" );
-			$self = get_category( $descendants_and_self );
-			array_unshift( $categories, $self );
-		} else {
-			$categories = get_categories( 'get=all' );
-		}
-		$all_categories = $categories;
+		$categories = $this->core->getCategories();
+		$_categories_id = $this->core->getCategoriesId($categories);
 
 		// Post process $categories rather than adding an exclude to the get_terms() query to keep the query the same across all posts (for any query cache)
 		$checked_categories = array ();
-		for ( $i = 0; isset( $categories[$i] ); $i ++ ) {
-			if ( in_array( $categories[$i]->term_id, $args['selected_cats'] ) ) {
-				$checked_categories[] = $categories[$i];
-				unset( $categories[$i] );
+		foreach ($args['selected_cats'] as $key => $value) {
+			if (isset($_categories_id[$key])) {
+				$category_key=$_categories_id[$key];
+				$checked_categories[] = $categories[$category_key];
+				unset ($categories[$category_key]);
 			}
 		}
 
-		if ( 1 == $display ) {
-			// Put checked cats on top
-			echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
-			// Then the rest of them
-			echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
-		} else {
-			return ($all_categories);
-		}
+		// Put checked cats on top
+		echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
+		// Then the rest of them
+		echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
 	}
 }
 
@@ -784,11 +776,10 @@ class AVH_Walker_Category_Checklist extends Walker
 	function start_el ( &$output, $category, $depth, $args )
 	{
 		extract( $args );
-		$this->input_id = $this->input_id . '-' . $category->term_id;
-		$class = in_array( $category->term_id, $popular_cats ) ? ' class="popular-category"' : '';
-		$output .= "\n" . '<li id="' . $this->li_id . '"' . $class . '>';
-		$output .= '<label for="' . $this->input_id . '" class="selectit">';
-		$output .= '<input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[' . $category->term_id . ']" id="' . $this->input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
+		$input_id = $this->input_id . '-' . $category->term_id;
+		$output .= "\n" . '<li id="' . $this->li_id . '">';
+		$output .= '<label for="' . $input_id . '" class="selectit">';
+		$output .= '<input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[' . $category->term_id . ']" id="' . $input_id . '"' . (in_array( $category->term_id, $selected_cats ) ? ' checked="checked"' : "") . '/> ' . wp_specialchars( apply_filters( 'the_category', $category->name ) ) . '</label>';
 	}
 
 	function end_el ( &$output, $category, $depth, $args )

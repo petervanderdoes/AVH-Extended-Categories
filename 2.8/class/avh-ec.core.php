@@ -428,13 +428,24 @@ class AVH_EC_Core
 			return $output;
 	}
 
-	function avhGetCategories ( $postid )
+	function getCategories ( )
 	{
 		static $_categories = NULL;
 		if ( NULL === $_categories ) {
-			$_categories = wp_get_post_categories( $post_id );
+			$_categories = get_categories( 'get=all' );
 		}
 		return $_categories;
+	}
+
+	function getCategoriesId ( $categories )
+	{
+		static $_categories_id = NULL;
+		if ( NULL == $_categories_id ) {
+			foreach ( $categories as $key => $category ) {
+				$_categories_id[$category->term_id] = $key;
+			}
+		}
+		return $_categories_id;
 	}
 }
 
