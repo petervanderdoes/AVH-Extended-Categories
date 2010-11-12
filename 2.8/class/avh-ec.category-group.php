@@ -80,8 +80,8 @@ class AVH_EC_Category_Group
 		 * Setup Group Categories Taxonomy
 		 */
 		if ( ! is_taxonomy( $this->taxonomy_name ) ) {
-			register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
-			register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true ) );
+			register_taxonomy( $this->taxonomy_name, 'post', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true, 'show_ui'=>false ) );
+			register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true, 'show_ui'=>false ) );
 		}
 
 		// Setup the standard groups if the none group does not exists.
