@@ -3,8 +3,8 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 3.0-Beta1
-Stable tag: 3.2.1
+Tested up to: 3.0.1
+Stable tag: 3.2.2
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -99,6 +99,10 @@ I have also setup a project in Launchpad for translating the plug-in. Just visit
 None
 
 == Changelog ==
+= Version 3.2.2 =
+* Bugfix: Problem with Chrome and saving the category group.
+* Bugfix: Extra metabox displayed. The plugin uses it's own metabox for Category Group selection. 
+
 = Version 3.2.1 =
 * Speed improvements in the admin section when there are a lot of categories and several Categories widgets.
 
