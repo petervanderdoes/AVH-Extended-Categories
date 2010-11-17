@@ -173,8 +173,8 @@ class AVH_EC_Admin
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
 
 		// Metaboxes for the Category Group on the post and page pages
-		add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
-		add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
+		//add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
+		//add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
 
 		// Add menu system
 		$folder = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR );
