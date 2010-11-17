@@ -674,6 +674,11 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$instance['style'] = strip_tags( stripslashes( $new_instance['style'] ) );
 		$instance['rssfeed'] = $new_instance['rssfeed'] ? TRUE : FALSE;
 		$instance['rssimage'] = strip_tags( stripslashes( $new_instance['rssimage'] ) );
+		if ( array_key_exists( 'all', $new_instance['post_group_category'] ) ) {
+			$instance['post_group_category'] = FALSE;
+		} else {
+			$instance['post_group_category'] = serialize( $new_instance['post_group_category'] );
+		}
 		return $instance;
 	}
 
@@ -702,6 +707,8 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$style_drop = ($instance['style'] == 'drop') ? ' SELECTED' : '';
 		$rssfeed = ( bool ) $instance['rssfeed'];
 		$rssimage = esc_attr( $instance['rssimage'] );
+
+		$selected_cats = ($instance['post_group_category'] != '') ? unserialize( $instance['post_group_category'] ) : FALSE;
 
 		echo '<p>';
 		avh_doWidgetFormText( $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), __( 'Title', 'avh-ec' ), $instance['title'] );
@@ -744,7 +751,62 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		avh_doWidgetFormText( $this->get_field_id( 'rssimage' ), $this->get_field_name( 'rssimage' ), __( 'Path (URI) to RSS image', 'avh-ec' ), $instance['rssimage'] );
 		echo '</p>';
 
+				echo '<p>';
+		echo '<b>' . __( 'Select Groups', 'avh-ec' ) . '</b><hr />';
+		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
+		echo '<li id="' . $this->get_field_id( 'group_category--1' ) . '" class="popular-group_category">';
+		echo '<label for="' . $this->get_field_id( 'group_post_category' ) . '" class="selectit">';
+		echo '<input value="all" id="' . $this->get_field_id( 'group_post_category' ) . '" name="' . $this->get_field_name( 'post_group_category' ) . '[all]" type="checkbox" ' . (FALSE === $selected_cats ? ' CHECKED' : '') . '> ';
+		_e( 'Any Group', 'avh-ec' );
+		echo '</label>';
+		echo '</li>';
+		ob_start();
+		$this->avh_wp_group_category_checklist($selected_cats,$this->number );
+		ob_end_flush();
+		echo '</ul>';
+		echo '</p>';
+
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';
+	}
+
+	function avh_wp_group_category_checklist ( $selected_cats, $number)
+	{
+
+		$walker = new AVH_Walker_Category_Checklist();
+		$walker->number = $number;
+		$walker->input_id = $this->get_field_id( 'post_group_category' );
+		$walker->input_name = $this->get_field_name( 'post_group_category' );
+		$walker->li_id = $this->get_field_id( 'group_category--1' );
+
+		$args = array ('taxonomy' => 'avhec_catgroup',
+		'descendants_and_self' => 0,
+		'selected_cats' => array(),
+		'popular_cats' => array(),
+		'walker' => $walker,
+		'checked_ontop' => true);
+
+		if ( is_array( $selected_cats ) )
+			$args['selected_cats'] = $selected_cats;
+		else
+			$args['selected_cats'] = array ();
+
+		$categories = (array) get_terms($args['taxonomy'], array('get' => 'all'));
+
+		// Post process $categories rather than adding an exclude to the get_terms() query to keep the query the same across all posts (for any query cache)
+		$checked_categories = array ();
+		$keys = array_keys( $categories );
+
+		foreach( $keys as $k ) {
+			if ( in_array( $categories[$k]->term_id, $args['selected_cats'] ) ) {
+				$checked_categories[] = $categories[$k];
+				unset( $categories[$k] );
+			}
+		}
+
+		// Put checked cats on top
+		echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
+		// Then the rest of them
+		echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
 	}
 }
 
