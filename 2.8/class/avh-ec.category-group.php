@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVH Extended Categorie Category Group Class
  *
@@ -35,7 +36,7 @@ class AVH_EC_Category_Group
 	{
 		global $wpdb;
 
-		register_shutdown_function( array (&$this, '__destruct' ) );
+		register_shutdown_function(array(&$this, '__destruct'));
 
 		/**
 		 * Taxonomy name
@@ -51,11 +52,11 @@ class AVH_EC_Category_Group
 		 * Create the table if it doesn't exist.
 		 *
 		 */
-		if ( $wpdb->get_var( 'show tables like \'' . $wpdb->avhec_cat_group . '\'' ) != $wpdb->avhec_cat_group ) {
-			add_action( 'init', array (&$this, 'doCreateTable' ) );
+		if ($wpdb->get_var('show tables like \'' . $wpdb->avhec_cat_group . '\'') != $wpdb->avhec_cat_group) {
+			add_action('init', array(&$this, 'doCreateTable'));
 		}
-		add_action( 'init', array (&$this, 'doRegisterTaxonomy' ) );
-		add_action( 'init', array (&$this, 'doSetupOptions' ) );
+		add_action('init', array(&$this, 'doRegisterTaxonomy'));
+		add_action('init', array(&$this, 'doSetupOptions'));
 
 	}
 
@@ -79,21 +80,21 @@ class AVH_EC_Category_Group
 		/**
 		 * Setup Group Categories Taxonomy
 		 */
-			register_taxonomy( $this->taxonomy_name, array('post','page'), array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true, 'show_in_nav_menus' => FALSE ) );
-			//register_taxonomy( $this->taxonomy_name, 'page', array ('hierarchical' => false, 'label' => __( 'Category Groups', 'avh-ec' ), 'query_var' => true, 'rewrite' => true, 'show_in_nav_menus' => FALSE ) );
+		$labels = array('name'=>__('Category Groups', 'avh-ec'), 'singular_name'=>__('Category Group', 'avh-ec'), 'search_items'=>__('Search Category Groups', 'avh-ec'), 'popular_items'=>__('Popular Category Groups'), 'all_items'=>__('All Category Groups'), 'parent_item'=>__('Parent Category Group'), 'parent_item_colon'=>__('Parent Category Group:'), 'edit_item'=>__('Edit Category Group'), 'update_item'=>__('Update Category Group'), 'add_new_item'=>__('Add New Category Group'), 'new_item_name'=>__('New Category Group Name'));
+		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>FALSE, 'labels'=> $labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE));
 
 		// Setup the standard groups if the none group does not exists.
-		if ( false === $this->getTermIDBy( 'slug', 'none' ) ) {
-			$none_group_id = wp_insert_term( 'none', $this->taxonomy_name, array ('description' => 'This group will not show the widget.' ) );
-			$all_group_id = wp_insert_term( 'All', $this->taxonomy_name, array ('description' => 'Holds all the categories.' ) );
-			$home_group_id = wp_insert_term( 'Home', $this->taxonomy_name, array ('description' => 'This group will be shown on the front page.' ) );
+		if (false === $this->getTermIDBy('slug', 'none')) {
+			$none_group_id = wp_insert_term('none', $this->taxonomy_name, array('description'=>'This group will not show the widget.'));
+			$all_group_id = wp_insert_term('All', $this->taxonomy_name, array('description'=>'Holds all the categories.'));
+			$home_group_id = wp_insert_term('Home', $this->taxonomy_name, array('description'=>'This group will be shown on the front page.'));
 
 			//	Fill the standard groups with all categories
 			$all_categories = $this->getAllCategoriesTermID();
-			$this->setCategoriesForGroup( $all_group_id['term_id'], $all_categories );
-			$this->setCategoriesForGroup( $home_group_id['term_id'], $all_categories );
-			$this->setWidgetTitleForGroup( $all_group_id['term_id'], '' );
-			$this->setWidgetTitleForGroup( $home_group_id['term_id'], '' );
+			$this->setCategoriesForGroup($all_group_id['term_id'], $all_categories);
+			$this->setCategoriesForGroup($home_group_id['term_id'], $all_categories);
+			$this->setWidgetTitleForGroup($all_group_id['term_id'], '');
+			$this->setWidgetTitleForGroup($home_group_id['term_id'], '');
 		}
 	}
 
@@ -104,14 +105,14 @@ class AVH_EC_Category_Group
 	 */
 	function doSetupOptions ()
 	{
-		$options = get_option( $this->db_options_widget_titles );
-		if ( ! $options ) {
-			$options = array ();
-			$id = $this->getTermIDBy( 'slug', 'all' );
+		$options = get_option($this->db_options_widget_titles);
+		if (! $options) {
+			$options = array();
+			$id = $this->getTermIDBy('slug', 'all');
 			$options[$id] = '';
-			$id = $this->getTermIDBy( 'slug', 'home' );
+			$id = $this->getTermIDBy('slug', 'home');
 			$options[$id] = '';
-			update_option( $this->db_options_widget_titles, $options );
+			update_option($this->db_options_widget_titles, $options);
 		}
 		$this->options_widget_titles = $options;
 	}
@@ -128,16 +129,16 @@ class AVH_EC_Category_Group
 		// Setup the DB Tables
 		$charset_collate = '';
 
-		if ( version_compare( mysql_get_server_info(), '4.1.0', '>=' ) ) {
-			if ( ! empty( $wpdb->charset ) )
+		if (version_compare(mysql_get_server_info(), '4.1.0', '>=')) {
+			if (! empty($wpdb->charset))
 				$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
-			if ( ! empty( $wpdb->collate ) )
+			if (! empty($wpdb->collate))
 				$charset_collate .= ' COLLATE ' . $wpdb->collate;
 		}
 
 		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `group_term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`group_term_id`, `term_id`) )' . $charset_collate . ';';
 
-		$result = $wpdb->query( $sql );
+		$result = $wpdb->query($sql);
 	}
 
 	/**
@@ -148,7 +149,7 @@ class AVH_EC_Category_Group
 	function getAllCategoriesTermID ()
 	{
 		$categories = get_categories();
-		foreach ( $categories as $category ) {
+		foreach ($categories as $category) {
 			$all_cat_id[] = $category->term_id;
 		}
 		return ($all_cat_id);
@@ -161,18 +162,18 @@ class AVH_EC_Category_Group
 	 * @return Array|False categories. Will return FALSE, if the row does not exists.
 	 *
 	 */
-	function getCategoriesFromGroup ( $group_id )
+	function getCategoriesFromGroup ($group_id)
 	{
 		global $wpdb;
 
 		// Query database
-		$result = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->terms . ' t, ' . $wpdb->avhec_cat_group . ' cg WHERE t.term_id = cg.term_id AND cg.group_term_id = %d', $group_id ) );
+		$result = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->terms . ' t, ' . $wpdb->avhec_cat_group . ' cg WHERE t.term_id = cg.term_id AND cg.group_term_id = %d', $group_id));
 
-		if ( is_array( $result ) ) { // Call succeeded
-			if ( empty( $result ) ) { // No rows found
-				$return = array ();
+		if (is_array($result)) { // Call succeeded
+			if (empty($result)) { // No rows found
+				$return = array();
 			} else {
-				foreach ( $result as $row ) {
+				foreach ($result as $row) {
 					$return[] = $row->term_id;
 				}
 			}
@@ -190,40 +191,40 @@ class AVH_EC_Category_Group
 	 * @return Object (false if not found)
 	 *
 	 */
-	function setCategoriesForGroup ( $group_id, $categories = array() )
+	function setCategoriesForGroup ($group_id, $categories = array())
 	{
 		global $wpdb;
 
-		$old_categories = $this->getCategoriesFromGroup( $group_id );
+		$old_categories = $this->getCategoriesFromGroup($group_id);
 
-		if ( ! is_array( $categories ) ) {
-			$categories = array ();
+		if (! is_array($categories)) {
+			$categories = array();
 		}
 		$new_categories = $categories;
-		sort( $old_categories );
-		sort( $new_categories );
+		sort($old_categories);
+		sort($new_categories);
 		// If the new and old values are the same, no need to update.
-		if ( $new_categories === $old_categories ) {
+		if ($new_categories === $old_categories) {
 			return false;
 		}
 
-		$new = array_diff( $new_categories, $old_categories );
-		$removed = array_diff( $old_categories, $new_categories );
+		$new = array_diff($new_categories, $old_categories);
+		$removed = array_diff($old_categories, $new_categories);
 
-		if ( ! empty( $new ) ) {
-			foreach ( $new as $cat_term_id ) {
+		if (! empty($new)) {
+			foreach ($new as $cat_term_id) {
 				$insert[] = '(' . $group_id . ',' . $cat_term_id . ')';
 			}
-			$value = implode( ',', $insert );
+			$value = implode(',', $insert);
 			$sql = 'INSERT INTO ' . $wpdb->avhec_cat_group . ' (group_term_id, term_id) VALUES ' . $value;
-			$result = $wpdb->query( $sql );
+			$result = $wpdb->query($sql);
 
 		}
 
-		if ( ! empty( $removed ) ) {
-			$delete = implode( ',', $removed );
-			$sql = $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d and term_id IN (' . $delete . ')', $group_id );
-			$result = $wpdb->query( $sql );
+		if (! empty($removed)) {
+			$delete = implode(',', $removed);
+			$sql = $wpdb->prepare('DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d and term_id IN (' . $delete . ')', $group_id);
+			$result = $wpdb->query($sql);
 
 		}
 
@@ -236,10 +237,10 @@ class AVH_EC_Category_Group
 	 * @param string $widget_title
 	 *
 	 */
-	function setWidgetTitleForGroup ( $group_id, $widget_title = '' )
+	function setWidgetTitleForGroup ($group_id, $widget_title = '')
 	{
 		$this->options_widget_titles[$group_id] = $widget_title;
-		update_option( $this->db_options_widget_titles, $this->options_widget_titles );
+		update_option($this->db_options_widget_titles, $this->options_widget_titles);
 	}
 
 	/**
@@ -247,9 +248,9 @@ class AVH_EC_Category_Group
 	 * @param $group_id
 	 *
 	 */
-	function getWidgetTitleForGroup ( $group_id )
+	function getWidgetTitleForGroup ($group_id)
 	{
-		if ( isset( $this->options_widget_titles[$group_id] ) ) {
+		if (isset($this->options_widget_titles[$group_id])) {
 			return ($this->options_widget_titles[$group_id]);
 		}
 		return false;
@@ -260,12 +261,12 @@ class AVH_EC_Category_Group
 	 *
 	 * @param $group_id
 	 */
-	function doDeleteWidgetTitle ( $group_id )
+	function doDeleteWidgetTitle ($group_id)
 	{
-		if ( isset( $this->db_options_widget_titles[$group_id] ) ) {
-			unset( $this->db_options_widget_titles[$group_id] );
+		if (isset($this->db_options_widget_titles[$group_id])) {
+			unset($this->db_options_widget_titles[$group_id]);
 		}
-		update_option( $this->db_options_widget_titles, $this->options_widget_titles );
+		update_option($this->db_options_widget_titles, $this->options_widget_titles);
 	}
 
 	/**
@@ -274,13 +275,13 @@ class AVH_EC_Category_Group
 	 * @param string $value
 	 * @return int|boolean
 	 */
-	function getTermIDBy ( $field, $value )
+	function getTermIDBy ($field, $value)
 	{
-		$row = get_term_by( $field, $value, $this->taxonomy_name );
-		if ( false === $row ) {
+		$row = get_term_by($field, $value, $this->taxonomy_name);
+		if (false === $row) {
 			$return = false;
 		} else {
-			$return = ( int ) $row->term_id;
+			$return = (int) $row->term_id;
 		}
 		return ($return);
 	}
@@ -291,12 +292,12 @@ class AVH_EC_Category_Group
 	 * @param $group_id
 	 * @return Object|False Returns False when the group doesn't exists.
 	 */
-	function getGroup ( $group_id )
+	function getGroup ($group_id)
 	{
 		global $wpdb;
 
-		$result = get_term( ( int ) $group_id, $this->taxonomy_name );
-		if ( null === $result ) {
+		$result = get_term((int) $group_id, $this->taxonomy_name);
+		if (null === $result) {
 			$result = false;
 		}
 		return ($result);
@@ -308,10 +309,10 @@ class AVH_EC_Category_Group
 	 * @param $term
 	 * @param array $args
 	 */
-	function doInsertGroup ( $term, $args = array(), $widget_title = '' )
+	function doInsertGroup ($term, $args = array(), $widget_title = '')
 	{
-		$row = wp_insert_term( $term, $this->taxonomy_name, $args );
-		$this->setWidgetTitleForGroup( $term, $widget_title );
+		$row = wp_insert_term($term, $this->taxonomy_name, $args);
+		$this->setWidgetTitleForGroup($term, $widget_title);
 		return ($row['term_id']);
 	}
 
@@ -320,15 +321,15 @@ class AVH_EC_Category_Group
 	 *
 	 * @param $group_id
 	 */
-	function doDeleteGroup ( $group_id )
+	function doDeleteGroup ($group_id)
 	{
 
 		global $wpdb;
 
-		$group = $this->getGroup( $group_id );
-		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d', $group_id ) );
-		$this->doDeleteWidgetTitle( $group_id );
-		$return = wp_delete_term( $group->term_id, $this->taxonomy_name );
+		$group = $this->getGroup($group_id);
+		$result = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE group_term_id=%d', $group_id));
+		$this->doDeleteWidgetTitle($group_id);
+		$return = wp_delete_term($group->term_id, $this->taxonomy_name);
 
 		return ($return);
 	}
@@ -342,15 +343,15 @@ class AVH_EC_Category_Group
 	 *
 	 * return -1,0,1 Unknown Group, Duplicate Slug, Succesfull
 	 */
-	function doUpdateGroup ( $group_id, $args = array(), $selected_categories, $widget_title = '' )
+	function doUpdateGroup ($group_id, $args = array(), $selected_categories, $widget_title = '')
 	{
 
-		$group = $this->getGroup( $group_id );
-		if ( is_object( $group ) ) {
-			$id = wp_update_term( $group->term_id, $this->taxonomy_name, $args );
-			if ( ! is_wp_error( $id ) ) {
-				$this->setWidgetTitleForGroup( $group_id, $widget_title );
-				$this->setCategoriesForGroup( $group_id, $selected_categories );
+		$group = $this->getGroup($group_id);
+		if (is_object($group)) {
+			$id = wp_update_term($group->term_id, $this->taxonomy_name, $args);
+			if (! is_wp_error($id)) {
+				$this->setWidgetTitleForGroup($group_id, $widget_title);
+				$this->setCategoriesForGroup($group_id, $selected_categories);
 				$return = 1; // Succesful
 			} else {
 				$return = 0; // Duplicate Slug
@@ -366,10 +367,10 @@ class AVH_EC_Category_Group
 	 *
 	 * @param $category_id
 	 */
-	function doDeleteCategoryFromGroup ( $category_id )
+	function doDeleteCategoryFromGroup ($category_id)
 	{
 		global $wpdb;
-		$result = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE term_id=%d', $category_id ) );
+		$result = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->avhec_cat_group . ' WHERE term_id=%d', $category_id));
 	}
 }
 ?>
