@@ -36,7 +36,6 @@ class AVH_EC_Admin
 		// Actions used for editing posts
 		add_action( 'load-post.php', array (&$this, 'actionLoadPostPage' ) );
 		add_action( 'load-page.php', array (&$this, 'actionLoadPostPage' ) );
-		add_action( 'save_post', array (&$this, 'actionSaveCategoryGroupTaxonomy' ) );
 
 		// Actions related to adding and deletes categories
 		add_action( "created_category", array ($this, 'actionCreatedCategory' ), 10, 2 );
@@ -55,75 +54,6 @@ class AVH_EC_Admin
 	function AVH_EC_Admin ()
 	{
 		$this->__construct();
-	}
-
-	/**
-	 * Shows a metabox on the page post.php and page.php
-	 * This function gets called in edit-form-advanced.php
-	 *
-	 * @param $post
-	 */
-	function metaboxPostCategoryGroup ( $post )
-	{
-		$options = $this->core->getOptions();
-		echo '<p id=\'avhec-cat-group\'>';
-
-		echo '<input type="hidden" name="avhec_category_group_nonce" id="avhec_category_group_nonce" value="' . wp_create_nonce( 'avhec_category_group_nonce' ) . '" />';
-
-		// Get all the taxonomy terms
-		$category_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
-
-		echo ' <select name=\'post_avhec_category_group\' id=\'post_avhec_category_group\' class=\'postform\'>';
-		$current_category_group = wp_get_object_terms( $post->ID, $this->catgrp->taxonomy_name );
-
-		foreach ( $category_groups as $group ) {
-			if ( ! is_wp_error( $current_category_group ) && ! empty( $current_category_group ) && ! strcmp( $group->term_id, $current_category_group[0]->term_id ) ) {
-				echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
-			} else {
-				if ( empty( $current_category_group ) && $options['cat_group']['default_group'] == $group->term_id ) {
-					echo '<option value="' . $group->term_id . '" selected=\'selected\'>' . $group->name . "</option>\n";
-				} else {
-					echo '<option value="' . $group->term_id . '">' . $group->name . "</option>\n";
-				}
-			}
-		}
-		echo '</select>';
-		echo '<em>Selecting the group \'none\' will not show the widget on the page.</em>';
-		echo '</p>';
-	}
-
-	/**
-	 * Called when the post/page is saved. It associates the selected Category Group with the post
-	 *
-	 * @param $post_id
-	 * @return
-	 */
-	function actionSaveCategoryGroupTaxonomy ( $post_id )
-	{
-
-		if ( ! wp_verify_nonce( $_POST['avhec_category_group_nonce'], 'avhec_category_group_nonce' ) ) {
-			return $post_id;
-		}
-
-		// verify if this is an auto save routine. If it is our form has not been submitted, so we dont want to do anything
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			return $post_id;
-
-		// Check permissions
-		if ( 'page' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_page', $post_id ) )
-				return $post_id;
-		} else {
-			if ( ! current_user_can( 'edit_post', $post_id ) )
-				return $post_id;
-		}
-
-		// OK, we're authenticated: we need to find and save the data
-		$group_term_id = ( int ) $_POST['post_avhec_category_group'];
-		wp_set_object_terms( $post_id, $group_term_id, $this->catgrp->taxonomy_name );
-
-		return $post_id;
-
 	}
 
 	/**
@@ -171,10 +101,6 @@ class AVH_EC_Admin
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '';
 		wp_register_script( 'avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array ('jquery' ), $this->core->version, true );
 		wp_register_style( 'avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array ('wp-admin' ), $this->core->version, 'screen' );
-
-		// Metaboxes for the Category Group on the post and page pages
-		//add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'post', 'side', 'core' );
-		//add_meta_box( 'avhec_category_group_box_ID', __( 'Category Group', 'avh-ec' ), array (&$this, 'metaboxPostCategoryGroup' ), 'page', 'side', 'core' );
 
 		// Add menu system
 		$folder = $this->core->getBaseDirectory( AVHEC_PLUGIN_DIR );
