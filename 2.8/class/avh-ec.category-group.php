@@ -18,6 +18,8 @@ class AVH_EC_Category_Group
 
 	var $options_widget_titles;
 
+	var $widget_done_catgroup;
+
 	/**
 	 * PHP4 constructor.
 	 *

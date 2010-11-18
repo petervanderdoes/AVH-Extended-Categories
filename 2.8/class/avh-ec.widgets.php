@@ -359,7 +359,6 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 	 */
 	function widget ( $args, $instance )
 	{
-
 		extract( $args );
 
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Categories', 'avh-ec' ) : $instance['title'] );
@@ -512,7 +511,6 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 		echo '<input type="hidden" id="' . $this->get_field_id( 'submit' ) . '" name="' . $this->get_field_name( 'submit' ) . '" value="1" />';
 	}
-
 }
 
 /**
@@ -573,7 +571,12 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		} else {
 			$terms = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 			if ( ! empty( $terms ) ) {
-				$row = $terms[0];
+				foreach ($terms as $key => $value){
+					if (!($this->getWidgetDoneCatGroup($value->term_id))) {
+						$row=$value;
+						break;
+					}
+				}
 			}
 		}
 
@@ -807,6 +810,15 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		echo call_user_func_array( array (&$walker, 'walk' ), array ($checked_categories, 0, $args ) );
 		// Then the rest of them
 		echo call_user_func_array( array (&$walker, 'walk' ), array ($categories, 0, $args ) );
+	}
+
+	function getWidgetDoneCatGroup($id) {
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		if (key_exists($id, $catgrp->widget_done_catgroup)) {
+			return TRUE;
+		}
+		$catgrp->widget_done_catgroup[$id]=TRUE;
+		return FALSE;
 	}
 }
 
