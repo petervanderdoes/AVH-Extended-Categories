@@ -392,8 +392,7 @@ class AVH_EC_Admin
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'General Options', 'avh-ec' ) . '</h2>';
-		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
-		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . $admin_base_url . 'avhec-general' . '" accept-charset="utf-8" >';
+		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . admin_url('admin.php?page=avhec-general') . '" accept-charset="utf-8" >';
 		wp_nonce_field( 'avh_ec_generaloptions' );
 
 		echo '	<div id="dashboard-widgets-wrap">';
@@ -590,7 +589,6 @@ class AVH_EC_Admin
 		echo '<div class="wrap avhec-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Category Groups', 'avh-ec' ) . '</h2>';
-		$admin_base_url = $this->core->info['siteurl'] . '/wp-admin/admin.php?page=';
 
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
