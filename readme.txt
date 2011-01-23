@@ -77,7 +77,7 @@ The AVH Extended Categories Widgets can be installed in 3 easy steps:
 1. Go to the Presentation/Appearance->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
 
 
-== Frequently Asked Questions ==
+== Support ==
 
 = What about support? =
 I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.
@@ -95,10 +95,48 @@ I'll keep a list of translators and their websites here in the readme.txt and on
 
 I have also setup a project in Launchpad for translating the plug-in. Just visit http://bit.ly/95WyJ
 
+= Multiple Category Groups =
+The following is an explanation how assigning multiple groups to page/post works.
+ 
+Lets say you have the following groups:
+Free Time
+Theater
+Movie
+Music
+
+Setup several Category Group widgets and associated each widget with one or more groups.
+Widget 1 has association with Free Time
+Widget 2 has association with Theater, Movie and Music
+Widget 3 has association with Theater, Movie and Music
+
+Page has associations the groups Free Time and Theater
+* Widget 1: Shows categories of the Free Time group
+* Widget 2 :Shows categories of the Theater group.
+* Widget 3: Not displayed
+
+Page has associations the group Movie.
+* Widget 1: Not displayed
+* Widget 2 :Shows categories of the Movie group.
+* Widget 3: Not displayed
+
+
+Page has associations the groups Free Time, Movie and Music
+* Widget 1: Shows categories of the Free Time group
+* Widget 2 :Shows categories of the Movie or Music group.
+* Widget 3: Shows categories of the Music or Movie group.
+Whether Widget 2 shows Movie or Music depends on the creation order of groups. If Widget 2 shows Movie, Widget 3 will show Music but if Widget 2 shows Music, Widget 3 will show Movie.
+
 == Screen shots ==
 None
 
 == Changelog ==
+= Version 3.3.1 =
+* Bugfix: Hierarchy in the dropdown with selected categories didn't work properly.
+
+= Version 3.3 =
+* Ability to assign multiple Category Groups to a post/page.
+* Bugfix: When using SSL in the admin section save would redirect to non-SSL and not saving the options.
+
 = Version 3.2.2 =
 * Bugfix: Problem with Chrome and saving the category group.
 * Bugfix: Extra metabox displayed. The plugin uses it's own metabox for Category Group selection. 

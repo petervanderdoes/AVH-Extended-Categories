@@ -309,7 +309,7 @@ class AVH_EC_Core
 				$output .= "\t" . '<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
 			}
 
-			if ( $hierarchical && (! $selectedonly) ) {
+			if ( $hierarchical ) {
 				$depth = $r['depth']; // Walk the full depth.
 			} else {
 				$depth = - 1; // Flat
