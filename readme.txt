@@ -130,6 +130,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.3.2 =
+* Bugfix: The widget for the Groups was a different setup as the others breaking certain theme layouts.
+
 = Version 3.3.1 =
 * Bugfix: Hierarchy in the dropdown with selected categories didn't work properly.
 
