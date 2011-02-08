@@ -363,6 +363,7 @@ class AVH_EC_Admin
 		// Add metaboxes
 		add_meta_box( 'avhecBoxCategoryGroupAdd', __( 'Add Group', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupAdd' ), $this->hooks['menu_category_groups'], 'normal', 'core' );
 		add_meta_box( 'avhecBoxCategoryGroupList', __( 'Group Overview', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_category_groups'], 'side', 'core' );
+		add_meta_box( 'avhecBoxCategoryGroupSpecialPages', __( 'Special Pages', 'avh-ec' ), array (&$this, 'metaboxCategoryGroupSpecialPages' ), $this->hooks['menu_category_groups'], 'normal', 'core' );
 
 		add_filter( 'screen_layout_columns', array (&$this, 'filterScreenLayoutColumns' ), 10, 2 );
 		// WordPress core Scripts
@@ -403,6 +404,7 @@ class AVH_EC_Admin
 		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', ' Widget Title', 'text', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
 		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
 		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
+
 
 		if ( isset( $_POST['addgroup'] ) ) {
 			check_admin_referer( 'avh_ec_addgroup' );
@@ -508,6 +510,38 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
+		$data_special_pages_old=$this->core->options['sp_cat_group'];
+		$data_special_pages_new=$data_special_pages_old;
+		if ( isset( $_POST['avhec_special_pages'] ) ) {
+			check_admin_referer( 'avh_ec_specialpagesgroup' );
+
+			$formoptions = $_POST['avhec_special_pages'];
+			$formdata = $formoptions['sp'];
+			foreach ($formdata as $key => $value) {
+				$data_special_pages_new[$key] = $value;
+			}
+			$this->core->options['sp_cat_group']=$data_special_pages_new;
+			$this->core->saveOptions($this->core->options);
+
+		}
+		$data_special_pages['sp']=$data_special_pages_new;
+		$cat_groups = get_terms( $this->catgrp->taxonomy_name, array ('hide_empty' => FALSE ) );
+
+		foreach ( $cat_groups as $group ) {
+				$temp_cat = get_term( $group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit' );
+				$dropdown_value[]= $group->term_id;
+				$dropdown_text[]= $temp_cat->name;
+		}
+		$options_special_pages[] = array('avhec_special_pages[sp][home_group]','Home page','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][category_group]','Category Archive','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][day_group]','Daily Archive','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][month_group]','Monthly Archive','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][year_group]','Yearly Archive','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][author_group]','Author Archive','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][search_group]','Search Page','dropdown',$dropdown_value,$dropdown_text,'');
+
+		$data['sp']=array ('form' => $options_special_pages, 'data' => $data_special_pages );
+
 		// This box can't be unselectd in the the Screen Options
 		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_category_groups'], 'side', 'core' );
 
@@ -600,6 +634,18 @@ class AVH_EC_Admin
 		echo '</form>';
 	}
 
+	/**
+	 * Metabox Category Group Special pages
+	 *
+	 */
+	function metaboxCategoryGroupSpecialPages ( $data )
+	{
+		echo '<form name="avhec-specialpagesgroup" id="avhec-specialpagesgroup" method="POST" action="' . $this->getBackLink() . '" accept-charset="utf-8" >';
+		wp_nonce_field( 'avh_ec_specialpagesgroup' );
+		echo $this->printOptions( $data['sp']['form'], $data['sp']['data'] );
+		echo '<p class="submit"><input	class="button"	type="submit" name="spgroup" value="' . __( 'Save settings', 'avh-ec' ) . '" /></p>';
+		echo '</form>';
+	}
 	/**
 	 * Setup everything needed for the FAQ page
 	 *

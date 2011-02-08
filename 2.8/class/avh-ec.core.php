@@ -8,6 +8,7 @@ class AVH_EC_Core
 	var $default_options;
 	var $default_options_general;
 	var $default_options_category_group;
+	var $default_options_sp_category_group;
 
 	var $options;
 
@@ -25,7 +26,7 @@ class AVH_EC_Core
 
 		$this->version = '3.2.2';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
-		$db_version = 2;
+		$db_version = 4;
 		$this->db_options_core = 'avhec';
 
 		$info['siteurl'] = get_option( 'siteurl' );
@@ -45,7 +46,9 @@ class AVH_EC_Core
 		$default_group_id = $catgrp->getTermIDBy( 'slug', 'all' );
 		$this->default_options_category_group = array ('no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group' => $default_group_id );
 
-		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group, 'widget_titles'=>array() );
+		$this->default_options_sp_category_group = array('home_group' => $home_group_id,'category_group' => $default_group_id,'day_group'=>$default_group_id,'month_group'=>$default_group_id,'year_group'=>$default_group_id,'author_group'=>$default_group_id,'search_group'=>$default_group_id);
+
+		$this->default_options = array ('general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group, 'widget_titles'=>array(),'sp_cat_group'=>$this->default_options_sp_category_group );
 
 		/**
 		 * Set the options for the program

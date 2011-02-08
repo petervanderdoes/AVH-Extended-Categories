@@ -566,8 +566,28 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$options = $this->core->getOptions();
 
 		$row = array ();
-		if ( is_home() ) {
-			$row = get_term_by( 'id', $options['cat_group']['home_group'], $catgrp->taxonomy_name ); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
+
+		if (is_home () ) {
+			$special_page='home_group';
+		} elseif (is_category()) {
+			$special_page='category_group';
+		} elseif (is_day()) {
+			$special_page='day_group';
+		} elseif (is_month()) {
+			$special_page='month_group';
+		}elseif (is_year()) {
+			$special_page='year_group';
+		} elseif (is_author()) {
+			$special_page='author_group';
+		} elseif (is_search()) {
+			$special_page='search_group';
+		} else {
+			$special_page='none';
+		}
+
+		if ( $special_page != 'none' ) {
+			$sp_category_group = $options['sp_cat_group'][$special_page];
+			$row = get_term_by( 'id', $sp_category_group, $catgrp->taxonomy_name ); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
 		} else {
 			$terms = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 			if ( ! empty( $terms ) ) {

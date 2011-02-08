@@ -130,15 +130,11 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.3.2 =
-* Bugfix: The widget for the Groups was a different setup as the others breaking certain theme layouts.
-
-= Version 3.3.1 =
-* Bugfix: Hierarchy in the dropdown with selected categories didn't work properly.
-
 = Version 3.3 =
 * Ability to assign multiple Category Groups to a post/page.
 * Bugfix: When using SSL in the admin section save would redirect to non-SSL and not saving the options.
+* Bugfix: Hierarchy in the dropdown with selected categories didn't work properly.
+* Bugfix: The widget for the Groups was a different setup as the others breaking certain theme layouts.
 
 = Version 3.2.2 =
 * Bugfix: Problem with Chrome and saving the category group.
