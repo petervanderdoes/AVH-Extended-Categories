@@ -26,8 +26,25 @@ class AVH_EC_Core
 
 		$this->version = '3.2.2';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
-		$db_version = 4;
 		$this->db_options_core = 'avhec';
+
+		$this->handleTextdomain();
+		add_action('init', array(&$this,'init',10));
+	}
+
+	/**
+	 * PHP4 Constructor
+	 *
+	 * @return AVHExtendedCategoriesCore
+	 */
+	function AVH_EC_Core ()
+	{
+		$this->__construct();
+	}
+
+	function init() {
+		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
+		$db_version = 4;
 
 		$info['siteurl'] = get_option( 'siteurl' );
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
@@ -61,19 +78,7 @@ class AVH_EC_Core
 			$this->doUpdateOptions( $db_version );
 		}
 
-		$this->handleTextdomain();
 	}
-
-	/**
-	 * PHP4 Constructor
-	 *
-	 * @return AVHExtendedCategoriesCore
-	 */
-	function AVH_EC_Core ()
-	{
-		$this->__construct();
-	}
-
 	/**
 	 * Loads the i18n
 	 *
