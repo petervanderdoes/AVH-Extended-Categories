@@ -3,7 +3,7 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 3.0.1
+Tested up to: 3.0.5
 Stable tag: 3.2.2
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
@@ -53,7 +53,7 @@ The Category Group widget gives you the following customizable options:
 
 You can set the following options for the Category Group Widget:
 
-* Which group to show on the home page.
+* Which group to show on the 'special' pages. The 'special' pages are, Home, Category archive, Tag archive, Daily/Monthly/Yearly archive, Author archive, Search results page.
 * Which group to show when no group is associated with a post. Useful for older posts that don't have the association.
 * Set the default group when editing or creating a post.
 
@@ -132,6 +132,7 @@ None
 == Changelog ==
 = Version 3.3 =
 * Ability to assign multiple Category Groups to a post/page.
+* A Category Group can be assigned to 'special' pages. The 'special' pages are, Home, Category archive, Tag archive, Daily/Monthly/Yearly archive, Author archive, Search results page.
 * Bugfix: When using SSL in the admin section save would redirect to non-SSL and not saving the options.
 * Bugfix: Hierarchy in the dropdown with selected categories didn't work properly.
 * Bugfix: The widget for the Groups was a different setup as the others breaking certain theme layouts.
