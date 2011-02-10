@@ -55,9 +55,9 @@ class AVH_EC_Category_Group
 		 *
 		 */
 		if ($wpdb->get_var('show tables like \'' . $wpdb->avhec_cat_group . '\'') != $wpdb->avhec_cat_group) {
-			add_action('init', array(&$this, 'doCreateTable'));
+			add_action('init', array(&$this, 'doCreateTable') ,2); // Priority needs to be the same as the Register Taxonomy
 		}
-		add_action('init', array(&$this, 'doRegisterTaxonomy'));
+		add_action('init', array(&$this, 'doRegisterTaxonomy'), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
 		add_action('init', array(&$this, 'doSetupOptions'));
 
 	}
