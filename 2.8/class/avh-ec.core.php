@@ -29,7 +29,7 @@ class AVH_EC_Core
 		$this->db_options_core = 'avhec';
 
 		$this->handleTextdomain();
-		add_action('init', array(&$this,'init',10));
+		add_action('init', array(&$this,'init'),10);
 	}
 
 	/**
