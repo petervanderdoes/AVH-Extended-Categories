@@ -585,28 +585,32 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 			$special_page='none';
 		}
 
+		$toDisplay = FALSE;
 		if ( $special_page != 'none' ) {
 			$sp_category_group = $options['sp_cat_group'][$special_page];
-			$row = get_term_by( 'id', $sp_category_group, $catgrp->taxonomy_name ); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
+			if (!($this->getWidgetDoneCatGroup($sp_category_group))) {
+				$row = get_term_by( 'id', $sp_category_group, $catgrp->taxonomy_name ); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
+				$toDisplay = TRUE;
+			}
 		} else {
 			$terms = wp_get_object_terms( $post->ID, $catgrp->taxonomy_name );
 			if ( ! empty( $terms ) ) {
 				foreach ($terms as $key => $value){
 					if (!($this->getWidgetDoneCatGroup($value->term_id))) {
 						$row=$value;
+						$toDisplay = TRUE;
 						break;
 					}
 				}
+			} else {
+				$options = $this->core->options;
+				$no_cat_group = $options['cat_group']['no_group'];
+				$row = get_term_by( 'id', $no_cat_group, $catgrp->taxonomy_name );
+				$toDisplay = TRUE;
 			}
 		}
 
-		if ( empty( $row ) ) { // There is no group associated with the post or the home group is empty
-			$options = $this->core->options;
-			$no_cat_group = $options['cat_group']['no_group'];
-			$row = get_term_by( 'id', $no_cat_group, $catgrp->taxonomy_name );
-		}
-
-		if ( ! ('none' == $row->name) ) {
+		if ( $toDisplay ) {
 			extract( $args );
 
 			$c = $instance['count'] ? TRUE : FALSE;
