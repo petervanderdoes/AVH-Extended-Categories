@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 3.0.5
-Stable tag: 3.3
+Stable tag: 3.3.1
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -130,6 +130,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.3.1 =
+* Bugfix: A PHP warning would show up when using multiple Category Group widgets.
+
 = Version 3.3 =
 * Ability to assign multiple Category Groups to a post/page.
 * A Category Group can be assigned to 'special' pages. The 'special' pages are: Home, Category archive, Tag archive, Daily/Monthly/Yearly archive, Author archive, Search results page.

@@ -832,7 +832,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 	function getWidgetDoneCatGroup($id) {
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
-		if (key_exists($id, $catgrp->widget_done_catgroup)) {
+		if (is_array($catgrp->widget_done_catgroup) && array_key_exists($id, $catgrp->widget_done_catgroup)) {
 			return TRUE;
 		}
 		$catgrp->widget_done_catgroup[$id]=TRUE;
