@@ -610,6 +610,11 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 			}
 		}
 
+		$selected_catgroups = unserialize($instance['post_group_category']);
+		if (! (FALSE == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
+			$toDisplay = FALSE;
+		}
+
 		if ( $toDisplay ) {
 			extract( $args );
 
