@@ -29,7 +29,7 @@ class AVH_EC_Core
 		$this->db_options_core = 'avhec';
 
 		$this->handleTextdomain();
-		add_action('init', array(&$this,'init'),10);
+		add_action('init', array(&$this,'handleInitializePlugin'),10);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class AVH_EC_Core
 		$this->__construct();
 	}
 
-	function init() {
+	function handleInitializePlugin() {
 		$catgrp = & AVH_EC_Singleton::getInstance( 'AVH_EC_Category_Group' );
 		$db_version = 4;
 
