@@ -28,7 +28,6 @@ class AVH_EC_Core
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$this->db_options_core = 'avhec';
 
-		$this->handleTextdomain();
 		add_action('init', array(&$this,'handleInitializePlugin'),10);
 	}
 
@@ -48,7 +47,7 @@ class AVH_EC_Core
 
 		$info['siteurl'] = get_option( 'siteurl' );
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
-		$info['lang_dir'] = AVHEC_WORKING_DIR . '/lang';
+		$info['lang_dir'] = AVHEC_RELATIVE_WORKING_DIR . '/lang';
 		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 
 		// Set class property for info
@@ -77,6 +76,8 @@ class AVH_EC_Core
 		if ( (! isset( $this->options['general']['dbversion'] )) || $this->options['general']['dbversion'] < $db_version ) {
 			$this->doUpdateOptions( $db_version );
 		}
+
+		$this->handleTextdomain();
 
 	}
 	/**

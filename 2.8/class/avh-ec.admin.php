@@ -236,10 +236,10 @@ class AVH_EC_Admin
 			$groupname[] = $group->name;
 		}
 
-		$options_general[] = array ('avhec[general][alternative_name_select_category]', '<em>Select Category</em> Alternative', 'text', 20, 'Alternative text for Select Category.' );
-		$options_general[] = array ('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, 'Select which group to show on the home page.<br />Selecting the group \'none\' will not show the widget on the page.' );
-		$options_general[] = array ('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, 'Select which group to show when there is no group associated with the post.<br />Selecting the group \'none\' will not show the widget on the page.' );
-		$options_general[] = array ('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, 'Select which group will be the default group when editing a post.<br />Selecting the group \'none\' will not show the widget on the page.' );
+		$options_general[] = array ('avhec[general][alternative_name_select_category]', __('<em>Select Category</em> Alternative','avh-ec'), 'text', 20, __('Alternative text for Select Category.','avh-ec') );
+		$options_general[] = array ('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, __('Select which group to show on the home page.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
+		$options_general[] = array ('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, __('Select which group to show when there is no group associated with the post.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
+		$options_general[] = array ('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, __('Select which group will be the default group when editing a post.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
 
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
@@ -394,16 +394,16 @@ class AVH_EC_Admin
 		$data_add_group_default = array ('name' => '', 'slug' => '', 'widget_title' => '', 'description' => '' );
 		$data_add_group_new = $data_add_group_default;
 
-		$options_add_group[] = array ('avhec_add_group[add][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
-		$options_add_group[] = array ('avhec_add_group[add][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
-		$options_add_group[] = array ('avhec_add_group[add][widget_title]', ' Widget Title', 'text', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
-		$options_add_group[] = array ('avhec_add_group[add][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
+		$options_add_group[] = array ('avhec_add_group[add][name]', __(' Group Name','avh-ec'), 'text', 20, __('The name is used to identify the group.','avh-ec') );
+		$options_add_group[] = array ('avhec_add_group[add][slug]', __(' Slug Group','avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.','avh-ec') );
+		$options_add_group[] = array ('avhec_add_group[add][widget_title]', __(' Widget Title,','avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.','avh-ec') );
+		$options_add_group[] = array ('avhec_add_group[add][description]', __(' Description','avh-ec'), 'textarea', 40, __('Description is not prominent by default.','avh-ec'), 5 );
 
-		$options_edit_group[] = array ('avhec_edit_group[edit][name]', ' Group Name', 'text', 20, 'The name is used to identify the group.' );
-		$options_edit_group[] = array ('avhec_edit_group[edit][slug]', ' Slug Group', 'text', 20, 'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' );
-		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', ' Widget Title', 'text', 20, 'When no title is given in the widget options, this will used as the title of the widget when this group is shown.' );
-		$options_edit_group[] = array ('avhec_edit_group[edit][description]', ' Description', 'textarea', 40, 'Description is not prominent by default.', 5 );
-		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', ' Categories', 'catlist', 0, 'Select categories to be included in the group.' );
+		$options_edit_group[] = array ('avhec_edit_group[edit][name]', __(' Group Name','avh-ec'), 'text', 20, __('The name is used to identify the group.','avh-ec') );
+		$options_edit_group[] = array ('avhec_edit_group[edit][slug]', __(' Slug Group','avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.','avh-ec') );
+		$options_edit_group[] = array ('avhec_edit_group[edit][widget_title]', __(' Widget Title','avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.','avh-ec') );
+		$options_edit_group[] = array ('avhec_edit_group[edit][description]', __(' Description','avh-ec'), 'textarea', 40, __('Description is not prominent by default.','avh-ec'), 5 );
+		$options_edit_group[] = array ('avhec_edit_group[edit][categories]', __(' Categories','avh-ec'), 'catlist', 0, __('Select categories to be included in the group.','avh-ec') );
 
 
 		if ( isset( $_POST['addgroup'] ) ) {
@@ -532,13 +532,13 @@ class AVH_EC_Admin
 				$dropdown_value[]= $group->term_id;
 				$dropdown_text[]= $temp_cat->name;
 		}
-		$options_special_pages[] = array('avhec_special_pages[sp][home_group]','Home page','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][category_group]','Category Archive','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][day_group]','Daily Archive','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][month_group]','Monthly Archive','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][year_group]','Yearly Archive','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][author_group]','Author Archive','dropdown',$dropdown_value,$dropdown_text,'');
-		$options_special_pages[] = array('avhec_special_pages[sp][search_group]','Search Page','dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][home_group]',__('Home page','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][category_group]',__('Category Archive','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][day_group]',__('Daily Archive','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][month_group]',__('Monthly Archive','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][year_group]',__('Yearly Archive','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][author_group]',__('Author Archive','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
+		$options_special_pages[] = array('avhec_special_pages[sp][search_group]',__('Search Page','avh-ec'),'dropdown',$dropdown_value,$dropdown_text,'');
 
 		$data['sp']=array ('form' => $options_special_pages, 'data' => $data_special_pages );
 
@@ -1059,7 +1059,7 @@ class AVH_EC_Admin
 	function printAdminFooter ()
 	{
 		echo '<p class="footer_avhec">';
-		printf( '&copy; Copyright 2009 <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', $this->core->version );
+		printf( '&copy; Copyright 2011 <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', $this->core->version );
 		echo '</p>';
 	}
 
