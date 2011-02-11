@@ -61,10 +61,17 @@ You can also select not to show the Category Group widget by selecting the group
  
 Translations:
 
-* Czech - Čeština (cs_CZ) in Launchpad by Dirty Mind - http://dirtymind.ic.cz
-* Spanish - Español (es_ES) in Launchpad
-* Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - http://gidibao.net
-* French - Français (fr_FR) in Launchpad - BeAlCoSt - http://www.aclanester56.com/
+* Czech - Čeština (cs_CZ)
+* Dutch - Nederlands (nl_NL)
+* Greek (el)
+* Indonesian - Bahasa Indonesia (id_ID)
+* Italian - Italiano (it_IT)
+* Russian — Русский (ru_RU)
+* Spanish - Español (es_ES)
+* Swedish - Svenska (sv_SE)
+* Turkish - Türkçe (tr)
+
+Some of the translations are incomplete. You can complete them or add your own language through Launchpad (https://translations.launchpad.net/avhextendedcategories/trunk)
 
 == Installation ==
 
@@ -89,11 +96,7 @@ Here is how it works: Say you have 5 top level categories and each top level has
 You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
 
 = I want to help and translate the plug-in =
-The .pot file is included with the plug-in.
-If you have created a language pack, or have an update of an existing one, you can send the [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can include them in future releases.
-I'll keep a list of translators and their websites here in the readme.txt and on my website.
-
-I have also setup a project in Launchpad for translating the plug-in. Just visit http://bit.ly/95WyJ
+I have setup a project in Launchpad for translating the plug-in. Just visit http://bit.ly/95WyJ
 
 = Multiple Category Groups =
 The following is an explanation how assigning multiple groups to page/post works.
@@ -130,6 +133,11 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.3.2 =
+* Added several new localizations.
+* Bugfix: When using multiple Category Group widgets, all of them would show up on the special pages instead of just the one selected in the options.
+* Bugfix: Localization didn't work.
+
 = Version 3.3.1 =
 * Bugfix: A PHP warning would show up when using multiple Category Group widgets.
 

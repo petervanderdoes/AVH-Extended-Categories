@@ -723,19 +723,26 @@ class AVH_EC_Admin
 	 */
 	function metaboxTranslation ()
 	{
-		echo '<p>A language pack can be created for this plugin. The .pot file is included with the plugin and can be found in the directory extended-categories-widget/2.8/lang';
-		echo 'If you have created a language pack you can send the .po, and if you have it the .mo file, to me and I will include the files with the plugin';
-		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
-		echo '</p>';
 		echo '<p>';
-		echo 'I have also setup a project in Launchpad for translating the plugin. Just visit <a href="http://bit.ly/95WyJ" target="_blank" title="AVH Extended Categories Translation Project">http://bit.ly/95WyJ</a>';
+		echo 'This plugin is translated in several languages. Some of the languages might be incomplete. Please help to complete these translations or add a new language.<br />';
+		echo 'You can visit <a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> to help complete these translations or add a new language.';
 		echo '</p>';
 		echo '<p>';
 		echo '<span class="b">Available Languages</span></p><p>';
-		echo 'Czech - Čeština (cs_CZ)  in Launchpad - Dirty Mind - <a href="http://dirtymind.ic.cz" target="_blank">http://dirtymind.ic.cz</a><br />';
-		echo 'Spanish - Español (es_ES) in Launchpad<br />';
-		echo 'Italian - Italiano (it_IT) in Launchpad - Gianni Diurno - <a href="http://gidibao.net" target="_blank">http://gidibao.net</a><br />';
-		echo 'French - Français (fr_FR) in Launchpad - BeAlCoSt - <a href="http://www.aclanester56.com/" target="_blank">http://www.aclanester56.com/</a><br />';
+		echo '<ul>';
+		echo '<li>Czech - Čeština (cs_CZ)</li>';
+		echo '<li>Dutch - Nederlands (nl_NL)</li>';
+		echo '<li>Greek (el)</li>';
+		echo '<li>Indonesian - Bahasa Indonesia (id_ID)</li>';
+		echo '<li>Italian - Italiano (it_IT)</li>';
+		echo '<li>Russian — Русский (ru_RU)</li>';
+		echo '<li>Spanish - Español (es_ES)</li>';
+		echo '<li>Swedish - Svenska (sv_SE)</li>';
+		echo '<li>Turkish - Türkçe (tr)</li>';
+		echo '</ul>';
+		echo '</p>';
+		echo '<p>';
+		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
 		echo '</p>';
 	}
 
