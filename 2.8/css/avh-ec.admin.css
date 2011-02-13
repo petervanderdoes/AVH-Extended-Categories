@@ -33,6 +33,17 @@ table.avhec-options {
 	font-size: 11px;
 }
 
+/* Metabox FAQ */
+#avhecBoxFAQ .inside ul {
+	font-size: 11px;
+	margin-bottom: 6px;
+}
+#avhecBoxFAQ .inside ul li{
+	line-height: 120%;
+    list-style: disc inside none;
+    margin-bottom: 0;
+}
+
 /* Metabox Donations*/
 #avhecBoxDonations .inside {
 	font-size: 12px;

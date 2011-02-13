@@ -778,49 +778,50 @@ class AVH_EC_Admin
 		echo '<p>';
 		echo '<span class="b">' . __('What about support?', avh - ec) . '</span><br />';
 		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avhec') . '<br />';
-		echo '</p>';
 
-		echo '<p>';
 		echo '<span class="b">' . __('What is depth selection?', 'avh-ec') . '</span><br />';
 		echo __('Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.', 'avhec') . '<br /><br />';
 		echo __('Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:', 'avhec') . '<br />';
 		echo __('You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.', 'avhec') . '<br />';
-		echo '</p>';
 
-		echo '<p>';
 		echo '<span class="b">' . __('Multiple Category Groups', 'avh-ec') . '</span><br />';
 		echo __('The following is an explanation how assigning multiple groups to page/post works.', 'avh-ec') . '<br /><br />';
-		echo __('Lets say you have the following groups:', 'avh-ec') . '<br />';
+		echo __('Lets say you have the following groups:', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Free Time', 'avh-ec') . '</li>';
 		echo '<li>' . __('Theater', 'avh-ec') . '</li>';
 		echo '<li>' . __('Movie', 'avh-ec') . '</li>';
 		echo '<li>' . __('Music', 'avh-ec') . '</li>';
 		echo '</ul>';
-		echo __('Setup several Category Group widgets and associated each widget with one or more groups.', 'avh-ec') . '<br />';
+
+		echo __('Setup several Category Group widgets and associated each widget with one or more groups.', 'avh-ec');
 		echo __('Widget 1 has association with Free Time', 'avh-ec') . '<br /';
 		echo __('Widget 2 has association with Theater, Movie and Music', 'avh-ec') . '<br />';
 		echo __('Widget 3 has association with Theater, Movie and Music', 'avh-ec') . '<br /><br />';
 
-		echo __('Page has associations the groups Free Time and Theater', 'avh-ec') . '<br />';
+		echo __('Page has associations the groups Free Time and Theater', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Theater group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
-		echo __('Page has associations the group Movie.', 'avh-ec') . '<br />';
+
+		echo __('Page has associations the group Movie.', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Not displayed', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
 
-		echo __('Page has associations the groups Free Time, Movie and Music', 'avh-ec') . '<br />';
+		echo __('Page has associations the groups Free Time, Movie and Music', 'avh-ec');
+		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie or Music group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Shows categories of the Music or Movie group.', 'avh-ec') . '</li>';
 		echo '</ul>';
+
 		echo __('Whether Widget 2 shows Movie or Music depends on the creation order of groups. If Widget 2 shows Movie, Widget 3 will show Music but if Widget 2 shows Music, Widget 3 will show Movie.', 'avh-ec') . '<br />';
+		echo '</p>';
 
 	}
 
