@@ -114,18 +114,18 @@ Widget 3 has association with Theater, Movie and Music
 
 Page has associations the groups Free Time and Theater
 * Widget 1: Shows categories of the Free Time group
-* Widget 2 :Shows categories of the Theater group.
+* Widget 2: Shows categories of the Theater group.
 * Widget 3: Not displayed
 
 Page has associations the group Movie.
 * Widget 1: Not displayed
-* Widget 2 :Shows categories of the Movie group.
+* Widget 2: Shows categories of the Movie group.
 * Widget 3: Not displayed
 
 
 Page has associations the groups Free Time, Movie and Music
 * Widget 1: Shows categories of the Free Time group
-* Widget 2 :Shows categories of the Movie or Music group.
+* Widget 2: Shows categories of the Movie or Music group.
 * Widget 3: Shows categories of the Music or Movie group.
 Whether Widget 2 shows Movie or Music depends on the creation order of groups. If Widget 2 shows Movie, Widget 3 will show Music but if Widget 2 shows Music, Widget 3 will show Movie.
 
