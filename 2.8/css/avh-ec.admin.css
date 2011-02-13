@@ -14,16 +14,35 @@ div.clearer {
 table.avhec-options {
 	font-size: 11px;
 }
+.avhec-metabox-wrap {
+	font-size: 11px;
+}
+
+.avhec-metabox-wrap .p{
+    font-size: 11px;
+    line-height: 140%;
+    margin: 1em 0;
+}
 
 #avhecBoxOptions option{
 	padding: .5em;
 }
-.avhec-wrap span.description {
+.avhec-metabox-wrap span.description {
 	font-size: 11px;
 }
 
-.avhec-wrap .b {
+.avhec-metabox-wrap .b {
 	font-weight: bold;
+}
+
+.avhec-metabox-wrap ul {
+	margin-bottom: 1em;
+}
+
+.avhec-metabox-wrap ul li{
+	line-height: 120%;
+    list-style: disc inside none;
+    margin-bottom: 0;
 }
 
 #avhec-options input {

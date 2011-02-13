@@ -174,7 +174,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		echo '<div class="wrap avhec-wrap">';
+		echo '<div class="wrap avhec-metabox-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Overview', 'avh-ec' ) . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
@@ -315,7 +315,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		echo '<div class="wrap avhec-wrap">';
+		echo '<div class="wrap avhec-metabox-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'General Options', 'avh-ec' ) . '</h2>';
 		echo '<form name="avhec-generaloptions" id="avhec-generaloptions" method="POST" action="' . admin_url('admin.php?page=avhec-general') . '" accept-charset="utf-8" >';
@@ -546,7 +546,7 @@ class AVH_EC_Admin
 		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_category_groups'], 'side', 'core' );
 
 
-		echo '<div class="wrap avhec-wrap">';
+		echo '<div class="wrap avhec-metabox-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'Category Groups', 'avh-ec' ) . '</h2>';
 
@@ -695,7 +695,7 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 
-		echo '<div class="wrap avhec-wrap">';
+		echo '<div class="wrap avhec-metabox-wrap">';
 		echo $this->displayIcon( 'index' );
 		echo '<h2>' . 'AVH Extended Categories - ' . __( 'F.A.Q', 'avh-ec' ) . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
@@ -723,12 +723,13 @@ class AVH_EC_Admin
 	 */
 	function metaboxTranslation ()
 	{
-		echo '<p>';
-		echo 'This plugin is translated in several languages. Some of the languages might be incomplete. Please help to complete these translations or add a new language.<br />';
-		echo 'You can visit <a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> to help complete these translations or add a new language.';
-		echo '</p>';
-		echo '<p>';
-		echo '<span class="b">Available Languages</span></p><p>';
+		echo '<div class="p">';
+		echo __('This plugin is translated in several languages. Some of the languages might be incomplete. Please help to complete these translations or add a new language.', 'avh-ec').'<br />';
+		echo __('You can visit ', 'avh-ec').'<a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> '.__('to help complete these translations or add a new language.', 'avh-ec');
+		echo '</div>';
+
+		echo '<div class="p">';
+		echo '<span class="b">'.__('Available Languages', 'avh-ec').'</span>';
 		echo '<ul>';
 		echo '<li>Czech - Čeština (cs_CZ)</li>';
 		echo '<li>Dutch - Nederlands (nl_NL)</li>';
@@ -740,10 +741,12 @@ class AVH_EC_Admin
 		echo '<li>Swedish - Svenska (sv_SE)</li>';
 		echo '<li>Turkish - Türkçe (tr)</li>';
 		echo '</ul>';
-		echo '</p>';
-		echo '<p>';
-		echo 'More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.';
-		echo '</p>';
+		echo '</div>';
+
+		echo '<div class="p">';
+		echo __('More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.', 'avh-ec');
+		echo '</div>';
+
 	}
 
 	/**
@@ -752,20 +755,27 @@ class AVH_EC_Admin
 	 */
 	function metaboxDonations ()
 	{
-		echo '<p>If you enjoy this plug-in please consider a donation. There are several ways you can show your appreciation</p>';
-		echo '<p>';
+		echo '<div class="p">';
+		echo __('If you enjoy this plug-in please consider a donation. There are several ways you can show your appreciation.', 'avh-ec');
+		echo '</div>';
+
+		echo '<div class="p">';
 		echo '<span class="b">Amazon</span><br />';
-		echo 'If you decide to buy something from Amazon click the button.<br />';
-		echo '<a href="https://www.amazon.com/?&tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' . $this->core->info['graphics_url'] . '/us_banner_logow_120x60.gif" /></a></p>';
-		echo '<p>';
-		echo 'You can send me something from my <a href="http://www.amazon.com/gp/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">Amazon Wish List</a>';
-		echo '</p>';
-		echo '<p>';
-		echo '<span class="b">Through Paypal.</span><br />';
-		echo 'Click on the Donate button and you will be directed to Paypal where you can make your donation and you don\'t need to have a Paypal account to make a donation.<br />';
+		echo __('If you decide to buy something from Amazon click the button.', 'avh-ec') . '</span><br />';
+		echo '<a href="https://www.amazon.com/?&tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' . $this->core->info['graphics_url'] . '/us_banner_logow_120x60.gif" /></a>';
+		echo '</div>';
+
+		echo '<div class="p">';
+		echo __('You can send me something from my ', 'avh-ec') . '<a href="http://www.amazon.com/gp/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">'.__('Amazon Wish List', 'avh-ec') . '</a>';
+		echo '</div>';
+
+		echo '<div class="p">';
+		echo '<span class="b">'.__('Through Paypal.', 'avh-ec') . '</span><br />';
+		echo __('Click on the Donate button and you will be directed to Paypal where you can make your donation and you don\'t need to have a Paypal account to make a donation.', 'avh-ec') . '<br />';
 		echo '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S85FXJ9EBHAF2&lc=US&item_name=AVH%20Plugins&item_number=fdas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank" title="Donate">';
 		echo '<img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate"/></a>';
-		echo '</p>';
+		echo '</div>';
+
 	}
 
 	/***
@@ -775,72 +785,77 @@ class AVH_EC_Admin
 	function metaboxFAQ ()
 	{
 
-		echo '<p>';
-		echo '<span class="b">' . __('What about support?', avh - ec) . '</span><br />';
-		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avhec') . '<br />';
-		echo '</p>';
+		echo '<div class="p">';
+		echo '<span class="b">' . __('What about support?', 'avh-ec') . '</span><br />';
+		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avh-ec') . '<br />';
+		echo '</div>';
 
-		echo '<p>';
+		echo '<div class="p">';
 		echo '<span class="b">' . __('What is depth selection?', 'avh-ec') . '</span><br />';
-		echo __('Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.', 'avhec') . '<br /><br />';
-		echo __('Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:', 'avhec') . '<br />';
-		echo __('You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.', 'avhec') . '<br />';
-		echo '</p>';
+		echo __('Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.', 'avh-ec') . '<br /><br />';
+		echo __('Here is how it works: Say you have 5 top level categories and each top level has a number of children. You could manually select all the Top Level categories you want to show but now you can do the following:', 'avh-ec') . '<br />';
+		echo __('You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.', 'avh-ec') . '<br />';
+		echo '</div>';
 
-		echo '<p>';
+		echo '<div class="p">';
 		echo '<span class="b">' . __('Multiple Category Groups', 'avh-ec') . '</span><br />';
 		echo __('The following is an explanation how assigning multiple groups to page/post works.', 'avh-ec') . '<br /><br />';
-		echo __('Lets say you have the following groups:', 'avh-ec') . '<br />';
+		echo __('Lets say you have the following groups:', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Free Time', 'avh-ec') . '</li>';
 		echo '<li>' . __('Theater', 'avh-ec') . '</li>';
 		echo '<li>' . __('Movie', 'avh-ec') . '</li>';
 		echo '<li>' . __('Music', 'avh-ec') . '</li>';
 		echo '</ul>';
-		echo __('Setup several Category Group widgets and associated each widget with one or more groups.', 'avh-ec') . '<br />';
-		echo __('Widget 1 has association with Free Time', 'avh-ec') . '<br /';
+
+		echo __('Setup several Category Group widgets and associated each widget with one or more groups.', 'avh-ec'). '<br />';
+		echo __('Widget 1 has association with Free Time', 'avh-ec') . '<br />';
 		echo __('Widget 2 has association with Theater, Movie and Music', 'avh-ec') . '<br />';
 		echo __('Widget 3 has association with Theater, Movie and Music', 'avh-ec') . '<br /><br />';
 
-		echo __('Page has associations the groups Free Time and Theater', 'avh-ec') . '<br />';
+		echo __('Page has associations the groups Free Time and Theater', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Theater group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
-		echo __('Page has associations the group Movie.', 'avh-ec') . '<br />';
+
+		echo __('Page has associations the group Movie.', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Not displayed', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
 
-		echo __('Page has associations the groups Free Time, Movie and Music', 'avh-ec') . '<br />';
+		echo __('Page has associations the groups Free Time, Movie and Music', 'avh-ec');
+		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie or Music group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Shows categories of the Music or Movie group.', 'avh-ec') . '</li>';
 		echo '</ul>';
+
 		echo __('Whether Widget 2 shows Movie or Music depends on the creation order of groups. If Widget 2 shows Movie, Widget 3 will show Music but if Widget 2 shows Music, Widget 3 will show Movie.', 'avh-ec') . '<br />';
+		echo '</div>';
 
 	}
 
 	function metaboxAnnouncements ()
 	{
-		$php5 = version_compare( '5.2', phpversion(), '<' );
-		echo '<p>';
-		echo '<span class="b">PHP4 Support</span><br />';
-		echo 'The next major release of the plugin will no longer support PHP4.<br />';
-		echo 'It will be written for PHP 5.2 and ';
-		if ( $php5 ) {
-			echo 'your blog already runs the needed PHP version. When the new release comes out you can safely update.<br />';
+		$php5 = version_compare('5.2', phpversion(), '<');
+		echo '<div class="p">';
+		echo '<span class="b">' . __('PHP4 Support', 'avh-ec') . '</span><br />';
+		echo __('The next major release of the plugin will no longer support PHP4.', 'avh-ec') . '<br />';
+		echo __('It will be written for PHP 5.2 and ', 'avh-ec');
+		if ($php5) {
+			echo __('your blog already runs the needed PHP version. When the new release comes out you can safely update.', 'avh-ec') . '<br />';
 		} else {
-			echo 'your blog still runs PHP4. When the new release comes out you can not use it.<br />';
-			echo 'I don\'t have a timeline for the next version but consider contacting your host if PHP 5.2 is available.<br />';
-			echo 'If your hosts doesn\'t offer PHP 5.2 you might want to consider switching hosts.<br />';
-			echo 'A host to consider is <a href="http://www.lunarpages.com/id/pdoes" target="_blank">Lunarpages</a>.';
-			echo 'I run my personal blog there and I am very happy with their services. You can get an account with unlimited bandwidth, storage and much more for a low price.';
+			echo __('your blog still runs PHP4. When the new release comes out you can not use it.', 'avh-ec') . '<br />';
+			echo __('I don\'t have a timeline for the next version but consider contacting your host if PHP 5.2 is available.', 'avh-ec') . '<br />';
+			echo __('If your hosts doesn\'t offer PHP 5.2 you might want to consider switching hosts.', 'avh-ec') . '<br />';
+			echo __('A host to consider is ', 'avh-ec') . '<a href="http://www.lunarpages.com/id/pdoes" target="_blank">Lunarpages</a>';
+			echo __('I run my personal blog there and I am very happy with their services. You can get an account with unlimited bandwidth, storage and much more for a low price.', 'avh-ec');
 		}
-		echo '</p>';
+		echo '</div>';
 
 	}
 
