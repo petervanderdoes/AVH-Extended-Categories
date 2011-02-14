@@ -236,10 +236,10 @@ class AVH_EC_Admin
 			$groupname[] = $group->name;
 		}
 
-		$options_general[] = array ('avhec[general][alternative_name_select_category]', __('<em>Select Category</em> Alternative','avh-ec'), 'text', 20, __('Alternative text for Select Category.','avh-ec') );
-		$options_general[] = array ('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, __('Select which group to show on the home page.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
-		$options_general[] = array ('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, __('Select which group to show when there is no group associated with the post.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
-		$options_general[] = array ('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, __('Select which group will be the default group when editing a post.<br />Selecting the group \'none\' will not show the widget on the page.','avh-ec') );
+		$options_general[] = array('avhec[general][alternative_name_select_category]', __('<em>Select Category</em> Alternative', 'avh-ec'), 'text', 20, __('Alternative text for Select Category.', 'avh-ec'));
+		$options_general[] = array('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, __('Select which group to show on the home page.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
+		$options_general[] = array('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, __('Select which group to show when there is no group associated with the post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
+		$options_general[] = array('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, __('Select which group will be the default group when editing a post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
 
 		if ( isset( $_POST['updateoptions'] ) ) {
 			check_admin_referer( 'avh_ec_generaloptions' );
