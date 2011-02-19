@@ -133,6 +133,10 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.3.3 =
+* RFC: Changed selecting Category groups in posts from tag-like to checkboxes.
+* Removed the Menu item Category groups under Posts and Pages.
+
 = Version 3.3.2 =
 * Added several new localizations.
 * Bugfix: When using multiple Category Group widgets, all of them would show up on the special pages instead of just the one selected in the options.

@@ -81,9 +81,17 @@ class AVH_EC_Category_Group
 	{
 		/**
 		 * Setup Group Categories Taxonomy
+		 *
+		 * As we don't want to see the Menu Item we have to disable show_ui. This also disables the metabox on the posts and pages, so we add thse manually instead.
+		 * We remove the capabilities to manage, edit and delete the terms. We have written this part ourselves and don't use WordPress for these functions. The only one we use is the assign_terms.
 		 */
 		$labels = array('name'=>__('Category Groups', 'avh-ec'), 'singular_name'=>__('Category Group', 'avh-ec'), 'search_items'=>__('Search Category Groups', 'avh-ec'), 'popular_items'=>__('Popular Category Groups'), 'all_items'=>__('All Category Groups'), 'parent_item'=>__('Parent Category Group'), 'parent_item_colon'=>__('Parent Category Group:'), 'edit_item'=>__('Edit Category Group'), 'update_item'=>__('Update Category Group'), 'add_new_item'=>__('Add New Category Group'), 'new_item_name'=>__('New Category Group Name'));
-		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>FALSE, 'labels'=> $labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE));
+		$caps = array('manage_terms'=>null, 'edit_terms'=>null, 'delete_terms'=>null, 'assign_terms'=>'edit_posts');
+		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>FALSE, 'labels'=>$labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE, 'public'=>TRUE, 'show_ui'=>FALSE, 'capabilities'=>$caps));
+
+		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'post', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
+		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'page', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
+
 
 		// Setup the standard groups if the none group does not exists.
 		if (false === $this->getTermIDBy('slug', 'none')) {
