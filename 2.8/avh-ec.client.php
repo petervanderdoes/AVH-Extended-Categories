@@ -57,6 +57,8 @@ function avhextendedcategories_init ()
 		require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.admin.php');
 		$avhec_admin = new AVH_EC_Admin();
 	}
+	AVH_EC_Singleton::getInstance('AVH_EC_Core');
+	
 	add_action('widgets_init', 'avhextendedcategories_widgets_init');
 
 } // End avhamazon_init()
