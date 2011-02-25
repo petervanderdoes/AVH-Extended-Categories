@@ -71,7 +71,7 @@ Translations:
 * Swedish - Svenska (sv_SE)
 * Turkish - Türkçe (tr)
 
-Some of the translations are incomplete. You can complete them or add your own language through Launchpad (https://translations.launchpad.net/avhextendedcategories/trunk)
+Some of the translations are incomplete. You can complete them or add your own language through [Launchpad](https://translations.launchpad.net/avhextendedcategories/trunk)
 
 == Installation ==
 
@@ -96,7 +96,7 @@ Here is how it works: Say you have 5 top level categories and each top level has
 You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
 
 = I want to help and translate the plug-in =
-I have setup a project in Launchpad for translating the plug-in. Just visit http://bit.ly/95WyJ
+I have setup a project in [Launchpad](https://translations.launchpad.net/avhextendedcategories/trunk) for translating the plug-in.
 
 = Multiple Category Groups =
 The following is an explanation how assigning multiple groups to page/post works.
