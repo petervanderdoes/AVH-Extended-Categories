@@ -59,6 +59,7 @@ class AVH_EC_Category_Group
 		}
 		add_action('init', array(&$this, 'doRegisterTaxonomy'), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
 		add_action('init', array(&$this, 'doSetupOptions'));
+		add_action('admin_init', array(&$this, 'addMetaBoxes'));
 
 	}
 
@@ -89,10 +90,6 @@ class AVH_EC_Category_Group
 		$caps = array('manage_terms'=>null, 'edit_terms'=>null, 'delete_terms'=>null, 'assign_terms'=>'edit_posts');
 		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>FALSE, 'labels'=>$labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE, 'public'=>TRUE, 'show_ui'=>FALSE, 'capabilities'=>$caps));
 
-		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'post', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
-		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'page', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
-
-
 		// Setup the standard groups if the none group does not exists.
 		if (false === $this->getTermIDBy('slug', 'none')) {
 			$none_group_id = wp_insert_term('none', $this->taxonomy_name, array('description'=>__('This group will not show the widget.','avh-ec')));
@@ -108,6 +105,10 @@ class AVH_EC_Category_Group
 		}
 	}
 
+	function addMetaBoxes() {
+		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'post', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
+		add_meta_box($this->taxonomy_name . 'div', $labels['name'], 'post_categories_meta_box', 'page', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
+	}
 	/**
 	 * Setup the options for the widget titles
 	 * @WordPress_action init
