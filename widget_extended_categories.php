@@ -29,17 +29,17 @@ require (ABSPATH . WPINC . '/version.php');
 
 global $plugin;
 
-$pluginname = plugin_basename( trim( $plugin ) );
-$dir = current( explode( '/', $pluginname ) );
+$pluginname = plugin_basename(trim($plugin));
+$dir = current(explode('/', $pluginname));
 
-define( 'AVHEC_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . $dir );
-define( 'AVHEC_PLUGIN_NAME', $pluginname );
+define('AVHEC_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . $dir);
+define('AVHEC_PLUGIN_NAME', $pluginname);
 
-if ( ( float ) $wp_version >= 2.8 ) {
-	define( 'AVHEC_PLUGIN_URL', WP_PLUGIN_URL . '/' . $dir . '/2.8' );
-	define( 'AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . '/2.8' );
-	define ('AVHEC_RELATIVE_WORKING_DIR', $dir . '/2.8');
-	unset ($dir);
+if ((float) $wp_version >= 2.8) {
+	define('AVHEC_PLUGIN_URL', WP_PLUGIN_URL . '/' . $dir . '/2.8');
+	define('AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . '/2.8');
+	define('AVHEC_RELATIVE_WORKING_DIR', $dir . '/2.8');
+	unset($dir);
 	require (AVHEC_ABSOLUTE_WORKING_DIR . '/avh-ec.client.php');
 } else {
 	require_once 'widget-pre2.8.php';

@@ -3,12 +3,12 @@
 // Because the plugin is already deactivated it won't regonize any class declarations.
 
 
-if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) )
+if (! defined('ABSPATH') && ! defined('WP_UNINSTALL_PLUGIN'))
 	exit();
 
 global $wpdb;
-if ( 'extended-categories-widget' == dirname( $file ))  {
-	delete_option( 'avhec' );
+if ('extended-categories-widget' == dirname($file)) {
+	delete_option('avhec');
 	$db__used_by_plugin = $wpdb->prefix . 'avhec_category_groups';
-	$result = $wpdb->query( 'DROP TABLE IF EXISTS `'. $db__used_by_plugin.'`' );
+	$result = $wpdb->query('DROP TABLE IF EXISTS `' . $db__used_by_plugin . '`');
 }
