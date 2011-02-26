@@ -524,13 +524,13 @@ class AVH_EC_Admin
 			$dropdown_value[] = $group->term_id;
 			$dropdown_text[] = $temp_cat->name;
 		}
-		$options_special_pages[] = array('avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][category_group]', __('Category Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
-		$options_special_pages[] = array('avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, '');
+		$options_special_pages[] = array('avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('home','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][category_group]', __('Category Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('home page','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('daily archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('monthly archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('yearly archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('author archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('search','avhec')));
 		
 		$data['sp'] = array('form'=>$options_special_pages, 'data'=>$data_special_pages);
 		
