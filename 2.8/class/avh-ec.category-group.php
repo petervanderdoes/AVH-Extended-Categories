@@ -321,6 +321,19 @@ class AVH_EC_Category_Group
 		return ($result);
 	}
 
+	function getGroupByCategoryID($category_id){
+		$return = $this->getTermIDBy('slug', 'none');
+		$cat_groups = get_terms($this->taxonomy_name, array('hide_empty'=>FALSE));
+		
+		foreach ($cat_groups as $group) {
+			$cats = $this->getCategoriesFromGroup($group->term_id);
+			if ($group->slug != 'all' && in_array($category_id,$cats)) {
+				$return = $group->term_id;
+				break;
+			}
+		}
+		return $return;
+	}
 	/**
 	 * Inserts a new group
 	 *

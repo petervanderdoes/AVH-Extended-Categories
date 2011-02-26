@@ -31,6 +31,7 @@ class AVH_EC_Admin
 		add_action('wp_ajax_delete-group', array(&$this, 'ajaxDeleteGroup'));
 		
 		// Admin menu
+		add_action('admin_init', array(&$this,'actionAdminInit'));
 		add_action('admin_menu', array(&$this, 'actionAdminMenu'));
 		add_filter('plugin_action_links_extended-categories-widget/widget_extended_categories.php', array(&$this, 'filterPluginActions'), 10, 2);
 		
@@ -57,6 +58,59 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
+	function actionAdminInit() {
+		if (is_admin() && isset($_GET['taxonomy']) && 'category' == $_GET['taxonomy']) {
+			add_action($_GET['taxonomy'] . '_edit_form', array(&$this,'displayCategoryGroupForm'), 10, 2 );
+			add_action('edit_term', array(&$this,'handleEditTerm'), 10, 3 );
+		}
+	}
+	
+	function displayCategoryGroupForm($term, $taxonomy){
+		
+		$current_selection = '';
+		$tax_meta = get_option($this->core->db_options_tax_meta);
+		if ( isset($tax_meta[$taxonomy][$term->term_id]) ) {
+			$tax_meta = $tax_meta[$taxonomy][$term->term_id];
+			$current_selection = $tax_meta['category_group_term_id'];
+		}
+		
+		if (empty($current_selection)) {
+			$current_selection=$this->catgrp->getGroupByCategoryID($term->term_id);
+		}
+		
+		$cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
+		foreach ($cat_groups as $group) {
+			$temp_cat = get_term($group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit');
+			$dropdown_value[] = $group->term_id;
+			$dropdown_text[] = $temp_cat->name;
+		}
+		
+		foreach ( $dropdown_value as $key => $sel) {
+			$seldata .= '<option value="' . $sel . '" ' . (($current_selection == $sel) ? 'selected="selected"' : '') . ' >' . ucfirst($dropdown_text[$key]) . '</option>' . "\n";
+		}
+		
+		echo '<h3>AVH Extended Categories - Category Group Widget</h3>';
+		echo '<table class="form-table"><tbody>';
+		echo '<tr class="form-field">';
+		echo '<th valign="top" scope="row">';
+		echo '<label for="avhec_categorygroup">Category Group</label></th>';
+		echo '<td>';
+		echo '<select id="avhec_categorygroup" name="avhec_categorygroup">';
+		echo $seldata;
+		echo '</select>';
+		echo '<p class="description">Select the category group to show on the archive page.</p>';
+		echo '</td>';
+		echo '</tr>';
+		echo '</tbody></table>';
+	}
+	
+	function handleEditTerm( $term_id, $tt_id, $taxonomy ) {
+		$tax_meta = get_option($this->core->db_options_tax_meta);
+		if ( isset($_POST['avhec_categorygroup']) && $tax_meta[$taxonomy][$term_id]['avhec_categorygroup'] 	!= $_POST['avhec_categorygroup']) {
+				$tax_meta[$taxonomy][$term_id]['categorygroup'] 	= $_POST['avhec_categorygroup'];
+				update_option($this->core->db_options_tax_meta, $tax_meta);
+		}
+	}
 	/**
 	 * When a category is created this function is called to add the new category to the group all
 	 * @param $term_id
@@ -524,13 +578,13 @@ class AVH_EC_Admin
 			$dropdown_value[] = $group->term_id;
 			$dropdown_text[] = $temp_cat->name;
 		}
-		$options_special_pages[] = array('avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('home','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][category_group]', __('Category Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('home page','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('daily archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('monthly archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('yearly archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('author archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page','avh-ec'),__('search','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('home','avhec')));
+		//$options_special_pages[] = array('avhec_special_pages[sp][category_group]', __('Category Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('category archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('daily archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('monthly archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('yearly archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('author archive','avhec')));
+		$options_special_pages[] = array('avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('search','avhec')));
 		
 		$data['sp'] = array('form'=>$options_special_pages, 'data'=>$data_special_pages);
 		

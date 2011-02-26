@@ -11,6 +11,8 @@ class AVH_EC_Core
 	var $default_options_category_group;
 	var $default_options_sp_category_group;
 	
+	var $db_options_tax_meta;
+	
 	var $options;
 
 	/**
@@ -28,6 +30,7 @@ class AVH_EC_Core
 		$this->version = '3.3.4';
 		$this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
 		$this->db_options_core = 'avhec';
+		$this->db_options_tax_meta = 'avhec-tax_meta';
 		
 		add_action('init', array(&$this, 'handleInitializePlugin'), 10);
 	}
@@ -59,7 +62,7 @@ class AVH_EC_Core
 		$this->default_options_general = array('version'=>$this->version, 'dbversion'=>$db_version, 'alternative_name_select_category'=>'');
 		
 		// Set the default category group options
-		$no_group_id = $catgrp->getTermIDBy('slug', 'all');
+		$no_group_id = $catgrp->getTermIDBy('slug', 'none');
 		$home_group_id = $catgrp->getTermIDBy('slug', 'home');
 		$default_group_id = $catgrp->getTermIDBy('slug', 'all');
 		$this->default_options_category_group = array('no_group'=>$no_group_id, 'home_group'=>$home_group_id, 'default_group'=>$default_group_id);

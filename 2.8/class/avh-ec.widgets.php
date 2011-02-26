@@ -519,7 +519,13 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	 * @var AVH_EC_Core
 	 */
 	var $core;
-
+	
+	/**
+	 *
+	 * @var AVH_EC_Category_Group
+	 */
+	var $catgrp;
+	
 	/**
 	 * PHP 5 Constructor
 	 *
@@ -527,6 +533,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	function __construct ()
 	{
 		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
+		$this->catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 		
 		$widget_ops = array('description'=>__("Shows grouped categories.", 'avh-ec'));
 		WP_Widget::__construct(FALSE, __('AVH Extended Category: Category Group'), $widget_ops);
@@ -555,7 +562,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 	 */
 	function widget ($args, $instance)
 	{
-		global $post;
+		global $post, $wp_query;
 		
 		$catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 		$options = $this->core->getOptions();
@@ -582,7 +589,17 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		
 		$toDisplay = FALSE;
 		if ($special_page != 'none') {
-			$sp_category_group = $options['sp_cat_group'][$special_page];
+			if ('category_group' == $special_page) {
+				$tax_meta = get_option($this->core->db_options_tax_meta);
+				$term = $wp_query->get_queried_object();
+				if (isset($tax_meta[$term->term_id][$term->taxonomy]['categorygroup'])) {
+					$sp_category_group = $tax_meta[$term->term_id][$term->taxonomy]['categorygroup'];
+				} else {
+					$sp_category_group=$this->catgrp->getGroupByCategoryID($term->term_id);
+				}
+			} else {
+				$sp_category_group = $options['sp_cat_group'][$special_page];
+			}
 			if (! ($this->getWidgetDoneCatGroup($sp_category_group))) {
 				$row = get_term_by('id', $sp_category_group, $catgrp->taxonomy_name); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
 				$toDisplay = TRUE;
