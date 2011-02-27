@@ -15,20 +15,42 @@ table.avhec-options {
 	font-size: 11px;
 }
 
-#avhecBoxOptions option{
-	padding: .5em;
-}
-.avhec-wrap span.description {
+.avhec-metabox-wrap {
 	font-size: 11px;
 }
 
-.avhec-wrap .b {
+.avhec-metabox-wrap .p {
+	font-size: 11px;
+	line-height: 140%;
+	margin: 1em 0;
+}
+
+#avhecBoxOptions option {
+	padding: .5em;
+}
+
+.avhec-metabox-wrap span.description {
+	font-size: 11px;
+}
+
+.avhec-metabox-wrap .b {
 	font-weight: bold;
+}
+
+.avhec-metabox-wrap ul {
+	margin-bottom: 1em;
+}
+
+.avhec-metabox-wrap ul li {
+	line-height: 120%;
+	list-style: disc inside none;
+	margin-bottom: 0;
 }
 
 #avhec-options input {
 	font-size: 11px;
 }
+
 #avhec-generaloptions input {
 	font-size: 11px;
 }
@@ -60,17 +82,17 @@ table.avhec-options {
 
 /* Metabox in post and page */
 #post_avhec_category_group {
-	width:100%;
+	width: 100%;
 }
 
 #avhec-catlist {
-	-moz-border-radius:4px 4px 4px 4px;
-	background-color:#FFFFFF;
-	border:1px solid #DFDFDF;
-	height:20em;
-	margin-bottom:-1.8em;
-	overflow:auto;
-	width:95%;
+	-moz-border-radius: 4px 4px 4px 4px;
+	background-color: #FFFFFF;
+	border: 1px solid #DFDFDF;
+	height: 20em;
+	margin-bottom: -1.8em;
+	overflow: auto;
+	width: 95%;
 }
 
 #avhec-catlist ul {
@@ -82,5 +104,5 @@ table.avhec-options {
 }
 
 #avhec-catlist li {
-margin-bottom: 0px;
+	margin-bottom: 0px;
 }
