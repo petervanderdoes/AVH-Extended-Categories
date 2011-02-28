@@ -588,29 +588,13 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 		
 		$toDisplay = FALSE;
-		if ($special_page != 'none') {
-			if ('category_group' == $special_page) {
-				$tax_meta = get_option($this->core->db_options_tax_meta);
-				$term = $wp_query->get_queried_object();
-				if (isset($tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'])) {
-					$sp_category_group = $tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'];
-				} else {
-					$sp_category_group=$this->catgrp->getGroupByCategoryID($term->term_id);
-				}
-			} else {
-				$sp_category_group = $options['sp_cat_group'][$special_page];
-			}
-			if (! ($this->getWidgetDoneCatGroup($sp_category_group))) {
-				$row = get_term_by('id', $sp_category_group, $catgrp->taxonomy_name); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
-				$toDisplay = TRUE;
-			}
-		} else {
+		if ('none' == $special_page) {
 			$terms = wp_get_object_terms($post->ID, $catgrp->taxonomy_name);
 			if (! empty($terms)) {
 				foreach ($terms as $key => $value) {
 					if (! ($this->getWidgetDoneCatGroup($value->term_id))) {
 						$row = $value;
-						$toDisplay = TRUE;
+						$group_found = TRUE;
 						break;
 					}
 				}
@@ -618,13 +602,37 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				$options = $this->core->options;
 				$no_cat_group = $options['cat_group']['no_group'];
 				$row = get_term_by('id', $no_cat_group, $catgrp->taxonomy_name);
-				$toDisplay = TRUE;
+				$group_found = TRUE;
 			}
+		} else {
+			if ('category_group' == $special_page) {
+				$tax_meta = get_option($this->core->db_options_tax_meta);
+				$term = $wp_query->get_queried_object();
+				if (isset($tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'])) {
+					$sp_category_group_id = $tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'];
+				} else {
+					$sp_category_group = $this->catgrp->getGroupByCategoryID($term->term_id);
+					$sp_category_group_id = $sp_category_group->term_id;
+				}
+			} else {
+				$sp_category_group_id = $options['sp_cat_group'][$special_page];
+			}
+			$row = get_term_by('id', $sp_category_group_id, $catgrp->taxonomy_name); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
+			$group_found = TRUE;
 		}
 		
-		$selected_catgroups = unserialize($instance['post_group_category']);
-		if (! (FALSE == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
-			$toDisplay = FALSE;
+		if ($group_found) {
+			$toDisplay = TRUE;
+			$category_group_id_none = $this->catgrp->getTermIDBy('slug', 'none');
+			$selected_catgroups = unserialize($instance['post_group_category']);
+			
+			if ($category_group_id_none == $row->term_id ) {
+				$toDisplay = FALSE;
+			} elseif (! (FALSE == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
+				$toDisplay = FALSE;
+			} elseif ($this->getWidgetDoneCatGroup($sp_category_group_id)) {
+				$toDisplay = FALSE;
+			}
 		}
 		
 		if ($toDisplay) {

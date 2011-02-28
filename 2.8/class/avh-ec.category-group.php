@@ -322,13 +322,13 @@ class AVH_EC_Category_Group
 	}
 
 	function getGroupByCategoryID($category_id){
-		$return = $this->getTermIDBy('slug', 'none');
+		$return = get_term_by('slug', 'none', $this->taxonomy_name);
 		$cat_groups = get_terms($this->taxonomy_name, array('hide_empty'=>FALSE));
 		
 		foreach ($cat_groups as $group) {
 			$cats = $this->getCategoriesFromGroup($group->term_id);
 			if ($group->slug != 'all' && in_array($category_id,$cats)) {
-				$return = $group->term_id;
+				$return = $group;
 				break;
 			}
 		}

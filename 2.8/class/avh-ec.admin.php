@@ -84,7 +84,8 @@ class AVH_EC_Admin
 		}
 		
 		if (empty($current_selection)) {
-			$current_selection=$this->catgrp->getGroupByCategoryID($term->term_id);
+			$current_group = $this->catgrp->getGroupByCategoryID($term->term_id);
+			$current_selection= $current_group->term_id;
 		}
 		
 		$cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
