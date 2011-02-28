@@ -847,7 +847,6 @@ class AVH_EC_Admin
 	 */
 	function metaboxFAQ ()
 	{
-		
 		echo '<div class="p">';
 		echo '<span class="b">' . __('What about support?', 'avh-ec') . '</span><br />';
 		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avh-ec') . '<br />';
@@ -870,36 +869,30 @@ class AVH_EC_Admin
 		echo '<li>' . __('Movie', 'avh-ec') . '</li>';
 		echo '<li>' . __('Music', 'avh-ec') . '</li>';
 		echo '</ul>';
-		
 		echo __('Setup several Category Group widgets and associated each widget with one or more groups.', 'avh-ec') . '<br />';
 		echo __('Widget 1 has association with Free Time', 'avh-ec') . '<br />';
 		echo __('Widget 2 has association with Theater, Movie and Music', 'avh-ec') . '<br />';
 		echo __('Widget 3 has association with Theater, Movie and Music', 'avh-ec') . '<br /><br />';
-		
 		echo __('Page has associations the groups Free Time and Theater', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Theater group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
-		
 		echo __('Page has associations the group Movie.', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Not displayed', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Not displayed', 'avh-ec') . '</li>';
 		echo '</ul>';
-		
 		echo __('Page has associations the groups Free Time, Movie and Music', 'avh-ec');
 		echo '<ul>';
 		echo '<li>' . __('Widget 1: Shows categories of the Free Time group', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 2: Shows categories of the Movie or Music group.', 'avh-ec') . '</li>';
 		echo '<li>' . __('Widget 3: Shows categories of the Music or Movie group.', 'avh-ec') . '</li>';
 		echo '</ul>';
-		
 		echo __('Whether Widget 2 shows Movie or Music depends on the creation order of groups. If Widget 2 shows Movie, Widget 3 will show Music but if Widget 2 shows Music, Widget 3 will show Movie.', 'avh-ec') . '<br />';
 		echo '</div>';
-	
 	}
 
 	function metaboxAnnouncements ()
