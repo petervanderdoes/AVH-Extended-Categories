@@ -27,13 +27,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Include WordPress version
 require (ABSPATH . WPINC . '/version.php');
 
-global $plugin;
+$_basename = plugin_basename(__FILE__);
+$dir = current(explode('/', $_basename));
 
-$pluginname = plugin_basename(trim($plugin));
-$dir = current(explode('/', $pluginname));
 
 define('AVHEC_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . $dir);
-define('AVHEC_PLUGIN_NAME', $pluginname);
+define('AVHEC_PLUGIN_NAME', $_basename);
 
 if ((float) $wp_version >= 2.8) {
 	define('AVHEC_PLUGIN_URL', WP_PLUGIN_URL . '/' . $dir . '/2.8');
