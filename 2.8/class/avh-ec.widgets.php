@@ -592,8 +592,8 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 			if ('category_group' == $special_page) {
 				$tax_meta = get_option($this->core->db_options_tax_meta);
 				$term = $wp_query->get_queried_object();
-				if (isset($tax_meta[$term->term_id][$term->taxonomy]['categorygroup'])) {
-					$sp_category_group = $tax_meta[$term->term_id][$term->taxonomy]['categorygroup'];
+				if (isset($tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'])) {
+					$sp_category_group = $tax_meta[$term->taxonomy][$term->term_id]['category_group_term_id'];
 				} else {
 					$sp_category_group=$this->catgrp->getGroupByCategoryID($term->term_id);
 				}
