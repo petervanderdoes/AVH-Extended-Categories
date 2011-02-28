@@ -111,7 +111,7 @@ class AVH_EC_Category_Group
 		 */
 		$labels = array('name'=>__('Category Groups', 'avh-ec'), 'singular_name'=>__('Category Group', 'avh-ec'), 'search_items'=>__('Search Category Groups', 'avh-ec'), 'popular_items'=>__('Popular Category Groups'), 'all_items'=>__('All Category Groups'), 'parent_item'=>__('Parent Category Group'), 'parent_item_colon'=>__('Parent Category Group:'), 'edit_item'=>__('Edit Category Group'), 'update_item'=>__('Update Category Group'), 'add_new_item'=>__('Add New Category Group'), 'new_item_name'=>__('New Category Group Name'));
 		$caps = array('manage_terms'=>null, 'edit_terms'=>null, 'delete_terms'=>null, 'assign_terms'=>'edit_posts');
-		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>FALSE, 'labels'=>$labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE, 'public'=>TRUE, 'show_ui'=>FALSE, 'capabilities'=>$caps));
+		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>TRUE, 'labels'=>$labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE, 'public'=>TRUE, 'show_ui'=>FALSE, 'capabilities'=>$caps));
 	
 	}
 
