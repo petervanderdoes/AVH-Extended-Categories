@@ -65,6 +65,14 @@ class AVH_EC_Admin
 		}
 	}
 	
+	/**
+	 *
+	 * Adds Category Group form
+	 * @WordPress action category_edit_form
+	 *
+	 * @param unknown_type $term
+	 * @param unknown_type $taxonomy
+	 */
 	function displayCategoryGroupForm($term, $taxonomy){
 		
 		$current_selection = '';
@@ -104,13 +112,22 @@ class AVH_EC_Admin
 		echo '</tbody></table>';
 	}
 	
+	/**
+	 * Saves the association Category - Category Group fron the edit taxonomy page
+	 * @WordPress action edit_form.
+	 *
+	 * @param unknown_type $term_id
+	 * @param unknown_type $tt_id
+	 * @param unknown_type $taxonomy
+	 */
 	function handleEditTerm( $term_id, $tt_id, $taxonomy ) {
 		$tax_meta = get_option($this->core->db_options_tax_meta);
-		if ( isset($_POST['avhec_categorygroup']) && $tax_meta[$taxonomy][$term_id]['avhec_categorygroup'] 	!= $_POST['avhec_categorygroup']) {
-				$tax_meta[$taxonomy][$term_id]['categorygroup'] 	= $_POST['avhec_categorygroup'];
+		if ( isset($_POST['avhec_categorygroup']) && $tax_meta[$taxonomy][$term_id]['category_group_term_id'] 	!= $_POST['avhec_categorygroup']) {
+				$tax_meta[$taxonomy][$term_id]['category_group_term_id'] 	= $_POST['avhec_categorygroup'];
 				update_option($this->core->db_options_tax_meta, $tax_meta);
 		}
 	}
+	
 	/**
 	 * When a category is created this function is called to add the new category to the group all
 	 * @param $term_id
