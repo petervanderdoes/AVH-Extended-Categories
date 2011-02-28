@@ -61,8 +61,9 @@ class AVH_EC_Admin
 	function actionAdminInit() {
 		if (is_admin() && isset($_GET['taxonomy']) && 'category' == $_GET['taxonomy']) {
 			add_action($_GET['taxonomy'] . '_edit_form', array(&$this,'displayCategoryGroupForm'), 10, 2 );
-			add_action('edit_term', array(&$this,'handleEditTerm'), 10, 3 );
 		}
+		add_action('edit_term', array(&$this,'handleEditTerm'), 10, 3 );
+
 	}
 	
 	/**
