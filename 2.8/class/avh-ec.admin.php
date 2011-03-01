@@ -1212,12 +1212,12 @@ class AVH_EC_Admin
 			$option_key = substr($option_key, strpos($option_key, '][') + 2);
 			// Helper
 			if ($option[2] == 'helper') {
-				$output .= '<tr style="vertical-align: top;"><td class="helper" colspan="2">' . $option[4] . '</td></tr>' . "\n";
+				$output .= '<tr style="vertical-align: top;"><td class="helper" colspan="2">' . wp_filter_post_kses($option[4]) . '</td></tr>' . "\n";
 				continue;
 			}
 			switch ($option[2]) {
 				case 'checkbox':
-					$input_type = '<input type="checkbox" id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape($option[3]) . '" ' . $this->isChecked('1', $option_actual[$section][$option_key]) . ' />' . "\n";
+					$input_type = '<input type="checkbox" id="' . esc_attr($option[0]) . '" name="' . esc_attr($option[0]) . '" value="' . esc_attr($option[3]) . '" ' . $this->isChecked('1', $option_actual[$section][$option_key]) . ' />' . "\n";
 					$explanation = $option[4];
 					break;
 				case 'dropdown':
@@ -1225,17 +1225,17 @@ class AVH_EC_Admin
 					$seltext = $option[4];
 					$seldata = '';
 					foreach ((array) $selvalue as $key => $sel) {
-						$seldata .= '<option value="' . $sel . '" ' . (($option_actual[$section][$option_key] == $sel) ? 'selected="selected"' : '') . ' >' . ucfirst($seltext[$key]) . '</option>' . "\n";
+						$seldata .= '<option value="' . esc_attr($sel) . '" ' . (($option_actual[$section][$option_key] == $sel) ? 'selected="selected"' : '') . ' >' . esc_html(ucfirst($seltext[$key])) . '</option>' . "\n";
 					}
-					$input_type = '<select id="' . $option[0] . '" name="' . $option[0] . '">' . $seldata . '</select>' . "\n";
+					$input_type = '<select id="' . esc_attr($option[0]) . '" name="' . esc_attr($option[0]) . '">' . $seldata . '</select>' . "\n";
 					$explanation = $option[5];
 					break;
 				case 'text-color':
-					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape($option_actual[$section][$option_key]) . '" size="' . $option[3] . '" /><div class="box_color ' . $option[0] . '"></div>' . "\n";
+					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . esc_attr($option[0]) . '" name="' . esc_attr($option[0]) . '" value="' . esc_attr($option_actual[$section][$option_key]) . '" size="' . esc_attr($option[3]) . '" /><div class="box_color ' . esc_attr($option[0]) . '"></div>' . "\n";
 					$explanation = $option[4];
 					break;
 				case 'textarea':
-					$input_type = '<textarea rows="' . $option[5] . '" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" size="' . $option[3] . '" />' . attribute_escape($option_actual[$section][$option_key]) . '</textarea>';
+					$input_type = '<textarea rows="' . esc_attr($option[5]) . '" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . esc_attr($option[0]) . '" name="' . esc_attr($option[0]) . '" size="' . esc_attr($option[3]) . '" />' . $option_actual[$section][$option_key] . '</textarea>';
 					$explanation = $option[4];
 					break;
 				case 'catlist':
@@ -1251,17 +1251,17 @@ class AVH_EC_Admin
 					break;
 				case 'text':
 				default:
-					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . $option[0] . '" name="' . $option[0] . '" value="' . attribute_escape($option_actual[$section][$option_key]) . '" size="' . $option[3] . '" />' . "\n";
+					$input_type = '<input type="text" ' . (($option[3] > 1) ? ' style="width: 95%" ' : '') . 'id="' . esc_attr($option[0]) . '" name="' . esc_attr($option[0]) . '" value="' . esc_attr($option_actual[$section][$option_key]) . '" size="' . esc_attr($option[3]) . '" />' . "\n";
 					$explanation = $option[4];
 					break;
 			}
 			// Additional Information
 			$extra = '';
 			if ($explanation) {
-				$extra = '<br /><span class="description">' . __($explanation) . '</span>' . "\n";
+				$extra = '<br /><span class="description">' . wp_filter_kses($explanation) . '</span>' . "\n";
 			}
 			// Output
-			$output .= '<tr style="vertical-align: top;"><th align="left" scope="row"><label for="' . $option[0] . '">' . __($option[1]) . '</label></th><td>' . $input_type . '	' . $extra . '</td></tr>' . "\n";
+			$output .= '<tr style="vertical-align: top;"><th align="left" scope="row"><label for="' . esc_attr($option[0]) . '">' . wp_filter_kses($option[1]) . '</label></th><td>' . $input_type . '	' . $extra . '</td></tr>' . "\n";
 		}
 		$output .= '</table>' . "\n";
 		return $output;
