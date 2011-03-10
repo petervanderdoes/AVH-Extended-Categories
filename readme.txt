@@ -136,6 +136,7 @@ None
 = Version 3.4-rc4=
 * RFC: Category Groups can be associated with categories. This enables the plugin to display the Category Group Widget for that category group on the category archive page.
 * Bugfix: In combination with WP Supercache an error can occur.
+* Bugfix: An error occurs if there are no categories present in WordPress.
 
 = Version 3.3.5 =
 * Bugfix: Category Groups would be created every time you saved a post.

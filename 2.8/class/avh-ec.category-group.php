@@ -166,9 +166,12 @@ class AVH_EC_Category_Group
 	 */
 	function getAllCategoriesTermID ()
 	{
+		$all_cat_id = array();
 		$categories = get_categories();
-		foreach ($categories as $category) {
-			$all_cat_id[] = $category->term_id;
+		if (! is_wp_error($categories)) {
+			foreach ($categories as $category) {
+				$all_cat_id[] = $category->term_id;
+			}
 		}
 		return ($all_cat_id);
 	}
