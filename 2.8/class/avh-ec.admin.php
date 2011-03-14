@@ -206,6 +206,7 @@ class AVH_EC_Admin
 	{
 		// Add metaboxes
 		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array(&$this, 'metaboxCategoryGroupList'), $this->hooks['menu_overview'], 'normal', 'core');
+		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array(&$this, 'metaboxTranslation'), $this->hooks['menu_overview'], 'normal', 'core');
 		
 		add_filter('screen_layout_columns', array(&$this, 'filterScreenLayoutColumns'), 10, 2);
 		
@@ -788,28 +789,40 @@ class AVH_EC_Admin
 	 */
 	function metaboxTranslation ()
 	{
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'avh-ec' );
+		$available_locale['cs_CZ'] = array('Czech - Čeština',0);
+		$available_locale['nl_NL'] = array('Dutch - Nederlands',0);
+		$available_locale['el'] = array('Greek - Čeština',0);
+		$available_locale['id_ID'] = array('Indonesian - Bahasa Indonesia - Čeština',0);
+		$available_locale['it_IT'] = array('Italian - Italiano',1);
+		$available_locale['ru_RU'] = array('Russian — Русский',0);
+		$available_locale['es_ES'] = array('Spanish - Español',0);
+		$available_locale['sv_SE'] = array('Swedish - Svenska',0);
+		$available_locale['tr'] = array('Turkish - Türkçe',0);
+		
 		echo '<div class="p">';
 		echo __('This plugin is translated in several languages. Some of the languages might be incomplete. Please help to complete these translations or add a new language.', 'avh-ec') . '<br />';
-		echo __('You can visit ', 'avh-ec') . '<a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> ' . __('to help complete these translations or add a new language.', 'avh-ec');
+
 		echo '</div>';
 		
 		echo '<div class="p">';
 		echo '<span class="b">' . __('Available Languages', 'avh-ec') . '</span>';
 		echo '<ul>';
-		echo '<li>Czech - Čeština (cs_CZ)</li>';
-		echo '<li>Dutch - Nederlands (nl_NL)</li>';
-		echo '<li>Greek (el)</li>';
-		echo '<li>Indonesian - Bahasa Indonesia (id_ID)</li>';
-		echo '<li>Italian - Italiano (it_IT)</li>';
-		echo '<li>Russian — Русский (ru_RU)</li>';
-		echo '<li>Spanish - Español (es_ES)</li>';
-		echo '<li>Swedish - Svenska (sv_SE)</li>';
-		echo '<li>Turkish - Türkçe (tr)</li>';
+		foreach ($available_locale as $key => $value) {
+			echo '<li>';
+			$complete = ($value[1] == 1 ? 'Complete' : 'Incomplete');
+			echo $value[0] . ' (' . $key . ') - ' . $complete;
+			echo '</li>';
+		}
 		echo '</ul>';
 		echo '</div>';
 		
 		echo '<div class="p">';
-		echo __('More information about translating can found at http://codex.wordpress.org/Translating_WordPress . This page is dedicated for translating WordPress but the instructions are the same for this plugin.', 'avh-ec');
+			if ('en_US' != $locale & (!array_key_exists($locale, $available_locale))){
+			echo 'Currently the plugin is not available in your language ('.$locale.'). Why not help out and translate the plugin in your language. You can help by visiting <a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a>.';
+		} else {
+			echo __('You can visit ', 'avh-ec') . '<a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> ' . __('to help complete these translations or add a new language.', 'avh-ec');
+		}
 		echo '</div>';
 	
 	}

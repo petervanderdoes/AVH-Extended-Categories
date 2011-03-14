@@ -63,6 +63,7 @@ Translations:
 
 * Czech - Čeština (cs_CZ)
 * Dutch - Nederlands (nl_NL)
+* German - Deutsch (de_DE)
 * Greek (el)
 * Indonesian - Bahasa Indonesia (id_ID)
 * Italian - Italiano (it_IT)
