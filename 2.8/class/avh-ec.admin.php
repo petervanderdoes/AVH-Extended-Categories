@@ -792,6 +792,7 @@ class AVH_EC_Admin
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'avh-ec' );
 		$available_locale['cs_CZ'] = array('Czech - Čeština',0);
 		$available_locale['nl_NL'] = array('Dutch - Nederlands',0);
+		$available_locale['de_DE'] = array('German - Deutsch', 0);
 		$available_locale['el'] = array('Greek - Čeština',0);
 		$available_locale['id_ID'] = array('Indonesian - Bahasa Indonesia - Čeština',0);
 		$available_locale['it_IT'] = array('Italian - Italiano',1);

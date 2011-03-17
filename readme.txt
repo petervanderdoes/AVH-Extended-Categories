@@ -134,7 +134,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.4=
+= Version 3.4 =
 * RFC: Category Groups can be associated with categories. This enables the plugin to display the Category Group Widget for that category group on the category archive page.
 * Bugfix: In combination with WP Supercache an error can occur.
 * Bugfix: An error occurs if there are no categories present in WordPress.
