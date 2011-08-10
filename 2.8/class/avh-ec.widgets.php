@@ -633,7 +633,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 				$toDisplay = FALSE;
 			} elseif (! (FALSE == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
 				$toDisplay = FALSE;
-			} elseif ($this->getWidgetDoneCatGroup($sp_category_group_id)) {
+			} elseif ($special_page != 'none' && $this->getWidgetDoneCatGroup($sp_category_group_id)) {
 				$toDisplay = FALSE;
 			}
 		}
