@@ -3,7 +3,7 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 3.1
+Tested up to: 3.2.1
 Stable tag: 3.4.1
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
