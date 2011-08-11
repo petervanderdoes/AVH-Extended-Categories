@@ -593,7 +593,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 			if (! empty($terms)) {
 				$selected_catgroups = unserialize($instance['post_group_category']);
 				foreach ($terms as $key => $value) {
-					if (array_key_exists($value->term_id, $selected_catgroups)) {
+					if ($selected_catgroups === FALSE || array_key_exists($value->term_id, $selected_catgroups)) {
 						if (! ($this->getWidgetDoneCatGroup($value->term_id))) {
 							$row = $value;
 							$group_found = TRUE;
