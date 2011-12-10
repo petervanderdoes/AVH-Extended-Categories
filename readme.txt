@@ -134,6 +134,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.5 =
+* RFC: Adds compability with the plugin My Category Order.
+
 = Version 3.4.2 =
 * Bugfix: Fails to display the Category Group Widget when the widget is to display any group.
 

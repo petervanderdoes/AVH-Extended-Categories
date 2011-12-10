@@ -32,7 +32,7 @@ class AVH_EC_Core
 		$this->db_options_core = 'avhec';
 		$this->db_options_tax_meta = 'avhec-tax_meta';
 		
-		add_action('init', array(&$this, 'handleInitializePlugin'), 10);
+		add_action('init', array ( &$this, 'handleInitializePlugin' ), 10);
 	}
 
 	/**
@@ -56,20 +56,20 @@ class AVH_EC_Core
 		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 		
 		// Set class property for info
-		$this->info = array('home'=>get_option('home'), 'siteurl'=>$info['siteurl'], 'plugin_dir'=>$info['plugin_dir'], 'lang_dir'=>$info['lang_dir'], 'graphics_url'=>$info['graphics_url']);
+		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
 		
 		// Set the default options
-		$this->default_options_general = array('version'=>$this->version, 'dbversion'=>$db_version, 'alternative_name_select_category'=>'');
+		$this->default_options_general = array ( 'version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
 		
 		// Set the default category group options
 		$no_group_id = $catgrp->getTermIDBy('slug', 'none');
 		$home_group_id = $catgrp->getTermIDBy('slug', 'home');
 		$default_group_id = $catgrp->getTermIDBy('slug', 'all');
-		$this->default_options_category_group = array('no_group'=>$no_group_id, 'home_group'=>$home_group_id, 'default_group'=>$default_group_id);
+		$this->default_options_category_group = array ( 'no_group' => $no_group_id, 'home_group' => $home_group_id, 'default_group' => $default_group_id );
 		
-		$this->default_options_sp_category_group = array('home_group'=>$home_group_id, 'category_group'=>$default_group_id, 'day_group'=>$default_group_id, 'month_group'=>$default_group_id, 'year_group'=>$default_group_id, 'author_group'=>$default_group_id, 'search_group'=>$default_group_id);
+		$this->default_options_sp_category_group = array ( 'home_group' => $home_group_id, 'category_group' => $default_group_id, 'day_group' => $default_group_id, 'month_group' => $default_group_id, 'year_group' => $default_group_id, 'author_group' => $default_group_id, 'search_group' => $default_group_id );
 		
-		$this->default_options = array('general'=>$this->default_options_general, 'cat_group'=>$this->default_options_category_group, 'widget_titles'=>array(), 'sp_cat_group'=>$this->default_options_sp_category_group);
+		$this->default_options = array ( 'general' => $this->default_options_general, 'cat_group' => $this->default_options_category_group, 'widget_titles' => array (), 'sp_cat_group' => $this->default_options_sp_category_group );
 		
 		/**
 		 * Set the options for the program
@@ -83,7 +83,16 @@ class AVH_EC_Core
 		}
 		
 		$this->handleTextdomain();
+		add_filter('get_terms_orderby', array ( &$this, 'applyOrderFilter' ), 10, 2);
 	
+	}
+
+	function applyOrderFilter ($orderby, $args)
+	{
+		if ($args['orderby'] == 'avhec_3rdparty_mycategoryorder')
+			return 't.term_order';
+		else
+			return $orderby;
 	}
 
 	/**
@@ -289,7 +298,7 @@ class AVH_EC_Core
 	{
 		$mywalker = new AVH_Walker_CategoryDropdown();
 		
-		$defaults = array('show_option_all'=>'', 'show_option_none'=>'', 'orderby'=>'id', 'order'=>'ASC', 'show_last_update'=>0, 'show_count'=>0, 'hide_empty'=>1, 'child_of'=>0, 'exclude'=>'', 'echo'=>1, 'selected'=>0, 'hierarchical'=>0, 'name'=>'cat', 'class'=>'postform', 'depth'=>0, 'tab_index'=>0, 'walker'=>$mywalker);
+		$defaults = array ( 'show_option_all' => '', 'show_option_none' => '', 'orderby' => 'id', 'order' => 'ASC', 'show_last_update' => 0, 'show_count' => 0, 'hide_empty' => 1, 'child_of' => 0, 'exclude' => '', 'echo' => 1, 'selected' => 0, 'hierarchical' => 0, 'name' => 'cat', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'walker' => $mywalker );
 		
 		$defaults['selected'] = (is_category()) ? get_query_var('cat') : 0;
 		
@@ -379,7 +388,7 @@ class AVH_EC_Core
 	function avh_wp_list_categories ($args = '', $selectedonly)
 	{
 		$mywalker = new AVHEC_Walker_Category();
-		$defaults = array('show_option_all'=>'', 'orderby'=>'name', 'order'=>'ASC', 'show_last_update'=>0, 'style'=>'list', 'show_count'=>0, 'hide_empty'=>1, 'use_desc_for_title'=>1, 'child_of'=>0, 'feed'=>'', 'feed_type'=>'', 'feed_image'=>'', 'exclude'=>'', 'exclude_tree'=>'', 'current_category'=>0, 'hierarchical'=>true, 'title_li'=>__('Categories'), 'echo'=>1, 'depth'=>0, 'walker'=>$mywalker);
+		$defaults = array ( 'show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __('Categories'), 'echo' => 1, 'depth' => 0, 'walker' => $mywalker );
 		
 		$r = wp_parse_args($args, $defaults);
 		
@@ -491,7 +500,7 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 		
 		// flat display
 		if (- 1 == $max_depth) {
-			$empty_array = array();
+			$empty_array = array ();
 			foreach ($elements as $e)
 				$this->display_element($e, $empty_array, 1, 0, $args, $output);
 			return $output;
@@ -503,8 +512,8 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 		 * children_elements is two dimensional array, eg.
 		 * children_elements[10][] contains all sub-elements whose parent is 10.
 		 */
-		$top_level_elements = array();
-		$children_elements = array();
+		$top_level_elements = array ();
+		$children_elements = array ();
 		foreach ($elements as $e) {
 			if (0 == $e->$parent_field)
 				$top_level_elements[] = $e;
@@ -521,8 +530,8 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 			$first = array_slice($elements, 0, 1);
 			$root = $first[0];
 			
-			$top_level_elements = array();
-			$children_elements = array();
+			$top_level_elements = array ();
+			$children_elements = array ();
 			foreach ($elements as $e) {
 				if ($root->$parent_field == $e->$parent_field)
 					$top_level_elements[] = $e;
@@ -539,7 +548,7 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 		 * then we got orphans, which should be displayed regardless
 		 */
 		if ((0 == $max_depth) && count($children_elements) > 0) {
-			$empty_array = array();
+			$empty_array = array ();
 			foreach ($children_elements as $orphans)
 				foreach ($orphans as $op)
 					$this->display_element($op, $empty_array, 1, 0, $args, $output);
@@ -569,7 +578,7 @@ class AVHEC_Walker_Category extends Walker
 	 * @todo Decouple this
 	 * @var array
 	 */
-	var $db_fields = array('parent'=>'parent', 'id'=>'term_id');
+	var $db_fields = array ( 'parent' => 'parent', 'id' => 'term_id' );
 
 	/**
 	 * @see Walker::start_lvl()
