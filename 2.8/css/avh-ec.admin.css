@@ -118,7 +118,7 @@ table.avhec-options {
 	-webkit-border-radius: 3px;
 }
 
-li.lineitem {
+#myCategoryOrderList li.lineitem {
 	border: 1px solid #B2B2B2;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -131,9 +131,10 @@ li.lineitem {
 	padding: 2px 5px 2px 5px;
 	height: 1.5em;
 	line-height: 1.5em;
+	list-style: none outside none;
 }
 
-.sortable-placeholder {
+#myCategoryOrderList .sortable-placeholder {
 	border: 1px dashed #B2B2B2;
 	margin-top: 5px;
 	margin-bottom: 5px;
