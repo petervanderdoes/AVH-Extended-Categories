@@ -805,7 +805,110 @@ class AVH_EC_Admin
 	 */
 	function metaboxManualOrder ()
 	{
-		Echo "Manual Order";
+		global $wpdb;
+		
+		$parentID = 0;
+		
+		$wpdb->show_errors();
+		
+		$query1 = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'avh_clean_term_order'");
+		
+		if ($query1 == 0) {
+			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avh_clean_term_order` INT( 4 ) NULL DEFAULT '0'");
+		}
+		
+		if (isset($_POST['btnSubCats'])) {
+			$parentID = $_POST['cats'];
+		} elseif (isset($_POST['hdnParentID'])) {
+			$parentID = $_POST['hdnParentID'];
+		}
+		
+		if (isset($_POST['btnReturnParent'])) {
+			$parentsParent = $wpdb->get_row("SELECT parent FROM $wpdb->term_taxonomy WHERE term_id = " . $_POST['hdnParentID'], ARRAY_N);
+			$parentID = $parentsParent[0];
+		}
+		
+		$success = "";
+		if (isset($_POST['btnOrderCats'])) {
+			if (isset($_POST['hdnMyCategoryOrder']) && $_POST['hdnMyCategoryOrder'] != "") {
+		global $wpdb;
+		
+		$hdnMyCategoryOrder = $_POST['hdnMyCategoryOrder'];
+		$IDs = explode(",", $hdnMyCategoryOrder);
+		$result = count($IDs);
+		
+		for ($i = 0; $i < $result; $i ++) {
+					$str = str_replace("id_", "", $IDs[$i]);
+					$wpdb->query("UPDATE $wpdb->terms SET avh_clean_term_order = '$i' WHERE term_id ='$str'");
+				}
+				
+				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'mycategoryorder') . '</p></div>';
+			} else
+				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'mycategoryorder') . '</p></div>';
+		
+		}
+		
+		$subCatStr = "";
+		$results = $wpdb->get_results("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.term_order ASC");
+		foreach ($results as $row) {
+			$subCatStr = $subCatStr . "<option value='$row->term_id'>$row->name</option>";
+		}
+		
+		echo '<div class="wrap">';
+		echo '<form name="frmMyCatOrder" method="post" action="">';
+		echo $success;
+		
+		echo '<p>';
+		_e('Choose a category from the drop down to order subcategories in that category or order the categories on this level by dragging and dropping them into the desired order.', 'mycategoryorder');
+		echo '</p>';
+		
+		if ($subCatStr != "") {
+			echo '<h3>';
+			_e('Order Subcategories', 'mycategoryorder');
+			echo '</h3>';
+			echo '<select id="cats" name="cats">';
+			echo $subCatStr;
+			
+			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'mycategoryorder') . '" />';
+		}
+		
+		echo '<h3>';
+		_e('Order Categories', 'mycategoryorder');
+		echo '</h3>';
+		echo '<ul id="myCategoryOrderList">';
+		$results = $wpdb->get_results("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY term_order ASC");
+		foreach ($results as $row)
+			echo "<li id='id_$row->term_id' class='lineitem'>" . __($row->name) . "</li>";
+		
+		echo '</ul>';
+		
+		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Click to Order Categories', 'mycategoryorder') . '"	onclick="javascript:orderCats(); return true;" />';
+		
+		if ($parentID != 0) {
+			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'mycategoryorder') . "' />";
+		}
+		
+		echo '<strong id="updateText"></strong><br /><br />';
+		echo '<input type="hidden" id="hdnMyCategoryOrder" name="hdnMyCategoryOrder" />';
+		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
+		echo '</div>';
+		
+		echo '<script type="text/javascript">' . "/n";
+		echo '		function mycategoryrderaddloadevent(){' . "/n";
+		echo '		jQuery("#myCategoryOrderList").sortable({ ' . "/n";
+		echo '			placeholder: "sortable-placeholder", ' . "/n";
+		echo '			revert: false,' . "/n";
+		echo '			tolerance: "pointer" ' . "/n";
+		echo '		});' . "/n";
+		echo '	};' . "/n";
+		echo '' . "/n";
+		echo '	addLoadEvent(mycategoryrderaddloadevent);' . "/n";
+		echo '	' . "/n";
+		echo '	function orderCats() {' . "/n";
+		echo '		jQuery("#updateText").html("' . __('Updating Category Order...', 'mycategoryorder') . '");' . "/n";
+		echo '		jQuery("#hdnMyCategoryOrder").val(jQuery("#myCategoryOrderList").sortable("toArray"));' . "/n";
+		echo '	}' . "/n";
+		echo '</script>' . "/n";
 	
 	}
 

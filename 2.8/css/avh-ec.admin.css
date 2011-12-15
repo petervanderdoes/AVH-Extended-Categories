@@ -106,3 +106,38 @@ table.avhec-options {
 #avhec-catlist li {
 	margin-bottom: 0px;
 }
+
+#myCategoryOrderList {
+	width: 90%;
+	border: 1px solid #B2B2B2;
+	margin: 10px 10px 10px 0px;
+	padding: 5px 10px 5px 10px;
+	list-style: none;
+	background-color: #fff;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+li.lineitem {
+	border: 1px solid #B2B2B2;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #F1F1F1;
+	color: #000;
+	cursor: move;
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 2px 5px 2px 5px;
+	height: 1.5em;
+	line-height: 1.5em;
+}
+
+.sortable-placeholder {
+	border: 1px dashed #B2B2B2;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 2px 5px 2px 5px;
+	height: 1.5em;
+	line-height: 1.5em;
+}
