@@ -208,7 +208,11 @@ class AVH_EC_Admin
 		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array(&$this, 'metaboxCategoryGroupList'), $this->hooks['menu_overview'], 'normal', 'core');
 		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array(&$this, 'metaboxTranslation'), $this->hooks['menu_overview'], 'normal', 'core');
 		
-		add_filter('screen_layout_columns', array(&$this, 'filterScreenLayoutColumns'), 10, 2);
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
 		
 		// WordPress core Scripts
 		wp_enqueue_script('common');
@@ -280,7 +284,11 @@ class AVH_EC_Admin
 		// Add metaboxes
 		add_meta_box('avhecBoxOptions', __('Options', 'avh-ec'), array(&$this, 'metaboxOptions'), $this->hooks['menu_general'], 'normal', 'core');
 		
-		add_filter('screen_layout_columns', array(&$this, 'filterScreenLayoutColumns'), 10, 2);
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
 		
 		// WordPress core Scripts
 		wp_enqueue_script('common');
@@ -435,7 +443,12 @@ class AVH_EC_Admin
 		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array(&$this, 'metaboxCategoryGroupList'), $this->hooks['menu_category_groups'], 'side', 'core');
 		add_meta_box('avhecBoxCategoryGroupSpecialPages', __('Special Pages', 'avh-ec'), array(&$this, 'metaboxCategoryGroupSpecialPages'), $this->hooks['menu_category_groups'], 'normal', 'core');
 		
-		add_filter('screen_layout_columns', array(&$this, 'filterScreenLayoutColumns'), 10, 2);
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
+		
 		// WordPress core Scripts
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
@@ -723,7 +736,11 @@ class AVH_EC_Admin
 		add_meta_box('avhecBoxFAQ', __('F.A.Q.', 'avh-ec'), array(&$this, 'metaboxFAQ'), $this->hooks['menu_faq'], 'normal', 'core');
 		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array(&$this, 'metaboxTranslation'), $this->hooks['menu_faq'], 'normal', 'core');
 		
-		add_filter('screen_layout_columns', array(&$this, 'filterScreenLayoutColumns'), 10, 2);
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
 		
 		// WordPress core Styles and Scripts
 		wp_enqueue_script('common');
