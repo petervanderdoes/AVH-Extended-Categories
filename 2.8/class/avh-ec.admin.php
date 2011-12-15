@@ -893,22 +893,22 @@ class AVH_EC_Admin
 		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
 		echo '</div>';
 		
-		echo '<script type="text/javascript">' . "/n";
-		echo '		function mycategoryrderaddloadevent(){' . "/n";
-		echo '		jQuery("#myCategoryOrderList").sortable({ ' . "/n";
-		echo '			placeholder: "sortable-placeholder", ' . "/n";
-		echo '			revert: false,' . "/n";
-		echo '			tolerance: "pointer" ' . "/n";
-		echo '		});' . "/n";
-		echo '	};' . "/n";
-		echo '' . "/n";
-		echo '	addLoadEvent(mycategoryrderaddloadevent);' . "/n";
-		echo '	' . "/n";
-		echo '	function orderCats() {' . "/n";
-		echo '		jQuery("#updateText").html("' . __('Updating Category Order...', 'mycategoryorder') . '");' . "/n";
-		echo '		jQuery("#hdnMyCategoryOrder").val(jQuery("#myCategoryOrderList").sortable("toArray"));' . "/n";
-		echo '	}' . "/n";
-		echo '</script>' . "/n";
+		echo '<script type="text/javascript">' . "\n";
+		echo '		function mycategoryrderaddloadevent(){' . "\n";
+		echo '		jQuery("#myCategoryOrderList").sortable({ ' . "\n";
+		echo '			placeholder: "sortable-placeholder", ' . "\n";
+		echo '			revert: false,' . "\n";
+		echo '			tolerance: "pointer" ' . "\n";
+		echo '		});' . "\n";
+		echo '	};' . "\n";
+		echo '' . "\n";
+		echo '	addLoadEvent(mycategoryrderaddloadevent);' . "\n";
+		echo '	' . "\n";
+		echo '	function orderCats() {' . "\n";
+		echo '		jQuery("#updateText").html("' . __('Updating Category Order...', 'mycategoryorder') . '");' . "\n";
+		echo '		jQuery("#hdnMyCategoryOrder").val(jQuery("#myCategoryOrderList").sortable("toArray"));' . "\n";
+		echo '	}' . "\n";
+		echo '</script>' . "\n";
 	
 	}
 
