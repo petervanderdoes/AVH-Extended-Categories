@@ -182,6 +182,7 @@ class AVH_EC_Admin
 		$this->hooks['menu_overview'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Overview', 'avh-ec'), __('Overview', 'avh-ec'), 'manage_options', $folder, array(&$this, 'doMenuOverview'));
 		$this->hooks['menu_general'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('General Options', 'avh-ec'), __('General Options', 'avh-ec'), 'manage_options', 'avhec-general', array(&$this, 'doMenuGeneral'));
 		$this->hooks['menu_category_groups'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Category Groups', 'avh-ec'), __('Category Groups', 'avh-ec'), 'manage_options', 'avhec-grouped', array(&$this, 'doMenuCategoryGroup'));
+		$this->hooks['menu_manual_order'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Manually Order', 'avh-ec'), __('Manually Order', 'avh-ec'), 'manage_options', 'avhec-manual-order', array(&$this, 'doMenuManualOrder'));
 		$this->hooks['menu_faq'] = add_submenu_page($folder, 'AVH Extended Categories:' . __('F.A.Q', 'avh-ec'), __('F.A.Q', 'avh-ec'), 'manage_options', 'avhec-faq', array(&$this, 'doMenuFAQ'));
 		
 		// Add actions for menu pages
@@ -193,6 +194,9 @@ class AVH_EC_Admin
 		
 		// Category Groups Menu
 		add_action('load-' . $this->hooks['menu_category_groups'], array(&$this, 'actionLoadPageHook_CategoryGroup'));
+		
+		// Manual Order Menu
+		add_action('load-' . $this->hooks['menu_manual_order'], array(&$this, 'actionLoadPageHook_ManualOrder'));
 		
 		// FAQ Menu
 		add_action('load-' . $this->hooks['menu_faq'], array(&$this, 'actionLoadPageHook_faq'));
@@ -724,6 +728,85 @@ class AVH_EC_Admin
 		echo $this->printOptions($data['sp']['form'], $data['sp']['data']);
 		echo '<p class="submit"><input	class="button"	type="submit" name="spgroup" value="' . __('Save settings', 'avh-ec') . '" /></p>';
 		echo '</form>';
+	}
+
+
+		/**
+	 * Setup everything needed for the Manul Order page
+	 *
+	 */
+	function actionLoadPageHook_ManualOrder ()
+	{
+		
+		add_meta_box('avhecBoxManualOrder', __('Order Categories', 'avh-ec'), array(&$this, 'metaboxManualOrder'), $this->hooks['menu_manual_order'], 'normal', 'core');
+
+		
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 1, 'default' => 1) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
+		
+		// WordPress core Styles and Scripts
+		wp_enqueue_script('common');
+		wp_enqueue_script('wp-lists');
+		wp_enqueue_script('postbox');
+		wp_enqueue_script('jquery-ui-sortable');
+		
+		// WordPress core Styles
+		wp_admin_css('css/dashboard');
+		
+		// Plugin Style
+		wp_enqueue_style('avhec-admin-css');
+	
+	}
+
+	/**
+	 * Menu Page Manual Order
+	 *
+	 * @return none
+	 */
+	function doMenuManualOrder ()
+	{
+		global $screen_layout_columns;
+		
+		$hide2 = '';
+		switch ($screen_layout_columns) {
+			case 2:
+				$width = 'width:49%;';
+				break;
+			default:
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
+		}
+		
+		echo '<div class="wrap avhec-metabox-wrap">';
+		echo $this->displayIcon('index');
+		echo '<h2>' . 'AVH Extended Categories - ' . __('Manually Order CategoriesQ', 'avh-ec') . '</h2>';
+		echo '	<div id="dashboard-widgets-wrap">';
+		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes($this->hooks['menu_manual_order'], 'normal', '');
+		echo '			</div>';
+		echo '		</div>';
+		echo '<br class="clear"/>';
+		echo '	</div>'; //dashboard-widgets-wrap
+		echo '</div>'; // wrap
+		
+
+		$this->printMetaboxGeneralNonces();
+		$this->printMetaboxJS('manual_order');
+		$this->printAdminFooter();
+	}
+
+	/**
+	 * 
+	 * @return unknown_type
+	 */
+	function metaboxManualOrder ()
+	{
+		Echo "Manual Order";
+	
 	}
 
 	/**
