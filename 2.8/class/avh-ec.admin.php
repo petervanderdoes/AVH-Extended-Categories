@@ -738,7 +738,7 @@ class AVH_EC_Admin
 	function actionLoadPageHook_ManualOrder ()
 	{
 		
-		add_meta_box('avhecBoxManualOrder', __('Order Categories', 'avh-ec'), array(&$this, 'metaboxManualOrder'), $this->hooks['menu_manual_order'], 'normal', 'core');
+		add_meta_box('avhecBoxManualOrder', __('Manually Order Categories', 'avh-ec'), array(&$this, 'metaboxManualOrder'), $this->hooks['menu_manual_order'], 'normal', 'core');
 
 		
 		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
@@ -782,7 +782,7 @@ class AVH_EC_Admin
 		
 		echo '<div class="wrap avhec-metabox-wrap">';
 		echo $this->displayIcon('index');
-		echo '<h2>' . 'AVH Extended Categories - ' . __('Manually Order CategoriesQ', 'avh-ec') . '</h2>';
+		echo '<h2>' . 'AVH Extended Categories - ' . __('Manually Order Categories', 'avh-ec') . '</h2>';
 		echo '	<div id="dashboard-widgets-wrap">';
 		echo '		<div id="dashboard-widgets" class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
