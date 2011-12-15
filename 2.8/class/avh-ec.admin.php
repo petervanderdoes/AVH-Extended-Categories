@@ -863,18 +863,18 @@ class AVH_EC_Admin
 		echo '</p>';
 		
 		if ($subCatStr != "") {
-			echo '<h3>';
+			echo '<h4>';
 			_e('Order Subcategories', 'mycategoryorder');
-			echo '</h3>';
+			echo '</h4>';
 			echo '<select id="cats" name="cats">';
 			echo $subCatStr;
 			
 			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'mycategoryorder') . '" />';
 		}
 		
-		echo '<h3>';
+		echo '<h4>';
 		_e('Order Categories', 'mycategoryorder');
-		echo '</h3>';
+		echo '</h4>';
 		echo '<ul id="myCategoryOrderList">';
 		$results = $wpdb->get_results("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY term_order ASC");
 		foreach ($results as $row)
