@@ -45,6 +45,7 @@ class AVH_EC_Singleton
  */
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/helpers/avh-forms.php');
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.widgets.php');
+require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/libs/avh-common.php');
 
 /**
  * Initialize the plugin
