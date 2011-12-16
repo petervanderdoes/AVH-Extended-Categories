@@ -107,7 +107,7 @@ table.avhec-options {
 	margin-bottom: 0px;
 }
 
-#myCategoryOrderList {
+#avhecManualOrder {
 	width: 90%;
 	border: 1px solid #B2B2B2;
 	margin: 10px 10px 10px 0px;
@@ -118,14 +118,13 @@ table.avhec-options {
 	-webkit-border-radius: 3px;
 }
 
-#myCategoryOrderList li.lineitem {
+#avhecManualOrder li.lineitem {
 	border: 1px solid #B2B2B2;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	background-color: #F1F1F1;
 	color: #000;
 	cursor: move;
-	font-size: 13px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 2px 5px 2px 5px;
@@ -134,7 +133,7 @@ table.avhec-options {
 	list-style: none outside none;
 }
 
-#myCategoryOrderList .sortable-placeholder {
+#avhecManualOrder .sortable-placeholder {
 	border: 1px dashed #B2B2B2;
 	margin-top: 5px;
 	margin-bottom: 5px;
