@@ -880,7 +880,7 @@ class AVH_EC_Admin
 		echo '<ul id="avhecManualOrder">';
 		$results = $wpdb->get_results("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY term_order ASC");
 		foreach ($results as $row)
-			echo "<li id='id_$row->term_id' class='lineitem'>" . __($row->name) . "</li>";
+			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
 		
 		echo '</ul>';
 		
