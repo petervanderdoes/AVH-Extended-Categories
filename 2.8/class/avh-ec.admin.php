@@ -46,6 +46,8 @@ class AVH_EC_Admin
 		add_filter('manage_categories_group_columns', array(&$this, 'filterManageCategoriesGroupColumns'));
 		add_filter('explain_nonce_delete-avhecgroup', array(&$this, 'filterExplainNonceDeleteGroup'), 10, 2);
 		
+		wp_register_script('avhec-manualorder', $this->core->info['js_dir'].'/avhec.admin.manualorder.dev.js');
+		
 		return;
 	}
 
@@ -752,6 +754,7 @@ class AVH_EC_Admin
 		wp_enqueue_script('wp-lists');
 		wp_enqueue_script('postbox');
 		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('avhec-manualorder');
 		
 		// WordPress core Styles
 		wp_admin_css('css/dashboard');
@@ -809,12 +812,12 @@ class AVH_EC_Admin
 		
 		$parentID = 0;
 		
-		$wpdb->show_errors();
+		//$wpdb->show_errors();
 		
-		$query1 = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'avh_clean_term_order'");
+		$query1 = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'avhec_term_order'");
 		
 		if ($query1 == 0) {
-			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avh_clean_term_order` INT( 4 ) NULL DEFAULT '0'");
+			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avhec_term_order` INT( 4 ) NULL DEFAULT '0'");
 		}
 		
 		if (isset($_POST['btnSubCats'])) {
@@ -839,7 +842,7 @@ class AVH_EC_Admin
 		
 		for ($i = 0; $i < $result; $i ++) {
 					$str = str_replace("id_", "", $IDs[$i]);
-					$wpdb->query("UPDATE $wpdb->terms SET avh_clean_term_order = '$i' WHERE term_id ='$str'");
+					$wpdb->query("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'");
 				}
 				
 				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'mycategoryorder') . '</p></div>';
@@ -875,7 +878,7 @@ class AVH_EC_Admin
 		echo '<h4>';
 		_e('Order Categories', 'mycategoryorder');
 		echo '</h4>';
-		echo '<ul id="myCategoryOrderList">';
+		echo '<ul id="avhecManualOrder">';
 		$results = $wpdb->get_results("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY term_order ASC");
 		foreach ($results as $row)
 			echo "<li id='id_$row->term_id' class='lineitem'>" . __($row->name) . "</li>";
@@ -892,24 +895,6 @@ class AVH_EC_Admin
 		echo '<input type="hidden" id="hdnMyCategoryOrder" name="hdnMyCategoryOrder" />';
 		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
 		echo '</div>';
-		
-		echo '<script type="text/javascript">' . "\n";
-		echo '		function mycategoryrderaddloadevent(){' . "\n";
-		echo '		jQuery("#myCategoryOrderList").sortable({ ' . "\n";
-		echo '			placeholder: "sortable-placeholder", ' . "\n";
-		echo '			revert: false,' . "\n";
-		echo '			tolerance: "pointer" ' . "\n";
-		echo '		});' . "\n";
-		echo '	};' . "\n";
-		echo '' . "\n";
-		echo '	addLoadEvent(mycategoryrderaddloadevent);' . "\n";
-		echo '	' . "\n";
-		echo '	function orderCats() {' . "\n";
-		echo '		jQuery("#updateText").html("' . __('Updating Category Order...', 'mycategoryorder') . '");' . "\n";
-		echo '		jQuery("#hdnMyCategoryOrder").val(jQuery("#myCategoryOrderList").sortable("toArray"));' . "\n";
-		echo '	}' . "\n";
-		echo '</script>' . "\n";
-	
 	}
 
 	/**
