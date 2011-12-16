@@ -46,7 +46,7 @@ class AVH_EC_Admin
 		add_filter('manage_categories_group_columns', array(&$this, 'filterManageCategoriesGroupColumns'));
 		add_filter('explain_nonce_delete-avhecgroup', array(&$this, 'filterExplainNonceDeleteGroup'), 10, 2);
 		
-		wp_register_script('avhec-manualorder', $this->core->info['js_dir'].'/avhec.admin.manualorder.dev.js');
+		wp_register_script('avhec-manualorder','/'.AVHEC_RELATIVE_WORKING_DIR.'/js/avhec.admin.manualorder.dev.js');
 		
 		return;
 	}
