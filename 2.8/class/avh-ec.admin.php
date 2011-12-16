@@ -46,8 +46,6 @@ class AVH_EC_Admin
 		add_filter('manage_categories_group_columns', array(&$this, 'filterManageCategoriesGroupColumns'));
 		add_filter('explain_nonce_delete-avhecgroup', array(&$this, 'filterExplainNonceDeleteGroup'), 10, 2);
 		
-		wp_register_script('avhec-manualorder','/'.AVHEC_RELATIVE_WORKING_DIR.'/js/avhec.admin.manualorder.dev.js');
-		
 		return;
 	}
 
@@ -176,6 +174,7 @@ class AVH_EC_Admin
 		// Register Style and Scripts
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
 		wp_register_script('avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array('jquery'), $this->core->version, true);
+		wp_register_script('avhec-manualorder', AVHEC_PLUGIN_URL . '/js/avh-ec.admin.manualorder' . $suffix . '.js', array ( 'jquery-ui-sortable' ), $this->core->version, true);
 		wp_register_style('avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array('wp-admin'), $this->core->version, 'screen');
 		
 		// Add menu system
