@@ -1,4 +1,4 @@
-function avhecManualOrderaddloadevent() {
+function avhecManualOrder() {
 	jQuery("#avhecManualOrder").sortable({
 		placeholder : "sortable-placeholder",
 		revert : false,
@@ -6,10 +6,10 @@ function avhecManualOrderaddloadevent() {
 	});
 };
 
-addLoadEvent('avhecManualOrderaddloadevent');
+addLoadEvent(avhecManualOrder);
 
 function orderCats() {
 	jQuery("#updateText").html("Updating Category Order...");
 	jQuery("#hdnMyCategoryOrder").val(
-			jQuery("#myCategoryOrderList").sortable("toArray"));
+			jQuery("#avhecManualOrder").sortable("toArray"));
 }
