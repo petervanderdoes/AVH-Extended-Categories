@@ -2,6 +2,10 @@ function avhecManualOrder() {
 	jQuery("#avhecManualOrder").sortable({
 		placeholder : "sortable-placeholder",
 		revert : false,
+		items : '.lineitem',
+		opacity: 0.65,
+		cursor: 'move',
+		forcePlaceholderSize: true,
 		tolerance : "pointer"
 	});
 };
