@@ -782,19 +782,17 @@ class AVH_EC_Admin
 				$hide2 = 'display:none;';
 		}
 		
-		echo '<div class="wrap avhec-metabox-wrap">';
+		echo '<div class="wrap">';
 		echo $this->displayIcon('index');
 		echo '<h2>' . 'AVH Extended Categories - ' . __('Manually Order Categories', 'avh-ec') . '</h2>';
-		echo '	<div id="dashboard-widgets-wrap">';
-		echo '		<div id="dashboard-widgets" class="metabox-holder">';
+
+		echo '<div class="metabox-holder">';
 		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
 		do_meta_boxes($this->hooks['menu_manual_order'], 'normal', '');
 		echo '			</div>';
-		echo '		</div>';
-		echo '<br class="clear"/>';
-		echo '	</div>'; //dashboard-widgets-wrap
+		echo '</div>';
 		echo '</div>'; // wrap
-		
+		echo '<div class="clear"></div>';
 
 		$this->printMetaboxGeneralNonces();
 		$this->printMetaboxJS('manual_order');
