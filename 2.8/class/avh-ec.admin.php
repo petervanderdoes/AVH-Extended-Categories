@@ -839,17 +839,17 @@ class AVH_EC_Admin
 		
 		for ($i = 0; $i < $result; $i ++) {
 					$str = str_replace("id_", "", $IDs[$i]);
-					$wpdb->query("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'");
+					$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'"));
 				}
 				
-				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'mycategoryorder') . '</p></div>';
+				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'avh-ec') . '</p></div>';
 			} else
-				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'mycategoryorder') . '</p></div>';
+				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'avh-ec') . '</p></div>';
 		
 		}
 		
 		$subCatStr = "";
-		$results = $wpdb->get_results("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC");
+		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC"));
 		foreach ($results as $row) {
 			$subCatStr = $subCatStr . "<option value='$row->term_id'>$row->name</option>";
 		}
@@ -859,33 +859,33 @@ class AVH_EC_Admin
 		echo $success;
 		
 		echo '<p>';
-		_e('Choose a category from the drop down to order subcategories in that category or order the categories on this level by dragging and dropping them into the desired order.', 'mycategoryorder');
+		_e('Choose a category from the drop down to order subcategories in that category or order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
 		echo '</p>';
 		
 		if ($subCatStr != "") {
 			echo '<h4>';
-			_e('Order Subcategories', 'mycategoryorder');
+			_e('Order Subcategories', 'avh-ec');
 			echo '</h4>';
 			echo '<select id="cats" name="cats">';
 			echo $subCatStr;
 			
-			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'mycategoryorder') . '" />';
+			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'avh-ec') . '" />';
 		}
 		
 		echo '<h4>';
-		_e('Order Categories', 'mycategoryorder');
+		_e('Order Categories', 'avh-ec');
 		echo '</h4>';
 		echo '<ul id="avhecManualOrder">';
-		$results = $wpdb->get_results("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC");
+		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
 		foreach ($results as $row)
 			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
 		
 		echo '</ul>';
 		
-		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Click to Order Categories', 'mycategoryorder') . '"	onclick="javascript:orderCats(); return true;" />';
+		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Click to Order Categories', 'avh-ec') . '"	onclick="javascript:orderCats(); return true;" />';
 		
 		if ($parentID != 0) {
-			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'mycategoryorder') . "' />";
+			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'avh-ec') . "' />";
 		}
 		
 		echo '<strong id="updateText"></strong><br /><br />';
