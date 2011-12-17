@@ -120,6 +120,7 @@ table.avhec-options {
 
 #avhecManualOrder li.lineitem {
 	border: 1px solid #DFDFDF;
+	background-image: none;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	background-color: #FFFFFF;
@@ -128,8 +129,6 @@ table.avhec-options {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 2px 5px 2px 5px;
-	height: 1.5em;
-	line-height: 1.5em;
 	list-style: none outside none;
 }
 
