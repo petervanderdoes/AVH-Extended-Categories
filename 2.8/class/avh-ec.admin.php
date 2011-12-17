@@ -810,7 +810,8 @@ class AVH_EC_Admin
 		$parentID = 0;
 		
 		//$wpdb->show_errors();
-		
+		$db=new AVH_DB();
+		$f=$db->field_exists('avhec_term_order', $wpdb->terms);
 		$query1 = $wpdb->query("SHOW COLUMNS FROM $wpdb->terms LIKE 'avhec_term_order'");
 		
 		if ($query1 == 0) {
