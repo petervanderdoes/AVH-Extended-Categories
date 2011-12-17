@@ -873,8 +873,13 @@ class AVH_EC_Admin
 		}
 		
 		echo '<h4>';
-		_e('Order Categories', 'avh-ec');
-		echo ': ';
+		_e('Order the categories', 'avh-ec');
+		if ($parentID == 0){
+			echo ' at the Toplevel';
+		} else {
+			$_cats=get_category_parents($parentID,false,' » ');
+			echo ' in the category '.trim($_cats, ' » ');
+		}
 		echo '</h4>';
 		echo '<ul id="avhecManualOrder">';
 		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
