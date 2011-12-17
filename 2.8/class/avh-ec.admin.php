@@ -859,10 +859,33 @@ class AVH_EC_Admin
 		echo $success;
 		
 		echo '<p>';
-		_e('Choose a category from the drop down to order subcategories in that category or order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
+		_e('Order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
 		echo '</p>';
 		
+		echo '<h4>';
+		_e('Order the categories', 'avh-ec');
+		if ($parentID == 0) {
+			echo ' at the Toplevel';
+		} else {
+			$_cats = get_category_parents($parentID, false, ' » ');
+			echo ' in the category ' . trim($_cats, ' » ');
+		}
+		echo '</h4>';
+		echo '<ul id="avhecManualOrder">';
+		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
+		foreach ($results as $row)
+			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
+		
+		echo '</ul>';
+		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Click to Order Categories', 'avh-ec') . '"	onclick="javascript:orderCats(); return true;" />';
+		
+		if ($parentID != 0) {
+			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'avh-ec') . "' />";
+		}
+		
+		echo '<strong id="updateText"></strong><br /><br />';
 		if ($_SubCategories != "") {
+			_e('Choose a category from the drop down to order the subcategories in that category.', 'avh-ec');
 			echo '<h4>';
 			_e('Order Subcategories', 'avh-ec');
 			echo '</h4>';
@@ -872,29 +895,6 @@ class AVH_EC_Admin
 			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'avh-ec') . '" />';
 		}
 		
-		echo '<h4>';
-		_e('Order the categories', 'avh-ec');
-		if ($parentID == 0){
-			echo ' at the Toplevel';
-		} else {
-			$_cats=get_category_parents($parentID,false,' » ');
-			echo ' in the category '.trim($_cats, ' » ');
-		}
-		echo '</h4>';
-		echo '<ul id="avhecManualOrder">';
-		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
-		foreach ($results as $row)
-			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
-		
-		echo '</ul>';
-		
-		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Click to Order Categories', 'avh-ec') . '"	onclick="javascript:orderCats(); return true;" />';
-		
-		if ($parentID != 0) {
-			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'avh-ec') . "' />";
-		}
-		
-		echo '<strong id="updateText"></strong><br /><br />';
 		echo '<input type="hidden" id="hdnManualOrder" name="hdnManualOrder" />';
 		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
 		echo '</div>';
