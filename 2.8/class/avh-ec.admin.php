@@ -830,28 +830,28 @@ class AVH_EC_Admin
 		
 		$success = "";
 		if (isset($_POST['btnOrderCats'])) {
-			if (isset($_POST['hdnMyCategoryOrder']) && $_POST['hdnMyCategoryOrder'] != "") {
-		global $wpdb;
-		
-		$hdnMyCategoryOrder = $_POST['hdnMyCategoryOrder'];
-		$IDs = explode(",", $hdnMyCategoryOrder);
-		$result = count($IDs);
-		
-		for ($i = 0; $i < $result; $i ++) {
+			if (isset($_POST['hdnManualOrder']) && $_POST['hdnManualOrder'] != "") {
+				
+				$hdnManualOrder = $_POST['hdnManualOrder'];
+				$IDs = explode(",", $hdnManualOrder);
+				$result = count($IDs);
+				
+				for ($i = 0; $i < $result; $i ++) {
 					$str = str_replace("id_", "", $IDs[$i]);
 					$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'"));
 				}
 				
 				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'avh-ec') . '</p></div>';
-			} else
+			} else {
 				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'avh-ec') . '</p></div>';
+			}
 		
 		}
 		
-		$subCatStr = "";
+		$_SubCategories = "";
 		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC"));
 		foreach ($results as $row) {
-			$subCatStr = $subCatStr . "<option value='$row->term_id'>$row->name</option>";
+			$_SubCategories .= "<option value='$row->term_id'>$row->name</option>";
 		}
 		
 		echo '<div class="wrap">';
@@ -862,18 +862,19 @@ class AVH_EC_Admin
 		_e('Choose a category from the drop down to order subcategories in that category or order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
 		echo '</p>';
 		
-		if ($subCatStr != "") {
+		if ($_SubCategories != "") {
 			echo '<h4>';
 			_e('Order Subcategories', 'avh-ec');
 			echo '</h4>';
 			echo '<select id="cats" name="cats">';
-			echo $subCatStr;
+			echo $_SubCategories;
 			
 			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Order Subcategories', 'avh-ec') . '" />';
 		}
 		
 		echo '<h4>';
 		_e('Order Categories', 'avh-ec');
+		echo ': ';
 		echo '</h4>';
 		echo '<ul id="avhecManualOrder">';
 		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
@@ -889,7 +890,7 @@ class AVH_EC_Admin
 		}
 		
 		echo '<strong id="updateText"></strong><br /><br />';
-		echo '<input type="hidden" id="hdnMyCategoryOrder" name="hdnMyCategoryOrder" />';
+		echo '<input type="hidden" id="hdnManualOrder" name="hdnManualOrder" />';
 		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
 		echo '</div>';
 	}
