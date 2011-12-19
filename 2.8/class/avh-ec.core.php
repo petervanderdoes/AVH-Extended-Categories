@@ -47,6 +47,8 @@ class AVH_EC_Core
 
 	function handleInitializePlugin ()
 	{
+		global $wpdb;
+		
 		$catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 		$db_version = 4;
 		
@@ -80,6 +82,11 @@ class AVH_EC_Core
 		// Check if we have to do updates
 		if ((! isset($this->options['general']['dbversion'])) || $this->options['general']['dbversion'] < $db_version) {
 			$this->doUpdateOptions($db_version);
+		}
+		
+		$db=new AVH_DB();
+		if (! $db->field_exists('avhec_term_order', $wpdb->terms) ) {
+			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avhec_term_order` INT( 4 ) NULL DEFAULT '0'");
 		}
 		
 		$this->handleTextdomain();
