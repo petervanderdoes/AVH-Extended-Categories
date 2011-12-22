@@ -886,6 +886,7 @@ class AVH_Walker_Category_Checklist extends Walker
 	var $input_id;
 	var $input_name;
 	var $li_id;
+	
 	/**
 	 * Display array of elements hierarchically.
 	 *
@@ -898,6 +899,7 @@ class AVH_Walker_Category_Checklist extends Walker
 	 *
 	 * @param array $elements
 	 * @param int $max_depth
+	 * @param array $args;
 	 * @return string
 	 */
 	function walk( $elements, $max_depth, $args) {
