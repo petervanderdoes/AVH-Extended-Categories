@@ -765,7 +765,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$rssimage = esc_attr($instance['rssimage']);
 		
 		$selected_cats = ($instance['post_group_category'] != '') ? unserialize($instance['post_group_category']) : FALSE;
-		
+		ob_start();
 		echo '<p>';
 		avh_doWidgetFormText($this->get_field_id('title'), $this->get_field_name('title'), __('Title', 'avh-ec'), $instance['title']);
 		echo '</p>';
@@ -816,13 +816,14 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		_e('Any Group', 'avh-ec');
 		echo '</label>';
 		echo '</li>';
-		ob_start();
+
 		$this->avh_wp_group_category_checklist($selected_cats, $this->number);
-		ob_end_flush();
+
 		echo '</ul>';
 		echo '</p>';
 		
 		echo '<input type="hidden" id="' . $this->get_field_id('submit') . '" name="' . $this->get_field_name('submit') . '" value="1" />';
+		ob_end_flush();
 	}
 
 	function avh_wp_group_category_checklist ($selected_cats, $number)
@@ -855,9 +856,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 		
 		// Put checked cats on top
-		echo call_user_func_array(array(&$walker, 'walk'), array($checked_categories, 0, $args));
+		echo $walker->walk($checked_categories, 0, $args);
 		// Then the rest of them
-		echo call_user_func_array(array(&$walker, 'walk'), array($categories, 0, $args));
+		echo $walker->walk($categories, 0, $args);
 	}
 
 	function getWidgetDoneCatGroup ($id)
@@ -883,7 +884,91 @@ class AVH_Walker_Category_Checklist extends Walker
 	var $input_id;
 	var $input_name;
 	var $li_id;
+	/**
+	 * Display array of elements hierarchically.
+	 *
+	 * It is a generic function which does not assume any existing order of
+	 * elements. max_depth = -1 means flatly display every element. max_depth =
+	 * 0 means display all levels. max_depth > 0  specifies the number of
+	 * display levels.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param array $elements
+	 * @param int $max_depth
+	 * @return string
+	 */
+	function walk( $elements, $max_depth, $args) {
 
+		$output = '';
+
+		if ($max_depth < -1) //invalid parameter
+			return $output;
+
+		if (empty($elements)) //nothing to walk
+			return $output;
+
+		$id_field = $this->db_fields['id'];
+		$parent_field = $this->db_fields['parent'];
+
+		// flat display
+		if ( -1 == $max_depth ) {
+			$empty_array = array();
+			foreach ( $elements as $e )
+				$this->display_element( $e, $empty_array, 1, 0, $args, $output );
+			return $output;
+		}
+
+		/*
+		 * need to display in hierarchical order
+		 * separate elements into two buckets: top level and children elements
+		 * children_elements is two dimensional array, eg.
+		 * children_elements[10][] contains all sub-elements whose parent is 10.
+		 */
+		$top_level_elements = array();
+		$children_elements  = array();
+		foreach ( $elements as $e) {
+			if ( 0 == $e->$parent_field )
+				$top_level_elements[] = $e;
+			else
+				$children_elements[ $e->$parent_field ][] = $e;
+		}
+
+		/*
+		 * when none of the elements is top level
+		 * assume the first one must be root of the sub elements
+		 */
+		if ( empty($top_level_elements) ) {
+
+			$first = array_slice( $elements, 0, 1 );
+			$root = $first[0];
+
+			$top_level_elements = array();
+			$children_elements  = array();
+			foreach ( $elements as $e) {
+				if ( $root->$parent_field == $e->$parent_field )
+					$top_level_elements[] = $e;
+				else
+					$children_elements[ $e->$parent_field ][] = $e;
+			}
+		}
+
+		foreach ( $top_level_elements as $e )
+			$this->display_element( $e, $children_elements, $max_depth, 0, $args, $output );
+
+		/*
+		 * if we are displaying all levels, and remaining children_elements is not empty,
+		 * then we got orphans, which should be displayed regardless
+		 */
+		if ( ( $max_depth == 0 ) && count( $children_elements ) > 0 ) {
+			$empty_array = array();
+			foreach ( $children_elements as $orphans )
+				foreach( $orphans as $op )
+					$this->display_element( $op, $empty_array, 1, 0, $args, $output );
+		 }
+
+		 return $output;
+	}
 	function start_lvl (&$output, $depth, $args)
 	{
 		$indent = str_repeat("\t", $depth);
