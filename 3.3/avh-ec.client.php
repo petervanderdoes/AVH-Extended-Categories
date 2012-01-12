@@ -14,7 +14,7 @@ class AVH_EC_Singleton
 	 */
 	function &getInstance ($class, $arg1 = null)
 	{
-		static $instances = array(); // array of instance names
+		static $instances = array (); // array of instance names
 		if (array_key_exists($class, $instances)) {
 			$instance = & $instances[$class];
 		} else {
@@ -58,7 +58,7 @@ function avhextendedcategories_init ()
 		$avhec_admin = new AVH_EC_Admin();
 	}
 	AVH_EC_Singleton::getInstance('AVH_EC_Core');
-
+	
 	add_action('widgets_init', 'avhextendedcategories_widgets_init');
 
 } // End avhamazon_init()

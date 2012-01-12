@@ -38,7 +38,7 @@ class AVH_EC_Category_Group
 	{
 		global $wpdb;
 		
-		register_shutdown_function(array(&$this, '__destruct'));
+		register_shutdown_function(array ( &$this, '__destruct' ));
 		
 		/**
 		 * Taxonomy name
@@ -55,12 +55,12 @@ class AVH_EC_Category_Group
 		 *
 		 */
 		if ($wpdb->get_var('show tables like \'' . $wpdb->avhec_cat_group . '\'') != $wpdb->avhec_cat_group) {
-			add_action('init', array(&$this, 'doCreateTable'), 2); // Priority needs to be the same as the Register Taxonomy
+			add_action('init', array ( &$this, 'doCreateTable' ), 2); // Priority needs to be the same as the Register Taxonomy
 		}
-		add_action('init', array(&$this, 'doRegisterTaxonomy'), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
-		add_action('init', array(&$this, 'doSetupOptions'));
+		add_action('init', array ( &$this, 'doRegisterTaxonomy' ), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
+		add_action('init', array ( &$this, 'doSetupOptions' ));
 		
-		add_action('admin_init', array(&$this, 'addMetaBoxes'));
+		add_action('admin_init', array ( &$this, 'addMetaBoxes' ));
 	
 	}
 
@@ -109,9 +109,9 @@ class AVH_EC_Category_Group
 		 * As we don't want to see the Menu Item we have to disable show_ui. This also disables the metabox on the posts and pages, so we add thse manually instead.
 		 * We remove the capabilities to manage, edit and delete the terms. We have written this part ourselves and don't use WordPress for these functions. The only one we use is the assign_terms.
 		 */
-		$labels = array('name'=>__('Category Groups', 'avh-ec'), 'singular_name'=>__('Category Group', 'avh-ec'), 'search_items'=>__('Search Category Groups', 'avh-ec'), 'popular_items'=>__('Popular Category Groups'), 'all_items'=>__('All Category Groups'), 'parent_item'=>__('Parent Category Group'), 'parent_item_colon'=>__('Parent Category Group:'), 'edit_item'=>__('Edit Category Group'), 'update_item'=>__('Update Category Group'), 'add_new_item'=>__('Add New Category Group'), 'new_item_name'=>__('New Category Group Name'));
-		$caps = array('manage_terms'=>null, 'edit_terms'=>null, 'delete_terms'=>null, 'assign_terms'=>'edit_posts');
-		register_taxonomy($this->taxonomy_name, array('post', 'page'), array('hierarchical'=>TRUE, 'labels'=>$labels, 'query_var'=>TRUE, 'rewrite'=>TRUE, 'show_in_nav_menus'=>FALSE, 'public'=>TRUE, 'show_ui'=>FALSE, 'capabilities'=>$caps));
+		$labels = array ( 'name' => __('Category Groups', 'avh-ec'), 'singular_name' => __('Category Group', 'avh-ec'), 'search_items' => __('Search Category Groups', 'avh-ec'), 'popular_items' => __('Popular Category Groups'), 'all_items' => __('All Category Groups'), 'parent_item' => __('Parent Category Group'), 'parent_item_colon' => __('Parent Category Group:'), 'edit_item' => __('Edit Category Group'), 'update_item' => __('Update Category Group'), 'add_new_item' => __('Add New Category Group'), 'new_item_name' => __('New Category Group Name') );
+		$caps = array ( 'manage_terms' => null, 'edit_terms' => null, 'delete_terms' => null, 'assign_terms' => 'edit_posts' );
+		register_taxonomy($this->taxonomy_name, array ( 'post', 'page' ), array ( 'hierarchical' => TRUE, 'labels' => $labels, 'query_var' => TRUE, 'rewrite' => TRUE, 'show_in_nav_menus' => FALSE, 'public' => TRUE, 'show_ui' => FALSE, 'capabilities' => $caps ));
 	
 	}
 
@@ -125,9 +125,9 @@ class AVH_EC_Category_Group
 		// Setup the standard groups if the none group does not exists.
 		$all_categories = $this->getAllCategoriesTermID();
 		if (false === $this->getTermIDBy('slug', 'none')) {
-			$none_group_id = wp_insert_term('none', $this->taxonomy_name, array('description'=>__('This group will not show the widget.', 'avh-ec')));
-			$all_group_id = wp_insert_term('All', $this->taxonomy_name, array('description'=>__('Holds all the categories.', 'avh-ec')));
-			$home_group_id = wp_insert_term('Home', $this->taxonomy_name, array('description'=>__('This group will be shown on the front page.', 'avh-ec')));
+			$none_group_id = wp_insert_term('none', $this->taxonomy_name, array ( 'description' => __('This group will not show the widget.', 'avh-ec') ));
+			$all_group_id = wp_insert_term('All', $this->taxonomy_name, array ( 'description' => __('Holds all the categories.', 'avh-ec') ));
+			$home_group_id = wp_insert_term('Home', $this->taxonomy_name, array ( 'description' => __('This group will be shown on the front page.', 'avh-ec') ));
 			
 			//	Fill the standard groups with all categories
 			$this->setCategoriesForGroup($home_group_id['term_id'], $all_categories);
@@ -137,7 +137,7 @@ class AVH_EC_Category_Group
 		
 		$options = get_option($this->db_options_widget_titles);
 		if (! $options) {
-			$options = array();
+			$options = array ();
 			$id = $this->getTermIDBy('slug', 'all');
 			$options[$id] = '';
 			$id = $this->getTermIDBy('slug', 'home');
@@ -155,8 +155,8 @@ class AVH_EC_Category_Group
 	 */
 	function addMetaBoxes ()
 	{
-		add_meta_box($this->taxonomy_name . 'div', __('Category Groups', 'avh-ec'), 'post_categories_meta_box', 'post', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
-		add_meta_box($this->taxonomy_name . 'div', __('Category Groups', 'avh-ec'), 'post_categories_meta_box', 'page', 'side', 'core', array('taxonomy'=>$this->taxonomy_name));
+		add_meta_box($this->taxonomy_name . 'div', __('Category Groups', 'avh-ec'), 'post_categories_meta_box', 'post', 'side', 'core', array ( 'taxonomy' => $this->taxonomy_name ));
+		add_meta_box($this->taxonomy_name . 'div', __('Category Groups', 'avh-ec'), 'post_categories_meta_box', 'page', 'side', 'core', array ( 'taxonomy' => $this->taxonomy_name ));
 	}
 
 	/**
@@ -166,7 +166,7 @@ class AVH_EC_Category_Group
 	 */
 	function getAllCategoriesTermID ()
 	{
-		$all_cat_id = array();
+		$all_cat_id = array ();
 		$categories = get_categories();
 		if (! is_wp_error($categories)) {
 			foreach ($categories as $category) {
@@ -192,7 +192,7 @@ class AVH_EC_Category_Group
 		
 		if (is_array($result)) { // Call succeeded
 			if (empty($result)) { // No rows found
-				$return = array();
+				$return = array ();
 			} else {
 				foreach ($result as $row) {
 					$return[] = $row->term_id;
@@ -219,7 +219,7 @@ class AVH_EC_Category_Group
 		$old_categories = $this->getCategoriesFromGroup($group_id);
 		
 		if (! is_array($categories)) {
-			$categories = array();
+			$categories = array ();
 		}
 		$new_categories = $categories;
 		sort($old_categories);
@@ -324,19 +324,21 @@ class AVH_EC_Category_Group
 		return ($result);
 	}
 
-	function getGroupByCategoryID($category_id){
+	function getGroupByCategoryID ($category_id)
+	{
 		$return = get_term_by('slug', 'none', $this->taxonomy_name);
-		$cat_groups = get_terms($this->taxonomy_name, array('hide_empty'=>FALSE));
+		$cat_groups = get_terms($this->taxonomy_name, array ( 'hide_empty' => FALSE ));
 		
 		foreach ($cat_groups as $group) {
 			$cats = $this->getCategoriesFromGroup($group->term_id);
-			if ($group->slug != 'all' && in_array($category_id,$cats)) {
+			if ($group->slug != 'all' && in_array($category_id, $cats)) {
 				$return = $group;
 				break;
 			}
 		}
 		return $return;
 	}
+
 	/**
 	 * Inserts a new group
 	 *

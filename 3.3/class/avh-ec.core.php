@@ -58,7 +58,7 @@ class AVH_EC_Core
 		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 		
 		// Set class property for info
-		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'js_dir' => $info['plugin_dir'].'/js','lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
+		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'js_dir' => $info['plugin_dir'] . '/js', 'lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
 		
 		// Set the default options
 		$this->default_options_general = array ( 'version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
@@ -84,8 +84,8 @@ class AVH_EC_Core
 			$this->doUpdateOptions($db_version);
 		}
 		
-		$db=new AVH_DB();
-		if (! $db->field_exists('avhec_term_order', $wpdb->terms) ) {
+		$db = new AVH_DB();
+		if (! $db->field_exists('avhec_term_order', $wpdb->terms)) {
 			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avhec_term_order` INT( 4 ) NULL DEFAULT '0'");
 		}
 		
@@ -558,7 +558,7 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 		foreach ($top_level_elements as $e)
 			$this->display_element($e, $children_elements, $max_depth, 0, $args, $output);
 			
-		/*
+			/*
 		 * if we are displaying all levels, and remaining children_elements is not empty,
 		 * then we got orphans, which should be displayed regardless
 		 */

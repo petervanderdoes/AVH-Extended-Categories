@@ -20,7 +20,6 @@ table.avhec-options {
 }
 
 .avhec-metabox-wrap .p {
-
 	line-height: 140%;
 	margin: 1em 0;
 }
@@ -57,13 +56,13 @@ table.avhec-options {
 
 /* Metabox FAQ */
 #avhecBoxFAQ .inside ul {
-
 	margin-bottom: 6px;
 }
-#avhecBoxFAQ .inside ul li{
+
+#avhecBoxFAQ .inside ul li {
 	line-height: 120%;
-    list-style: disc inside none;
-    margin-bottom: 0;
+	list-style: disc inside none;
+	margin-bottom: 0;
 }
 
 /* Metabox Donations*/
@@ -109,13 +108,13 @@ table.avhec-options {
 
 #avhecManualOrder {
 	width: 25%;
-/*	border: 1px solid #B2B2B2;*/
-/*	margin: 10px 10px 10px 0px;*/
-/*	padding: 5px 10px 5px 10px;*/
-/*	list-style: none;*/
-/*	background-color: #fff;*/
-/*	border-radius: 3px;*/
-/*	-webkit-border-radius: 3px;*/
+	/*	border: 1px solid #B2B2B2;*/
+	/*	margin: 10px 10px 10px 0px;*/
+	/*	padding: 5px 10px 5px 10px;*/
+	/*	list-style: none;*/
+	/*	background-color: #fff;*/
+	/*	border-radius: 3px;*/
+	/*	-webkit-border-radius: 3px;*/
 }
 
 #avhecManualOrder li.lineitem {
@@ -141,10 +140,16 @@ table.avhec-options {
 	line-height: 1.5em;
 	list-style: none outside none;
 	background-color: transparent;
-	background-image: -ms-linear-gradient(top, #f9f9f9, #f5f5f5); /* IE10 */
-	background-image: -moz-linear-gradient(top, #f9f9f9, #f5f5f5); /* Firefox */
-	background-image: -o-linear-gradient(top, #f9f9f9, #f5f5f5); /* Opera */
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f5f5f5)); /* old Webkit */
-	background-image: -webkit-linear-gradient(top, #f9f9f9, #f5f5f5); /* new Webkit */
-	background-image: linear-gradient(top, #f9f9f9, #f5f5f5); /* proposed W3C Markup */
+	/* IE10 */
+	background-image: -ms-linear-gradient(top, #f9f9f9, #f5f5f5);
+	/* Firefox */
+	background-image: -moz-linear-gradient(top, #f9f9f9, #f5f5f5);
+	/* Opera */
+	background-image: -o-linear-gradient(top, #f9f9f9, #f5f5f5);
+	/* old Webkit */
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f5f5f5) );
+	/* new Webkit */
+	background-image: -webkit-linear-gradient(top, #f9f9f9, #f5f5f5);
+	/* proposed W3C Markup */
+	background-image: linear-gradient(top, #f9f9f9, #f5f5f5);
 }
