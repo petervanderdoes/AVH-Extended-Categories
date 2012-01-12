@@ -36,6 +36,7 @@ if ($_avhec_version >= 2.8) {
 	require_once ($_avhec_abs_dir . '/libs/avh-common.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-security.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-visitor.php');
+	require_once ($_avhec_abs_dir . '/libs/avh-db.php');
 
 	switch ($_avhec_version) {
 		case ($_avhec_version >= 2.8 && $_avhec_version < 3.2):
