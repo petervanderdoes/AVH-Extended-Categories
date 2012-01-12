@@ -172,8 +172,9 @@ class AVH_EC_Admin
 	{
 		
 		// Register Style and Scripts
-		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
+		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.closure';
 		wp_register_script('avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array('jquery'), $this->core->version, true);
+		wp_register_script('avhec-manualorder', AVHEC_PLUGIN_URL . '/js/avh-ec.admin.manualorder' . $suffix . '.js', array ( 'jquery-ui-sortable' ), $this->core->version, false);
 		wp_register_style('avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array('wp-admin'), $this->core->version, 'screen');
 		
 		// Add menu system
@@ -182,6 +183,7 @@ class AVH_EC_Admin
 		$this->hooks['menu_overview'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Overview', 'avh-ec'), __('Overview', 'avh-ec'), 'manage_options', $folder, array(&$this, 'doMenuOverview'));
 		$this->hooks['menu_general'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('General Options', 'avh-ec'), __('General Options', 'avh-ec'), 'manage_options', 'avhec-general', array(&$this, 'doMenuGeneral'));
 		$this->hooks['menu_category_groups'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Category Groups', 'avh-ec'), __('Category Groups', 'avh-ec'), 'manage_options', 'avhec-grouped', array(&$this, 'doMenuCategoryGroup'));
+		$this->hooks['menu_manual_order'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Manually Order', 'avh-ec'), __('Manually Order', 'avh-ec'), 'manage_options', 'avhec-manual-order', array(&$this, 'doMenuManualOrder'));
 		$this->hooks['menu_faq'] = add_submenu_page($folder, 'AVH Extended Categories:' . __('F.A.Q', 'avh-ec'), __('F.A.Q', 'avh-ec'), 'manage_options', 'avhec-faq', array(&$this, 'doMenuFAQ'));
 		
 		// Add actions for menu pages
@@ -193,6 +195,9 @@ class AVH_EC_Admin
 		
 		// Category Groups Menu
 		add_action('load-' . $this->hooks['menu_category_groups'], array(&$this, 'actionLoadPageHook_CategoryGroup'));
+		
+		// Manual Order Menu
+		add_action('load-' . $this->hooks['menu_manual_order'], array(&$this, 'actionLoadPageHook_ManualOrder'));
 		
 		// FAQ Menu
 		add_action('load-' . $this->hooks['menu_faq'], array(&$this, 'actionLoadPageHook_faq'));
@@ -726,6 +731,171 @@ class AVH_EC_Admin
 		echo '</form>';
 	}
 
+
+		/**
+	 * Setup everything needed for the Manul Order page
+	 *
+	 */
+	function actionLoadPageHook_ManualOrder ()
+	{
+		
+		add_meta_box('avhecBoxManualOrder', __('Manually Order Categories', 'avh-ec'), array(&$this, 'metaboxManualOrder'), $this->hooks['menu_manual_order'], 'normal', 'core');
+
+		
+		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
+			add_screen_option('layout_columns', array('max' => 1, 'default' => 1) );
+		} else {
+			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
+		}
+		
+		// WordPress core Styles and Scripts
+		wp_enqueue_script('common');
+		wp_enqueue_script('wp-lists');
+		wp_enqueue_script('postbox');
+		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('avhec-manualorder');
+		
+		// WordPress core Styles
+		wp_admin_css('css/dashboard');
+		
+		// Plugin Style
+		wp_enqueue_style('avhec-admin-css');
+	
+	}
+
+	/**
+	 * Menu Page Manual Order
+	 *
+	 * @return none
+	 */
+	function doMenuManualOrder ()
+	{
+		global $screen_layout_columns;
+		
+		$hide2 = '';
+		switch ($screen_layout_columns) {
+			case 2:
+				$width = 'width:49%;';
+				break;
+			default:
+				$width = 'width:98%;';
+				$hide2 = 'display:none;';
+		}
+		
+		echo '<div class="wrap">';
+		echo $this->displayIcon('index');
+		echo '<h2>' . 'AVH Extended Categories - ' . __('Manually Order Categories', 'avh-ec') . '</h2>';
+
+		echo '<div class="metabox-holder">';
+		echo '			<div class="postbox-container" style="' . $width . '">' . "\n";
+		do_meta_boxes($this->hooks['menu_manual_order'], 'normal', '');
+		echo '			</div>';
+		echo '</div>';
+		echo '</div>'; // wrap
+		echo '<div class="clear"></div>';
+
+		$this->printMetaboxGeneralNonces();
+		$this->printMetaboxJS('manual_order');
+		$this->printAdminFooter();
+	}
+
+	/**
+	 * 
+	 * @return unknown_type
+	 */
+	function metaboxManualOrder ()
+	{
+		global $wpdb;
+		
+		$parentID = 0;
+		
+		if (isset($_POST['btnSubCats'])) {
+			$parentID = $_POST['cats'];
+		} elseif (isset($_POST['hdnParentID'])) {
+			$parentID = $_POST['hdnParentID'];
+		}
+		
+		if (isset($_POST['btnReturnParent'])) {
+			$parentsParent = $wpdb->get_row("SELECT parent FROM $wpdb->term_taxonomy WHERE term_id = " . $_POST['hdnParentID'], ARRAY_N);
+			$parentID = $parentsParent[0];
+		}
+		
+		$success = "";
+		if (isset($_POST['btnOrderCats'])) {
+			if (isset($_POST['hdnManualOrder']) && $_POST['hdnManualOrder'] != "") {
+				
+				$hdnManualOrder = $_POST['hdnManualOrder'];
+				$IDs = explode(",", $hdnManualOrder);
+				$result = count($IDs);
+				
+				for ($i = 0; $i < $result; $i ++) {
+					$str = str_replace("id_", "", $IDs[$i]);
+					$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'"));
+				}
+				
+				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'avh-ec') . '</p></div>';
+			} else {
+				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'avh-ec') . '</p></div>';
+			}
+		
+		}
+		
+		$_SubCategories = "";
+		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC"));
+		foreach ($results as $row) {
+			$_SubCategories .= "<option value='$row->term_id'>$row->name</option>";
+		}
+		
+		echo '<div class="wrap">';
+		echo '<form name="frmMyCatOrder" method="post" action="">';
+		echo $success;
+		
+
+		
+		echo '<h4>';
+		_e('Order the categories', 'avh-ec');
+		if ($parentID == 0) {
+			echo ' at the Toplevel';
+		} else {
+			$_cats = get_category_parents($parentID, false, ' » ');
+			echo ' in the category ' . trim($_cats, ' » ');
+		}
+		echo '</h4>';
+		echo '<span class="description">';
+		_e('Order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
+		echo '</span>';
+		echo '<ul id="avhecManualOrder">';
+		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
+		foreach ($results as $row)
+			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
+		
+		echo '</ul>';
+		echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Save Order', 'avh-ec') . '"	onclick="javascript:orderCats(); return true;" />';
+		
+		if ($parentID != 0) {
+			echo "<input type='submit' class='button' id='btnReturnParent' name='btnReturnParent' value='" . __('Return to parent category', 'avh-ec') . "' />";
+		}
+		
+		echo '<strong id="updateText"></strong><br /><br />';
+		if ($_SubCategories != "") {
+			
+			echo '<h4>';
+			_e('Select Subcategory', 'avh-ec');
+			echo '</h4>';
+			echo '<select id="cats" name="cats">';
+			echo $_SubCategories;
+			
+			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Select', 'avh-ec') . '" />';
+			echo '<span class="description">';
+			_e('Choose a category from the drop down to order the subcategories in that category.', 'avh-ec');
+			echo '</span>';
+		}
+		
+		echo '<input type="hidden" id="hdnManualOrder" name="hdnManualOrder" />';
+		echo '<input type="hidden" id="hdnParentID" name="hdnParentID"	value="' . $parentID . '" /></form>';
+		echo '</div>';
+	}
+
 	/**
 	 * Setup everything needed for the FAQ page
 	 *
@@ -858,11 +1028,11 @@ class AVH_EC_Admin
 		echo '<div class="p">';
 		echo '<span class="b">Amazon</span><br />';
 		echo __('If you decide to buy something from Amazon click the button.', 'avh-ec') . '</span><br />';
-		echo '<a href="https://www.amazon.com/?&tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' . $this->core->info['graphics_url'] . '/us_banner_logow_120x60.gif" /></a>';
+		echo '<a href="https://www.amazon.com/?tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' . $this->core->info['graphics_url'] . '/us_banner_logow_120x60.gif" /></a>';
 		echo '</div>';
 		
 		echo '<div class="p">';
-		echo __('You can send me something from my ', 'avh-ec') . '<a href="http://www.amazon.com/gp/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">' . __('Amazon Wish List', 'avh-ec') . '</a>';
+		echo __('You can send me something from my ', 'avh-ec') . '<a href="http://www.amazon.com/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">' . __('Amazon Wish List', 'avh-ec') . '</a>';
 		echo '</div>';
 		
 		echo '<div class="p">';

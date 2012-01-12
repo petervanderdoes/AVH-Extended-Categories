@@ -47,6 +47,8 @@ class AVH_EC_Core
 
 	function handleInitializePlugin ()
 	{
+		global $wpdb;
+		
 		$catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 		$db_version = 4;
 		
@@ -56,7 +58,7 @@ class AVH_EC_Core
 		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 		
 		// Set class property for info
-		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
+		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'js_dir' => $info['plugin_dir'].'/js','lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
 		
 		// Set the default options
 		$this->default_options_general = array ( 'version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
@@ -82,6 +84,11 @@ class AVH_EC_Core
 			$this->doUpdateOptions($db_version);
 		}
 		
+		$db=new AVH_DB();
+		if (! $db->field_exists('avhec_term_order', $wpdb->terms) ) {
+			$wpdb->query("ALTER TABLE $wpdb->terms ADD `avhec_term_order` INT( 4 ) NULL DEFAULT '0'");
+		}
+		
 		$this->handleTextdomain();
 		add_filter('get_terms_orderby', array ( &$this, 'applyOrderFilter' ), 10, 2);
 	
@@ -89,10 +96,18 @@ class AVH_EC_Core
 
 	function applyOrderFilter ($orderby, $args)
 	{
-		if ($args['orderby'] == 'avhec_3rdparty_mycategoryorder')
-			return 't.term_order';
-		else
-			return $orderby;
+		switch ($args['orderby']) {
+			case 'avhec_manualorder':
+				$new_orderby = 't.avhec_term_order';
+				break;
+			case 'avhec_3rdparty_mycategoryorder':
+				$new_orderby = 't.term_order';
+				break;
+			default:
+				$new_orderby = $orderby;
+				break;
+		}
+		return $new_orderby;
 	}
 
 	/**

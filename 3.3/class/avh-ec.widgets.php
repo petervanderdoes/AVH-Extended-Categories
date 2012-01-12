@@ -217,9 +217,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$options['name'] = __('Name', 'avh-ec');
 		$options['count'] = __('Count', 'avh-ec');
 		$options['slug'] = __('Slug', 'avh-ec');
+		$options['avhec_manualorder'] = __('AVH EC Manual Order', 'avh-ec');
 		if (is_plugin_active('my-category-order/mycategoryorder.php')) {
 			$options['avhec_3rdparty_mycategoryorder'] = __('My Category Order', 'avh-ec');
 		}
+		
 		avh_doWidgetFormSelect($this->get_field_id('sort_column'), $this->get_field_name('sort_column'), __('Sort by', 'avh-ec'), $options, $instance['sort_column']);
 		unset($options);
 		
