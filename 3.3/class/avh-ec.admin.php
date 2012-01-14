@@ -338,7 +338,7 @@ class AVH_EC_Admin
 						break;
 				}
 				// Every field in a form is set except unchecked checkboxes. Set an unchecked checkbox to 0.
-				$newval = (isset($formoptions[$section][$option_key]) ? attribute_escape($formoptions[$section][$option_key]) : 0);
+				$newval = (isset($formoptions[$section][$option_key]) ? esc_attr($formoptions[$section][$option_key]) : 0);
 				if ($newval != $current_value) { // Only process changed fields.
 					switch ($section) {
 						case 'general':
