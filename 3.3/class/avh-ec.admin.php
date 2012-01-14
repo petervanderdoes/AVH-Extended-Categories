@@ -1016,7 +1016,7 @@ class AVH_EC_Admin
 	{
 		echo '<div class="p">';
 		echo '<span class="b">' . __('What about support?', 'avh-ec') . '</span><br />';
-		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avh-ec') . '<br />';
+		echo __('I created a <a href="http://forums.avirtualhome.com" target="_blank">support site</a> where you can ask questions or request features.', 'avh-ec') . '<br />';
 		echo '</div>';
 
 		echo '<div class="p">';
