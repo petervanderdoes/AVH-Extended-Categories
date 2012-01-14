@@ -54,11 +54,10 @@ class AVH_EC_Core
 
 		$info['siteurl'] = get_option('siteurl');
 		$info['plugin_dir'] = AVHEC_PLUGIN_DIR;
-		$info['lang_dir'] = AVHEC_RELATIVE_WORKING_DIR . '/lang';
 		$info['graphics_url'] = AVHEC_PLUGIN_URL . '/images';
 
 		// Set class property for info
-		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'js_dir' => $info['plugin_dir'] . '/js', 'lang_dir' => $info['lang_dir'], 'graphics_url' => $info['graphics_url'] );
+		$this->info = array ( 'home' => get_option('home'), 'siteurl' => $info['siteurl'], 'plugin_dir' => $info['plugin_dir'], 'js_dir' => $info['plugin_dir'] . '/js', 'graphics_url' => $info['graphics_url'] );
 
 		// Set the default options
 		$this->default_options_general = array ( 'version' => $this->version, 'dbversion' => $db_version, 'alternative_name_select_category' => '' );
@@ -118,7 +117,7 @@ class AVH_EC_Core
 	function handleTextdomain ()
 	{
 
-		load_plugin_textdomain('avh-ec', false, $this->info['lang_dir']);
+		load_plugin_textdomain('avh-ec', false, AVHEC_RELATIVE_PLUGIN_DIR . '/lang');
 
 	}
 
@@ -555,10 +554,11 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 			}
 		}
 
-		foreach ($top_level_elements as $e)
+		foreach ($top_level_elements as $e) {
 			$this->display_element($e, $children_elements, $max_depth, 0, $args, $output);
+		}
 
-			/*
+		/*
 		 * if we are displaying all levels, and remaining children_elements is not empty,
 		 * then we got orphans, which should be displayed regardless
 		 */

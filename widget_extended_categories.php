@@ -51,6 +51,7 @@ if ($_avhec_version >= 2.8) {
 	$_avhec_url = plugins_url() . $_avhec_dir;
 
 	define('AVHEC_PLUGIN_DIR', $_avhec_abs_dir);
+	define('AVHEC_RELATIVE_PLUGIN_DIR', $_avhec_dir);
 	define('AVHEC_PLUGIN_URL', $_avhec_url . $_avhec_version_dir);
 	define('AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . $_avhec_version_dir);
 	define('AVHEC_RELATIVE_WORKING_DIR', $_avhec_dir . $_avhec_version_dir);
