@@ -86,11 +86,11 @@ class AVH_EC_Category_Group
 		// Setup the DB Tables
 		$charset_collate = '';
 
-		if (version_compare(mysql_get_server_info(), '4.1.0', '>=')) {
-			if (! empty($wpdb->charset))
-				$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
-			if (! empty($wpdb->collate))
-				$charset_collate .= ' COLLATE ' . $wpdb->collate;
+		if (! empty($wpdb->charset)) {
+			$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
+		}
+		if (! empty($wpdb->collate)) {
+			$charset_collate .= ' COLLATE ' . $wpdb->collate;
 		}
 
 		$sql = 'CREATE TABLE `' . $wpdb->avhec_cat_group . '` ( `group_term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `term_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`group_term_id`, `term_id`) )' . $charset_collate . ';';
