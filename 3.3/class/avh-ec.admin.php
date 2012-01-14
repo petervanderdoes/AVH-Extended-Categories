@@ -240,7 +240,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '');
+		//add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '');
 		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array ( &$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', '');
 
 		$hide2 = '';
@@ -899,7 +899,7 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core');
+		// add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core');
 		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array ( &$this, 'metaboxDonations' ), $this->hooks['menu_faq'], 'side', 'core');
 
 		$hide2 = '';
