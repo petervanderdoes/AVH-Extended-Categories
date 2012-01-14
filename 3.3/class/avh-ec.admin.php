@@ -226,9 +226,6 @@ class AVH_EC_Admin
 		// Plugin Scripts
 		wp_enqueue_script('avhec-categorygroup-js');
 
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
-
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
 	}
@@ -294,9 +291,6 @@ class AVH_EC_Admin
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
 		wp_enqueue_script('postbox');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style and Scripts
 		wp_enqueue_style('avhec-admin-css');
@@ -452,9 +446,6 @@ class AVH_EC_Admin
 
 		// Plugin Scripts
 		wp_enqueue_script('avhec-categorygroup-js');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
@@ -740,9 +731,6 @@ class AVH_EC_Admin
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('avhec-manualorder');
 
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
-
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
 
@@ -895,9 +883,6 @@ class AVH_EC_Admin
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
 		wp_enqueue_script('postbox');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
