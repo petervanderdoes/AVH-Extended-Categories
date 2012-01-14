@@ -7,7 +7,7 @@ Version: 3.5.1
 Author: Peter van der Does
 Author URI: http://blog.avirtualhome.com/
 
-Copyright 2008  Peter van der Does  (email : peter@avirtualhome.com)
+Copyright 2012  Peter van der Does  (email : peter@avirtualhome.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,23 +23,45 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-// Include WordPress version
+if (! defined('AVH_FRAMEWORK')) {
+	define('AVH_FRAMEWORK', true);
+}
 require (ABSPATH . WPINC . '/version.php');
+$_avhec_version = (float) $wp_version;
 
-$_basename = plugin_basename(__FILE__);
-$dir = current(explode('/', $_basename));
+if ($_avhec_version >= 2.8) {
+	$_avhec_abs_dir = pathinfo(__FILE__, PATHINFO_DIRNAME);
 
+	require_once ($_avhec_abs_dir . '/libs/avh-registry.php');
+	require_once ($_avhec_abs_dir . '/libs/avh-common.php');
+	require_once ($_avhec_abs_dir . '/libs/avh-security.php');
+	require_once ($_avhec_abs_dir . '/libs/avh-visitor.php');
+	require_once ($_avhec_abs_dir . '/libs/avh-db.php');
 
-define('AVHEC_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . $dir);
-define('AVHEC_PLUGIN_NAME', $_basename);
+	switch ($_avhec_version) {
+		case ($_avhec_version >= 2.8 && $_avhec_version < 3.2):
+			$_avhec_version_dir = '/2.8';
+			break;
+		case ($_avhec_version >= 3.3):
+			$_avhec_version_dir = '/3.3';
+			break;
+	}
 
-if ((float) $wp_version >= 2.8) {
-	define('AVHEC_PLUGIN_URL', WP_PLUGIN_URL . '/' . $dir . '/2.8');
-	define('AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . '/2.8');
-	define('AVHEC_RELATIVE_WORKING_DIR', $dir . '/2.8');
-	unset($dir);
+	$_avhec_dir = '/' . end(explode('/', $_avhec_abs_dir));
+	$_avhec_url = plugins_url() . $_avhec_dir;
+
+	define('AVHEC_PLUGIN_DIR', $_avhec_abs_dir);
+	define('AVHEC_PLUGIN_URL', $_avhec_url . $_avhec_version_dir);
+	define('AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . $_avhec_version_dir);
+	define('AVHEC_RELATIVE_WORKING_DIR', $_avhec_dir . $_avhec_version_dir);
+
+	unset($_avhec_version);
+	unset($_avhec_dir);
+	unset($_avhec_abs_dir);
+	unset($_avhec_version_dir);
+	unset($_avhec_url);
 	require (AVHEC_ABSOLUTE_WORKING_DIR . '/avh-ec.client.php');
+
 } else {
 	require_once 'widget-pre2.8.php';
 }

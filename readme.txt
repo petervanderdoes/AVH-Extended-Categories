@@ -25,7 +25,7 @@ The replacement widget gives you the following customizable options:
 * Hide empty categories.
 * Show categories hierarchical.
 * Show categories up to a certain depth. (Requires WordPress 2.8 or higher).
-* Sort by ID, Name, Count, Slug and manual order set by the plugin My Category Order.
+* Sort by ID, Name, Count, Slug or manual order (Requires WordPress 3.3 or higher).
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
@@ -134,6 +134,10 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version NEXT =
+* Adds Manual Order option. No need for 3rd party plugin anymore.
+* Speed up the creation of the categories checklist in the widgets.
+
 = Version 3.5.1 =
 * Bugfix: The columns in the admin section don't save, making certain columns disappear.
 
