@@ -774,7 +774,10 @@ class AVH_EC_Admin
 
 	/**
 	 *
-	 * @return unknown_type
+	 * Displays the Manual Order metabox.
+	 *
+	 * @author Andrew Charlton - original
+	 * @author Peter van der Does - modifications
 	 */
 	function metaboxManualOrder ()
 	{
@@ -797,8 +800,8 @@ class AVH_EC_Admin
 		if (isset($_POST['btnOrderCats'])) {
 			if (isset($_POST['hdnManualOrder']) && $_POST['hdnManualOrder'] != "") {
 
-				$hdnManualOrder = $_POST['hdnManualOrder'];
-				$IDs = explode(",", $hdnManualOrder);
+				$manualOrder = $_POST['hdnManualOrder'];
+				$IDs = explode(",", $manualOrder);
 				$result = count($IDs);
 
 				for ($i = 0; $i < $result; $i ++) {
@@ -813,10 +816,10 @@ class AVH_EC_Admin
 
 		}
 
-		$_SubCategories = "";
+		$subCategories = "";
 		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC"));
 		foreach ($results as $row) {
-			$_SubCategories .= "<option value='$row->term_id'>$row->name</option>";
+			$subCategories .= "<option value='$row->term_id'>$row->name</option>";
 		}
 
 		echo '<div class="wrap">';
@@ -828,8 +831,8 @@ class AVH_EC_Admin
 		if ($parentID == 0) {
 			echo ' at the Toplevel';
 		} else {
-			$_cats = get_category_parents($parentID, false, ' » ');
-			echo ' in the category ' . trim($_cats, ' » ');
+			$categories = get_category_parents($parentID, false, ' » ');
+			echo ' in the category ' . trim($categories, ' » ');
 		}
 		echo '</h4>';
 		echo '<span class="description">';
@@ -848,13 +851,13 @@ class AVH_EC_Admin
 		}
 
 		echo '<strong id="updateText"></strong><br /><br />';
-		if ($_SubCategories != "") {
+		if ($subCategories != "") {
 
 			echo '<h4>';
 			_e('Select Subcategory', 'avh-ec');
 			echo '</h4>';
 			echo '<select id="cats" name="cats">';
-			echo $_SubCategories;
+			echo $subCategories;
 
 			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Select', 'avh-ec') . '" />';
 			echo '<span class="description">';
