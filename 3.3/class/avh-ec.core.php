@@ -144,6 +144,18 @@ class AVH_EC_Core
 			}
 		}
 
+		// Remove none existing sections and/or elements from the options
+		foreach ($options as $section => $data) {
+			if (! array_key_exists($section, $this->default_options)) {
+				unset($options[$section]);
+				continue;
+			}
+			foreach ($data as $element => $value) {
+				if (! array_key_exists($element, $this->default_options[$section])) {
+					unset($options[$section][$element]);
+				}
+			}
+		}
 		/**
 		 * Update the options to the latests versions
 		 */
