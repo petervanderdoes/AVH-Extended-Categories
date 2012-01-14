@@ -31,13 +31,13 @@ $_avhec_version = (float) $wp_version;
 
 if ($_avhec_version >= 2.8) {
 	$_avhec_abs_dir = pathinfo(__FILE__, PATHINFO_DIRNAME);
-	
+
 	require_once ($_avhec_abs_dir . '/libs/avh-registry.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-common.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-security.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-visitor.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-db.php');
-	
+
 	switch ($_avhec_version) {
 		case ($_avhec_version >= 2.8 && $_avhec_version < 3.2):
 			$_avhec_version_dir = '/2.8';
@@ -46,17 +46,19 @@ if ($_avhec_version >= 2.8) {
 			$_avhec_version_dir = '/3.3';
 			break;
 	}
-	
+
 	$_avhec_dir = '/' . end(explode('/', $_avhec_abs_dir));
 	$_avhec_url = plugins_url() . $_avhec_dir;
-	
+
 	define('AVHEC_PLUGIN_DIR', $_avhec_abs_dir);
 	define('AVHEC_PLUGIN_URL', $_avhec_url . $_avhec_version_dir);
 	define('AVHEC_ABSOLUTE_WORKING_DIR', AVHEC_PLUGIN_DIR . $_avhec_version_dir);
 	define('AVHEC_RELATIVE_WORKING_DIR', $_avhec_dir . $_avhec_version_dir);
-	
+
+	unset($_avhec_version);
 	unset($_avhec_dir);
 	unset($_avhec_abs_dir);
+	unset($_avhec_version_dir);
 	unset($_avhec_url);
 	require (AVHEC_ABSOLUTE_WORKING_DIR . '/avh-ec.client.php');
 
