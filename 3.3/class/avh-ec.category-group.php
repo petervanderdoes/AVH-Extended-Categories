@@ -4,7 +4,6 @@
  * AVH Extended Categorie Category Group Class
  *
  * @author Peter van der Does
- * @copyright 2010
  */
 class AVH_EC_Category_Group
 {

@@ -1203,7 +1203,7 @@ class AVH_EC_Admin
 	function printAdminFooter ()
 	{
 		echo '<p class="footer_avhec">';
-		printf('&copy; Copyright 2011 <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', $this->core->version);
+		printf('&copy; Copyright %d <a href="http://blog.avirtualhome.com/" title="My Thoughts">Peter van der Does</a> | AVH Extended Categories Version %s', date('Y'), $this->core->version);
 		echo '</p>';
 	}
 
