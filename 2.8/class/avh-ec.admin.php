@@ -479,16 +479,16 @@ class AVH_EC_Admin
 		$data_add_group_default = array('name'=>'', 'slug'=>'', 'widget_title'=>'', 'description'=>'');
 		$data_add_group_new = $data_add_group_default;
 
-		$options_add_group[] = array('avhec_add_group[add][name]', __(' Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][slug]', __(' Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][widget_title]', __(' Widget Title,', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][description]', __(' Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
+		$options_add_group[] = array('avhec_add_group[add][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
+		$options_add_group[] = array('avhec_add_group[add][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
+		$options_add_group[] = array('avhec_add_group[add][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
+		$options_add_group[] = array('avhec_add_group[add][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
 
-		$options_edit_group[] = array('avhec_edit_group[edit][name]', __(' Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][slug]', __(' Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][widget_title]', __(' Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][description]', __(' Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
-		$options_edit_group[] = array('avhec_edit_group[edit][categories]', __(' Categories', 'avh-ec'), 'catlist', 0, __('Select categories to be included in the group.', 'avh-ec'));
+		$options_edit_group[] = array('avhec_edit_group[edit][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
+		$options_edit_group[] = array('avhec_edit_group[edit][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
+		$options_edit_group[] = array('avhec_edit_group[edit][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
+		$options_edit_group[] = array('avhec_edit_group[edit][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
+		$options_edit_group[] = array('avhec_edit_group[edit][categories]', __('Categories', 'avh-ec'), 'catlist', 0, __('Select categories to be included in the group.', 'avh-ec'));
 
 		if (isset($_POST['addgroup'])) {
 			check_admin_referer('avh_ec_addgroup');
