@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 3.3
-Stable tag: 3.5.1
+Stable tag: 3.6
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -134,7 +134,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version NEXT =
+= Version 3.6 =
 * Adds Manual Order option. No need for 3rd party plugin anymore. This only works in WordPress 3.3.x
 * Speed up the creation of the categories checklist in the widgets.
 
