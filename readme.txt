@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 3.3
-Stable tag: 3.5
+Stable tag: 3.6
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -25,7 +25,7 @@ The replacement widget gives you the following customizable options:
 * Hide empty categories.
 * Show categories hierarchical.
 * Show categories up to a certain depth. (Requires WordPress 2.8 or higher).
-* Sort by ID, Name, Count, Slug and manual order set by the plugin My Category Order.
+* Sort by ID, Name, Count, Slug or manual order (Requires WordPress 3.3 or higher).
 * Sort ascending or descending.
 * Show RSS link after the category as text or image.
 * Select which categories to show. (Requires WordPress 2.5.1 or higher).
@@ -72,7 +72,7 @@ Translations:
 * Swedish - Svenska (sv_SE)
 * Turkish - Türkçe (tr)
 
-Some of the translations are incomplete. You can complete them or add your own language through [Launchpad](https://translations.launchpad.net/avhextendedcategories/trunk)
+Some of the translations are incomplete. Currently we're in the middle of changing the way you can help with translations. Keep an eye on the [website](http:///blog.avirtualhome.com) for the announcement.
 
 == Installation ==
 
@@ -134,6 +134,13 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.6 =
+* Adds Manual Order option. No need for 3rd party plugin anymore. This only works in WordPress 3.3.x
+* Speed up the creation of the categories checklist in the widgets.
+
+= Version 3.5.1 =
+* Bugfix: The columns in the admin section don't save, making certain columns disappear.
+
 = Version 3.5 =
 * RFC: Adds the ability for the widgets to sort the categories as set with plugin My Category Order. This plugin allows to order categories manually.
 

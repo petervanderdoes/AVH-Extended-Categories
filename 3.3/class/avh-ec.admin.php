@@ -14,7 +14,7 @@ class AVH_EC_Admin
 	 */
 	var $catgrp;
 
-	var $hooks = array();
+	var $hooks = array ();
 	var $message;
 
 	/**
@@ -28,23 +28,23 @@ class AVH_EC_Admin
 		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 		$this->catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
-		add_action('wp_ajax_delete-group', array(&$this, 'ajaxDeleteGroup'));
+		add_action('wp_ajax_delete-group', array ( &$this, 'ajaxDeleteGroup' ));
 
 		// Admin menu
-		add_action('admin_init', array(&$this,'actionAdminInit'));
-		add_action('admin_menu', array(&$this, 'actionAdminMenu'));
-		add_filter('plugin_action_links_extended-categories-widget/widget_extended_categories.php', array(&$this, 'filterPluginActions'), 10, 2);
+		add_action('admin_init', array ( &$this, 'actionAdminInit' ));
+		add_action('admin_menu', array ( &$this, 'actionAdminMenu' ));
+		add_filter('plugin_action_links_extended-categories-widget/widget_extended_categories.php', array ( &$this, 'filterPluginActions' ), 10, 2);
 
 		// Actions used for editing posts
-		add_action('load-post.php', array(&$this, 'actionLoadPostPage'));
-		add_action('load-page.php', array(&$this, 'actionLoadPostPage'));
+		add_action('load-post.php', array ( &$this, 'actionLoadPostPage' ));
+		add_action('load-page.php', array ( &$this, 'actionLoadPostPage' ));
 
 		// Actions related to adding and deletes categories
-		add_action("created_category", array($this, 'actionCreatedCategory'), 10, 2);
-		add_action("delete_category", array($this, 'actionDeleteCategory'), 10, 2);
+		add_action("created_category", array ( $this, 'actionCreatedCategory' ), 10, 2);
+		add_action("delete_category", array ( $this, 'actionDeleteCategory' ), 10, 2);
 
-		add_filter('manage_categories_group_columns', array(&$this, 'filterManageCategoriesGroupColumns'));
-		add_filter('explain_nonce_delete-avhecgroup', array(&$this, 'filterExplainNonceDeleteGroup'), 10, 2);
+		add_filter('manage_categories_group_columns', array ( &$this, 'filterManageCategoriesGroupColumns' ));
+		add_filter('explain_nonce_delete-avhecgroup', array ( &$this, 'filterExplainNonceDeleteGroup' ), 10, 2);
 
 		return;
 	}
@@ -58,11 +58,12 @@ class AVH_EC_Admin
 		$this->__construct();
 	}
 
-	function actionAdminInit() {
+	function actionAdminInit ()
+	{
 		if (is_admin() && isset($_GET['taxonomy']) && 'category' == $_GET['taxonomy']) {
-			add_action($_GET['taxonomy'] . '_edit_form', array(&$this,'displayCategoryGroupForm'), 10, 2 );
+			add_action($_GET['taxonomy'] . '_edit_form', array ( &$this, 'displayCategoryGroupForm' ), 10, 2);
 		}
-		add_action('edit_term', array(&$this,'handleEditTerm'), 10, 3 );
+		add_action('edit_term', array ( &$this, 'handleEditTerm' ), 10, 3);
 
 	}
 
@@ -74,28 +75,29 @@ class AVH_EC_Admin
 	 * @param unknown_type $term
 	 * @param unknown_type $taxonomy
 	 */
-	function displayCategoryGroupForm($term, $taxonomy){
+	function displayCategoryGroupForm ($term, $taxonomy)
+	{
 
 		$current_selection = '';
 		$tax_meta = get_option($this->core->db_options_tax_meta);
-		if ( isset($tax_meta[$taxonomy][$term->term_id]) ) {
+		if (isset($tax_meta[$taxonomy][$term->term_id])) {
 			$tax_meta = $tax_meta[$taxonomy][$term->term_id];
 			$current_selection = $tax_meta['category_group_term_id'];
 		}
 
 		if (empty($current_selection)) {
 			$current_group = $this->catgrp->getGroupByCategoryID($term->term_id);
-			$current_selection= $current_group->term_id;
+			$current_selection = $current_group->term_id;
 		}
 
-		$cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
+		$cat_groups = get_terms($this->catgrp->taxonomy_name, array ( 'hide_empty' => FALSE ));
 		foreach ($cat_groups as $group) {
 			$temp_cat = get_term($group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit');
 			$dropdown_value[] = $group->term_id;
 			$dropdown_text[] = $temp_cat->name;
 		}
 
-		foreach ( $dropdown_value as $key => $sel) {
+		foreach ($dropdown_value as $key => $sel) {
 			$seldata .= '<option value="' . esc_attr($sel) . '" ' . (($current_selection == $sel) ? 'selected="selected"' : '') . ' >' . esc_html(ucfirst($dropdown_text[$key])) . '</option>' . "\n";
 		}
 
@@ -122,11 +124,12 @@ class AVH_EC_Admin
 	 * @param unknown_type $tt_id
 	 * @param unknown_type $taxonomy
 	 */
-	function handleEditTerm( $term_id, $tt_id, $taxonomy ) {
+	function handleEditTerm ($term_id, $tt_id, $taxonomy)
+	{
 		$tax_meta = get_option($this->core->db_options_tax_meta);
-		if ( isset($_POST['avhec_categorygroup']) && $tax_meta[$taxonomy][$term_id]['category_group_term_id'] 	!= $_POST['avhec_categorygroup']) {
-				$tax_meta[$taxonomy][$term_id]['category_group_term_id'] 	= $_POST['avhec_categorygroup'];
-				update_option($this->core->db_options_tax_meta, $tax_meta);
+		if (isset($_POST['avhec_categorygroup']) && $tax_meta[$taxonomy][$term_id]['category_group_term_id'] != $_POST['avhec_categorygroup']) {
+			$tax_meta[$taxonomy][$term_id]['category_group_term_id'] = $_POST['avhec_categorygroup'];
+			update_option($this->core->db_options_tax_meta, $tax_meta);
 		}
 	}
 
@@ -173,31 +176,34 @@ class AVH_EC_Admin
 
 		// Register Style and Scripts
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.closure';
-		wp_register_script('avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array('jquery'), $this->core->version, true);
+		wp_register_script('avhec-categorygroup-js', AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js', array ( 'jquery' ), $this->core->version, true);
 		wp_register_script('avhec-manualorder', AVHEC_PLUGIN_URL . '/js/avh-ec.admin.manualorder' . $suffix . '.js', array ( 'jquery-ui-sortable' ), $this->core->version, false);
-		wp_register_style('avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array('wp-admin'), $this->core->version, 'screen');
+		wp_register_style('avhec-admin-css', AVHEC_PLUGIN_URL . '/css/avh-ec.admin.css', array ( 'wp-admin' ), $this->core->version, 'screen');
 
 		// Add menu system
 		$folder = $this->core->getBaseDirectory(AVHEC_PLUGIN_DIR);
-		add_menu_page('AVH Extended Categories', 'AVH Extended Categories', 'manage_options', $folder, array(&$this, 'doMenuOverview'));
-		$this->hooks['menu_overview'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Overview', 'avh-ec'), __('Overview', 'avh-ec'), 'manage_options', $folder, array(&$this, 'doMenuOverview'));
-		$this->hooks['menu_general'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('General Options', 'avh-ec'), __('General Options', 'avh-ec'), 'manage_options', 'avhec-general', array(&$this, 'doMenuGeneral'));
-		$this->hooks['menu_category_groups'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Category Groups', 'avh-ec'), __('Category Groups', 'avh-ec'), 'manage_options', 'avhec-grouped', array(&$this, 'doMenuCategoryGroup'));
-		$this->hooks['menu_manual_order'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Manually Order', 'avh-ec'), __('Manually Order', 'avh-ec'), 'manage_options', 'avhec-manual-order', array(&$this, 'doMenuManualOrder'));
-		$this->hooks['menu_faq'] = add_submenu_page($folder, 'AVH Extended Categories:' . __('F.A.Q', 'avh-ec'), __('F.A.Q', 'avh-ec'), 'manage_options', 'avhec-faq', array(&$this, 'doMenuFAQ'));
+		add_menu_page('AVH Extended Categories', 'AVH Extended Categories', 'manage_options', $folder, array ( &$this, 'doMenuOverview' ));
+		$this->hooks['menu_overview'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Overview', 'avh-ec'), __('Overview', 'avh-ec'), 'manage_options', $folder, array ( &$this, 'doMenuOverview' ));
+		$this->hooks['menu_general'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('General Options', 'avh-ec'), __('General Options', 'avh-ec'), 'manage_options', 'avhec-general', array ( &$this, 'doMenuGeneral' ));
+		$this->hooks['menu_category_groups'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Category Groups', 'avh-ec'), __('Category Groups', 'avh-ec'), 'manage_options', 'avhec-grouped', array ( &$this, 'doMenuCategoryGroup' ));
+		$this->hooks['menu_manual_order'] = add_submenu_page($folder, 'AVH Extended Categories: ' . __('Manually Order', 'avh-ec'), __('Manually Order', 'avh-ec'), 'manage_options', 'avhec-manual-order', array ( &$this, 'doMenuManualOrder' ));
+		$this->hooks['menu_faq'] = add_submenu_page($folder, 'AVH Extended Categories:' . __('F.A.Q', 'avh-ec'), __('F.A.Q', 'avh-ec'), 'manage_options', 'avhec-faq', array ( &$this, 'doMenuFAQ' ));
 
 		// Add actions for menu pages
 		// Overview Menu
-		add_action('load-' . $this->hooks['menu_overview'], array(&$this, 'actionLoadPageHook_Overview'));
+		add_action('load-' . $this->hooks['menu_overview'], array ( &$this, 'actionLoadPageHook_Overview' ));
 
 		// General Options Menu
-		add_action('load-' . $this->hooks['menu_general'], array(&$this, 'actionLoadPageHook_General'));
+		add_action('load-' . $this->hooks['menu_general'], array ( &$this, 'actionLoadPageHook_General' ));
 
 		// Category Groups Menu
-		add_action('load-' . $this->hooks['menu_category_groups'], array(&$this, 'actionLoadPageHook_CategoryGroup'));
+		add_action('load-' . $this->hooks['menu_category_groups'], array ( &$this, 'actionLoadPageHook_CategoryGroup' ));
+
+		// Manual Order Menu
+		add_action('load-' . $this->hooks['menu_manual_order'], array ( &$this, 'actionLoadPageHook_ManualOrder' ));
 
 		// FAQ Menu
-		add_action('load-' . $this->hooks['menu_faq'], array(&$this, 'actionLoadPageHook_faq'));
+		add_action('load-' . $this->hooks['menu_faq'], array ( &$this, 'actionLoadPageHook_faq' ));
 	}
 
 	/**
@@ -207,14 +213,10 @@ class AVH_EC_Admin
 	function actionLoadPageHook_Overview ()
 	{
 		// Add metaboxes
-		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array(&$this, 'metaboxCategoryGroupList'), $this->hooks['menu_overview'], 'normal', 'core');
-		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array(&$this, 'metaboxTranslation'), $this->hooks['menu_overview'], 'normal', 'core');
+		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array ( &$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_overview'], 'normal', 'core');
+		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array ( &$this, 'metaboxTranslation' ), $this->hooks['menu_overview'], 'normal', 'core');
 
-		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
-			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
-		} else {
-			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
-		}
+		add_screen_option('layout_columns', array ( 'max' => 2, 'default' => 2 ));
 
 		// WordPress core Scripts
 		wp_enqueue_script('common');
@@ -223,9 +225,6 @@ class AVH_EC_Admin
 
 		// Plugin Scripts
 		wp_enqueue_script('avhec-categorygroup-js');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
@@ -241,8 +240,8 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array(&$this, 'metaboxAnnouncements'), $this->hooks['menu_overview'], 'side', '');
-		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array(&$this, 'metaboxDonations'), $this->hooks['menu_overview'], 'side', '');
+		//add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_overview'], 'side', '');
+		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array ( &$this, 'metaboxDonations' ), $this->hooks['menu_overview'], 'side', '');
 
 		$hide2 = '';
 		switch ($screen_layout_columns) {
@@ -284,21 +283,14 @@ class AVH_EC_Admin
 	function actionLoadPageHook_General ()
 	{
 		// Add metaboxes
-		add_meta_box('avhecBoxOptions', __('Options', 'avh-ec'), array(&$this, 'metaboxOptions'), $this->hooks['menu_general'], 'normal', 'core');
+		add_meta_box('avhecBoxOptions', __('Options', 'avh-ec'), array ( &$this, 'metaboxOptions' ), $this->hooks['menu_general'], 'normal', 'core');
 
-		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
-			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
-		} else {
-			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
-		}
+		add_screen_option('layout_columns', array ( 'max' => 2, 'default' => 2 ));
 
 		// WordPress core Scripts
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
 		wp_enqueue_script('postbox');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style and Scripts
 		wp_enqueue_style('avhec-admin-css');
@@ -314,16 +306,16 @@ class AVH_EC_Admin
 	{
 		global $screen_layout_columns;
 
-		$groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
+		$groups = get_terms($this->catgrp->taxonomy_name, array ( 'hide_empty' => FALSE ));
 		foreach ($groups as $group) {
 			$group_id[] = $group->term_id;
 			$groupname[] = $group->name;
 		}
 
-		$options_general[] = array('avhec[general][alternative_name_select_category]', __('<em>Select Category</em> Alternative', 'avh-ec'), 'text', 20, __('Alternative text for Select Category.', 'avh-ec'));
-		$options_general[] = array('avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, __('Select which group to show on the home page.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
-		$options_general[] = array('avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, __('Select which group to show when there is no group associated with the post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
-		$options_general[] = array('avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, __('Select which group will be the default group when editing a post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec'));
+		$options_general[] = array ( 'avhec[general][alternative_name_select_category]', __('<em>Select Category</em> Alternative', 'avh-ec'), 'text', 20, __('Alternative text for Select Category.', 'avh-ec') );
+		$options_general[] = array ( 'avhec[cat_group][home_group]', 'Home Group', 'dropdown', $group_id, $groupname, __('Select which group to show on the home page.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec') );
+		$options_general[] = array ( 'avhec[cat_group][no_group]', 'Nonexistence Group', 'dropdown', $group_id, $groupname, __('Select which group to show when there is no group associated with the post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec') );
+		$options_general[] = array ( 'avhec[cat_group][default_group]', 'Default Group', 'dropdown', $group_id, $groupname, __('Select which group will be the default group when editing a post.', 'avh-ec') . '<br />' . __('Selecting the group \'none\' will not show the widget on the page.', 'avh-ec') );
 
 		if (isset($_POST['updateoptions'])) {
 			check_admin_referer('avh_ec_generaloptions');
@@ -346,7 +338,7 @@ class AVH_EC_Admin
 						break;
 				}
 				// Every field in a form is set except unchecked checkboxes. Set an unchecked checkbox to 0.
-				$newval = (isset($formoptions[$section][$option_key]) ? attribute_escape($formoptions[$section][$option_key]) : 0);
+				$newval = (isset($formoptions[$section][$option_key]) ? esc_attr($formoptions[$section][$option_key]) : 0);
 				if ($newval != $current_value) { // Only process changed fields.
 					switch ($section) {
 						case 'general':
@@ -383,7 +375,7 @@ class AVH_EC_Admin
 		$data['actual_options'] = $actual_options;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array(&$this, 'metaboxDonations'), $this->hooks['menu_general'], 'side', 'core');
+		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array ( &$this, 'metaboxDonations' ), $this->hooks['menu_general'], 'side', 'core');
 
 		$hide2 = '';
 		switch ($screen_layout_columns) {
@@ -441,15 +433,11 @@ class AVH_EC_Admin
 	{
 
 		// Add metaboxes
-		add_meta_box('avhecBoxCategoryGroupAdd', __('Add Group', 'avh-ec'), array(&$this, 'metaboxCategoryGroupAdd'), $this->hooks['menu_category_groups'], 'normal', 'core');
-		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array(&$this, 'metaboxCategoryGroupList'), $this->hooks['menu_category_groups'], 'side', 'core');
-		add_meta_box('avhecBoxCategoryGroupSpecialPages', __('Special Pages', 'avh-ec'), array(&$this, 'metaboxCategoryGroupSpecialPages'), $this->hooks['menu_category_groups'], 'normal', 'core');
+		add_meta_box('avhecBoxCategoryGroupAdd', __('Add Group', 'avh-ec'), array ( &$this, 'metaboxCategoryGroupAdd' ), $this->hooks['menu_category_groups'], 'normal', 'core');
+		add_meta_box('avhecBoxCategoryGroupList', __('Group Overview', 'avh-ec'), array ( &$this, 'metaboxCategoryGroupList' ), $this->hooks['menu_category_groups'], 'side', 'core');
+		add_meta_box('avhecBoxCategoryGroupSpecialPages', __('Special Pages', 'avh-ec'), array ( &$this, 'metaboxCategoryGroupSpecialPages' ), $this->hooks['menu_category_groups'], 'normal', 'core');
 
-		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
-			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
-		} else {
-			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
-		}
+		add_screen_option('layout_columns', array ( 'max' => 2, 'default' => 2 ));
 
 		// WordPress core Scripts
 		wp_enqueue_script('common');
@@ -458,9 +446,6 @@ class AVH_EC_Admin
 
 		// Plugin Scripts
 		wp_enqueue_script('avhec-categorygroup-js');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
@@ -476,19 +461,19 @@ class AVH_EC_Admin
 	{
 		global $screen_layout_columns;
 
-		$data_add_group_default = array('name'=>'', 'slug'=>'', 'widget_title'=>'', 'description'=>'');
+		$data_add_group_default = array ( 'name' => '', 'slug' => '', 'widget_title' => '', 'description' => '' );
 		$data_add_group_new = $data_add_group_default;
 
-		$options_add_group[] = array('avhec_add_group[add][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
-		$options_add_group[] = array('avhec_add_group[add][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
+		$options_add_group[] = array ( 'avhec_add_group[add][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec') );
+		$options_add_group[] = array ( 'avhec_add_group[add][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec') );
+		$options_add_group[] = array ( 'avhec_add_group[add][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec') );
+		$options_add_group[] = array ( 'avhec_add_group[add][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5 );
 
-		$options_edit_group[] = array('avhec_edit_group[edit][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec'));
-		$options_edit_group[] = array('avhec_edit_group[edit][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5);
-		$options_edit_group[] = array('avhec_edit_group[edit][categories]', __('Categories', 'avh-ec'), 'catlist', 0, __('Select categories to be included in the group.', 'avh-ec'));
+		$options_edit_group[] = array ( 'avhec_edit_group[edit][name]', __('Group Name', 'avh-ec'), 'text', 20, __('The name is used to identify the group.', 'avh-ec') );
+		$options_edit_group[] = array ( 'avhec_edit_group[edit][slug]', __('Slug Group', 'avh-ec'), 'text', 20, __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'avh-ec') );
+		$options_edit_group[] = array ( 'avhec_edit_group[edit][widget_title]', __('Widget Title', 'avh-ec'), 'text', 20, __('When no title is given in the widget options, this will used as the title of the widget when this group is shown.', 'avh-ec') );
+		$options_edit_group[] = array ( 'avhec_edit_group[edit][description]', __('Description', 'avh-ec'), 'textarea', 40, __('Description is not prominent by default.', 'avh-ec'), 5 );
+		$options_edit_group[] = array ( 'avhec_edit_group[edit][categories]', __('Categories', 'avh-ec'), 'catlist', 0, __('Select categories to be included in the group.', 'avh-ec') );
 
 		if (isset($_POST['addgroup'])) {
 			check_admin_referer('avh_ec_addgroup');
@@ -502,7 +487,7 @@ class AVH_EC_Admin
 
 			$id = $this->catgrp->getTermIDBy('slug', $data_add_group_new['slug']);
 			if (! $id) {
-				$group_id = $this->catgrp->doInsertGroup($data_add_group_new['name'], array('description'=>$data_add_group_new['description'], 'slug'=>$data_add_group_new['slug']), $data_add_group_new['widget_title']);
+				$group_id = $this->catgrp->doInsertGroup($data_add_group_new['name'], array ( 'description' => $data_add_group_new['description'], 'slug' => $data_add_group_new['slug'] ), $data_add_group_new['widget_title']);
 				$this->catgrp->setCategoriesForGroup($group_id);
 				$this->message = __('Category group saved', 'avh-ec');
 				$this->status = 'updated fade';
@@ -518,7 +503,7 @@ class AVH_EC_Admin
 			$this->displayMessage();
 		}
 		$data_add_group['add'] = $data_add_group_new;
-		$data['add'] = array('form'=>$options_add_group, 'data'=>$data_add_group);
+		$data['add'] = array ( 'form' => $options_add_group, 'data' => $data_add_group );
 
 		if (isset($_GET['action'])) {
 			$action = $_GET['action'];
@@ -530,10 +515,10 @@ class AVH_EC_Admin
 					$widget_title = $this->catgrp->getWidgetTitleForGroup($group_id);
 					$cats = $this->catgrp->getCategoriesFromGroup($group_id);
 
-					$data_edit_group['edit'] = array('group_id'=>$group_id, 'name'=>$group->name, 'slug'=>$group->slug, 'widget_title'=>$widget_title, 'description'=>$group->description, 'categories'=>$cats);
-					$data['edit'] = array('form'=>$options_edit_group, 'data'=>$data_edit_group);
+					$data_edit_group['edit'] = array ( 'group_id' => $group_id, 'name' => $group->name, 'slug' => $group->slug, 'widget_title' => $widget_title, 'description' => $group->description, 'categories' => $cats );
+					$data['edit'] = array ( 'form' => $options_edit_group, 'data' => $data_edit_group );
 
-					add_meta_box('avhecBoxCategoryGroupEdit', __('Edit Group', 'avh-ec') . ': ' . $group->name, array(&$this, 'metaboxCategoryGroupEdit'), $this->hooks['menu_category_groups'], 'normal', 'low');
+					add_meta_box('avhecBoxCategoryGroupEdit', __('Edit Group', 'avh-ec') . ': ' . $group->name, array ( &$this, 'metaboxCategoryGroupEdit' ), $this->hooks['menu_category_groups'], 'normal', 'low');
 					break;
 				case 'delete':
 					if (! isset($_GET['group_ID'])) {
@@ -562,7 +547,7 @@ class AVH_EC_Admin
 			$selected_categories = $_POST['post_category'];
 
 			$group_id = (int) $_POST['avhec-group_id'];
-			$result = $this->catgrp->doUpdateGroup($group_id, array('name'=>$formoptions['edit']['name'], 'slug'=>$formoptions['edit']['slug'], 'description'=>$formoptions['edit']['description']), $selected_categories, $formoptions['edit']['widget_title']);
+			$result = $this->catgrp->doUpdateGroup($group_id, array ( 'name' => $formoptions['edit']['name'], 'slug' => $formoptions['edit']['slug'], 'description' => $formoptions['edit']['description'] ), $selected_categories, $formoptions['edit']['widget_title']);
 			switch ($result) {
 				case 1:
 					$this->message = __('Category group updated', 'avh-ec');
@@ -606,22 +591,22 @@ class AVH_EC_Admin
 
 		}
 		$data_special_pages['sp'] = $data_special_pages_new;
-		$cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
+		$cat_groups = get_terms($this->catgrp->taxonomy_name, array ( 'hide_empty' => FALSE ));
 
 		foreach ($cat_groups as $group) {
 			$temp_cat = get_term($group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit');
 			$dropdown_value[] = $group->term_id;
 			$dropdown_text[] = $temp_cat->name;
 		}
-		$options_special_pages[] = array('avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('home','avhec')));
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][home_group]', __('Home page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('home', 'avhec')) );
 		//$options_special_pages[] = array('avhec_special_pages[sp][category_group]', __('Category Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('category archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('daily archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('monthly archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('yearly archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('author archive','avhec')));
-		$options_special_pages[] = array('avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.','avh-ec'),__('search','avhec')));
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][day_group]', __('Daily Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('daily archive', 'avhec')) );
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][month_group]', __('Monthly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('monthly archive', 'avhec')) );
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][year_group]', __('Yearly Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('yearly archive', 'avhec')) );
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][author_group]', __('Author Archive', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('author archive', 'avhec')) );
+		$options_special_pages[] = array ( 'avhec_special_pages[sp][search_group]', __('Search Page', 'avh-ec'), 'dropdown', $dropdown_value, $dropdown_text, sprintf(__('Select which category to show on the %s page.', 'avh-ec'), __('search', 'avhec')) );
 
-		$data['sp'] = array('form'=>$options_special_pages, 'data'=>$data_special_pages);
+		$data['sp'] = array ( 'form' => $options_special_pages, 'data' => $data_special_pages );
 
 		// This box can't be unselectd in the the Screen Options
 		//add_meta_box( 'avhecBoxDonations', __( 'Donations', 'avh-ec' ), array (&$this, 'metaboxDonations' ), $this->hooks['menu_category_groups'], 'side', 'core' );
@@ -728,22 +713,16 @@ class AVH_EC_Admin
 		echo '</form>';
 	}
 
-
-		/**
+	/**
 	 * Setup everything needed for the Manul Order page
 	 *
 	 */
 	function actionLoadPageHook_ManualOrder ()
 	{
 
-		add_meta_box('avhecBoxManualOrder', __('Manually Order Categories', 'avh-ec'), array(&$this, 'metaboxManualOrder'), $this->hooks['menu_manual_order'], 'normal', 'core');
+		add_meta_box('avhecBoxManualOrder', __('Manually Order Categories', 'avh-ec'), array ( &$this, 'metaboxManualOrder' ), $this->hooks['menu_manual_order'], 'normal', 'core');
 
-
-		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
-			add_screen_option('layout_columns', array('max' => 1, 'default' => 1) );
-		} else {
-			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
-		}
+		add_screen_option('layout_columns', array ( 'max' => 1, 'default' => 1 ));
 
 		// WordPress core Styles and Scripts
 		wp_enqueue_script('common');
@@ -751,9 +730,6 @@ class AVH_EC_Admin
 		wp_enqueue_script('postbox');
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('avhec-manualorder');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
@@ -798,7 +774,10 @@ class AVH_EC_Admin
 
 	/**
 	 *
-	 * @return unknown_type
+	 * Displays the Manual Order metabox.
+	 *
+	 * @author Andrew Charlton - original
+	 * @author Peter van der Does - modifications
 	 */
 	function metaboxManualOrder ()
 	{
@@ -813,7 +792,7 @@ class AVH_EC_Admin
 		}
 
 		if (isset($_POST['btnReturnParent'])) {
-			$parentsParent = $wpdb->get_row("SELECT parent FROM $wpdb->term_taxonomy WHERE term_id = " . $_POST['hdnParentID'], ARRAY_N);
+			$parentsParent = $wpdb->get_row($wpdb->prepare("SELECT parent FROM $wpdb->term_taxonomy WHERE term_id = %d", $_POST['hdnParentID']), ARRAY_N);
 			$parentID = $parentsParent[0];
 		}
 
@@ -821,48 +800,46 @@ class AVH_EC_Admin
 		if (isset($_POST['btnOrderCats'])) {
 			if (isset($_POST['hdnManualOrder']) && $_POST['hdnManualOrder'] != "") {
 
-				$hdnManualOrder = $_POST['hdnManualOrder'];
-				$IDs = explode(",", $hdnManualOrder);
+				$manualOrder = $_POST['hdnManualOrder'];
+				$IDs = explode(",", $manualOrder);
 				$result = count($IDs);
 
 				for ($i = 0; $i < $result; $i ++) {
 					$str = str_replace("id_", "", $IDs[$i]);
-					$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET avhec_term_order = '$i' WHERE term_id ='$str'"));
+					$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET avhec_term_order = %d WHERE term_id =%d", $i, $str));
 				}
 
-				$success = '<div id="message" class="updated fade"><p>' . __('Categories updated successfully.', 'avh-ec') . '</p></div>';
+				$success = '<div id="message" class="updated fade"><p>' . __('Manual order of the categories successfully updated.', 'avh-ec') . '</p></div>';
 			} else {
 				$success = '<div id="message" class="updated fade"><p>' . __('An error occured, order has not been saved.', 'avh-ec') . '</p></div>';
 			}
 
 		}
 
-		$_SubCategories = "";
-		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = $parentID AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC"));
+		$subCategories = "";
+		$results = $wpdb->get_results($wpdb->prepare("SELECT t.term_id, t.name FROM $wpdb->term_taxonomy tt, $wpdb->terms t, $wpdb->term_taxonomy tt2 WHERE tt.parent = %d AND tt.taxonomy = 'category' AND t.term_id = tt.term_id AND tt2.parent = tt.term_id GROUP BY t.term_id, t.name HAVING COUNT(*) > 0 ORDER BY t.avhec_term_order ASC", $parentID));
 		foreach ($results as $row) {
-			$_SubCategories .= "<option value='$row->term_id'>$row->name</option>";
+			$subCategories .= "<option value='$row->term_id'>$row->name</option>";
 		}
 
 		echo '<div class="wrap">';
 		echo '<form name="frmMyCatOrder" method="post" action="">';
 		echo $success;
 
-
-
 		echo '<h4>';
 		_e('Order the categories', 'avh-ec');
 		if ($parentID == 0) {
 			echo ' at the Toplevel';
 		} else {
-			$_cats = get_category_parents($parentID, false, ' » ');
-			echo ' in the category ' . trim($_cats, ' » ');
+			$categories = get_category_parents($parentID, false, ' » ');
+			echo ' in the category ' . trim($categories, ' » ');
 		}
 		echo '</h4>';
 		echo '<span class="description">';
 		_e('Order the categories on this level by dragging and dropping them into the desired order.', 'avh-ec');
 		echo '</span>';
 		echo '<ul id="avhecManualOrder">';
-		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = $parentID ORDER BY avhec_term_order ASC"));
+		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = %d ORDER BY avhec_term_order ASC", $parentID));
 		foreach ($results as $row)
 			echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
 
@@ -874,13 +851,13 @@ class AVH_EC_Admin
 		}
 
 		echo '<strong id="updateText"></strong><br /><br />';
-		if ($_SubCategories != "") {
+		if ($subCategories != "") {
 
 			echo '<h4>';
 			_e('Select Subcategory', 'avh-ec');
 			echo '</h4>';
 			echo '<select id="cats" name="cats">';
-			echo $_SubCategories;
+			echo $subCategories;
 
 			echo '</select><input type="submit" name="btnSubCats" class="button" id="btnSubCats" value="' . __('Select', 'avh-ec') . '" />';
 			echo '<span class="description">';
@@ -900,22 +877,15 @@ class AVH_EC_Admin
 	function actionLoadPageHook_faq ()
 	{
 
-		add_meta_box('avhecBoxFAQ', __('F.A.Q.', 'avh-ec'), array(&$this, 'metaboxFAQ'), $this->hooks['menu_faq'], 'normal', 'core');
-		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array(&$this, 'metaboxTranslation'), $this->hooks['menu_faq'], 'normal', 'core');
+		add_meta_box('avhecBoxFAQ', __('F.A.Q.', 'avh-ec'), array ( &$this, 'metaboxFAQ' ), $this->hooks['menu_faq'], 'normal', 'core');
+		add_meta_box('avhecBoxTranslation', __('Translation', 'avh-ec'), array ( &$this, 'metaboxTranslation' ), $this->hooks['menu_faq'], 'normal', 'core');
 
-		if (AVH_Common::getWordpressVersion() >= 3.1 ) {
-			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
-		} else {
-			add_filter('screen_layout_columns', array ( &$this, 'filterScreenLayoutColumns' ), 10, 2);
-		}
+		add_screen_option('layout_columns', array ( 'max' => 2, 'default' => 2 ));
 
 		// WordPress core Styles and Scripts
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-lists');
 		wp_enqueue_script('postbox');
-
-		// WordPress core Styles
-		wp_admin_css('css/dashboard');
 
 		// Plugin Style
 		wp_enqueue_style('avhec-admin-css');
@@ -932,8 +902,8 @@ class AVH_EC_Admin
 		global $screen_layout_columns;
 
 		// This box can't be unselectd in the the Screen Options
-		add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array(&$this, 'metaboxAnnouncements'), $this->hooks['menu_faq'], 'side', 'core');
-		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array(&$this, 'metaboxDonations'), $this->hooks['menu_faq'], 'side', 'core');
+		// add_meta_box('avhecBoxAnnouncements', __('Announcements', 'avh-ec'), array ( &$this, 'metaboxAnnouncements' ), $this->hooks['menu_faq'], 'side', 'core');
+		add_meta_box('avhecBoxDonations', __('Donations', 'avh-ec'), array ( &$this, 'metaboxDonations' ), $this->hooks['menu_faq'], 'side', 'core');
 
 		$hide2 = '';
 		switch ($screen_layout_columns) {
@@ -973,17 +943,17 @@ class AVH_EC_Admin
 	 */
 	function metaboxTranslation ()
 	{
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'avh-ec' );
-		$available_locale['cs_CZ'] = array('Czech - Čeština',0);
-		$available_locale['nl_NL'] = array('Dutch - Nederlands',0);
-		$available_locale['de_DE'] = array('German - Deutsch', 0);
-		$available_locale['el'] = array('Greek - Čeština',0);
-		$available_locale['id_ID'] = array('Indonesian - Bahasa Indonesia - Čeština',0);
-		$available_locale['it_IT'] = array('Italian - Italiano',1);
-		$available_locale['ru_RU'] = array('Russian — Русский',0);
-		$available_locale['es_ES'] = array('Spanish - Español',0);
-		$available_locale['sv_SE'] = array('Swedish - Svenska',0);
-		$available_locale['tr'] = array('Turkish - Türkçe',0);
+		$locale = apply_filters('plugin_locale', get_locale(), 'avh-ec');
+		$available_locale['cs_CZ'] = array ( 'Czech - Čeština', 0 );
+		$available_locale['nl_NL'] = array ( 'Dutch - Nederlands', 0 );
+		$available_locale['de_DE'] = array ( 'German - Deutsch', 0 );
+		$available_locale['el'] = array ( 'Greek - Čeština', 0 );
+		$available_locale['id_ID'] = array ( 'Indonesian - Bahasa Indonesia - Čeština', 0 );
+		$available_locale['it_IT'] = array ( 'Italian - Italiano', 1 );
+		$available_locale['ru_RU'] = array ( 'Russian — Русский', 0 );
+		$available_locale['es_ES'] = array ( 'Spanish - Español', 0 );
+		$available_locale['sv_SE'] = array ( 'Swedish - Svenska', 0 );
+		$available_locale['tr'] = array ( 'Turkish - Türkçe', 0 );
 
 		echo '<div class="p">';
 		echo __('This plugin is translated in several languages. Some of the languages might be incomplete. Please help to complete these translations or add a new language.', 'avh-ec') . '<br />';
@@ -1003,10 +973,10 @@ class AVH_EC_Admin
 		echo '</div>';
 
 		echo '<div class="p">';
-			if ('en_US' != $locale & (!array_key_exists($locale, $available_locale))){
-			echo 'Currently the plugin is not available in your language ('.$locale.'). Why not help out and translate the plugin in your language. You can help by visiting <a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a>.';
+		if ('en_US' != $locale & (! array_key_exists($locale, $available_locale))) {
+			echo 'Currently the plugin is not available in your language (' . $locale . '). We\'re in the middle of changing the way you can help with translations. Keep an eye on the <a href="http:///blog.avirtualhome.com">website</a> for the announcement.';
 		} else {
-			echo __('You can visit ', 'avh-ec') . '<a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> ' . __('to help complete these translations or add a new language.', 'avh-ec');
+			echo 'We\'re in the middle of changing the way you can help with translations. Keep an eye on the <a href="http:///blog.avirtualhome.com">website</a> for the announcement.';
 		}
 		echo '</div>';
 
@@ -1049,7 +1019,7 @@ class AVH_EC_Admin
 	{
 		echo '<div class="p">';
 		echo '<span class="b">' . __('What about support?', 'avh-ec') . '</span><br />';
-		echo __('I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.', 'avh-ec') . '<br />';
+		echo __('I created a <a href="http://forums.avirtualhome.com" target="_blank">support site</a> where you can ask questions or request features.', 'avh-ec') . '<br />';
 		echo '</div>';
 
 		echo '<div class="p">';
@@ -1166,7 +1136,7 @@ class AVH_EC_Admin
 	 */
 	function filterManageCategoriesGroupColumns ($columns)
 	{
-		$categories_group_columns = array('name'=>__('Name', 'avh-ec'), 'slug'=>'Slug', 'widget-title'=>__('Widget Title', 'avh-ec'), 'description'=>__('Description', 'avh-ec'), 'cat-in-group'=>__('Categories in the group', 'avh-ec'));
+		$categories_group_columns = array ( 'name' => __('Name', 'avh-ec'), 'slug' => 'Slug', 'widget-title' => __('Widget Title', 'avh-ec'), 'description' => __('Description', 'avh-ec'), 'cat-in-group' => __('Categories in the group', 'avh-ec') );
 		return $categories_group_columns;
 	}
 
@@ -1216,7 +1186,7 @@ class AVH_EC_Admin
 	 */
 	function printCategoryGroupRows ()
 	{
-		$cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty'=>FALSE));
+		$cat_groups = get_terms($this->catgrp->taxonomy_name, array ( 'hide_empty' => FALSE ));
 
 		foreach ($cat_groups as $group) {
 			if ('none' != $group->slug) {
@@ -1242,7 +1212,7 @@ class AVH_EC_Admin
 		$no_delete[$this->catgrp->getTermIDBy('slug', 'all')] = 0;
 
 		if (current_user_can('manage_categories')) {
-			$actions = array();
+			$actions = array ();
 			if (! array_key_exists($group->term_id, $no_edit)) {
 				$edit_link = "admin.php?page=avhec-grouped&amp;action=edit&amp;group_ID=$group->term_id";
 				$edit = "<a class='row-title' href='$edit_link' title='" . esc_attr(sprintf(__('Edit &#8220;%s&#8221;'), $group->name)) . "'>" . esc_attr($group->name) . '</a><br />';
@@ -1302,6 +1272,9 @@ class AVH_EC_Admin
 					break;
 				case 'widget-title':
 					$title = $this->catgrp->getWidgetTitleForGroup($group->term_id);
+					if (! $title) {
+						$title = "&nbsp;";
+					}
 					$output .= '<td ' . $attributes . '>' . $title . '</td>';
 					break;
 
@@ -1313,7 +1286,7 @@ class AVH_EC_Admin
 					break;
 				case 'cat-in-group':
 					$cats = $this->catgrp->getCategoriesFromGroup($group_term_id);
-					$catname = array();
+					$catname = array ();
 					foreach ($cats as $cat_id) {
 						$catname[] = get_cat_name($cat_id);
 					}

@@ -14,7 +14,7 @@ class AVH_EC_Singleton
 	 */
 	function &getInstance ($class, $arg1 = null)
 	{
-		static $instances = array(); // array of instance names
+		static $instances = array (); // array of instance names
 		if (array_key_exists($class, $instances)) {
 			$instance = & $instances[$class];
 		} else {
@@ -45,8 +45,6 @@ class AVH_EC_Singleton
  */
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/helpers/avh-forms.php');
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.widgets.php');
-require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/libs/avh-common.php');
-require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/libs/avh-db.php');
 
 /**
  * Initialize the plugin
