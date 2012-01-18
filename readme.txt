@@ -72,7 +72,7 @@ Translations:
 * Swedish - Svenska (sv_SE)
 * Turkish - Türkçe (tr)
 
-Some of the translations are incomplete. You can complete them or add your own language through [Launchpad](https://translations.launchpad.net/avhextendedcategories/trunk)
+Some of the translations are incomplete. Currently we're in the middle of changing the way you can help with translations. Keep an eye on the [website](http:///blog.avirtualhome.com) for the announcement.
 
 == Installation ==
 
@@ -135,7 +135,7 @@ None
 
 == Changelog ==
 = Version NEXT =
-* Adds Manual Order option. No need for 3rd party plugin anymore.
+* Adds Manual Order option. No need for 3rd party plugin anymore. This only works in WordPress 3.3.x
 * Speed up the creation of the categories checklist in the widgets.
 
 = Version 3.5.1 =

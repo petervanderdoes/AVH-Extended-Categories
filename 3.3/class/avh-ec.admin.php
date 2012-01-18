@@ -974,9 +974,9 @@ class AVH_EC_Admin
 
 		echo '<div class="p">';
 		if ('en_US' != $locale & (! array_key_exists($locale, $available_locale))) {
-			echo 'Currently the plugin is not available in your language (' . $locale . '). Why not help out and translate the plugin in your language. You can help by visiting <a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a>.';
+			echo 'Currently the plugin is not available in your language (' . $locale . '). We\'re in the middle of changing the way you can help with translations. Keep an eye on the <a href="http:///blog.avirtualhome.com">website</a> for the announcement.';
 		} else {
-			echo __('You can visit ', 'avh-ec') . '<a href="https://translations.launchpad.net/avhextendedcategories/trunk" target="_blank">Launchpad</a> ' . __('to help complete these translations or add a new language.', 'avh-ec');
+			echo 'We\'re in the middle of changing the way you can help with translations. Keep an eye on the <a href="http:///blog.avirtualhome.com">website</a> for the announcement.';
 		}
 		echo '</div>';
 
