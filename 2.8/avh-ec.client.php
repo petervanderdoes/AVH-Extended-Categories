@@ -45,8 +45,6 @@ class AVH_EC_Singleton
  */
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/helpers/avh-forms.php');
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.widgets.php');
-require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/libs/avh-common.php');
-require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/libs/avh-db.php');
 
 /**
  * Initialize the plugin
@@ -60,7 +58,7 @@ function avhextendedcategories_init ()
 		$avhec_admin = new AVH_EC_Admin();
 	}
 	AVH_EC_Singleton::getInstance('AVH_EC_Core');
-	
+
 	add_action('widgets_init', 'avhextendedcategories_widgets_init');
 
 } // End avhamazon_init()
