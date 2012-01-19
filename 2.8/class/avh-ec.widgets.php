@@ -304,9 +304,9 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		}
 
 		// Put checked cats on top
-		echo call_user_func_array(array(&$walker, 'walk'), array($checked_categories, 0, $args));
+		echo $walker->walk($checked_categories, 0, array ( $args ));
 		// Then the rest of them
-		echo call_user_func_array(array(&$walker, 'walk'), array($categories, 0, $args));
+		echo $walker->walk($categories, 0, array ( $args ));
 	}
 }
 
@@ -857,9 +857,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 
 		// Put checked cats on top
-		echo $walker->walk($checked_categories, 0, $args);
+		echo $walker->walk($checked_categories, 0, array ( $args ));
 		// Then the rest of them
-		echo $walker->walk($categories, 0, $args);
+		echo $walker->walk($categories, 0, array ( $args ));
 	}
 
 	function getWidgetDoneCatGroup ($id)
