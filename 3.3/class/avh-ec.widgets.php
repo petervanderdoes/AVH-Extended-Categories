@@ -217,7 +217,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$options['name'] = __('Name', 'avh-ec');
 		$options['count'] = __('Count', 'avh-ec');
 		$options['slug'] = __('Slug', 'avh-ec');
-		$options['avhec_manualorder'] = 'AVH EC '.__('Manual Order', 'avh-ec');
+		$options['avhec_manualorder'] = 'AVH EC ' . __('Manual Order', 'avh-ec');
 		if (is_plugin_active('my-category-order/mycategoryorder.php')) {
 			$options['avhec_3rdparty_mycategoryorder'] = 'My Category Order';
 		}
@@ -305,9 +305,9 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		}
 
 		// Put checked cats on top
-		echo call_user_func_array(array ( &$walker, 'walk' ), array ( $checked_categories, 0, $args ));
+		echo $walker->walk($checked_categories, 0, array ( $args ));
 		// Then the rest of them
-		echo call_user_func_array(array ( &$walker, 'walk' ), array ( $categories, 0, $args ));
+		echo $walker->walk($categories, 0, array ( $args ));
 	}
 }
 
@@ -332,7 +332,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 		$this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 
 		$widget_ops = array ( 'description' => __("Shows the top categories.", 'avh-ec') );
-		WP_Widget::__construct(FALSE, 'AVH Extended Categories: '.__('Top Categories'), $widget_ops);
+		WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Top Categories'), $widget_ops);
 		add_action('wp_print_styles', array ( &$this, 'actionWpPrintStyles' ));
 
 	}
@@ -541,7 +541,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		$this->catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
 		$widget_ops = array ( 'description' => __("Shows grouped categories.", 'avh-ec') );
-		WP_Widget::__construct(FALSE,'AVH Extended Categories: '. __('Category Group'), $widget_ops);
+		WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Category Group'), $widget_ops);
 		add_action('wp_print_styles', array ( &$this, 'actionWpPrintStyles' ));
 
 	}
@@ -858,9 +858,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 		}
 
 		// Put checked cats on top
-		echo $walker->walk($checked_categories, 0, $args);
+		echo $walker->walk($checked_categories, 0, array ( $args ));
 		// Then the rest of them
-		echo $walker->walk($categories, 0, $args);
+		echo $walker->walk($categories, 0, array ( $args ));
 	}
 
 	function getWidgetDoneCatGroup ($id)
