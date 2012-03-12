@@ -324,7 +324,15 @@ class AVH_EC_Core
 	{
 		$mywalker = new AVH_Walker_CategoryDropdown();
 
-		$defaults = array ( 'show_option_all' => '', 'show_option_none' => '', 'orderby' => 'id', 'order' => 'ASC', 'show_last_update' => 0, 'show_count' => 0, 'hide_empty' => 1, 'child_of' => 0, 'exclude' => '', 'echo' => 1, 'selected' => 0, 'hierarchical' => 0, 'name' => 'cat', 'class' => 'postform', 'depth' => 0, 'tab_index' => 0, 'walker' => $mywalker );
+		$defaults = array ( 'show_option_all' => '', 		'show_option_none' => '',
+		'orderby' => 'id', 		'order' => 'ASC',
+		'show_last_update' => 0, 		'show_count' => 0,
+		'hide_empty' => 1, 		'child_of' => 0,
+		'exclude' => '', 		'echo' => 1,
+		'selected' => 0, 		'hierarchical' => 0,
+		'name' => 'cat', 		'class' => 'postform',
+		'depth' => 0, 		'tab_index' => 0,
+		'walker' => $mywalker );
 
 		$defaults['selected'] = (is_category()) ? get_query_var('cat') : 0;
 
@@ -341,13 +349,14 @@ class AVH_EC_Core
 		if ((int) $tab_index > 0)
 			$tab_index_attribute = ' tabindex="' . $tab_index . '"';
 
-		$categories = get_categories($r);
+		$categories = get_terms( $taxonomy, $r );
 		$name = esc_attr($name);
 		$class = esc_attr($class);
+		$id = $id ? esc_attr( $id ) : $name;
 
 		$output = '';
 		if (! empty($categories)) {
-			$output = '<select name="' . $name . '" id="' . $name . '" class="' . $class . '" ' . $tab_index_attribute . '>' . "\n";
+			$output = '<select name="' . $name . '" id="' . $id . '" class="' . $class . '" ' . $tab_index_attribute . '>' . "\n";
 
 			if ($show_option_all) {
 				$show_option_all = apply_filters('list_cats', $show_option_all);
