@@ -3,7 +3,7 @@
 Plugin Name: AVH Extended Categories Widgets
 Plugin URI: http://blog.avirtualhome.com/wordpress-plugins
 Description: Replacement of the category widget to allow for greater customization of the category widget.
-Version: 3.6.2
+Version: 3.6.3
 Author: Peter van der Does
 Author URI: http://blog.avirtualhome.com/
 
@@ -30,7 +30,7 @@ require (ABSPATH . WPINC . '/version.php');
 $_avhec_version = (float) $wp_version;
 
 if ($_avhec_version >= 2.8) {
-	$_avhec_abs_dir = pathinfo(__FILE__, PATHINFO_DIRNAME);
+	$_avhec_abs_dir = dirname(__FILE__);
 
 	require_once ($_avhec_abs_dir . '/libs/avh-registry.php');
 	require_once ($_avhec_abs_dir . '/libs/avh-common.php');
@@ -47,8 +47,8 @@ if ($_avhec_version >= 2.8) {
 			break;
 	}
 
-	$_avhec_dir = '/' . end(explode('/', $_avhec_abs_dir));
-	$_avhec_url = plugins_url() . $_avhec_dir;
+	$_avhec_dir = basename($_avhec_abs_dir);
+	$_avhec_url = plugins_url() . '/'. $_avhec_dir;
 
 	define('AVHEC_PLUGIN_DIR', $_avhec_abs_dir);
 	define('AVHEC_RELATIVE_PLUGIN_DIR', $_avhec_dir);
