@@ -324,16 +324,21 @@ class AVH_EC_Core
 	{
 		$mywalker = new AVH_Walker_CategoryDropdown();
 
-		$defaults = array ( 'show_option_all' => '', 		'show_option_none' => '',
-		'orderby' => 'id', 		'order' => 'ASC',
-		'show_last_update' => 0, 		'show_count' => 0,
-		'hide_empty' => 1, 		'child_of' => 0,
-		'exclude' => '', 		'echo' => 1,
-		'selected' => 0, 		'hierarchical' => 0,
-		'name' => 'cat', 		'class' => 'postform',
-		'depth' => 0, 		'tab_index' => 0,
-		'walker' => $mywalker );
-
+		// @format_off
+		$defaults = array(
+		'show_option_all' => '', 'show_option_none' => '',
+		'orderby' => 'id', 'order' => 'ASC',
+		'show_last_update' => 0, 'show_count' => 0,
+		'hide_empty' => 1, 'child_of' => 0,
+		'exclude' => '', 'echo' => 1,
+		'selected' => 0, 'hierarchical' => 0,
+		'name' => 'cat', 'id' => '',
+		'class' => 'postform', 'depth' => 0,
+		'tab_index' => 0, 'taxonomy' => 'category',
+		'walker' => $mywalker,
+		'hide_if_empty' => false
+		);
+		// @format_on
 		$defaults['selected'] = (is_category()) ? get_query_var('cat') : 0;
 
 		$r = wp_parse_args($args, $defaults);
@@ -349,14 +354,21 @@ class AVH_EC_Core
 		if ((int) $tab_index > 0)
 			$tab_index_attribute = ' tabindex="' . $tab_index . '"';
 
-		$categories = get_terms( $taxonomy, $r );
+		$categories = get_terms($taxonomy, $r);
 		$name = esc_attr($name);
 		$class = esc_attr($class);
-		$id = $id ? esc_attr( $id ) : $name;
+		$id = $id ? esc_attr($id) : $name;
 
-		$output = '';
+		if (! $r['hide_if_empty'] || ! empty($categories))
+			$output = "<select name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+		else
+			$output = '';
+
+		if (empty($categories) && ! $r['hide_if_empty'] && ! empty($show_option_none)) {
+			$show_option_none = apply_filters('list_cats', $show_option_none);
+			$output .= "\t<option value='-1' selected='selected'>$show_option_none</option>\n";
+		}
 		if (! empty($categories)) {
-			$output = '<select name="' . $name . '" id="' . $id . '" class="' . $class . '" ' . $tab_index_attribute . '>' . "\n";
 
 			if ($show_option_all) {
 				$show_option_all = apply_filters('list_cats', $show_option_all);
@@ -376,8 +388,9 @@ class AVH_EC_Core
 				$depth = - 1; // Flat
 			}
 			$output .= walk_category_dropdown_tree($categories, $depth, $r);
-			$output .= "</select>\n";
 		}
+		if (! $r['hide_if_empty'] || ! empty($categories))
+			$output .= "</select>\n";
 
 		$output = apply_filters('wp_dropdown_cats', $output);
 
