@@ -121,7 +121,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 			echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");' . "\n";
 			echo '            function ec_onCatChange_' . $this->number . '() {' . "\n";
 			echo '                if ( ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value > 0 ) {' . "\n";
-			echo '                    location.href = "' . get_option('home') . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;' . "\n";
+			echo '                    location.href = "' .home_url() . '/?cat="+ec_dropdown_' . $this->number . '.options[ec_dropdown_' . $this->number . '.selectedIndex].value;' . "\n";
 			echo '                }' . "\n";
 			echo '            }' . "\n";
 			echo '            ec_dropdown_' . $this->number . '.onchange = ec_onCatChange_' . $this->number . ';' . "\n";
