@@ -283,8 +283,8 @@ class AVH_EC_Category_Group
 	 */
 	function doDeleteWidgetTitle ($group_id)
 	{
-		if (isset($this->db_options_widget_titles[$group_id])) {
-			unset($this->db_options_widget_titles[$group_id]);
+		if (isset($this->options_widget_titles[$group_id])) {
+			unset($this->options_widget_titles[$group_id]);
 		}
 		update_option($this->db_options_widget_titles, $this->options_widget_titles);
 	}
