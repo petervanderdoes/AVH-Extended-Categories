@@ -135,7 +135,7 @@ None
 
 == Changelog ==
 = Version 3.6.5-rc.1 =
-* Preparation for hotfix.
+* Bugfix: Can not delete category groups
 
 = Version 3.6.4 =
 * Bugfix: Problem with categories not showing up when showing dropdown categories.
