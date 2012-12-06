@@ -134,6 +134,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.6.6-rc.1 =
+* Preparation for hotfix.
+
 = Version 3.6.5 =
 * Bugfix: Can not delete category groups
 
