@@ -1136,7 +1136,7 @@ class AVH_EC_Admin
 	 */
 	function filterManageCategoriesGroupColumns ($columns)
 	{
-		$categories_group_columns = array ( 'name' => __('Name', 'avh-ec'), 'slug' => 'Slug', 'widget-title' => __('Widget Title', 'avh-ec'), 'description' => __('Description', 'avh-ec'), 'cat-in-group' => __('Categories in the group', 'avh-ec') );
+		$categories_group_columns = array ( 'name' => __('Name', 'avh-ec'), 'slug' => __('Slug', 'avh-ec'), 'widget-title' => __('Widget Title', 'avh-ec'), 'description' => __('Description', 'avh-ec'), 'cat-in-group' => __('Categories in the group', 'avh-ec') );
 		return $categories_group_columns;
 	}
 
