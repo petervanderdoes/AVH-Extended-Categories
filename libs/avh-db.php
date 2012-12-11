@@ -16,13 +16,13 @@ if (! class_exists('AVH_DB')) {
 		public function getFieldNames ($table = '')
 		{
 			global $wpdb;
-			
+
 			$retval = wp_cache_get('field_names_' . $table, 'avhec');
 			if (false === $retval) {
 				$sql = $this->_getQueryShowColumns($table);
-				
+
 				$result = $wpdb->get_results($sql, ARRAY_A);
-				
+
 				$retval = array ();
 				foreach ($result as $row) {
 					if (isset($row['Field'])) {
@@ -31,7 +31,7 @@ if (! class_exists('AVH_DB')) {
 				}
 				wp_cache_set('field_names_' . $table, $retval,'avhec',3600);
 			}
-			
+
 			return $retval;
 		}
 
@@ -59,8 +59,8 @@ if (! class_exists('AVH_DB')) {
 		private function _getQueryShowColumns ($table = '')
 		{
 			global $wpdb;
-			return $wpdb->prepare('SHOW COLUMNS FROM ' . $table);
-		
+			return $wpdb->prepare('SHOW COLUMNS FROM %s', $table);
+
 		}
 	}
 }
