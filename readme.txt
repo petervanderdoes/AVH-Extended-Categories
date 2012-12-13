@@ -136,7 +136,7 @@ None
 
 == Changelog ==
 = Version 3.6.7-rc.1 =
-* Preparation for hotfix.
+*  Fix error in SQL syntax
 
 = Version 3.6.6 =
 * Missed a translatable string.

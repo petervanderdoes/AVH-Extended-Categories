@@ -59,8 +59,7 @@ if (! class_exists('AVH_DB')) {
 		private function _getQueryShowColumns ($table = '')
 		{
 			global $wpdb;
-			return $wpdb->prepare('SHOW COLUMNS FROM %s', $table);
-
+			return 'SHOW COLUMNS FROM '.$table;
 		}
 	}
 }
