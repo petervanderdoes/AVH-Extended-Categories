@@ -136,6 +136,9 @@ None
 
 == Changelog ==
 = Version 3.7.0-rc.1 =
+* Fix uninstall
+
+= Version 3.6.7 =
 *  Fix error in SQL syntax
 
 = Version 3.6.6 =
