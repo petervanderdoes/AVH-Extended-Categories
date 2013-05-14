@@ -135,7 +135,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.6.7-dev.6 =
+= Version 3.7.0-rc.1 =
 *  Fix error in SQL syntax
 
 = Version 3.6.6 =
