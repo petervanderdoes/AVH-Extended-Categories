@@ -135,7 +135,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.7.1-rc.1 =
+= Version 3.7.1 =
 * When updating a category a warning is can be shown.
 
 = Version 3.7.0 =
