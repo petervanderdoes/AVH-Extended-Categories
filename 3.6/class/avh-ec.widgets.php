@@ -892,8 +892,9 @@ class AVH_Walker_Category_Checklist extends Walker
      * @param  array  $args;
      * @return string
      */
-    public function walk($elements, $max_depth, $args)
+    public function walk($elements, $max_depth)
     {
+        $args = array_slice(func_get_args(), 2);
         $output = '';
 
         if ($max_depth < -1) // invalid parameter
@@ -960,19 +961,19 @@ class AVH_Walker_Category_Checklist extends Walker
         return $output;
     }
 
-    public function start_lvl(&$output, $depth, $args)
+    public function start_lvl( &$output, $depth = 0, $args = array() )
     {
         $indent = str_repeat("\t", $depth);
         $output .= $indent . '<ul class="children">' . "\n";
     }
 
-    public function end_lvl(&$output, $depth, $args)
+    public function end_lvl( &$output, $depth = 0, $args = array() )
     {
         $indent = str_repeat("\t", $depth);
         $output .= $indent . '</ul>' . "\n";
     }
 
-    public function start_el(&$output, $category, $depth, $args)
+    public function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 )
     {
         extract($args);
         $input_id = $this->input_id . '-' . $category->term_id;
@@ -981,7 +982,7 @@ class AVH_Walker_Category_Checklist extends Walker
         $output .= '<input value="' . $category->term_id . '" type="checkbox" name="' . $this->input_name . '[' . $category->term_id . ']" id="' . $input_id . '"' . (in_array($category->term_id, $selected_cats) ? ' checked="checked"' : "") . '/> ' . esc_html(apply_filters('the_category', $category->name)) . '</label>';
     }
 
-    public function end_el(&$output, $category, $depth, $args)
+    public function end_el( &$output, $object, $depth = 0, $args = array() )
     {
         $output .= "</li>\n";
     }
