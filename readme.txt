@@ -135,6 +135,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.9.0-dev.1 =
+* Preparation for new development cycle.
+
 = Version 3.8.2 =
 * WordPress plugin page is no longer available.
 
