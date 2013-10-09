@@ -136,7 +136,7 @@ None
 
 == Changelog ==
 = Version 3.8.1-rc.1 =
-* Preparation for new development cycle.
+* Category list doesn't show categories
 
 = Version 3.8.0 =
 * Add support for WordPress 3.6
