@@ -135,7 +135,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.8.0-dev.9 =
+= Version 3.8.0-rc.1 =
 * Add support for WordPress 3.6
 * Dropped support for PHP4, from this version on it PHP 5 or higher.
 * Fixed PHP Strict errors
