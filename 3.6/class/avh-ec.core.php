@@ -34,7 +34,7 @@ class AVH_EC_Core
          */
         $catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
-        $this->version = '3.8.1';
+        $this->version = '3.8.2';
         $this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
         $this->db_options_core = 'avhec';
         $this->db_options_tax_meta = 'avhec-tax_meta';
@@ -203,9 +203,8 @@ class AVH_EC_Core
      */
     public function getBaseDirectory($directory)
     {
-        $public_directory = dirname($directory);
         // place each directory into array and get the last element
-        $directory_array = explode('/', $public_directory);
+        $directory_array = explode('/', directory);
         // get highest or top level in array of directory strings
         $public_base = end($directory_array);
 
