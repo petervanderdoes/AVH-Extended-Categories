@@ -136,7 +136,10 @@ None
 
 == Changelog ==
 = Version 3.8.0-dev.1 =
-* Preparation for new development cycle.
+* Add support for WordPress 3.6
+* Dropped support for PHP4, from this version on it PHP 5 or higher.
+* Fixed PHP Strict errors
+* Fixed undefined variables errors.
 
 = Version 3.7.1 =
 * When updating a category a warning is can be shown.
