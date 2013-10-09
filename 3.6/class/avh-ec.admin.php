@@ -96,6 +96,7 @@ class AVH_EC_Admin
             $dropdown_text[] = $temp_cat->name;
         }
 
+        $seldata ='';
         foreach ($dropdown_value as $key => $sel) {
             $seldata .= '<option value="' . esc_attr($sel) . '" ' . (($current_selection == $sel) ? 'selected="selected"' : '') . ' >' . esc_html(ucfirst($dropdown_text[$key])) . '</option>' . "\n";
         }
