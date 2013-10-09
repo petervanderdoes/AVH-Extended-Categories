@@ -42,16 +42,6 @@ class AVH_EC_Core
         add_action('init', array(&$this, 'handleInitializePlugin'), 10);
     }
 
-    /**
-     * PHP4 Constructor
-     *
-     * @return AVHExtendedCategoriesCore
-     */
-    public function AVH_EC_Core()
-    {
-        $this->__construct();
-    }
-
     public function handleInitializePlugin()
     {
         global $wpdb;

@@ -32,11 +32,6 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
         add_action('wp_print_styles', array(&$this, 'actionWpPrintStyles'));
     }
 
-    public function WP_Widget_AVH_ExtendedCategories_Normal()
-    {
-        $this->__construct();
-    }
-
     public function actionWpPrintStyles()
     {
         if (!(FALSE === is_active_widget(FALSE, FALSE, $this->id_base, TRUE))) {
@@ -331,11 +326,6 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
         add_action('wp_print_styles', array(&$this, 'actionWpPrintStyles'));
     }
 
-    public function WP_Widget_AVH_ExtendedCategories_Top()
-    {
-        $this->__construct();
-    }
-
     public function actionWpPrintStyles()
     {
         if (!(FALSE === is_active_widget(FALSE, FALSE, $this->id_base, TRUE))) {
@@ -544,11 +534,6 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         $widget_ops = array('description' => __("Shows grouped categories.", 'avh-ec'));
         WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Category Group'), $widget_ops);
         add_action('wp_print_styles', array(&$this, 'actionWpPrintStyles'));
-    }
-
-    public function WP_Widget_AVH_ExtendedCategories_Category_Group()
-    {
-        $this->__construct();
     }
 
     public function actionWpPrintStyles()

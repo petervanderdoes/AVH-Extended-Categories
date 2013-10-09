@@ -50,14 +50,6 @@ class AVH_EC_Admin
         return;
     }
 
-    /**
-     * PHP4 Constructor
-     */
-    public function AVH_EC_Admin()
-    {
-        $this->__construct();
-    }
-
     public function actionAdminInit()
     {
         if (is_admin() && isset($_GET['taxonomy']) && 'category' == $_GET['taxonomy']) {
