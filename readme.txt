@@ -136,7 +136,7 @@ None
 
 == Changelog ==
 = Version 3.8.2-rc.1 =
-* Preparation for new development cycle.
+* WordPress plugin page is no longer available.
 
 = Version 3.8.1 =
 * Category list doesn't show categories
