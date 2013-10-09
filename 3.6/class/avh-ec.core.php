@@ -34,7 +34,7 @@ class AVH_EC_Core
          */
         $catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
-        $this->version = '3.8.0';
+        $this->version = '3.8.1';
         $this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
         $this->db_options_core = 'avhec';
         $this->db_options_tax_meta = 'avhec-tax_meta';
@@ -672,7 +672,7 @@ class AVHEC_Walker_Category extends Walker
      *
      * @param string $output
      *            Passed by reference. Used to append additional content.
-     * @param object $category
+     * @param object $object
      *            Category data object.
      * @param int $depth
      *            Depth of category in reference to parents.
@@ -682,13 +682,13 @@ class AVHEC_Walker_Category extends Walker
     {
         extract($args);
 
-        $cat_name = esc_attr($category->name);
-        $cat_name = apply_filters('list_cats', $cat_name, $category);
-        $link = '<div class="avhec-widget-line"><a href="' . get_category_link($category->term_id) . '" ';
-        if ($use_desc_for_title == 0 || empty($category->description))
+        $cat_name = esc_attr($object->name);
+        $cat_name = apply_filters('list_cats', $cat_name, $object);
+        $link = '<div class="avhec-widget-line"><a href="' . get_category_link($object->term_id) . '" ';
+        if ($use_desc_for_title == 0 || empty($object->description))
             $link .= 'title="' . sprintf(__('View all posts filed under %s'), $cat_name) . '"';
         else
-            $link .= 'title="' . esc_attr(strip_tags(apply_filters('category_description', $category->description, $category))) . '"';
+            $link .= 'title="' . esc_attr(strip_tags(apply_filters('category_description', $object->description, $object))) . '"';
         $link .= '>';
         $link .= $cat_name . '</a>';
 
@@ -698,7 +698,7 @@ class AVHEC_Walker_Category extends Walker
             if (empty($feed_image))
                 $link .= '(';
 
-            $link .= '<a href="' . get_category_feed_link($category->term_id, $feed_type) . '"';
+            $link .= '<a href="' . get_category_feed_link($object->term_id, $feed_type) . '"';
 
             if (empty($feed))
                 $alt = ' alt="' . sprintf(__('Feed for all posts filed under %s'), $cat_name) . '"';
@@ -722,10 +722,10 @@ class AVHEC_Walker_Category extends Walker
         }
 
         if (isset($show_count) && $show_count)
-            $link .= '<div class="avhec-widget-count"> (' . intval($category->count) . ')</div>';
+            $link .= '<div class="avhec-widget-count"> (' . intval($object->count) . ')</div>';
 
         if (isset($show_date) && $show_date) {
-            $link .= ' ' . gmdate('Y-m-d', $category->last_update_timestamp);
+            $link .= ' ' . gmdate('Y-m-d', $object->last_update_timestamp);
         }
 
         if (isset($current_category) && $current_category)
@@ -733,10 +733,10 @@ class AVHEC_Walker_Category extends Walker
 
         if ('list' == $args['style']) {
             $output .= "\t" . '<li';
-            $class = 'cat-item cat-item-' . $category->term_id;
-            if (isset($current_category) && $current_category && ($category->term_id == $current_category))
+            $class = 'cat-item cat-item-' . $object->term_id;
+            if (isset($current_category) && $current_category && ($object->term_id == $current_category))
                 $class .= ' current-cat';
-            elseif (isset($_current_category) && $_current_category && ($category->term_id == $_current_category->parent))
+            elseif (isset($_current_category) && $_current_category && ($object->term_id == $_current_category->parent))
                 $class .= ' current-cat-parent';
             $output .= ' class="' . $class . '"';
             $output .= '>' . $link . '</div>' . "\n";
