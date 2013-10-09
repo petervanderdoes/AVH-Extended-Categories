@@ -34,6 +34,7 @@ class AVH_EC_Singleton
             $instances[$class] = new $class($arg1);
             $instance = & $instances[$class];
         }
+
         return $instance;
     } // getInstance
 } // singleton
@@ -75,4 +76,3 @@ function avhextendedcategories_widgets_init()
 }
 
 add_action('plugins_loaded', 'avhextendedcategories_init');
-?>

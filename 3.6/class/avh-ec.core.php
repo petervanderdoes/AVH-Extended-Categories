@@ -3,30 +3,30 @@
 class AVH_EC_Core
 {
 
-    var $version;
+    public $version;
 
-    var $comment;
+    public $comment;
 
-    var $info;
+    public $info;
 
-    var $db_options_core;
+    public $db_options_core;
 
-    var $default_options;
+    public $default_options;
 
-    var $default_options_general;
+    public $default_options_general;
 
-    var $default_options_category_group;
+    public $default_options_category_group;
 
-    var $default_options_sp_category_group;
+    public $default_options_sp_category_group;
 
-    var $db_options_tax_meta;
+    public $db_options_tax_meta;
 
-    var $options;
+    public $options;
 
     /**
      * PHP5 constructor
      */
-    function __construct()
+    public function __construct()
     {
         /**
          *
@@ -47,12 +47,12 @@ class AVH_EC_Core
      *
      * @return AVHExtendedCategoriesCore
      */
-    function AVH_EC_Core()
+    public function AVH_EC_Core()
     {
         $this->__construct();
     }
 
-    function handleInitializePlugin()
+    public function handleInitializePlugin()
     {
         global $wpdb;
 
@@ -98,7 +98,7 @@ class AVH_EC_Core
         add_filter('get_terms_orderby', array(&$this, 'applyOrderFilter'), 10, 2);
     }
 
-    function applyOrderFilter($orderby, $args)
+    public function applyOrderFilter($orderby, $args)
     {
         switch ($args['orderby']) {
             case 'avhec_manualorder':
@@ -111,6 +111,7 @@ class AVH_EC_Core
                 $new_orderby = $orderby;
                 break;
         }
+
         return $new_orderby;
     }
 
@@ -119,8 +120,9 @@ class AVH_EC_Core
      *
      * @return
      *
+     *
      */
-    function handleTextdomain()
+    public function handleTextdomain()
     {
         load_plugin_textdomain('avh-ec', false, AVHEC_RELATIVE_PLUGIN_DIR . '/lang');
     }
@@ -131,7 +133,7 @@ class AVH_EC_Core
      * @since 1.2.3
      *
      */
-    function doUpdateOptions($db_version)
+    public function doUpdateOptions($db_version)
     {
         $options = $this->getOptions();
 
@@ -171,43 +173,45 @@ class AVH_EC_Core
     /**
      * Used in forms to set the checked option.
      *
-     * @param mixed $checked
-     * @param mixed_type $current
+     * @param  mixed      $checked
+     * @param  mixed_type $current
      * @return string
      *
      * @since 2.0
      */
-    function isChecked($checked, $current)
+    public function isChecked($checked, $current)
     {
         if ($checked == $current) {
             return (' checked="checked"');
         }
+
         return ('');
     }
 
     /**
      * Used in forms to set the SELECTED option
      *
-     * @param string $current
-     * @param string $field
+     * @param  string $current
+     * @param  string $field
      * @return string
      */
-    function isSelected($current, $field)
+    public function isSelected($current, $field)
     {
         if ($current == $field) {
             return (' SELECTED');
         }
+
         return ('');
     }
 
     /**
      * Get the base directory of a directory structure
      *
-     * @param string $directory
+     * @param  string $directory
      * @return string
      *
      */
-    function getBaseDirectory($directory)
+    public function getBaseDirectory($directory)
     {
         $public_directory = dirname($directory);
         // place each directory into array and get the last element
@@ -230,7 +234,7 @@ class AVH_EC_Core
      *
      * @param array $data
      */
-    function setOptions($options)
+    public function setOptions($options)
     {
         $this->options = $options;
     }
@@ -238,7 +242,7 @@ class AVH_EC_Core
     /**
      * return array
      */
-    function getOptions()
+    public function getOptions()
     {
         return ($this->options);
     }
@@ -246,7 +250,7 @@ class AVH_EC_Core
     /**
      * Save all current options and set the options
      */
-    function saveOptions($options)
+    public function saveOptions($options)
     {
         update_option($this->db_options_core, $options);
         wp_cache_flush(); // Delete cache
@@ -259,7 +263,7 @@ class AVH_EC_Core
      *
      * @return none
      */
-    function loadOptions()
+    public function loadOptions()
     {
         $options = get_option($this->db_options_core);
         if (false === $options) { // New installation
@@ -273,24 +277,25 @@ class AVH_EC_Core
      * Get the value for an option element.
      * If there's no option is set on the Admin page, return the default value.
      *
-     * @param string $key
-     * @param string $option
+     * @param  string $key
+     * @param  string $option
      * @return mixed
      */
-    function getOptionElement($option, $key)
+    public function getOptionElement($option, $key)
     {
         if ($this->options[$option][$key]) {
             $return = $this->options[$option][$key]; // From Admin Page
         } else {
             $return = $this->default_options[$option][$key]; // Default
         }
+
         return ($return);
     }
 
     /**
      * Reset to default options and save in DB
      */
-    function resetToDefaultOptions()
+    public function resetToDefaultOptions()
     {
         $this->options = $this->default_options;
         $this->saveOptions($this->default_options);
@@ -330,7 +335,7 @@ class AVH_EC_Core
      *            Optional. Override default arguments.
      * @return string HTML content only if 'echo' argument is 0.
      */
-    function avh_wp_dropdown_categories($args = '', $selectedonly)
+    public function avh_wp_dropdown_categories($args = '', $selectedonly)
     {
         $mywalker = new AVH_Walker_CategoryDropdown();
 
@@ -432,7 +437,7 @@ class AVH_EC_Core
      *            Optional. Override default arguments.
      * @return string HTML content only if 'echo' argument is 0.
      */
-    function avh_wp_list_categories($args = '', $selectedonly)
+    public function avh_wp_list_categories($args = '', $selectedonly)
     {
         $mywalker = new AVHEC_Walker_Category();
         $defaults = array('show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __('Categories'), 'echo' => 1, 'depth' => 0, 'walker' => $mywalker);
@@ -501,16 +506,17 @@ class AVH_EC_Core
             return $output;
     }
 
-    function getCategories()
+    public function getCategories()
     {
         static $_categories = NULL;
         if (NULL === $_categories) {
             $_categories = get_categories('get=all');
         }
+
         return $_categories;
     }
 
-    function getCategoriesId($categories)
+    public function getCategoriesId($categories)
     {
         static $_categories_id = NULL;
         if (NULL == $_categories_id) {
@@ -518,6 +524,7 @@ class AVH_EC_Core
                 $_categories_id[$category->term_id] = $key;
             }
         }
+
         return $_categories_id;
     }
 }
@@ -530,7 +537,7 @@ class AVH_EC_Core
 class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
 {
 
-    function walk($elements, $max_depth)
+    public function walk($elements, $max_depth)
     {
         $args = array_slice(func_get_args(), 2);
         $output = '';
@@ -549,6 +556,7 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
             $empty_array = array();
             foreach ($elements as $e)
                 $this->display_element($e, $empty_array, 1, 0, $args, $output);
+
             return $output;
         }
 
@@ -614,7 +622,7 @@ class AVHEC_Walker_Category extends Walker
      * @since 2.1.0
      * @var string
      */
-    var $tree_type = 'category';
+    public $tree_type = 'category';
 
     /**
      *
@@ -623,7 +631,7 @@ class AVHEC_Walker_Category extends Walker
      * @todo Decouple this
      * @var array
      */
-    var $db_fields = array('parent' => 'parent', 'id' => 'term_id');
+    public $db_fields = array('parent' => 'parent', 'id' => 'term_id');
 
     /**
      *
@@ -637,7 +645,7 @@ class AVHEC_Walker_Category extends Walker
      * @param array $args
      *            Will only append content if style argument value is 'list'.
      */
-    function start_lvl(&$output, $depth = 0, $args = array())
+    public function start_lvl(&$output, $depth = 0, $args = array())
     {
         if ('list' != $args['style'])
             return;
@@ -658,7 +666,7 @@ class AVHEC_Walker_Category extends Walker
      * @param array $args
      *            Will only append content if style argument value is 'list'.
      */
-    function end_lvl(&$output, $depth = 0, $args = array())
+    public function end_lvl(&$output, $depth = 0, $args = array())
     {
         if ('list' != $args['style'])
             return;
@@ -680,7 +688,7 @@ class AVHEC_Walker_Category extends Walker
      *            Depth of category in reference to parents.
      * @param array $args
      */
-    function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0)
+    public function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0)
     {
         extract($args);
 
@@ -761,7 +769,7 @@ class AVHEC_Walker_Category extends Walker
      * @param array $args
      *            Only uses 'list' for whether should append to output.
      */
-    function end_el(&$output, $object, $depth = 0, $args = array())
+    public function end_el(&$output, $object, $depth = 0, $args = array())
     {
         if ('list' != $args['style'])
             return;
@@ -769,4 +777,3 @@ class AVHEC_Walker_Category extends Walker
         $output .= '</li>' . "\n";
     }
 }
-?>
