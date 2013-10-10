@@ -43,6 +43,7 @@ class AVH_EC_Singleton
  * Include the necessary files
  */
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/helpers/avh-forms.php');
+require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/helpers/avh-common.php');
 require_once (AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.widgets.php');
 
 /**
