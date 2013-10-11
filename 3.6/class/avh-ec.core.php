@@ -39,7 +39,7 @@ class AVH_EC_Core
         $this->db_options_core = 'avhec';
         $this->db_options_tax_meta = 'avhec-tax_meta';
 
-        add_action('init', array(&$this, 'handleInitializePlugin'), 10);
+        add_action('init', array($this, 'handleInitializePlugin'), 10);
     }
 
     public function handleInitializePlugin()
@@ -85,7 +85,7 @@ class AVH_EC_Core
         }
 
         $this->handleTextdomain();
-        add_filter('get_terms_orderby', array(&$this, 'applyOrderFilter'), 10, 2);
+        add_filter('get_terms_orderby', array($this, 'applyOrderFilter'), 10, 2);
     }
 
     public function applyOrderFilter($orderby, $args)

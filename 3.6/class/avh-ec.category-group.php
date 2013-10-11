@@ -29,7 +29,7 @@ class AVH_EC_Category_Group
     {
         global $wpdb;
 
-        register_shutdown_function(array(&$this, '__destruct'));
+        register_shutdown_function(array($this, '__destruct'));
 
         /**
          * Taxonomy name
@@ -46,12 +46,12 @@ class AVH_EC_Category_Group
          * Create the table if it doesn't exist.
          */
         if ($wpdb->get_var('show tables like \'' . $wpdb->avhec_cat_group . '\'') != $wpdb->avhec_cat_group) {
-            add_action('init', array(&$this, 'doCreateTable'), 2); // Priority needs to be the same as the Register Taxonomy
+            add_action('init', array($this, 'doCreateTable'), 2); // Priority needs to be the same as the Register Taxonomy
         }
-        add_action('init', array(&$this, 'doRegisterTaxonomy'), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
-        add_action('init', array(&$this, 'doSetupOptions'));
+        add_action('init', array($this, 'doRegisterTaxonomy'), 2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
+        add_action('init', array($this, 'doSetupOptions'));
 
-        add_action('admin_init', array(&$this, 'addMetaBoxes'));
+        add_action('admin_init', array($this, 'addMetaBoxes'));
     }
 
     /**

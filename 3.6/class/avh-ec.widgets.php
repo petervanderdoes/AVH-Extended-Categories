@@ -29,7 +29,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 		$widget_ops = array('description' => __("An extended version of the default Categories widget.", 'avh-ec'));
 		WP_Widget::__construct('extended-categories', 'AVH Extended Categories', $widget_ops);
 
-		add_action('wp_print_styles', array(&$this,'actionWpPrintStyles'));
+		add_action('wp_print_styles', array($this,'actionWpPrintStyles'));
 	}
 
 	public function actionWpPrintStyles ()
@@ -323,7 +323,7 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
 
 		$widget_ops = array('description' => __("Shows the top categories.", 'avh-ec'));
 		WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Top Categories'), $widget_ops);
-		add_action('wp_print_styles', array(&$this,'actionWpPrintStyles'));
+		add_action('wp_print_styles', array($this,'actionWpPrintStyles'));
 	}
 
 	public function actionWpPrintStyles ()
@@ -529,7 +529,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
 		$widget_ops = array('description' => __("Shows grouped categories.", 'avh-ec'));
 		WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Category Group'), $widget_ops);
-		add_action('wp_print_styles', array(&$this,'actionWpPrintStyles'));
+		add_action('wp_print_styles', array($this,'actionWpPrintStyles'));
 	}
 
 	public function actionWpPrintStyles ()
