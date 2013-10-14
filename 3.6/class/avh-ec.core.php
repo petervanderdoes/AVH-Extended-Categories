@@ -29,7 +29,6 @@ class AVH_EC_Core
     public function __construct()
     {
         /**
-         *
          * @var AVH_EC_Category_Group
          */
         $catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
@@ -107,9 +106,6 @@ class AVH_EC_Core
 
     /**
      * Loads the i18n
-     *
-     * @return
-     *
      *
      */
     public function handleTextdomain()
