@@ -58,7 +58,7 @@ You can set the following options for the Category Group Widget:
 * Set the default group when editing or creating a post.
 
 You can also select not to show the Category Group widget by selecting the group: None
- 
+
 Translations:
 
 * Czech - Čeština (cs_CZ)
@@ -102,7 +102,7 @@ I have setup a project in [Launchpad](https://translations.launchpad.net/avhexte
 
 = Multiple Category Groups =
 The following is an explanation how assigning multiple groups to page/post works.
- 
+
 Lets say you have the following groups:
 Free Time
 Theater
@@ -136,7 +136,7 @@ None
 
 == Changelog ==
 = Version 3.9.0-dev.4 =
-* Preparation for new development cycle.
+* Bugfix: Widget would not keep checked categories
 
 = Version 3.8.2 =
 * WordPress plugin page is no longer available.
@@ -229,7 +229,7 @@ None
 
 = Version 3.2.2 =
 * Bugfix: Problem with Chrome and saving the category group.
-* Bugfix: Extra metabox displayed. The plugin uses it's own metabox for Category Group selection. 
+* Bugfix: Extra metabox displayed. The plugin uses it's own metabox for Category Group selection.
 
 = Version 3.2.1 =
 * Speed improvements in the admin section when there are a lot of categories and several Categories widgets.
@@ -253,7 +253,7 @@ None
 
 = Version 3.0.2 =
 * Bugfix: The plugin conflicts with the standard theme/plugin editor in WordPress
- 
+
 = Version 3.0.1 =
 * Bugfix: Definition of the metabox for post/page in the wrong place
 
@@ -281,7 +281,7 @@ None
 = Version 2.3.1 =
 * Bugfix: Undefined function
 
-= Version 2.3 = 
+= Version 2.3 =
 * RFC: You can change the text Select Category, without editing any translation file.
 * Bugfix: Selecting one parent wouldn't show it's children.
 * You can now display only selected categories. This didn't work properly in an hierachical category structure.
@@ -290,7 +290,7 @@ None
 = Version 2.2 =
 * RFC: Internationalization of the plug-in.
 * Bugfix: W3 Validation Errors when using drop down categories.
-* Added option to exclude categories from displaying instead of including them. (Compliments to: Jose Luis Moya - http://www.alsur.es ) 
+* Added option to exclude categories from displaying instead of including them. (Compliments to: Jose Luis Moya - http://www.alsur.es )
 
 = Version 2.1 =
 * RFC: The path for the RSS image can be URI.
