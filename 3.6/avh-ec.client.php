@@ -36,8 +36,8 @@ class AVH_EC_Singleton
         }
 
         return $instance;
-    } // getInstance
-} // singleton
+    }
+}
 
 /**
  * Include the necessary files

@@ -22,7 +22,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
         // Convert the old option widget_extended_categories to widget_extended-categories
         $old = get_option('widget_extended_categories');
-        if (!(FALSE === $old)) {
+        if (!(false === $old)) {
             update_option('widget_extended-categories', $old);
             delete_option('widget_extended_categories');
         }
@@ -34,7 +34,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
     public function actionWpPrintStyles()
     {
-        if (!(FALSE === is_active_widget(FALSE, FALSE, $this->id_base, TRUE))) {
+        if (!(false === is_active_widget(false, false, $this->id_base, true))) {
             wp_register_style('avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array(), $this->core->version);
             wp_enqueue_style('avhec-widget');
         }
@@ -126,15 +126,15 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
     /**
      * When Widget Control Form Is Posted
      *
-     * @param  unknown_type $new_instance
-     * @param  unknown_type $old_instance
+     * @param unknown_type $new_instance
+     * @param unknown_type $old_instance
      * @return unknown
      */
     public function update($new_instance, $old_instance)
     {
         // update the instance's settings
         if (!isset($new_instance['submit'])) {
-            return FALSE;
+            return false;
         }
 
         $instance = $old_instance;
@@ -151,7 +151,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
         $instance['rssfeed'] = isset($new_instance['rssfeed']);
         $instance['rssimage'] = strip_tags(stripslashes($new_instance['rssimage']));
         if (array_key_exists('all', $new_instance['post_category'])) {
-            $instance['post_category'] = FALSE;
+            $instance['post_category'] = false;
         } else {
             $instance['post_category'] = serialize($new_instance['post_category']);
         }
@@ -179,7 +179,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
         if ($depth < 0 || 11 < $depth) {
             $depth = 0;
         }
-        $selected_cats = (avhGetArrayValue($instance, 'post_category') !== '') ? unserialize($instance['post_category']) : FALSE;
+        $selected_cats = (avhGetArrayValue($instance, 'post_category') !== '') ? unserialize($instance['post_category']) : false;
 
         echo '<p>';
         avh_doWidgetFormText($this->get_field_id('title'), $this->get_field_name('title'), __('Title', 'avh-ec'), avhGetArrayValue($instance, 'title'));
@@ -241,7 +241,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
         echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
         echo '<li id="' . $this->get_field_id('category--1') . '" class="popular-category">';
         echo '<label for="' . $this->get_field_id('post_category') . '" class="selectit">';
-        echo '<input value="all" id="' . $this->get_field_id('post_category') . '" name="' . $this->get_field_name('post_category') . '[all]" type="checkbox" ' . (FALSE === $selected_cats ? ' CHECKED' : '') . '> ';
+        echo '<input value="all" id="' . $this->get_field_id('post_category') . '" name="' . $this->get_field_name('post_category') . '[all]" type="checkbox" ' . (false === $selected_cats ? ' CHECKED' : '') . '> ';
         _e('All Categories', 'avh-ec');
         echo '</label>';
         echo '</li>';
@@ -261,11 +261,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
     /**
      * Creates the categories checklist
      *
-     * @param int   $post_id
-     * @param int   $descendants_and_self
+     * @param int $post_id
+     * @param int $descendants_and_self
      * @param array $selected_cats
      * @param array $popular_cats
-     * @param int   $number
+     * @param int $number
      */
     public function avh_wp_category_checklist($selected_cats, $number)
     {
@@ -277,10 +277,11 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
         $args = array('taxonomy' => 'category', 'descendants_and_self' => 0, 'selected_cats' => $selected_cats, 'popular_cats' => array(), 'walker' => $walker, 'checked_ontop' => true, 'popular_cats' => array());
 
-        if (is_array($selected_cats))
+        if (is_array($selected_cats)) {
             $args['selected_cats'] = $selected_cats;
-        else
+        } else {
             $args['selected_cats'] = array();
+        }
 
         $categories = $this->core->getCategories();
         $_categories_id = $this->core->getCategoriesId($categories);
@@ -322,13 +323,13 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
         $this->core = & AVH_EC_Singleton::getInstance('AVH_EC_Core');
 
         $widget_ops = array('description' => __("Shows the top categories.", 'avh-ec'));
-        WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Top Categories'), $widget_ops);
+        WP_Widget::__construct(false, 'AVH Extended Categories: ' . __('Top Categories'), $widget_ops);
         add_action('wp_print_styles', array($this, 'actionWpPrintStyles'));
     }
 
     public function actionWpPrintStyles()
     {
-        if (!(FALSE === is_active_widget(FALSE, FALSE, $this->id_base, TRUE))) {
+        if (!(false === is_active_widget(false, false, $this->id_base, true))) {
             wp_register_style('avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array(), $this->core->version);
             wp_enqueue_style('avhec-widget');
         }
@@ -376,10 +377,10 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
             $show_option_none = $options['general']['alternative_name_select_category'];
         }
 
-        $top_cats = get_terms('category', array('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => FALSE));
+        $top_cats = get_terms('category', array('fields' => 'ids', 'orderby' => 'count', 'order' => 'DESC', 'number' => $a, 'hierarchical' => false));
         $included_cats = implode(",", $top_cats);
 
-        $cat_args = array('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => FALSE, 'hierarchical' => FALSE, 'depth' => -1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number);
+        $cat_args = array('include' => $included_cats, 'orderby' => $s, 'order' => $o, 'show_count' => $c, 'use_desc_for_title' => $use_desc_for_title, 'hide_empty' => false, 'hierarchical' => false, 'depth' => -1, 'title_li' => '', 'show_option_none' => $show_option_none, 'feed' => $r, 'feed_image' => $i, 'name' => 'extended-categories-top-select-' . $this->number);
         echo $before_widget;
         echo $this->core->comment;
         echo $before_title . $title . $after_title;
@@ -410,19 +411,19 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
      *
      * This function should check that $new_instance is set correctly.
      * The newly calculated value of $instance should be returned.
-     * If "FALSE" is returned, the instance won't be saved/updated.
+     * If "false" is returned, the instance won't be saved/updated.
      *
      * @param array $new_instance
      *            New settings for this instance as input by the user via form()
      * @param array $old_instance
      *            Old settings for this instance
-     * @return array Settings to save or bool FALSE to cancel saving
+     * @return array Settings to save or bool false to cancel saving
      */
     public function update($new_instance, $old_instance)
     {
         // update the instance's settings
         if (!isset($new_instance['submit'])) {
-            return FALSE;
+            return false;
         }
 
         $instance = $old_instance;
@@ -528,13 +529,13 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         $this->catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
         $widget_ops = array('description' => __("Shows grouped categories.", 'avh-ec'));
-        WP_Widget::__construct(FALSE, 'AVH Extended Categories: ' . __('Category Group'), $widget_ops);
+        WP_Widget::__construct(false, 'AVH Extended Categories: ' . __('Category Group'), $widget_ops);
         add_action('wp_print_styles', array($this, 'actionWpPrintStyles'));
     }
 
     public function actionWpPrintStyles()
     {
-        if (!(FALSE === is_active_widget(FALSE, FALSE, $this->id_base, TRUE))) {
+        if (!(false === is_active_widget(false, false, $this->id_base, true))) {
             wp_register_style('avhec-widget', AVHEC_PLUGIN_URL . '/css/avh-ec.widget.css', array(), $this->core->version);
             wp_enqueue_style('avhec-widget');
         }
@@ -573,16 +574,16 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
             $special_page = 'none';
         }
 
-        $toDisplay = FALSE;
+        $toDisplay = false;
         if ('none' == $special_page) {
             $terms = wp_get_object_terms($post->ID, $catgrp->taxonomy_name);
             if (!empty($terms)) {
                 $selected_catgroups = unserialize($instance['post_group_category']);
                 foreach ($terms as $key => $value) {
-                    if ($selected_catgroups === FALSE || array_key_exists($value->term_id, $selected_catgroups)) {
+                    if ($selected_catgroups === false || array_key_exists($value->term_id, $selected_catgroups)) {
                         if (!($this->getWidgetDoneCatGroup($value->term_id))) {
                             $row = $value;
-                            $group_found = TRUE;
+                            $group_found = true;
                             break;
                         }
                     }
@@ -591,7 +592,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
                 $options = $this->core->options;
                 $no_cat_group = $options['cat_group']['no_group'];
                 $row = get_term_by('id', $no_cat_group, $catgrp->taxonomy_name);
-                $group_found = TRUE;
+                $group_found = true;
             }
         } else {
             if ('category_group' == $special_page) {
@@ -606,21 +607,21 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
             } else {
                 $sp_category_group_id = $options['sp_cat_group'][$special_page];
             }
-            $row = get_term_by('id', $sp_category_group_id, $catgrp->taxonomy_name); // Returns FALSE when non-existance. (empty(FALSE)=TRUE)
-            $group_found = TRUE;
+            $row = get_term_by('id', $sp_category_group_id, $catgrp->taxonomy_name); // Returns false when non-existance. (empty(false)=true)
+            $group_found = true;
         }
 
         if ($group_found) {
-            $toDisplay = TRUE;
+            $toDisplay = true;
             $category_group_id_none = $this->catgrp->getTermIDBy('slug', 'none');
             $selected_catgroups = unserialize($instance['post_group_category']);
 
             if ($category_group_id_none == $row->term_id) {
-                $toDisplay = FALSE;
-            } elseif (!(FALSE == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
-                $toDisplay = FALSE;
+                $toDisplay = false;
+            } elseif (!(false == $selected_catgroups || array_key_exists($row->term_id, $selected_catgroups))) {
+                $toDisplay = false;
             } elseif ($special_page != 'none' && $this->getWidgetDoneCatGroup($sp_category_group_id)) {
-                $toDisplay = FALSE;
+                $toDisplay = false;
             }
         }
 
@@ -667,10 +668,10 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
             if ($style == 'list') {
                 echo '<ul>';
-                $this->core->avh_wp_list_categories($cat_args, TRUE);
+                $this->core->avh_wp_list_categories($cat_args, true);
                 echo '</ul>';
             } else {
-                $this->core->avh_wp_dropdown_categories($cat_args, TRUE);
+                $this->core->avh_wp_dropdown_categories($cat_args, true);
                 echo '<script type=\'text/javascript\'>' . "\n";
                 echo '/* <![CDATA[ */' . "\n";
                 echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-group-' . $this->number . '");' . "\n";
@@ -690,15 +691,15 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
     /**
      * When Widget Control Form Is Posted
      *
-     * @param  unknown_type $new_instance
-     * @param  unknown_type $old_instance
+     * @param unknown_type $new_instance
+     * @param unknown_type $old_instance
      * @return unknown
      */
     public function update($new_instance, $old_instance)
     {
         // update the instance's settings
         if (!isset($new_instance['submit'])) {
-            return FALSE;
+            return false;
         }
 
         $instance = $old_instance;
@@ -714,7 +715,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         $instance['rssfeed'] = isset($new_instance['rssfeed']);
         $instance['rssimage'] = strip_tags(stripslashes($new_instance['rssimage']));
         if (array_key_exists('all', $new_instance['post_group_category'])) {
-            $instance['post_group_category'] = FALSE;
+            $instance['post_group_category'] = false;
         } else {
             $instance['post_group_category'] = serialize($new_instance['post_group_category']);
         }
@@ -732,7 +733,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         // displays the widget admin form
         $instance = wp_parse_args((array) $instance, array('title' => '', 'rssimage' => ''));
 
-        $selected_cats = (avhGetArrayValue($instance, 'post_group_category') !== '') ? unserialize($instance['post_group_category']) : FALSE;
+        $selected_cats = (avhGetArrayValue($instance, 'post_group_category') !== '') ? unserialize($instance['post_group_category']) : false;
         ob_start();
         echo '<p>';
         avh_doWidgetFormText($this->get_field_id('title'), $this->get_field_name('title'), __('Title', 'avh-ec'), $instance['title']);
@@ -780,7 +781,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear" style="list-style-type: none; margin-left: 5px; padding-left: 0px; margin-bottom: 20px;">';
         echo '<li id="' . $this->get_field_id('group_category--1') . '" class="popular-group_category">';
         echo '<label for="' . $this->get_field_id('group_post_category') . '" class="selectit">';
-        echo '<input value="all" id="' . $this->get_field_id('group_post_category') . '" name="' . $this->get_field_name('post_group_category') . '[all]" type="checkbox" ' . (FALSE === $selected_cats ? ' CHECKED' : '') . '> ';
+        echo '<input value="all" id="' . $this->get_field_id('group_post_category') . '" name="' . $this->get_field_name('post_group_category') . '[all]" type="checkbox" ' . (false === $selected_cats ? ' CHECKED' : '') . '> ';
         _e('Any Group', 'avh-ec');
         echo '</label>';
         echo '</li>';
@@ -804,10 +805,11 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
 
         $args = array('taxonomy' => 'avhec_catgroup', 'descendants_and_self' => 0, 'selected_cats' => array(), 'popular_cats' => array(), 'walker' => $walker, 'checked_ontop' => true);
 
-        if (is_array($selected_cats))
+        if (is_array($selected_cats)) {
             $args['selected_cats'] = $selected_cats;
-        else
+        } else {
             $args['selected_cats'] = array();
+        }
 
         $categories = (array) get_terms($args['taxonomy'], array('get' => 'all'));
 
@@ -832,11 +834,11 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
     {
         $catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
         if (is_array($catgrp->widget_done_catgroup) && array_key_exists($id, $catgrp->widget_done_catgroup)) {
-            return TRUE;
+            return true;
         }
-        $catgrp->widget_done_catgroup[$id] = TRUE;
+        $catgrp->widget_done_catgroup[$id] = true;
 
-        return FALSE;
+        return false;
     }
 }
 
@@ -867,9 +869,9 @@ class AVH_Walker_Category_Checklist extends Walker
      *
      * @since 2.1.0
      *
-     * @param  array  $elements
-     * @param  int    $max_depth
-     * @param  array  $args;
+     * @param array $elements
+     * @param int $max_depth
+     * @param array $args;
      * @return string
      */
     public function walk($elements, $max_depth)
@@ -877,11 +879,13 @@ class AVH_Walker_Category_Checklist extends Walker
         $args = array_slice(func_get_args(), 2);
         $output = '';
 
-        if ($max_depth < -1) // invalid parameter
+        if ($max_depth < -1) {
             return $output;
+        }
 
-        if (empty($elements)) // nothing to walk
+        if (empty($elements)) { // nothing to walk
             return $output;
+        }
 
         $id_field = $this->db_fields['id'];
         $parent_field = $this->db_fields['parent'];
@@ -889,8 +893,9 @@ class AVH_Walker_Category_Checklist extends Walker
         // flat display
         if (-1 == $max_depth) {
             $empty_array = array();
-            foreach ($elements as $e)
+            foreach ($elements as $e) {
                 $this->display_element($e, $empty_array, 1, 0, $args, $output);
+            }
 
             return $output;
         }
@@ -901,10 +906,11 @@ class AVH_Walker_Category_Checklist extends Walker
         $top_level_elements = array();
         $children_elements = array();
         foreach ($elements as $e) {
-            if (0 == $e->$parent_field)
+            if (0 == $e->$parent_field) {
                 $top_level_elements[] = $e;
-            else
+            } else {
                 $children_elements[$e->$parent_field][] = $e;
+            }
         }
 
         /*
@@ -918,24 +924,28 @@ class AVH_Walker_Category_Checklist extends Walker
             $top_level_elements = array();
             $children_elements = array();
             foreach ($elements as $e) {
-                if ($root->$parent_field == $e->$parent_field)
+                if ($root->$parent_field == $e->$parent_field) {
                     $top_level_elements[] = $e;
-                else
+                } else {
                     $children_elements[$e->$parent_field][] = $e;
+                }
             }
         }
 
-        foreach ($top_level_elements as $e)
+        foreach ($top_level_elements as $e) {
             $this->display_element($e, $children_elements, $max_depth, 0, $args, $output);
+        }
 
-            /*
+        /*
          * if we are displaying all levels, and remaining children_elements is not empty, then we got orphans, which should be displayed regardless
          */
         if (($max_depth == 0) && count($children_elements) > 0) {
             $empty_array = array();
-            foreach ($children_elements as $orphans)
-                foreach ($orphans as $op)
+            foreach ($children_elements as $orphans) {
+                foreach ($orphans as $op) {
                     $this->display_element($op, $empty_array, 1, 0, $args, $output);
+                }
+            }
         }
 
         return $output;

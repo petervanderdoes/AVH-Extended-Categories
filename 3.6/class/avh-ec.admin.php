@@ -79,7 +79,7 @@ class AVH_EC_Admin
             $current_selection = $current_group->term_id;
         }
 
-        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => FALSE));
+        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => false));
         foreach ($cat_groups as $group) {
             $temp_cat = get_term($group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit');
             $dropdown_value[] = $group->term_id;
@@ -143,7 +143,7 @@ class AVH_EC_Admin
      * When a category is deleted this function is called so the category is deleted from every group as well.
      *
      * @param object $term
-     * @param int    $term_taxonomy_id
+     * @param int $term_taxonomy_id
      */
     public function actionDeleteCategory($term_id, $term_taxonomy_id)
     {
@@ -295,7 +295,7 @@ class AVH_EC_Admin
     {
         global $screen_layout_columns;
 
-        $groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => FALSE));
+        $groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => false));
         foreach ($groups as $group) {
             $group_id[] = $group->term_id;
             $groupname[] = $group->name;
@@ -572,7 +572,7 @@ class AVH_EC_Admin
             $this->core->saveOptions($this->core->options);
         }
         $data_special_pages['sp'] = $data_special_pages_new;
-        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => FALSE));
+        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => false));
 
         foreach ($cat_groups as $group) {
             $temp_cat = get_term($group->term_id, $this->catgrp->taxonomy_name, OBJECT, 'edit');
@@ -815,9 +815,9 @@ class AVH_EC_Admin
         echo '</span>';
         echo '<ul id="avhecManualOrder">';
         $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->terms t inner join $wpdb->term_taxonomy tt on t.term_id = tt.term_id WHERE taxonomy = 'category' and parent = %d ORDER BY avhec_term_order ASC", $parentID));
-        foreach ($results as $row)
+        foreach ($results as $row) {
             echo "<li id='id_$row->term_id' class='lineitem menu-item-settings'>" . __($row->name) . "</li>";
-
+        }
         echo '</ul>';
         echo '<input type="submit" name="btnOrderCats" id="btnOrderCats" class="button-primary" 	value="' . __('Save Order', 'avh-ec') . '"	onclick="javascript:orderCats(); return true;" />';
 
@@ -1118,8 +1118,8 @@ class AVH_EC_Admin
     /**
      * When not using AJAX, this function is called when the deletion fails.
      *
-     * @param  string $text
-     * @param  int    $group_id
+     * @param string $text
+     * @param int $group_id
      * @return string @WordPress Filter explain_nonce_$verb-$noun
      * @see wp_explain_nonce
      */
@@ -1146,10 +1146,11 @@ class AVH_EC_Admin
             $page = preg_replace('[^a-zA-Z0-9\.\_\-]', '', $_GET['page']);
         }
 
-        if (function_exists("admin_url"))
+        if (function_exists("admin_url")) {
             return admin_url(basename($_SERVER["PHP_SELF"])) . "?page=" . $page;
-        else
+        } else {
             return $_SERVER['PHP_SELF'] . "?page=" . $page;
+        }
     }
 
     /**
@@ -1160,7 +1161,7 @@ class AVH_EC_Admin
      */
     public function printCategoryGroupRows()
     {
-        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => FALSE));
+        $cat_groups = get_terms($this->catgrp->taxonomy_name, array('hide_empty' => false));
 
         foreach ($cat_groups as $group) {
             if ('none' != $group->slug) {
@@ -1222,8 +1223,9 @@ class AVH_EC_Admin
             $class = 'class="' . $column_name . ' column-' . $column_name . '"';
 
             $style = '';
-            if (in_array($column_name, $hidden))
+            if (in_array($column_name, $hidden)) {
                 $style = ' style="display:none;"';
+            }
 
             $attributes = $class . $style;
 
@@ -1338,7 +1340,7 @@ class AVH_EC_Admin
     /**
      * Ouput formatted options
      *
-     * @param  array  $option_data
+     * @param array $option_data
      * @return string
      */
     public function printOptions($option_data, $option_actual)
@@ -1412,8 +1414,8 @@ class AVH_EC_Admin
     /**
      * Used in forms to set an option checked
      *
-     * @param  mixed   $checked
-     * @param  mixed   $current
+     * @param mixed $checked
+     * @param mixed $current
      * @return strings
      */
     public function isChecked($checked, $current)
