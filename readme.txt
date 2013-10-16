@@ -137,6 +137,7 @@ None
 == Changelog ==
 = Version 3.9.0-dev.4 =
 * Bugfix: Widget would not keep checked categories
+* Bugfix: Several PHP warnings and notices are shown.
 
 = Version 3.8.2 =
 * WordPress plugin page is no longer available.
