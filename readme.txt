@@ -139,7 +139,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.9.0-dev.4 =
+= Version 3.8.3-rc.1 =
 * Bugfix: Widget would not keep checked categories
 * Bugfix: Several PHP warnings and notices are shown.
 
