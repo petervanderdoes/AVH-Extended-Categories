@@ -85,11 +85,14 @@ The AVH Extended Categories Widgets can be installed in 3 easy steps:
 
 1. Go to the Presentation/Appearance->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
 
+= Get involved =
+
+Developers can checkout and contribute to the source code on the [AVH Extended Categories GitHub Repository](https://github.com/petervanderdoes/AVH-Extended-Categories).
 
 == Support ==
 
 = What about support? =
-I created a support site at http://forums.avirtualhome.com where you can ask questions or request features.
+Support is done through WordPress.org
 
 = Depth selection =
 Starting with version 2.0 and WordPress 2.8 you can select how many levels deep you want to show your categories. This option only works when you select Show Hierarchy as well.
