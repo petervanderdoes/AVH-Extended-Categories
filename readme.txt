@@ -75,6 +75,11 @@ Translations:
 
 Some of the translations are incomplete. Currently we're in the middle of changing the way you can help with translations. Keep an eye on the [website](http:///blog.avirtualhome.com) for the announcement.
 
+= Get involved =
+
+Bugs and feature requests can be submitted at the [AVH Extended Categories GitHub Repository](https://github.com/petervanderdoes/AVH-Extended-Categories/blob/develop/Contributing.md).
+Developers can checkout and contribute to the source code on the [AVH Extended Categories GitHub Repository](https://github.com/petervanderdoes/AVH-Extended-Categories/blob/develop/Contributing.md).
+
 == Installation ==
 
 The AVH Extended Categories Widgets can be installed in 3 easy steps:
@@ -84,10 +89,6 @@ The AVH Extended Categories Widgets can be installed in 3 easy steps:
 1. Activate the plug-in
 
 1. Go to the Presentation/Appearance->Widgets page and drag the widget into the sidebar of your choice. Configuration of the widget is done like all other widgets.
-
-= Get involved =
-
-Developers can checkout and contribute to the source code on the [AVH Extended Categories GitHub Repository](https://github.com/petervanderdoes/AVH-Extended-Categories).
 
 == Support ==
 
