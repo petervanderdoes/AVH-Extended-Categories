@@ -50,17 +50,17 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
     {
         extract($args);
 
-        $selectedonly = isset($instance['selectedonly']);
-        $c = isset($instance['count']);
-        $h = isset($instance['hierarchical']);
-        $d = isset($instance['depth']) ? $instance['depth'] : 0;
-        $e = isset($instance['hide_empty']);
-        $use_desc_for_title = isset($instance['use_desc_for_title']);
+        $selectedonly = $instance['selectedonly'];
+        $c = $instance['count'];
+        $h = $instance['hierarchical'];
+        $d = $instance['depth'];
+        $e = $instance['hide_empty'];
+        $use_desc_for_title = $instance['use_desc_for_title'];
         $s = isset($instance['sort_column']) ? $instance['sort_column'] : 'name';
         $o = isset($instance['sort_order']) ? $instance['sort_order'] : 'asc';
-        $r = isset($instance['rssfeed']) ? 'RSS' : '';
+        $r = ($instance['rssfeed'] == true) ? 'RSS' : '';
         $i = isset($instance['rssimage']) ? $instance['rssimage'] : '';
-        $invert = isset($instance['invert_included']);
+        $invert = $instance['invert_included'];
 
         if (empty($r)) {
             $i = '';
@@ -193,7 +193,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
         avh_doWidgetFormCheckbox($this->get_field_id('hierarchical'), $this->get_field_name('hierarchical'), __('Show hierarchy', 'avh-ec'), (bool) avhGetArrayValue($instance, 'hierarchical'));
 
         $options = array(0 => __('All Levels', 'avh-ec'), 1 => __('Toplevel only', 'avh-ec'));
-        for ($i = 2; $i <= 11; $i ++) {
+        for ($i = 2; $i <= 11; $i++) {
             $options[$i] = __('Child ', 'avh-ec') . ($i - 1);
         }
         avh_doWidgetFormSelect($this->get_field_id('depth'), $this->get_field_name('depth'), __('How many levels to show', 'avh-ec'), $options, $depth);
@@ -356,11 +356,11 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
         } elseif ($a < 1) {
             $a = 1;
         }
-        $c = isset($instance['count']);
-        $use_desc_for_title = isset($instance['use_desc_for_title']);
+        $c = $instance['count'];
+        $use_desc_for_title = $instance['use_desc_for_title'];
         $s = isset($instance['sort_column']) ? $instance['sort_column'] : 'name';
         $o = isset($instance['sort_order']) ? $instance['sort_order'] : 'asc';
-        $r = isset($instance['rssfeed']) ? 'RSS' : '';
+        $r = ($instance['rssfeed'] === true) ? 'RSS' : '';
         $i = isset($instance['rssimage']) ? $instance['rssimage'] : '';
         if (empty($r)) {
             $i = '';
