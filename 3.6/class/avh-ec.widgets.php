@@ -628,14 +628,14 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         if ($toDisplay) {
             extract($args);
 
-            $c = isset($instance['count']);
-            $e = isset($instance['hide_empty']);
-            $h = isset($instance['hierarchical']);
-            $use_desc_for_title = isset($instance['use_desc_for_title']);
+            $c = $instance['count'];
+            $e = $instance['hide_empty'];
+            $h = $instance['hierarchical'];
+            $use_desc_for_title = $instance['use_desc_for_title'];
             $s = isset($instance['sort_column']) ? $instance['sort_column'] : 'name';
             $o = isset($instance['sort_order']) ? $instance['sort_order'] : 'asc';
-            $r = isset($instance['rssfeed']) ? 'RSS' : '';
-            $i = isset($instance['rssimage']) ? $instance['rssimage'] : '';
+            $r = $instance['rssfeed'] ? 'RSS' : '';
+            $i = $instance['rssimage'] ? $instance['rssimage'] : '';
 
             if (empty($r)) {
                 $i = '';

@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 3.9.0-dev.1 =
-* Preparation for new development cycle.
+* Bugfix: Options of the group widgets are not obeyed.
 
 = Version 3.8.4 =
 * Bugfix: Options of the widgets are not obeyed.
