@@ -34,7 +34,7 @@ class AVH_EC_Core
          */
         $catgrp = & AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
 
-        $this->version = '3.8.4';
+        $this->version = '3.8.5';
         $this->comment = '<!-- AVH Extended Categories version ' . $this->version . ' | http://blog.avirtualhome.com/wordpress-plugins/ -->';
         $this->db_options_core = 'avhec';
         $this->db_options_tax_meta = 'avhec-tax_meta';
@@ -320,7 +320,7 @@ class AVH_EC_Core
      *            Optional. Override default arguments.
      * @return string HTML content only if 'echo' argument is 0.
      */
-    public function avh_wp_dropdown_categories($args = array(), $selectedonly = false)
+    public function avh_wp_dropdown_categories($args = array())
     {
         $mywalker = new AVH_Walker_CategoryDropdown();
 
@@ -426,7 +426,7 @@ class AVH_EC_Core
      *            Optional. Override default arguments.
      * @return string HTML content only if 'echo' argument is 0.
      */
-    public function avh_wp_list_categories($args = array(), $selectedonly = false)
+    public function avh_wp_list_categories($args = array())
     {
         $mywalker = new AVHEC_Walker_Category();
         $defaults = array('show_option_all' => '', 'orderby' => 'name', 'order' => 'ASC', 'show_last_update' => 0, 'style' => 'list', 'show_count' => 0, 'hide_empty' => 1, 'use_desc_for_title' => 1, 'child_of' => 0, 'feed' => '', 'feed_type' => '', 'feed_image' => '', 'exclude' => '', 'exclude_tree' => '', 'current_category' => 0, 'hierarchical' => true, 'title_li' => __('Categories'), 'echo' => 1, 'depth' => 0, 'walker' => $mywalker);
