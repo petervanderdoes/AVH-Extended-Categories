@@ -104,10 +104,10 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
         if ($style == 'list') {
             echo '<ul>';
-            $this->core->avh_wp_list_categories($cat_args, $selectedonly);
+            $this->core->avh_wp_list_categories($cat_args);
             echo '</ul>';
         } else {
-            $this->core->avh_wp_dropdown_categories($cat_args, $selectedonly);
+            $this->core->avh_wp_dropdown_categories($cat_args);
             echo '<script type=\'text/javascript\'>' . "\n";
             echo '/* <![CDATA[ */' . "\n";
             echo '            var ec_dropdown_' . $this->number . ' = document.getElementById("extended-categories-select-' . $this->number . '");' . "\n";
