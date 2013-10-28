@@ -139,7 +139,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.9.0-dev.1 =
+= Version 3.8.5-rc.1 =
 * Bugfix: Options of the group widgets are not obeyed.
 
 = Version 3.8.4 =
