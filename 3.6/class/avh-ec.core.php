@@ -747,6 +747,12 @@ class AVHEC_Walker_Category extends Walker
             $link .= ' ' . gmdate('Y-m-d', $object->last_update_timestamp);
         }
 
+	if (is_single())
+	{
+		$post_cats=get_the_category();
+		$current_category = $post_cats[0]->term_id;
+	}
+
         if (isset($current_category) && $current_category) {
             $_current_category = get_category($current_category);
         }
