@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 3.9.0-dev.4 =
-* Preparation for new development cycle.
+* Add CSS classes to output when on a single post.
 
 = Version 3.8.5 =
 * Bugfix: Options of the group widgets are not obeyed.
