@@ -3,8 +3,8 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 3.6.1
-Stable tag: 3.8.5
+Tested up to: 3.8
+Stable tag: 3.9.0
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -73,7 +73,7 @@ Translations:
 * Swedish - Svenska (sv_SE)
 * Turkish - Türkçe (tr)
 
-Some of the translations are incomplete. Currently we're in the middle of changing the way you can help with translations. Keep an eye on the [website](http:///blog.avirtualhome.com) for the announcement.
+Some of the translations are incomplete. You can help translate all of the AVH Software by registering at our [translation site](http://translate.avirtualhome.com).
 
 = Get involved =
 
@@ -102,7 +102,7 @@ Here is how it works: Say you have 5 top level categories and each top level has
 You select to display all categories, select to Show hierarchy and select how many levels you want to show, in this case Toplevel only.
 
 = I want to help and translate the plug-in =
-I have setup a project in [Launchpad](https://translations.launchpad.net/avhextendedcategories/trunk) for translating the plug-in.
+You can help translate all of the AVH Software by registering at our [translation site](http://translate.avirtualhome.com).
 
 = Multiple Category Groups =
 The following is an explanation how assigning multiple groups to page/post works.
@@ -139,6 +139,11 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.9.0 =
+* Add CSS classes to output when on a single post.
+* Added language: Serbian - Српски (sr) thanks to  Borisa Djuraskovic - http://www.webhostinghub.com
+* Update language: Spanish - Español (es) thanks to Andrew Kurtis - http://www.webhostinghub.com
+
 = Version 3.8.5 =
 * Bugfix: Options of the group widgets are not obeyed.
 
