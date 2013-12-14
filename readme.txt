@@ -139,7 +139,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.9.0-dev.4 =
+= Version 3.9.0-rc.1 =
 * Add CSS classes to output when on a single post.
 * Added language: Serbian - Српски (sr) thanks to  Borisa Djuraskovic - http://www.webhostinghub.com
 * Update language: Spanish - Español (es) thanks to Andrew Kurtis - http://www.webhostinghub.com
