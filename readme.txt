@@ -4,7 +4,7 @@ Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
 Tested up to: 3.8
-Stable tag: 3.9.0
+Stable tag: 3.9.1
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
 == Description ==
@@ -139,6 +139,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 3.9.1 =
+* When the category group home is deleted there are MySQL errors.
+
 = Version 3.9.0 =
 * Add CSS classes to output when on a single post.
 * Added language: Serbian - Српски (sr) thanks to  Borisa Djuraskovic - http://www.webhostinghub.com
