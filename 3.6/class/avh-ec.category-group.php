@@ -113,13 +113,14 @@ class AVH_EC_Category_Group
         $all_categories = $this->getAllCategoriesTermID();
         if (false === $this->getTermIDBy('slug', 'none')) {
             $none_group_id = wp_insert_term('none', $this->taxonomy_name, array('description' => __('This group will not show the widget.', 'avh-ec')));
-            $all_group_id = wp_insert_term('All', $this->taxonomy_name, array('description' => __('Holds all the categories.', 'avh-ec')));
-            $home_group_id = wp_insert_term('Home', $this->taxonomy_name, array('description' => __('This group will be shown on the front page.', 'avh-ec')));
 
-            // Fill the standard groups with all categories
+            $home_group_id = wp_insert_term('Home', $this->taxonomy_name, array('description' => __('This group will be shown on the front page.', 'avh-ec')));
             $this->setCategoriesForGroup($home_group_id['term_id'], $all_categories);
-            $this->setWidgetTitleForGroup($all_group_id['term_id'], '');
             $this->setWidgetTitleForGroup($home_group_id['term_id'], '');
+        }
+        if (false === $this->getTermIDBy('slug', 'all')) {
+            $all_group_id = wp_insert_term('All', $this->taxonomy_name, array('description' => __('Holds all the categories.', 'avh-ec')));
+            $this->setWidgetTitleForGroup($all_group_id['term_id'], '');
         }
 
         $options = get_option($this->db_options_widget_titles);

@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 3.10.0-dev.1 =
-* Preparation for new development cycle.
+* When the category group home is deleted there are MySQL errors.
 
 = Version 3.9.0 =
 * Add CSS classes to output when on a single post.
