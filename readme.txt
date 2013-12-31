@@ -140,9 +140,6 @@ None
 
 == Changelog ==
 = Version 3.9.3-rc.1 =
-* Preparation for new development cycle.
-
-= Version 3.9.2 =
 * Log errors as E_USER_NOTICE when creating category groups.
 
 = Version 3.9.1 =
