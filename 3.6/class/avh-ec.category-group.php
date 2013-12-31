@@ -120,7 +120,11 @@ class AVH_EC_Category_Group
         }
         if (false === $this->getTermIDBy('slug', 'all')) {
             $all_group_id = wp_insert_term('All', $this->taxonomy_name, array('description' => __('Holds all the categories.', 'avh-ec')));
-            $this->setWidgetTitleForGroup($all_group_id['term_id'], '');
+            if (! is_wp_error($all_group_id)) {
+                $this->setWidgetTitleForGroup($all_group_id['term_id'], '');
+            } else {
+                trigger_error($all_group_id->get_error_message(). E_USER_NOTICE);
+            }
         }
 
         $options = get_option($this->db_options_widget_titles);

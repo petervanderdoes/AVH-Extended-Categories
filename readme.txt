@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 3.10.0-dev.1 =
-* Preparation for new development cycle.
+* Log errors as E_USER_NOTICE when creating category groups.
 
 = Version 3.9.1 =
 * When the category group home is deleted there are MySQL errors.
