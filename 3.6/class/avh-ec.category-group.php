@@ -123,7 +123,7 @@ class AVH_EC_Category_Group
             if (! is_wp_error($all_group_id)) {
                 $this->setWidgetTitleForGroup($all_group_id['term_id'], '');
             } else {
-                trigger_error($all_group_id->get_error_message(). E_USER_NOTICE);
+                trigger_error($all_group_id->get_error_message(), E_USER_NOTICE);
             }
         }
 
