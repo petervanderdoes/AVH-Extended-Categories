@@ -139,7 +139,7 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
-= Version 3.10.0-dev.1 =
+= Version 3.9.2-rc.1 =
 * Log errors as E_USER_NOTICE when creating category groups.
 
 = Version 3.9.1 =
