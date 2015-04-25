@@ -39,6 +39,9 @@ if ($_avhec_version >= 2.8) {
     require_once ($_avhec_abs_dir . '/libs/avh-db.php');
 
     switch ($_avhec_version) {
+        case ($_avhec_version >= 4.2):
+            $_avhec_version_dir = '/4.2';
+            break;
         case ($_avhec_version >= 3.6):
             $_avhec_version_dir = '/3.6';
             break;
