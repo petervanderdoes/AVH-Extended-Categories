@@ -139,6 +139,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 4.0.2-dev.1 =
+* Preparation for new development cycle.
+
 = Version 4.0.1 =
 * Post-Auth SQL Injection Vulnerability  
   Only occurs for WordPress versions lower than 3.3
