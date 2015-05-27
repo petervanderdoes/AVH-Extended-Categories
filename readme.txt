@@ -140,7 +140,8 @@ None
 
 == Changelog ==
 = Version 4.0.1-rc.1 =
-* Preparation for new development cycle.
+* Post-Auth SQL Injection Vulnerability  
+  Only occurs for WordPress versions lower than 3.3
 
 = Version 4.0.0 =
 * Fix for WordPress 4.2
