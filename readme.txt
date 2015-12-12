@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 4.0.2-rc.1 =
-* Preparation for new development cycle.
+* Certain methods show notice of undefined variables. 
 
 = Version 4.0.1 =
 * Post-Auth SQL Injection Vulnerability  
