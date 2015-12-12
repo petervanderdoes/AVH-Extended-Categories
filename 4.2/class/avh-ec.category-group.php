@@ -212,9 +212,10 @@ class AVH_EC_Category_Group
     public function setCategoriesForGroup($group_id, $categories = array())
     {
         global $wpdb;
-
+        $result = false;
+        
         if (false === $group_id) {
-            return;
+            return $result;
         }
         $old_categories = $this->getCategoriesFromGroup($group_id);
 
@@ -226,7 +227,7 @@ class AVH_EC_Category_Group
         sort($new_categories);
         // If the new and old values are the same, no need to update.
         if ($new_categories === $old_categories) {
-            return false;
+            return $result;
         }
 
         $new = array_diff($new_categories, $old_categories);
