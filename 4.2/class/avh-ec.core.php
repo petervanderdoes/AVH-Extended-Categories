@@ -61,91 +61,118 @@ class AVHEC_Walker_Category extends Walker
      * @see   Walker::start_el()
      * @since 2.1.0
      *
-     * @param string $output Passed by reference. Used to append additional content.
-     * @param object $object Category data object.
-     * @param int    $depth  Depth of category in reference to parents.
+     * @param string $output   Passed by reference. Used to append additional content.
+     * @param object $category Category data object.
+     * @param int    $depth    Depth of category in reference to parents.
      * @param array  $args
      * @param int    $current_object_id
      */
-    public function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0)
+    public function start_el(&$output, $category, $depth = 0, $args = array(), $current_object_id = 0)
     {
-        extract($args);
+        $cat_name = apply_filters('list_cats', esc_attr($category->name), $category);
+        // Don't generate an element if the category name is empty.
+        if (!$cat_name) {
+            return;
+        }
 
-        $cat_name = esc_attr($object->name);
-        $cat_name = apply_filters('list_cats', $cat_name, $object);
-        $link = '<div class="avhec-widget-line"><a href="' . get_category_link($object->term_id) . '" ';
-        if ($use_desc_for_title == 0 || empty($object->description)) {
-            $link .= 'title="' . sprintf(__('View all posts filed under %s'), $cat_name) . '"';
-        } else {
+        $link = '<div class="avhec-widget-line"><a href="' . get_category_link($category->term_id) . '" ';
+        if ($args['use_desc_for_title'] && !empty($category->description)) {
+            /**
+             * Filter the category description for display.
+             *
+             * @since 1.2.0
+             *
+             * @param string $description Category description.
+             * @param object $category    Category object.
+             */
             $link .= 'title="' .
-                     esc_attr(strip_tags(apply_filters('category_description', $object->description, $object))) .
+                     esc_attr(strip_tags(apply_filters('category_description', $category->description, $category))) .
                      '"';
+        } else {
+            $link .= 'title="' . sprintf(__('View all posts filed under %s'), $cat_name) . '"';
         }
         $link .= '>';
         $link .= $cat_name . '</a>';
 
-        if ((!empty($feed_image)) || (!empty($feed))) {
+        if (!empty($args['feed_image']) || !empty($args['feed'])) {
             $link .= '<div class="avhec-widget-rss"> ';
 
-            if (empty($feed_image)) {
+            if (empty($args['feed_image'])) {
                 $link .= '(';
             }
 
-            $link .= '<a href="' . get_category_feed_link($object->term_id, $feed_type) . '"';
+            $link .= '<a href="' . get_category_feed_link($category->term_id, $args['feed_type']) . '"';
 
-            if (empty($feed)) {
+            if (empty($args['feed'])) {
                 $alt = ' alt="' . sprintf(__('Feed for all posts filed under %s'), $cat_name) . '"';
             } else {
-                $title = ' title="' . $feed . '"';
-                $alt = ' alt="' . $feed . '"';
-                $name = $feed;
-                $link .= $title;
+                $alt = ' alt="' . $args['feed'] . '"';
+                $name = $args['feed'];
+                $link .= ' title="';
+                $link .= empty($args['title']) ? $args['feed'] : $args['title'];
+                $link .= '"';
             }
 
             $link .= '>';
 
-            if (empty($feed_image)) {
+            if (empty($args['feed_image'])) {
                 $link .= $name;
             } else {
-                $link .= '<img src="' . $feed_image . '"' . $alt . $title . ' />';
+                $link .= '<img src="' . $args['feed_image'] . '"' . $alt . '" />';
             }
             $link .= '</a>';
-            if (empty($feed_image)) {
+
+            if (empty($args['feed_image'])) {
                 $link .= ')';
             }
+
             $link .= '</div>';
         }
 
-        if (isset($show_count) && $show_count) {
-            $link .= '<div class="avhec-widget-count"> (' . intval($object->count) . ')</div>';
+        if (!empty($args['show_count'])) {
+            $link .= '<div class="avhec-widget-count"> (' . number_format_i18n($category->count) . ')</div>';
         }
 
-        if (isset($show_date) && $show_date) {
-            $link .= ' ' . gmdate('Y-m-d', $object->last_update_timestamp);
-        }
-
-        // When on a single post get the post's category. This ensures that that category will be given the CSS style of "current category".
-        if (is_single()) {
-            $post_cats = get_the_category();
-            $current_category = $post_cats[0]->term_id;
-        }
-
-        if (isset($current_category) && $current_category) {
-            $_current_category = get_category($current_category);
+        if (!empty($args['$show_date'])) {
+            $link .= ' ' . gmdate('Y-m-d', $category->last_update_timestamp);
         }
 
         if ('list' == $args['style']) {
-            $output .= "\t" . '<li';
-            $class = 'cat-item cat-item-' . $object->term_id;
-            if (isset($current_category) && $current_category && ($object->term_id == $current_category)) {
-                $class .= ' current-cat';
-            } elseif (isset($_current_category) &&
-                      $_current_category &&
-                      ($object->term_id == $_current_category->parent)
-            ) {
-                $class .= ' current-cat-parent';
+            // When on a single post get the post's category. This ensures that that category will be given the CSS style of "current category".
+            if (is_single()) {
+                $post_cats = get_the_category();
+                $args['current_category'] = $post_cats[0]->term_id;
             }
-            $output .= ' class="' . $class . '"';
+
+            $output .= "\t" . '<li';
+            $css_classes = array(
+                'cat-item',
+                'cat-item-' . $category->term_id,
+            );
+
+            if (!empty($args['current_category'])) {
+                $_current_category = get_term($args['current_category'], $category->taxonomy);
+                if ($category->term_id == $args['current_category']) {
+                    $css_classes[] = 'current-cat';
+                } elseif ($category->term_id == $_current_category->parent) {
+                    $css_classes[] = 'current-cat-parent';
+                }
+            }
+
+            /**
+             * Filter the list of CSS classes to include with each category in the list.
+             *
+             * @since 4.2.0
+             * @see   wp_list_categories()
+             *
+             * @param array  $css_classes An array of CSS classes to be applied to each list item.
+             * @param object $category    Category data object.
+             * @param int    $depth       Depth of page, used for padding.
+             * @param array  $args        An array of wp_list_categories() arguments.
+             */
+            $css_classes = implode(' ', apply_filters('category_css_class', $css_classes, $category, $depth, $args));
+
+            $output .= ' class="' . $css_classes . '"';
             $output .= '>' . $link . '</div>' . "\n";
         } else {
             $output .= "\t" . $link . '</div><br />' . "\n";
