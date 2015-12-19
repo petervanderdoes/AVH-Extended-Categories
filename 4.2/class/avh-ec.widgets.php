@@ -25,10 +25,7 @@ class AVH_Walker_Category_Checklist extends Walker
 
     public function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0)
     {
-        extract($args);
-        if (!isset($selected_cats)) {
-            $selected_cats = array();
-        }
+        $args['selected_cats'] = empty($args['selected_cats']) ? array() : $args['selected_cats'];
         $input_id = $this->input_id . '-' . $object->term_id;
         $output .= "\n" . '<li id="' . $this->li_id . '">';
         $output .= '<label for="' . $input_id . '" class="selectit">';
@@ -41,7 +38,7 @@ class AVH_Walker_Category_Checklist extends Walker
                    ']" id="' .
                    $input_id .
                    '"' .
-                   (in_array($object->term_id, $selected_cats) ? ' checked="checked"' : "") .
+                   (in_array($object->term_id, $args['selected_cats']) ? ' checked="checked"' : "") .
                    '/> ' .
                    esc_html(apply_filters('the_category', $object->name)) .
                    '</label>';
@@ -80,7 +77,6 @@ class AVH_Walker_Category_Checklist extends Walker
             return $output;
         }
 
-        $id_field = $this->db_fields['id'];
         $parent_field = $this->db_fields['parent'];
 
         // flat display
@@ -502,7 +498,6 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
         }
 
         if ($toDisplay) {
-            extract($args);
 
             $c = $instance['count'];
             $e = $instance['hide_empty'];
@@ -550,9 +545,9 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
                 'feed'               => $r,
                 'feed_image'         => $i
             );
-            echo $before_widget;
+            echo $args['before_widget'];
             echo $this->core->comment;
-            echo $before_title . $title . $after_title;
+            echo $args['before_title'] . $title . $args['after_title'];
 
             if ($style == 'list') {
                 echo '<ul>';
@@ -595,7 +590,7 @@ class WP_Widget_AVH_ExtendedCategories_Category_Group extends WP_Widget
                 echo '/* ]]> */' . "\n";
                 echo '</script>' . "\n";
             }
-            echo $after_widget;
+            echo $args['after_widget'];
         }
     }
 }
@@ -918,26 +913,23 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
      */
     public function widget($args, $instance)
     {
-        extract($args);
-
-        $selectedonly = $instance['selectedonly'];
-        $c = $instance['count'];
-        $h = $instance['hierarchical'];
-        $d = $instance['depth'];
-        $e = $instance['hide_empty'];
+        $count = $instance['count'];
+        $hierarchical = $instance['hierarchical'];
+        $depth = $instance['depth'];
+        $hide_empty = $instance['hide_empty'];
         $use_desc_for_title = $instance['use_desc_for_title'];
-        $s = isset($instance['sort_column']) ? $instance['sort_column'] : 'name';
-        $o = isset($instance['sort_order']) ? $instance['sort_order'] : 'asc';
-        $r = ($instance['rssfeed'] == true) ? 'RSS' : '';
-        $i = isset($instance['rssimage']) ? $instance['rssimage'] : '';
+        $sort_column = isset($instance['sort_column']) ? $instance['sort_column'] : 'name';
+        $sort_order = isset($instance['sort_order']) ? $instance['sort_order'] : 'asc';
+        $rss_feed = ($instance['rssfeed'] == true) ? 'RSS' : '';
+        $rss_image = isset($instance['rssimage']) ? $instance['rssimage'] : '';
         $invert = $instance['invert_included'];
 
-        if (empty($r)) {
-            $i = '';
+        if (empty($rss_feed)) {
+            $rss_image = '';
         }
 
-        if (empty($d)) {
-            $d = 0;
+        if (empty($depth)) {
+            $depth = 0;
         }
 
         $title = apply_filters(
@@ -972,21 +964,21 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
 
         $cat_args = array(
             $inc_exc             => $included_cats,
-            'orderby'            => $s,
-            'order'              => $o,
-            'show_count'         => $c,
+            'orderby'            => $sort_column,
+            'order'              => $sort_order,
+            'show_count'         => $count,
             'use_desc_for_title' => $use_desc_for_title,
-            'hide_empty'         => $e,
-            'hierarchical'       => $h,
-            'depth'              => $d,
+            'hide_empty'         => $hide_empty,
+            'hierarchical'       => $hierarchical,
+            'depth'              => $depth,
             'title_li'           => '',
             'show_option_none'   => $show_option_none,
-            'feed'               => $r,
-            'feed_image'         => $i
+            'feed'               => $rss_feed,
+            'feed_image'         => $rss_image
         );
-        echo $before_widget;
+        echo $args['before_widget'];
         echo $this->core->comment;
-        echo $before_title . $title . $after_title;
+        echo $args['before_title'] . $title . $args['after_title'];
 
         if ($style == 'list') {
             echo '<ul>';
@@ -1029,7 +1021,7 @@ class WP_Widget_AVH_ExtendedCategories_Normal extends WP_Widget
             echo '/* ]]> */' . "\n";
             echo '</script>' . "\n";
         }
-        echo $after_widget;
+        echo $args['after_widget'];
     }
 }
 
@@ -1223,7 +1215,6 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
      */
     public function widget($args, $instance)
     {
-        extract($args);
 
         $title = apply_filters(
             'widget_title',
@@ -1282,9 +1273,9 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
             'feed'               => $r,
             'feed_image'         => $i
         );
-        echo $before_widget;
+        echo $args['before_widget'];
         echo $this->core->comment;
-        echo $before_title . $title . $after_title;
+        echo $args['before_title'] . $title . $args['after_title'];
         echo '<ul>';
 
         if ($style == 'list') {
@@ -1327,6 +1318,6 @@ class WP_Widget_AVH_ExtendedCategories_Top extends WP_Widget
             echo '</script>' . "\n";
         }
         echo '</ul>';
-        echo $after_widget;
+        echo $args['after_widget'];
     }
 }

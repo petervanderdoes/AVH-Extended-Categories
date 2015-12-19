@@ -212,15 +212,10 @@ class AVH_EC_Core
     public $version;
 
     /**
-     * PHP5 constructor
+     * AVH_EC_Core constructor.
      */
     public function __construct()
     {
-        /**
-         * @var AVH_EC_Category_Group
-         */
-        $catgrp = &AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
-
         $this->version = '3.10.0-dev.1';
         $this->comment = '<!-- AVH Extended Categories version ' .
                          $this->version .
@@ -639,6 +634,7 @@ class AVH_EC_Core
     {
         global $wpdb;
 
+        /** @var AVH_EC_Category_Group $catgrp */
         $catgrp = &AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
         $db_version = 4;
 
@@ -808,8 +804,7 @@ class AVH_Walker_CategoryDropdown extends Walker_CategoryDropdown
         if (empty($elements)) {
             return $output;
         }
-
-        $id_field = $this->db_fields['id'];
+        
         $parent_field = $this->db_fields['parent'];
 
         // flat display

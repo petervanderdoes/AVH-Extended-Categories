@@ -384,8 +384,6 @@ class AVH_EC_Category_Group
      */
     public function getGroup($group_id)
     {
-        global $wpdb;
-
         $result = get_term((int) $group_id, $this->taxonomy_name);
         if (null === $result) {
             $result = false;

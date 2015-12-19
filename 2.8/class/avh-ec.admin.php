@@ -1197,7 +1197,7 @@ class AVH_EC_Admin
 	/**
 	 * Get the backlink for forms
 	 *
-	 * @return strings
+	 * @return string
 	 */
 	function getBackLink ()
 	{
@@ -1474,7 +1474,7 @@ class AVH_EC_Admin
 	 *
 	 * @param mixed $checked
 	 * @param mixed $current
-	 * @return strings
+	 * @return string
 	 */
 	function isChecked ($checked, $current)
 	{

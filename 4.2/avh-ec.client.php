@@ -52,7 +52,7 @@ function avhextendedcategories_init()
     // Admin
     if (is_admin()) {
         require_once(AVHEC_ABSOLUTE_WORKING_DIR . '/class/avh-ec.admin.php');
-        $avhec_admin = new AVH_EC_Admin();
+        new AVH_EC_Admin();
     }
     AVH_EC_Singleton::getInstance('AVH_EC_Core');
 

@@ -1229,7 +1229,7 @@ class AVH_EC_Admin
      * @param string $checked
      * @param string $current
      *
-     * @return strings
+     * @return string
      */
     public function isChecked($checked, $current)
     {
