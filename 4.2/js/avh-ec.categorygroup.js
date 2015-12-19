@@ -9,8 +9,9 @@ jQuery(document).ready(function ($) {
     }
   };
   delBefore = function (s) {
-    if ('undefined' != showNotice)
+    if ('undefined' !== showNotice) {
       return showNotice.warn() ? s : false;
+    }
     return s;
   };
   $('#the-list').wpList({delBefore: delBefore});
