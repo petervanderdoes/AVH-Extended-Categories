@@ -1380,14 +1380,14 @@ class AVH_EC_Admin
         echo '<div class="p">';
         echo '<span class="b">Amazon</span><br />';
         echo __('If you decide to buy something from Amazon click the button.', 'avh-ec') . '</span><br />';
-        echo '<a href="https://www.amazon.com/?tag=avh-donation-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' .
+        echo '<a href="https://www.amazon.com/?tag=petervanderdoes-20" target="_blank" title="Amazon Homepage"><img alt="Amazon Button" src="' .
              $this->core->info['graphics_url'] .
              '/us_banner_logow_120x60.gif" /></a>';
         echo '</div>';
 
         echo '<div class="p">';
         echo __('You can send me something from my ', 'avh-ec') .
-             '<a href="http://www.amazon.com/registry/wishlist/1U3DTWZ72PI7W?tag=avh-donation-20">' .
+             '<a href="http://www.amazon.com/registry/wishlist/1U3DTWZ72PI7W?tag=petervanderdoes-20">' .
              __('Amazon Wish List', 'avh-ec') .
              '</a>';
         echo '</div>';
