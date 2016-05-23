@@ -237,73 +237,98 @@ class AVH_EC_Core {
 
 	/**
 	 * Display or retrieve the HTML dropdown list of categories.
-	 * The list of arguments is below:
-	 * 'show_option_all' (string) - Text to display for showing all categories.
-	 * 'show_option_none' (string) - Text to display for showing no categories.
-	 * 'orderby' (string) default is 'ID' - What column to use for ordering the
-	 * categories.
-	 * 'order' (string) default is 'ASC' - What direction to order categories.
-	 * 'show_last_update' (bool|int) default is 0 - See {@link get_categories()}
-	 * 'show_count' (bool|int) default is 0 - Whether to show how many posts are
-	 * in the category.
-	 * 'hide_empty' (bool|int) default is 1 - Whether to hide categories that
-	 * don't have any posts attached to them.
-	 * 'child_of' (int) default is 0 - See {@link get_categories()}.
-	 * 'exclude' (string) - See {@link get_categories()}.
-	 * 'echo' (bool|int) default is 1 - Whether to display or retrieve content.
-	 * 'depth' (int) - The max depth.
-	 * 'tab_index' (int) - Tab index for select element.
-	 * 'name' (string) - The name attribute value for selected element.
-	 * 'class' (string) - The class attribute value for selected element.
-	 * 'selected' (int) - Which category ID is selected.
+	 *
 	 * The 'hierarchical' argument, which is disabled by default, will override the
 	 * depth argument, unless it is true. When the argument is false, it will
 	 * display all of the categories. When it is enabled it will use the value in
 	 * the 'depth' argument.
 	 *
 	 * @since 2.1.0
+	 * @since 4.2.0 Introduced the `value_field` argument.
 	 *
-	 * @param string|array $args Optional. Override default arguments.
+	 * @param string|array $args              {
+	 *                                        Optional. Array or string of arguments to generate a categories drop-down
+	 *                                        element.
 	 *
+	 * @type string        $show_option_all   Text to display for showing all categories. Default empty.
+	 * @type string        $show_option_none  Text to display for showing no categories. Default empty.
+	 * @type string        $option_none_value Value to use when no category is selected. Default empty.
+	 * @type string        $orderby           Which column to use for ordering categories. See get_terms() for a list
+	 *                                           of accepted values. Default 'id' (term_id).
+	 * @type string        $order             Whether to order terms in ascending or descending order. Accepts 'ASC'
+	 *                                           or 'DESC'. Default 'ASC'.
+	 * @type bool          $pad_counts        See get_terms() for an argument description. Default false.
+	 * @type bool|int      $show_count        Whether to include post counts. Accepts 0, 1, or their bool equivalents.
+	 *                                           Default 0.
+	 * @type bool|int      $hide_empty        Whether to hide categories that don't have any posts. Accepts 0, 1, or
+	 *                                           their bool equivalents. Default 1.
+	 * @type int           $child_of          Term ID to retrieve child terms of. See get_terms(). Default 0.
+	 * @type array|string  $exclude           Array or comma/space-separated string of term ids to exclude.
+	 *                                           If `$include` is non-empty, `$exclude` is ignored. Default empty
+	 *                                           array.
+	 * @type bool|int      $echo              Whether to echo or return the generated markup. Accepts 0, 1, or their
+	 *                                           bool equivalents. Default 1.
+	 * @type bool|int      $hierarchical      Whether to traverse the taxonomy hierarchy. Accepts 0, 1, or their bool
+	 *                                           equivalents. Default 0.
+	 * @type int           $depth             Maximum depth. Default 0.
+	 * @type int           $tab_index         Tab index for the select element. Default 0 (no tabindex).
+	 * @type string        $name              Value for the 'name' attribute of the select element. Default 'cat'.
+	 * @type string        $id                Value for the 'id' attribute of the select element. Defaults to the value
+	 *                                           of `$name`.
+	 * @type string        $class             Value for the 'class' attribute of the select element. Default
+	 *       'postform'.
+	 * @type int|string    $selected          Value of the option that should be selected. Default 0.
+	 * @type string        $value_field       Term field that should be used to populate the 'value' attribute
+	 *                                           of the option elements. Accepts any valid term field: 'term_id',
+	 *                                           'name',
+	 *                                           'slug', 'term_group', 'term_taxonomy_id', 'taxonomy', 'description',
+	 *                                           'parent', 'count'. Default 'term_id'.
+	 * @type string|array  $taxonomy          Name of the category or categories to retrieve. Default 'category'.
+	 * @type bool          $hide_if_empty     True to skip generating markup if no categories are found.
+	 *                                           Default false (create select element even if no categories are found).
+	 * }
 	 * @return string HTML content only if 'echo' argument is 0.
 	 */
-	public function avh_wp_dropdown_categories($args = array()) {
+	public function avh_wp_dropdown_categories($args = '') {
 		$mywalker = new AVH_Walker_CategoryDropdown();
 
 		// @format_off
 		$defaults = array(
-			'show_option_all'  => '',
-			'show_option_none' => '',
-			'orderby'          => 'id',
-			'order'            => 'ASC',
-			'show_last_update' => 0,
-			'show_count'       => 0,
-			'hide_empty'       => 1,
-			'child_of'         => 0,
-			'exclude'          => '',
-			'echo'             => 1,
-			'selected'         => 0,
-			'hierarchical'     => 0,
-			'name'             => 'cat',
-			'id'               => '',
-			'class'            => 'postform',
-			'depth'            => 0,
-			'tab_index'        => 0,
-			'taxonomy'         => 'category',
-			'walker'           => $mywalker,
-			'hide_if_empty'    => false
+			'show_option_all'   => '',
+			'show_option_none'  => '',
+			'orderby'           => 'id',
+			'order'             => 'ASC',
+			'show_last_update'  => 0,
+			'show_count'        => 0,
+			'hide_empty'        => 1,
+			'child_of'          => 0,
+			'exclude'           => '',
+			'echo'              => 1,
+			'selected'          => 0,
+			'hierarchical'      => 0,
+			'name'              => 'cat',
+			'id'                => '',
+			'class'             => 'postform',
+			'depth'             => 0,
+			'tab_index'         => 0,
+			'taxonomy'          => 'category',
+			'walker'            => $mywalker,
+			'hide_if_empty'     => false,
+			'option_none_value' => - 1,
+			'value_field'       => 'term_id',
 		);
 		// @format_on
 		$defaults['selected'] = (is_category()) ? get_query_var('cat') : 0;
 
-		$r = wp_parse_args($args, $defaults);
+		$r                 = wp_parse_args($args, $defaults);
+		$option_none_value = $r['option_none_value'];
 
 		if ( ! isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
 			$r['pad_counts'] = true;
 		}
 
 		$r['include_last_update_time'] = $r['show_last_update'];
-		extract($r);
+		$tab_index                     = $r['tab_index'];
 
 		$tab_index_attribute = '';
 		if ((int) $tab_index > 0) {
@@ -325,25 +350,33 @@ class AVH_EC_Core {
 			$output = '';
 		}
 
-		if (empty($categories) && ! $r['hide_if_empty'] && ! empty($show_option_none)) {
-			$show_option_none = apply_filters('list_cats', $show_option_none);
+		if (empty($categories) && ! $r['hide_if_empty'] && ! empty($r['show_option_none'])) {
+			$show_option_none = apply_filters('list_cats', $r['show_option_none']);
 			$output .= "\t<option value='-1' selected='selected'>$show_option_none</option>\n";
 		}
 		if ( ! empty($categories)) {
 
-			if ($show_option_all) {
-				$show_option_all = apply_filters('list_cats', $show_option_all);
+			if ($r['show_option_all']) {
+				$show_option_all = apply_filters('list_cats', $$r['show_option_all']);
 				$selected        = ('0' === strval($r['selected'])) ? " selected='selected'" : '';
 				$output .= "\t" . '<option value="0"' . $selected . '>' . $show_option_all . '</option>' . "\n";
 			}
 
-			if ($show_option_none) {
-				$show_option_none = apply_filters('list_cats', $show_option_none);
-				$selected         = ('-1' === strval($r['selected'])) ? " selected='selected'" : '';
-				$output .= "\t" . '<option value="-1"' . $selected . '>' . $show_option_none . '</option>' . "\n";
+			if ($r['show_option_none']) {
+				$show_option_none = apply_filters('list_cats', $r['show_option_none']);
+				$selected         = selected($option_none_value, $r['selected'], false);
+				$output .= "\t" .
+				           '<option value="' .
+				           esc_attr($option_none_value) .
+				           '"' .
+				           $selected .
+				           '>' .
+				           $show_option_none .
+				           '</option>' .
+				           "\n";
 			}
 
-			if ($hierarchical) {
+			if ($r['hierarchical']) {
 				$depth = $r['depth']; // Walk the full depth.
 			} else {
 				$depth = - 1; // Flat
@@ -354,9 +387,9 @@ class AVH_EC_Core {
 			$output .= "</select>\n";
 		}
 
-		$output = apply_filters('wp_dropdown_cats', $output);
+		$output = apply_filters('wp_dropdown_cats', $output, $r);
 
-		if ($echo) {
+		if ($r['echo']) {
 			echo $output;
 		}
 
@@ -365,140 +398,209 @@ class AVH_EC_Core {
 
 	/**
 	 * Display or retrieve the HTML list of categories.
-	 * The list of arguments is below:
-	 * 'show_option_all' (string) - Text to display for showing all categories.
-	 * 'orderby' (string) default is 'ID' - What column to use for ordering the
-	 * categories.
-	 * 'order' (string) default is 'ASC' - What direction to order categories.
-	 * 'show_last_update' (bool|int) default is 0 - See {@link
-	 * walk_category_dropdown_tree()}
-	 * 'show_count' (bool|int) default is 0 - Whether to show how many posts are
-	 * in the category.
-	 * 'hide_empty' (bool|int) default is 1 - Whether to hide categories that
-	 * don't have any posts attached to them.
-	 * 'use_desc_for_title' (bool|int) default is 1 - Whether to use the
-	 * description instead of the category title.
-	 * 'feed' - See {@link get_categories()}.
-	 * 'feed_type' - See {@link get_categories()}.
-	 * 'feed_image' - See {@link get_categories()}.
-	 * 'child_of' (int) default is 0 - See {@link get_categories()}.
-	 * 'exclude' (string) - See {@link get_categories()}.
-	 * 'exclude_tree' (string) - See {@link get_categories()}.
-	 * 'echo' (bool|int) default is 1 - Whether to display or retrieve content.
-	 * 'current_category' (int) - See {@link get_categories()}.
-	 * 'hierarchical' (bool) - See {@link get_categories()}.
-	 * 'title_li' (string) - See {@link get_categories()}.
-	 * 'depth' (int) - The max depth.
 	 *
 	 * @since 2.1.0
+	 * @since 4.4.0 Introduced the `hide_title_if_empty` and `separator` arguments. The `current_category` argument was
+	 *        modified to optionally accept an array of values.
 	 *
-	 * @param string|array $args Optional. Override default arguments.
+	 * @param string|array $args                {
+	 *                                          Array of optional arguments.
 	 *
-	 * @return void|string HTML content only if 'echo' argument is 0.
-	 */
-	public function avh_wp_list_categories($args = array()) {
-		$mywalker = new AVHEC_Walker_Category();
-		$defaults = array(
-			'show_option_all'    => '',
-			'orderby'            => 'name',
-			'order'              => 'ASC',
-			'show_last_update'   => 0,
-			'style'              => 'list',
-			'show_count'         => 0,
-			'hide_empty'         => 1,
-			'use_desc_for_title' => 1,
-			'child_of'           => 0,
-			'feed'               => '',
-			'feed_type'          => '',
-			'feed_image'         => '',
-			'exclude'            => '',
-			'exclude_tree'       => '',
-			'current_category'   => 0,
-			'hierarchical'       => true,
-			'title_li'           => __('Categories'),
-			'echo'               => 1,
-			'depth'              => 0,
-			'walker'             => $mywalker
-		);
-
-		$r = wp_parse_args($args, $defaults);
-
-		if ( ! isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
-			$r['pad_counts'] = true;
-		}
-
-		if ( ! isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
-			$r['pad_counts'] = true;
-		}
-
-		if (isset($r['show_date'])) {
-			$r['include_last_update_time'] = $r['show_date'];
-		}
-
-		if (true == $r['hierarchical']) {
-			$r['exclude_tree'] = $r['exclude'];
-			$r['exclude']      = '';
-		}
-
-		extract($r);
-
-		$categories = get_categories($r);
-
-		$output = '';
-		if ($title_li && 'list' == $style) {
-			$output = '<li class="categories">' . $r['title_li'] . '<ul>';
-		}
-
-		if (empty($categories)) {
-			if ('list' == $style) {
-				$output .= '<li>' . __("No categories") . '</li>';
-			} else {
-				$output .= __("No categories");
-			}
-		} else {
-			global $wp_query;
-
-			if ( ! empty($show_option_all)) {
-				if ('list' == $style) {
-					$output .= '<li><a href="' . get_bloginfo('url') . '">' . $show_option_all . '</a></li>';
-				} else {
-					$output .= '<a href="' . get_bloginfo('url') . '">' . $show_option_all . '</a>';
-				}
-			}
-			if (empty($r['current_category']) && is_category()) {
-				$r['current_category'] = $wp_query->get_queried_object_id();
-			}
-
-			if ($hierarchical) {
-				$depth = $r['depth'];
-			} else {
-				$depth = - 1; // Flat.
-			}
-
-			$output .= walk_category_tree($categories, $depth, $r);
-		}
-
-		if ($title_li && 'list' == $style) {
-			$output .= '</ul></li>';
-		}
-
-		$output = apply_filters('wp_list_categories', $output);
-
-		if ($echo) {
-			echo $output;
-		} else {
-			return $output;
-		}
-
-		return;
-	}
-
-	/**
+	 * @type string        $show_option_all     Text to display for showing all categories. Default empty string.
+	 * @type string        $show_option_none    Text to display for the 'no categories' option.
+	 *                                               Default 'No categories'.
+	 * @type string        $orderby             The column to use for ordering categories. Default 'ID'.
+	 * @type string        $order               Which direction to order categories. Accepts 'ASC' or 'DESC'.
+	 *                                               Default 'ASC'.
+	 * @type bool|int      $show_count          Whether to show how many posts are in the category. Default 0.
+	 * @type bool|int      $hide_empty          Whether to hide categories that don't have any posts attached to them.
+	 *                                               Default 1.
+	 * @type bool|int      $use_desc_for_title  Whether to use the category description as the title attribute.
+	 *                                               Default 1.
+	 * @type string        $feed                Text to use for the feed link. Default 'Feed for all posts filed
+	 *                                               under [cat name]'.
+	 * @type string        $feed_type           Feed type. Used to build feed link. See {@link get_term_feed_link()}.
+	 *                                               Default empty string (default feed).
+	 * @type string        $feed_image          URL of an image to use for the feed link. Default empty string.
+	 * @type int           $child_of            Term ID to retrieve child terms of. See {@link get_terms()}. Default 0.
+	 * @type array|string  $exclude             Array or comma/space-separated string of term IDs to exclude.
+	 *                                               If `$hierarchical` is true, descendants of `$exclude` terms will
+	 *                                               also be excluded; see `$exclude_tree`. See {@link get_terms()}.
+	 *                                               Default empty string.
+	 * @type array|string  $exclude_tree        Array or comma/space-separated string of term IDs to exclude, along
+	 *                                               with their descendants. See {@link get_terms()}. Default empty
+	 *                                               string.
+	 * @type bool|int      $echo                True to echo markup, false to return it. Default 1.
+	 * @type int|array     $current_category    ID of category, or array of IDs of categories, that should get the
+	 *                                               'current-cat' class. Default 0.
+	 * @type bool          $hierarchical        Whether to include terms that have non-empty descendants.
+	 *                                               See {@link get_terms()}. Default true.
+	 * @type string        $title_li            Text to use for the list title `<li>` element. Pass an empty string
+	 *                                               to disable. Default 'Categories'.
+	 * @type bool          $hide_title_if_empty Whether to hide the `$title_li` element if there are no terms in
+	 *                                               the list. Default false (title will always be shown).
+	 * @type int           $depth               Category depth. Used for tab indentation. Default 0.
+	 * @type string        $taxonomy            Taxonomy name. Default 'category'.
+	 * @type string        $separator           Separator between links. Default '<br />'.
+	 * }
+	 * @return false|string HTML content only if 'echo' argument is 0.
+	 *
+	 * public function avh_wp_list_categories($args = '') {
+	 * $mywalker = new AVHEC_Walker_Category();
+	 * $defaults = array(
+	 * 'child_of'            => 0,
+	 * 'current_category'    => 0,
+	 * 'depth'               => 0,
+	 * 'echo'                => 1,
+	 * 'exclude'             => '',
+	 * 'exclude_tree'        => '',
+	 * 'feed'                => '',
+	 * 'feed_image'          => '',
+	 * 'feed_type'           => '',
+	 * 'hide_empty'          => 1,
+	 * 'hide_title_if_empty' => false,
+	 * 'hierarchical'        => true,
+	 * 'order'               => 'ASC',
+	 * 'orderby'             => 'name',
+	 * 'separator'           => '<br />',
+	 * 'show_count'          => 0,
+	 * 'show_last_update'    => 0,
+	 * 'show_option_all'     => '',
+	 * 'show_option_none'    => __('No categories'),
+	 * 'style'               => 'list',
+	 * 'taxonomy'            => 'category',
+	 * 'title_li'            => __('Categories'),
+	 * 'use_desc_for_title'  => 1,
+	 * 'walker'              => $mywalker
+	 * );
+	 *
+	 * $r = wp_parse_args($args, $defaults);
+	 *
+	 * if ( ! isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
+	 * $r['pad_counts'] = true;
+	 * }
+	 *
+	 * if (isset($r['show_date'])) {
+	 * $r['include_last_update_time'] = $r['show_date'];
+	 * }
+	 *
+	 * if (true == $r['hierarchical']) {
+	 * $exclude_tree = array();
+	 *
+	 * if ($r['exclude_tree']) {
+	 * $exclude_tree = array_merge($exclude_tree, wp_parse_id_list($r['exclude_tree']));
+	 * }
+	 *
+	 * if ($r['exclude']) {
+	 * $exclude_tree = array_merge($exclude_tree, wp_parse_id_list($r['exclude']));
+	 * }
+	 *
+	 * $r['exclude_tree'] = $exclude_tree;
+	 * $r['exclude']      = '';
+	 * }
+	 *
+	 * if ( ! isset($r['class'])) {
+	 * $r['class'] = ('category' == $r['taxonomy']) ? 'categories' : $r['taxonomy'];
+	 * }
+	 *
+	 * if ( ! taxonomy_exists($r['taxonomy'])) {
+	 * return false;
+	 * }
+	 *
+	 * $show_option_all  = $r['show_option_all'];
+	 * $show_option_none = $r['show_option_none'];
+	 *
+	 * $categories = get_categories($r);
+	 *
+	 * $output = '';
+	 * if ($r['title_li'] && 'list' == $r['style'] && ( ! empty($categories) || ! $r['hide_title_if_empty'])) {
+	 * $output = '<li class="' . esc_attr($r['class']) . '">' . $r['title_li'] . '<ul>';
+	 * }
+	 *
+	 * if (empty($categories)) {
+	 * if ( ! empty($show_option_none)) {
+	 * if ('list' == $r['style']) {
+	 * $output .= '<li class="cat-item-none">' . __("No categories") . '</li>';
+	 * } else {
+	 * $output .= $show_option_none;
+	 * }
+	 * }
+	 * } else {
+	 * if ( ! empty($show_option_all)) {
+	 *
+	 * $posts_page      = '';
+	 * $taxonomy_object = get_taxonomy($r['taxonomy']);
+	 *
+	 * if ( ! in_array('post', $taxonomy_object->object_type) &&
+	 * ! in_array('page', $taxonomy_object->object_type)
+	 * ) {
+	 * foreach ($taxonomy_object->object_type as $object_type) {
+	 * $_object_type = get_post_type_object($object_type);
+	 *
+	 * // Grab the first one.
+	 * if ( ! empty($_object_type->has_archive)) {
+	 * $posts_page = get_post_type_archive_link($object_type);
+	 * break;
+	 * }
+	 * }
+	 * }
+	 * // Fallback for the 'All' link is the posts page.
+	 * if ( ! $posts_page) {
+	 * if ('page' == get_option('show_on_front') && get_option('page_for_posts')) {
+	 * $posts_page = get_permalink(get_option('page_for_posts'));
+	 * } else {
+	 * $posts_page = home_url('/');
+	 * }
+	 * }
+	 *
+	 * $posts_page = esc_url($posts_page);
+	 * if ('list' == $r['style']) {
+	 * $output .= '<li class="cat-item-all"><a href="' .
+	 * $posts_page .
+	 * '">' .
+	 * $show_option_all .
+	 * '</a></li>';
+	 * } else {
+	 * $output .= '<a href="' . $posts_page . '">' . $show_option_all . '</a>';
+	 * }
+	 * }
+	 * if (empty($r['current_category']) && (is_category() || is_tax() || is_tag())) {
+	 * $current_term_object = get_queried_object();
+	 * if ($current_term_object && $r['taxonomy'] === $current_term_object->taxonomy) {
+	 * $r['current_category'] = get_queried_object_id();
+	 * }
+	 * }
+	 *
+	 * if ($r['hierarchical']) {
+	 * $depth = $r['depth'];
+	 * } else {
+	 * $depth = - 1; // Flat.
+	 * }
+	 *
+	 * $output .= walk_category_tree($categories, $depth, $r);
+	 * }
+	 *
+	 * if ($r['title_li'] && 'list' == $r['style']) {
+	 * $output .= '</ul></li>';
+	 * }
+	 *
+	 * $html = apply_filters('wp_list_categories', $output, $args);
+	 *
+	 * if ($r['echo']) {
+	 * echo $html;
+	 * } else {
+	 * return $html;
+	 * }
+	 *
+	 * return;
+	 * }
+	 *
+	 * /**
 	 * Checks if running version is newer and do upgrades if necessary
 	 *
 	 * @since 1.2.3
 	 *
-	 * @param string $db_version
+	 * @param string       $db_version
 	 */
 	public function doUpdateOptions($db_version) {
 		$options = $this->getOptions();
