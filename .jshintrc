@@ -13,11 +13,9 @@
   "trailing": true,
   "undef": true,
   "unused": true,
-
   "browser": true,
   "jquery": true,
-  "backbone":true,
-
+  "backbone": true,
   "globals": {
     "_": false,
     "JSON": false,
