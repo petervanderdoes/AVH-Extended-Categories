@@ -67,7 +67,7 @@ class AVH_EC_Admin {
 	function actionAdminMenu() {
 
 		// Register Style and Scripts
-		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.closure';
+		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 		wp_register_script('avhec-categorygroup-js',
 		                   AVHEC_PLUGIN_URL . '/js/avh-ec.categorygroup' . $suffix . '.js',
 		                   array('jquery'),
