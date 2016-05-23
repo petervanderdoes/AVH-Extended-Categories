@@ -140,7 +140,9 @@ None
 
 == Changelog ==
 = Version 4.0.3-rc.1 =
-* Preparation for new development cycle.
+* Security fix
+* Update methods for displaying the categories
+* Move to minified javascript
 
 = Version 4.0.2 =
 * Certain methods show notice of undefined variables. 
