@@ -1128,11 +1128,13 @@ class AVH_EC_Admin {
 	public function handleEditTerm($term_id, $tt_id, $taxonomy) {
 		$tax_meta = get_option($this->core->db_options_tax_meta);
 		if (isset($_POST['avhec_categorygroup'])) {
-			if ( ! isset($tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id']) ||
-			     $tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id'] != $_POST['avhec_categorygroup']
-			) {
-				$tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id'] = $_POST['avhec_categorygroup'];
-				update_option($this->core->db_options_tax_meta, $tax_meta);
+			if (term_exists($_POST['avhec_categorygroup'], $this->catgrp->taxonomy_name) !== null) {
+				if ( ! isset($tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id']) ||
+				     $tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id'] != $_POST['avhec_categorygroup']
+				) {
+					$tax_meta[ $taxonomy ][ $term_id ]['category_group_term_id'] = $_POST['avhec_categorygroup'];
+					update_option($this->core->db_options_tax_meta, $tax_meta);
+				}
 			}
 		}
 	}
