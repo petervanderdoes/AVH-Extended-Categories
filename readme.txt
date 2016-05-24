@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 4.0.4-rc.1 =
-* Preparation for new development cycle.
+* Uncaught error can occur at times.
 
 = Version 4.0.3 =
 * Security fix
