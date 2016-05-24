@@ -139,6 +139,9 @@ Whether Widget 2 shows Movie or Music depends on the creation order of groups. I
 None
 
 == Changelog ==
+= Version 4.0.5-dev.1 =
+* Preparation for new development cycle.
+
 = Version 4.0.4 =
 * Uncaught error can occur at times.
 
