@@ -233,8 +233,12 @@ class AVH_EC_Category_Group {
 				                                'description' => __('This group will be shown on the front page.',
 				                                                    'avh-ec')
 			                                ));
-			$this->setCategoriesForGroup($home_group_id['term_id'], $all_categories);
-			$this->setWidgetTitleForGroup($home_group_id['term_id'], '');
+			if ( ! is_wp_error($home_group_id)) {
+				$this->setCategoriesForGroup($home_group_id['term_id'], $all_categories);
+				$this->setWidgetTitleForGroup($home_group_id['term_id'], '');
+			} else {
+				trigger_error($home_group_id->get_error_message(), E_USER_NOTICE);
+			}
 		}
 		if (false === $this->getTermIDBy('slug', 'all')) {
 			$all_group_id = wp_insert_term('All',
