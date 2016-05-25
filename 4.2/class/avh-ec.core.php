@@ -216,6 +216,8 @@ class AVH_EC_Core {
 		$this->db_options_core     = 'avhec';
 		$this->db_options_tax_meta = 'avhec-tax_meta';
 
+		AVH_EC_Singleton::getInstance('AVH_EC_Category_Group');
+
 		add_action('init', array($this, 'handleInitializePlugin'), 10);
 	}
 
