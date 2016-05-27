@@ -3,7 +3,7 @@ Contributors: petervanderdoes
 Donate link: http://blog.avirtualhome.com/wordpress-plugins/
 Tags: extended, categories, widget, top categories
 Requires at least: 2.3
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: 4.0.5
 
 The AVH Extended Categories Widgets gives you three widgets for displaying categories.
@@ -151,10 +151,10 @@ None
 * Move to minified javascript
 
 = Version 4.0.2 =
-* Certain methods show notice of undefined variables. 
+* Certain methods show notice of undefined variables.
 
 = Version 4.0.1 =
-* Post-Auth SQL Injection Vulnerability  
+* Post-Auth SQL Injection Vulnerability
   Only occurs for WordPress versions lower than 3.3
 
 = Version 4.0.0 =
