@@ -225,6 +225,9 @@ class AVH_EC_Category_Group {
 			                                array(
 				                                'description' => __('This group will not show the widget.', 'avh-ec')
 			                                ));
+			if (is_wp_error($none_group_id)) {
+				trigger_error($none_group_id->get_error_message(),E_USER_NOTICE);
+			}
 
 			$home_group_id = wp_insert_term('Home',
 			                                $this->taxonomy_name,
