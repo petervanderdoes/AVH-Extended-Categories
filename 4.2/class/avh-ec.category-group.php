@@ -40,13 +40,9 @@ class AVH_EC_Category_Group {
 		 * Create the table if it doesn't exist.
 		 */
 		if ($wpdb->get_var('show tables like \'' . $wpdb->avhec_cat_group . '\'') != $wpdb->avhec_cat_group) {
-			add_action('init',
-			           array($this, 'doCreateTable'),
-			           2); // Priority needs to be the same as the Register Taxonomy
+			add_action('init', array($this, 'doCreateTable'),0);
 		}
-		add_action('init',
-		           array($this, 'doRegisterTaxonomy'),
-		           2); // Priority for registering custom taxonomies is +1 over the creation of the initial taxonomies
+		add_action('init', array($this, 'doRegisterTaxonomy'),0);
 		add_action('init', array($this, 'doSetupOptions'));
 
 		add_action('admin_init', array($this, 'addMetaBoxes'));
@@ -198,18 +194,21 @@ class AVH_EC_Category_Group {
 			'delete_terms' => null,
 			'assign_terms' => 'edit_posts'
 		);
-		register_taxonomy($this->taxonomy_name,
-		                  array('post', 'page'),
-		                  array(
-			                  'hierarchical'      => true,
-			                  'labels'            => $labels,
-			                  'query_var'         => true,
-			                  'rewrite'           => true,
-			                  'show_in_nav_menus' => false,
-			                  'public'            => true,
-			                  'show_ui'           => false,
-			                  'capabilities'      => $caps
-		                  ));
+		$result = register_taxonomy($this->taxonomy_name,
+		                            array('post', 'page'),
+		                            array(
+			                            'hierarchical'      => true,
+			                            'labels'            => $labels,
+			                            'query_var'         => true,
+			                            'rewrite'           => true,
+			                            'show_in_nav_menus' => false,
+			                            'public'            => true,
+			                            'show_ui'           => false,
+			                            'capabilities'      => $caps
+		                            ));
+		if (is_wp_error($result)) {
+			trigger_error($result->get_error_message(), E_USER_NOTICE);
+		}
 	}
 
 	/**
@@ -226,6 +225,9 @@ class AVH_EC_Category_Group {
 			                                array(
 				                                'description' => __('This group will not show the widget.', 'avh-ec')
 			                                ));
+			if (is_wp_error($none_group_id)) {
+				trigger_error($none_group_id->get_error_message(),E_USER_NOTICE);
+			}
 
 			$home_group_id = wp_insert_term('Home',
 			                                $this->taxonomy_name,
