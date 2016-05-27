@@ -3,7 +3,7 @@
  * Plugin Name: AVH Extended Categories Widgets
  * Plugin URI: http://blog.avirtualhome.com/wordpress-plugins
  * Description: Replacement of the category widget to allow for greater customization of the category widget.
- * Version: 4.0.6-dev.1
+ * Version: 4.0.6
  * Author: Peter van der Does
  * Author URI: http://blog.avirtualhome.com/
  * Copyright 2012-2016  Peter van der Does  (email : peter@avirtualhome.com)
