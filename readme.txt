@@ -140,7 +140,7 @@ None
 
 == Changelog ==
 = Version 4.0.6-dev.1 =
-* Preparation for new development cycle.
+* Creating the standard groups sometimes lead to an error.
 
 = Version 4.0.5 =
 * To much comment out.
